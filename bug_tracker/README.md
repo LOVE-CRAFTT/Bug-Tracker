@@ -1,16 +1,21 @@
-# bug_tracker
+# Bug Tracker
 
-A new Flutter project.
+This is a bug tracking application developed using Flutter for my final year project. The application enables development teams to receive bug reports from customers, assign tasks to staff for resolution, and monitor progress. Customers can also track the progress and solution plans of these reports, leading to a more transparent system.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+- Report and track bugs
+- Assign tasks to team members for bug resolution
+- Monitor progress of bug resolution
+- Customers can track progress and solution plans
 
-A few resources to get you started if this is your first Flutter project:
+## Setup
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+1. Install Flutter on your machine.
+2. Clone this repository.
+3. Run `flutter pub get` to install the necessary packages.
+4. Run `flutter run` to start the application.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Author
+
+Your Name - Brendan Chukwuemeka 
