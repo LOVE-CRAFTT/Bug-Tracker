@@ -12,11 +12,26 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Row(
         children: [
-          CustomNavigationRail(),
-          Expanded(
+          CustomNavigationRail(
+            onPressed: () {
+              setState(
+                () {
+                  showAppBar = !showAppBar;
+                },
+              );
+            },
+            onDestinationSelected: (int index) {
+              setState(
+                () {
+                  selectedIndex = index;
+                },
+              );
+            },
+          ),
+          const Expanded(
             child: HomePage(),
           )
         ],

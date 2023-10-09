@@ -1,53 +1,54 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 
-class CustomNavigationRail extends StatefulWidget {
-  const CustomNavigationRail({super.key});
+// Variables for displaying the nav bar or not, and current selected in the nav bar
+//Moved out for access in main_screen
+bool showAppBar = true;
+int selectedIndex = 0;
 
-  @override
-  State<CustomNavigationRail> createState() => _CustomNavigationRailState();
-}
+///Contains a sized box and a NavigationRail arranged in a column,
+///This arrangement is to imitate an appbar at the top
+class CustomNavigationRail extends StatelessWidget {
+  const CustomNavigationRail(
+      {super.key, this.onPressed, this.onDestinationSelected});
 
-class _CustomNavigationRailState extends State<CustomNavigationRail> {
-  bool _showAppBar = true;
-  int _selectedIndex = 0;
+  final void Function()? onPressed;
+  final void Function(int)? onDestinationSelected;
+
+  //Default width for extended navRail and height for appbar
+  //gotten from docs
+  static const navRailWidth = 220.0;
+  static const appBarHeight = 56.0;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          height: 56,
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+        SizedBox(
+          height: appBarHeight,
+          width: showAppBar ? navRailWidth : null,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               IconButton(
-                icon: Icon(_showAppBar ? Icons.menu_open : Icons.menu),
-                onPressed: () {
-                  setState(() {
-                    _showAppBar = !_showAppBar;
-                  });
-                },
+                icon: Icon(showAppBar ? Icons.menu_open : Icons.menu),
+                onPressed: onPressed,
               ),
-              if (_showAppBar) ...[
-                // Image.asset('assets/logo.png', width: 36),
-                const SizedBox(width: 8),
-                const Text('Bug Tracker'),
+              if (showAppBar) ...[
+                const Text(
+                  'Bug Tracker',
+                  style: kAppBarTextStyle,
+                ),
               ],
             ],
           ),
         ),
         Expanded(
           child: NavigationRail(
-            extended: _showAppBar,
+            extended: showAppBar,
             destinations: kMainNavigationRailDestinations,
-            selectedIndex: _selectedIndex,
-            onDestinationSelected: (int index) {
-              setState(() {
-                _selectedIndex = index;
-              });
-            },
+            selectedIndex: selectedIndex,
+            onDestinationSelected: onDestinationSelected,
           ),
         ),
       ],
