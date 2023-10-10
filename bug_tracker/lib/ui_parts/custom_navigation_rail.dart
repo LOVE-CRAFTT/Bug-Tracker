@@ -5,6 +5,7 @@ import 'package:bug_tracker/utilities/constants.dart';
 //Moved out for access in main_screen
 bool showAppBar = true;
 int selectedIndex = 0;
+// bool clickIconButton = true;
 
 ///Contains a sized box and a NavigationRail arranged in a column,
 ///This arrangement is to imitate an appbar at the top
@@ -19,10 +20,16 @@ class CustomNavigationRail extends StatelessWidget {
   //gotten from docs
   static const navRailWidth = 220.0;
   static const appBarHeight = 56.0;
+  static const widthToShowNavBar = 712.0;
 
   @override
   Widget build(BuildContext context) {
+    double currentScreenWidth = MediaQuery.sizeOf(context).width;
+
+    void setShowAppBar() {}
+
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
         SizedBox(
           height: appBarHeight,
@@ -44,11 +51,24 @@ class CustomNavigationRail extends StatelessWidget {
           ),
         ),
         Expanded(
-          child: NavigationRail(
-            extended: showAppBar,
-            destinations: kMainNavigationRailDestinations,
-            selectedIndex: selectedIndex,
-            onDestinationSelected: onDestinationSelected,
+          child: LayoutBuilder(
+            builder: (BuildContext context, BoxConstraints constraints) {
+              return SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight: constraints.maxHeight,
+                  ),
+                  child: IntrinsicHeight(
+                    child: NavigationRail(
+                      extended: showAppBar,
+                      destinations: kMainNavigationRailDestinations,
+                      selectedIndex: selectedIndex,
+                      onDestinationSelected: onDestinationSelected,
+                    ),
+                  ),
+                ),
+              );
+            },
           ),
         ),
       ],

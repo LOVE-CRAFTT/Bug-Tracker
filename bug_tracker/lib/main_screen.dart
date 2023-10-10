@@ -14,12 +14,14 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
           CustomNavigationRail(
             onPressed: () {
               setState(
                 () {
                   showAppBar = !showAppBar;
+                  // clickIconButton = !clickIconButton;
                 },
               );
             },
