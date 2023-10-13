@@ -1,4 +1,4 @@
-import 'package:bug_tracker/ui_parts/fast_access_container.dart';
+import 'package:bug_tracker/ui_components/fast_access_container.dart';
 import 'package:flutter/material.dart';
 
 ///Width of a big screen, gotten from testing

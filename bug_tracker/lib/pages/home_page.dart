@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:bug_tracker/ui_parts/appbar.dart';
-import 'package:bug_tracker/ui_parts/fast_access_container.dart';
+import 'package:bug_tracker/ui_components/appbar.dart';
+import 'package:bug_tracker/ui_components/fast_access_container.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
