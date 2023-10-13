@@ -21,7 +21,6 @@ class _MainScreenState extends State<MainScreen> {
               setState(
                 () {
                   showAppBar = !showAppBar;
-                  // clickIconButton = !clickIconButton;
                 },
               );
             },
