@@ -6,7 +6,7 @@ import 'package:bug_tracker/utilities/constants.dart';
 bool showAppBar = true;
 int selectedIndex = 0;
 
-///Contains a sized box and a scrollable NavigationRail arranged in a column,
+///Contains a static [SizedBox] and a scrollable NavigationRail arranged in a column,
 ///This arrangement is to imitate an appbar at the top
 class CustomNavigationRail extends StatelessWidget {
   const CustomNavigationRail(
@@ -19,12 +19,11 @@ class CustomNavigationRail extends StatelessWidget {
   //gotten from docs
   static const navRailWidth = 220.0;
   static const appBarHeight = 56.0;
-  static const widthToShowNavBar = 712.0;
 
   @override
   Widget build(BuildContext context) {
     double currentScreenWidth = MediaQuery.sizeOf(context).width;
-    if (currentScreenWidth < widthToShowNavBar) {
+    if (currentScreenWidth < bigScreenWidth) {
       showAppBar = false;
     }
 

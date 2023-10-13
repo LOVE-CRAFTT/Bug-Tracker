@@ -1,5 +1,12 @@
+import 'package:bug_tracker/ui_parts/fast_access_container.dart';
 import 'package:flutter/material.dart';
 
+///Width of a big screen, gotten from testing
+///If screen goes lower than this, screen layout changes to accommodate
+///[] reduces, [FastAccessContainer]s realigns to have 3 maximum on a row
+const bigScreenWidth = 712.0;
+
+///TextStyle for the [reusableAppBar]
 const kAppBarTextStyle = TextStyle(
   fontSize: 20.0,
   color: Color(0xFF979c99),

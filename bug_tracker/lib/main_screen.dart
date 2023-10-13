@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:bug_tracker/ui_parts/custom_navigation_rail.dart';
 import 'package:bug_tracker/pages/home_page.dart';
 
+///Contains a Static Navigation Rail and changeable pages
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
 

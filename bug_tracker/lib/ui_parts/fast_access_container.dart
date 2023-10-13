@@ -18,34 +18,48 @@ class FastAccessContainer extends StatelessWidget {
     color: const Color(0xFFb6b8aa),
   );
 
+  //============
+  static const bigScreenMaxWidthLimit = 110;
+  static const smallScreenContainerHeight = 120.0;
+  static const bigScreenContainerHeight = 95.0;
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          color: const Color(0xFF1e1e1e),
-        ),
-        padding: const EdgeInsets.all(8),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+          var containerHeight = constraints.maxWidth <= bigScreenMaxWidthLimit
+              ? smallScreenContainerHeight
+              : bigScreenContainerHeight;
+          return Container(
+            margin: const EdgeInsets.all(5.0),
+            height: containerHeight,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              color: const Color(0xFF1e1e1e),
+            ),
+            padding: const EdgeInsets.all(8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      number.toString(),
+                      style: fastAccessTextStyle,
+                    ),
+                    Icon(icon),
+                  ],
+                ),
                 Text(
-                  number.toString(),
+                  text,
                   style: fastAccessTextStyle,
                 ),
-                Icon(icon),
               ],
             ),
-            Text(
-              text,
-              style: fastAccessTextStyle,
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }

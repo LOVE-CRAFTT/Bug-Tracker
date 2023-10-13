@@ -63,23 +63,14 @@ class _HomePageState extends State<HomePage> {
                         number: 1,
                         text: "Open Bugs",
                         icon: Icons.bug_report_outlined),
-                    const SizedBox(
-                      width: 16,
-                    ),
                     FastAccessContainer(
                         number: 6,
                         text: "Closed Bugs",
                         icon: Icons.bug_report_outlined),
-                    const SizedBox(
-                      width: 16,
-                    ),
                     FastAccessContainer(
                       number: 3,
                       text: "Open Milestones",
                       icon: Icons.stars,
-                    ),
-                    const SizedBox(
-                      width: 16,
                     ),
                     FastAccessContainer(
                       number: 9,
