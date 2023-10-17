@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+///Provides a quick overview of open bugs, closed bugs,
+///open milestones or closed milestones.
+///Can appear in a row of 4 or two rows of 2 depending on screen dimensions
 class FastAccessContainer extends StatelessWidget {
   final int number;
   final String text;

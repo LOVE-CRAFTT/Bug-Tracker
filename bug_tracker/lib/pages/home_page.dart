@@ -75,7 +75,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     FastAccessContainer(
                       number: 9000,
-                      text: "Open Milestones",
+                      text: "Closed Milestones",
                       icon: Icons.stars,
                     ),
                   ],
