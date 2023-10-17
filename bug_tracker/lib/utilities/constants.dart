@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 ///Width of a big screen, gotten from testing
 ///If screen goes lower than this, screen layout changes to accommodate
-///[] reduces, [FastAccessContainer]s realigns to have 3 maximum on a row
+///[containerHeight] reduces, [FastAccessContainer]s realigns to have 3 maximum on a row
 const bigScreenWidth = 712.0;
 
 ///TextStyle for the [reusableAppBar]

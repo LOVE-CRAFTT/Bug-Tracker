@@ -18,4 +18,4 @@ This is a bug tracking application developed using Flutter for my final year pro
 
 ## Author
 
-Your Name - Brendan Chukwuemeka 
+Brendan Chukwuemeka

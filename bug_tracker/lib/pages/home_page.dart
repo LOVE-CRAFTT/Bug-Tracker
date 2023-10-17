@@ -24,6 +24,7 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.only(left: 15, right: 10, top: 10),
             child: Column(
               mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -56,24 +57,24 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(
                   height: 20,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                Wrap(
+                  spacing: 8.0,
                   children: [
                     FastAccessContainer(
-                        number: 1,
+                        number: 1000,
                         text: "Open Bugs",
                         icon: Icons.bug_report_outlined),
                     FastAccessContainer(
-                        number: 6,
+                        number: 6000,
                         text: "Closed Bugs",
                         icon: Icons.bug_report_outlined),
                     FastAccessContainer(
-                      number: 3,
+                      number: 3000,
                       text: "Open Milestones",
                       icon: Icons.stars,
                     ),
                     FastAccessContainer(
-                      number: 9,
+                      number: 9000,
                       text: "Open Milestones",
                       icon: Icons.stars,
                     ),
