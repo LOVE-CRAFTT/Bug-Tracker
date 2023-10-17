@@ -60,6 +60,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Wrap(
                   spacing: 8.0,
+                  runSpacing: 8.0,
                   children: [
                     FastAccessContainer(
                         number: 10,
@@ -84,7 +85,9 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(
                   height: 20,
                 ),
-                Column(
+                Wrap(
+                  spacing: 10.0,
+                  runSpacing: 10.0,
                   children: largeContainers,
                 ),
               ],
