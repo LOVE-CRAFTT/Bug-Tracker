@@ -49,7 +49,6 @@ class CustomNavigationRail extends StatelessWidget {
           ),
         ),
         Expanded(
-          flex: 25,
           child: LayoutBuilder(
             builder: (BuildContext context, BoxConstraints constraints) {
               return SingleChildScrollView(

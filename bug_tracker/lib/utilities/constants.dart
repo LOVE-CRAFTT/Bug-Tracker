@@ -12,40 +12,24 @@ const kAppBarTextStyle = TextStyle(
   color: Color(0xFF979c99),
 );
 
+Map<String, Icon> navRailData = {
+  'Home': const Icon(Icons.home),
+  'Feed': const Icon(Icons.feed),
+  'Discuss': const Icon(Icons.chat_outlined),
+  'Calendar': const Icon(Icons.calendar_month),
+  'Projects': const Icon(Icons.work_outline),
+  'Bugs': const Icon(Icons.bug_report),
+  'Milestones': const Icon(Icons.flag),
+  'Timesheets': const Icon(Icons.access_time)
+};
+
 List<NavigationRailDestination> kMainNavigationRailDestinations = [
-  const NavigationRailDestination(
-    icon: Icon(Icons.home),
-    label: Text('Home'),
-  ),
-  const NavigationRailDestination(
-    icon: Icon(Icons.feed),
-    label: Text('Feed'),
-  ),
-  const NavigationRailDestination(
-    icon: Icon(Icons.chat_outlined),
-    label: Text('Discuss'),
-  ),
-  const NavigationRailDestination(
-    icon: Icon(Icons.calendar_month),
-    label: Text('Calendar'),
-  ),
-  const NavigationRailDestination(
-    icon: Icon(Icons.work_outline),
-    label: Text('Projects'),
-  ),
-  const NavigationRailDestination(
-    icon: Icon(Icons.bug_report),
-    selectedIcon: Icon(Icons.bug_report),
-    label: Text('Bugs'),
-  ),
-  const NavigationRailDestination(
-    icon: Icon(Icons.flag),
-    selectedIcon: Icon(Icons.flag),
-    label: Text('Milestones'),
-  ),
-  const NavigationRailDestination(
-    icon: Icon(Icons.access_time),
-    selectedIcon: Icon(Icons.access_time),
-    label: Text('Timesheets'),
-  ),
+  for (var value in navRailData.entries)
+    NavigationRailDestination(
+      icon: Tooltip(
+        message: value.key,
+        child: value.value,
+      ),
+      label: Text(value.key),
+    ),
 ];
