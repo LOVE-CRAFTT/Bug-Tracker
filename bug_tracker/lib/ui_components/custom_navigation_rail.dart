@@ -6,7 +6,7 @@ import 'package:bug_tracker/utilities/constants.dart';
 bool showAppBar = true;
 int selectedIndex = 0;
 
-///Contains a static [SizedBox] and a scrollable NavigationRail arranged in a column,
+///Contains a static [SizedBox] and an Expanded scrollable NavigationRail arranged in a column,
 ///This arrangement is to imitate an appbar at the top
 class CustomNavigationRail extends StatelessWidget {
   const CustomNavigationRail(

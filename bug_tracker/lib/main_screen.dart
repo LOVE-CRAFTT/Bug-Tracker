@@ -11,6 +11,21 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  late Widget page;
+
+  ///Process to choose page based on currently selected destination
+  ///Is run everytime new destination is selected
+  void choosePage() {
+    switch (selectedIndex) {
+      case 0:
+        page = const HomePage();
+      case 1:
+        page = const Placeholder();
+      default:
+        page = const HomePage();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,8 +48,8 @@ class _MainScreenState extends State<MainScreen> {
               );
             },
           ),
-          const Expanded(
-            child: HomePage(),
+          Expanded(
+            child: page,
           )
         ],
       ),
