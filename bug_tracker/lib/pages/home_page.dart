@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/ui_components/appbar.dart';
 import 'package:bug_tracker/ui_components/fast_access_container.dart';
 
@@ -61,20 +62,20 @@ class _HomePageState extends State<HomePage> {
                   spacing: 8.0,
                   children: [
                     FastAccessContainer(
-                        number: 1000,
+                        number: 10,
                         text: "Open Bugs",
                         icon: Icons.bug_report_outlined),
                     FastAccessContainer(
-                        number: 6000,
+                        number: 60,
                         text: "Closed Bugs",
                         icon: Icons.bug_report_outlined),
                     FastAccessContainer(
-                      number: 3000,
+                      number: 30,
                       text: "Open Milestones",
                       icon: Icons.stars,
                     ),
                     FastAccessContainer(
-                      number: 9000,
+                      number: 90,
                       text: "Closed Milestones",
                       icon: Icons.stars,
                     ),
@@ -83,49 +84,9 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(
                   height: 20,
                 ),
-                // Expanded(
-                //   child: SingleChildScrollView(
-                //     child: Column(
-                //       children: const [
-                //         LargeContainer(
-                //           title: "My Bugs",
-                //           icons: [Icons.edit, Icons.delete],
-                //           body: Text("Body content goes here"),
-                //         ),
-                //         LargeContainer(
-                //           title: "My Work Items Due Today",
-                //           icons: [Icons.edit, Icons.delete],
-                //           body: Text("Body content goes here"),
-                //         ),
-                //         LargeContainer(
-                //           title: "My Overdue Items",
-                //           icons: [Icons.edit, Icons.delete],
-                //           body: Text("Body content goes here"),
-                //         ),
-                //         LargeContainer(
-                //           title: "My Milestones",
-                //           icons: [Icons.edit, Icons.delete],
-                //           body: Text("Body content goes here"),
-                //         ),
-                //         LargeContainer(
-                //           title: "My Timesheet",
-                //           icons: [Icons.edit, Icons.delete],
-                //           body: Text("Body content goes here"),
-                //         ),
-                //         LargeContainer(
-                //           title: "All Bugs",
-                //           icons: [Icons.edit, Icons.delete],
-                //           body: Text("Body content goes here"),
-                //         ),
-                //         LargeContainer(
-                //           title: "My Events",
-                //           icons: [Icons.edit, Icons.delete],
-                //           body: Text("Body content goes here"),
-                //         ),
-                //       ],
-                //     ),
-                //   ),
-                // ),
+                Column(
+                  children: largeContainers,
+                ),
               ],
             ),
           )

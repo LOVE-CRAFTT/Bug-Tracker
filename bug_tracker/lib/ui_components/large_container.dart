@@ -106,7 +106,7 @@ class _LargeContainerState extends State<LargeContainer> {
                       .toList()
                   : [],
             ),
-            Expanded(child: widget.body),
+            widget.body,
           ],
         ),
       ),

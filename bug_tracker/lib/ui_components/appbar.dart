@@ -2,12 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 
 AppBar reusableAppBar = AppBar(
-  // leadingWidth: 100.0,
-  // leading: const IconButton(
-  //   onPressed: null,
-  //   tooltip: "Show panel",
-  //   icon: Icon(Icons.view_agenda),
-  // ),
   title: const Text(
     "Home",
     style: kAppBarTextStyle,

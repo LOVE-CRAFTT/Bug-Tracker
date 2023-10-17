@@ -15,7 +15,7 @@ class _MainScreenState extends State<MainScreen> {
 
   ///Process to choose page based on currently selected destination
   ///Is run everytime new destination is selected
-  void choosePage() {
+  void selectPage() {
     switch (selectedIndex) {
       case 0:
         page = const HomePage();
@@ -28,6 +28,7 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    selectPage();
     return Scaffold(
       body: Row(
         mainAxisSize: MainAxisSize.min,

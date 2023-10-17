@@ -1,5 +1,6 @@
-import 'package:bug_tracker/ui_components/fast_access_container.dart';
 import 'package:flutter/material.dart';
+import 'package:bug_tracker/ui_components/fast_access_container.dart';
+import 'package:bug_tracker/ui_components/large_container.dart';
 
 ///Width of a big screen, gotten from testing
 ///If screen goes lower than this, screen layout changes to accommodate
@@ -32,4 +33,43 @@ List<NavigationRailDestination> kMainNavigationRailDestinations = [
       ),
       label: Text(value.key),
     ),
+];
+
+///List of largeContainers in the home screen
+List<LargeContainer> largeContainers = [
+  const LargeContainer(
+    title: "My Bugs",
+    icons: [Icons.edit, Icons.delete],
+    body: Text("Body content goes here"),
+  ),
+  const LargeContainer(
+    title: "My Work Items Due Today",
+    icons: [Icons.edit, Icons.delete],
+    body: Text("Body content goes here"),
+  ),
+  const LargeContainer(
+    title: "My Overdue Items",
+    icons: [Icons.edit, Icons.delete],
+    body: Text("Body content goes here"),
+  ),
+  const LargeContainer(
+    title: "My Milestones",
+    icons: [Icons.edit, Icons.delete],
+    body: Text("Body content goes here"),
+  ),
+  const LargeContainer(
+    title: "My Timesheet",
+    icons: [Icons.edit, Icons.delete],
+    body: Text("Body content goes here"),
+  ),
+  const LargeContainer(
+    title: "All Bugs",
+    icons: [Icons.edit, Icons.delete],
+    body: Text("Body content goes here"),
+  ),
+  const LargeContainer(
+    title: "My Events",
+    icons: [Icons.edit, Icons.delete],
+    body: Text("Body content goes here"),
+  ),
 ];
