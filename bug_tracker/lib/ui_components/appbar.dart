@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 
 AppBar reusableAppBar = AppBar(
-  title: const Text(
+  title: Text(
     "Home",
     style: kAppBarTextStyle,
   ),

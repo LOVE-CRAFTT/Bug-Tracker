@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:bug_tracker/utilities/constants.dart';
 
 ///Provides a quick overview of open bugs, closed bugs,
 ///open milestones or closed milestones.
@@ -9,17 +9,12 @@ class FastAccessContainer extends StatelessWidget {
   final String text;
   final IconData icon;
 
-  FastAccessContainer({
+  const FastAccessContainer({
     Key? key,
     required this.number,
     required this.text,
     required this.icon,
   }) : super(key: key);
-
-  final TextStyle fastAccessTextStyle = GoogleFonts.nunito(
-    fontSize: 16,
-    color: const Color(0xFFb6b8aa),
-  );
 
 //============ SCREEN WIDTH GOTTEN FROM TESTING ================================
   static const bigScreenMaxWidthLimit = 500;
@@ -53,14 +48,14 @@ class FastAccessContainer extends StatelessWidget {
                 children: [
                   Text(
                     number.toString(),
-                    style: fastAccessTextStyle,
+                    style: kContainerTextStyle,
                   ),
                   Icon(icon),
                 ],
               ),
               Text(
                 text,
-                style: fastAccessTextStyle,
+                style: kContainerTextStyle,
               ),
             ],
           ),
