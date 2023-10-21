@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:bug_tracker/ui_components/fast_access_container.dart';
 import 'package:bug_tracker/ui_components/large_container.dart';
 
@@ -9,15 +8,17 @@ import 'package:bug_tracker/ui_components/large_container.dart';
 const bigScreenWidth = 712.0;
 
 ///TextStyle for the [reusableAppBar]
-final kAppBarTextStyle = GoogleFonts.nunito(
+const kAppBarTextStyle = TextStyle(
   fontSize: 20.0,
-  color: const Color(0xFF979c99),
+  fontFamily: "Nunito",
+  color: Color(0xFF979c99),
 );
 
 ///TextStyle for [FastAccessContainer] and [LargeContainer]
-final TextStyle kContainerTextStyle = GoogleFonts.nunito(
+const TextStyle kContainerTextStyle = TextStyle(
   fontSize: 16,
-  color: const Color(0xFFb6b8aa),
+  fontFamily: "Nunito",
+  color: Color(0xFFb6b8aa),
 );
 
 Map<String, Icon> navRailData = {

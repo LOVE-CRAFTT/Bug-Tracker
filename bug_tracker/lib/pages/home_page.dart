@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/ui_components/appbar.dart';
 import 'package:bug_tracker/ui_components/fast_access_container.dart';
@@ -12,8 +11,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String name = "John Doe";
-  String companyName = "Acme Inc.";
+  String name = "John D. Rockefeller";
+  String companyName = "Standard Oil Company, Inc.";
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +31,10 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     Text(
                       "Welcome $name",
-                      style: GoogleFonts.nunito(
+                      style: const TextStyle(
                         fontSize: 18,
-                        color: const Color(0xFFb6b8aa),
+                        fontFamily: "Nunito",
+                        color: Color(0xFFb6b8aa),
                       ),
                     ),
                     IconButton(
@@ -48,9 +48,10 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     Text(
                       "Company: $companyName",
-                      style: GoogleFonts.nunito(
+                      style: const TextStyle(
                         fontSize: 15,
-                        color: const Color(0xFFb6b8aa),
+                        fontFamily: "Nunito",
+                        color: Color(0xFFb6b8aa),
                       ),
                     ),
                   ],
@@ -58,7 +59,7 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(
                   height: 20,
                 ),
-                Wrap(
+                const Wrap(
                   spacing: 8.0,
                   runSpacing: 8.0,
                   children: [

@@ -40,7 +40,7 @@ class CustomNavigationRail extends StatelessWidget {
                 onPressed: onPressed,
               ),
               if (showAppBar) ...[
-                Text(
+                const Text(
                   'Bug Tracker',
                   style: kAppBarTextStyle,
                 ),
