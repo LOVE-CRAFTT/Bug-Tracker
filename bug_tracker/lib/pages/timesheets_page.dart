@@ -12,7 +12,7 @@ class _TimesheetsPageState extends State<TimesheetsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: reusableAppBar("Feed"),
+      appBar: reusableAppBar("Timesheets"),
       body: const Center(
         child: Text("Timesheets contents"),
       ),

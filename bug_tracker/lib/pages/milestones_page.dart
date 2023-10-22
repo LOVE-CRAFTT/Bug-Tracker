@@ -12,7 +12,7 @@ class _MilestonesPageState extends State<MilestonesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: reusableAppBar("Feed"),
+      appBar: reusableAppBar("Milestones"),
       body: const Center(
         child: Text("Milestones contents"),
       ),

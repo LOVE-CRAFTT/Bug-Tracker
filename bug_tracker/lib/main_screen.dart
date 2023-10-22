@@ -28,8 +28,20 @@ class _MainScreenState extends State<MainScreen> {
         page = const HomePage();
       case 1:
         page = const FeedPage();
+      case 2:
+        page = const DiscussPage();
+      case 3:
+        page = const CalendarPage();
+      case 4:
+        page = const ProjectsPage();
+      case 5:
+        page = const BugsPage();
+      case 6:
+        page = const MilestonesPage();
+      case 7:
+        page = const TimesheetsPage();
       default:
-        page = const Placeholder();
+        page = const HomePage();
     }
   }
 

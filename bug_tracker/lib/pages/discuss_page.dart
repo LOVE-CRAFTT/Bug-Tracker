@@ -12,7 +12,7 @@ class _DiscussPageState extends State<DiscussPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: reusableAppBar("Feed"),
+      appBar: reusableAppBar("Discuss"),
       body: const Center(
         child: Text("Discuss contents"),
       ),

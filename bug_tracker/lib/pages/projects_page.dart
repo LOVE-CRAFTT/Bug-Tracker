@@ -12,7 +12,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: reusableAppBar("Feed"),
+      appBar: reusableAppBar("Projects"),
       body: const Center(
         child: Text("Projects contents"),
       ),

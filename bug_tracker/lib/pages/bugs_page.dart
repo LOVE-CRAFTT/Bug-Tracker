@@ -12,7 +12,7 @@ class _BugsPageState extends State<BugsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: reusableAppBar("Feed"),
+      appBar: reusableAppBar("Bugs"),
       body: const Center(
         child: Text("Bugs contents"),
       ),
