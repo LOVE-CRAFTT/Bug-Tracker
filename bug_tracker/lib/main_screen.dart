@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/ui_components/custom_navigation_rail.dart';
 import 'package:bug_tracker/pages/home_page.dart';
+import 'package:bug_tracker/pages/feed_page.dart';
+import 'package:bug_tracker/pages/discuss_page.dart';
+import 'package:bug_tracker/pages/calendar_page.dart';
+import 'package:bug_tracker/pages/projects_page.dart';
+import 'package:bug_tracker/pages/bugs_page.dart';
+import 'package:bug_tracker/pages/milestones_page.dart';
+import 'package:bug_tracker/pages/timesheets_page.dart';
 
 ///Contains a Static Navigation Rail and changeable pages
 class MainScreen extends StatefulWidget {
@@ -20,9 +27,9 @@ class _MainScreenState extends State<MainScreen> {
       case 0:
         page = const HomePage();
       case 1:
-        page = const Placeholder();
+        page = const FeedPage();
       default:
-        page = const HomePage();
+        page = const Placeholder();
     }
   }
 
