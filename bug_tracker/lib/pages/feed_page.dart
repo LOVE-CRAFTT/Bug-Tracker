@@ -14,7 +14,25 @@ class _FeedPageState extends State<FeedPage> {
     return Scaffold(
       appBar: reusableAppBar("Feed"),
       body: const Center(
-        child: Text("Feed contents"),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+                "Here, depending on the specific project, you can see discussions made by people"),
+            Text(
+              "Example would be like discussions regarding clarity on approach to a problem",
+            ),
+            Text(
+              "General milestone completion",
+            ),
+            Text(
+              "Other colleagues activities",
+            ),
+            Text(
+              "Announcements",
+            )
+          ],
+        ),
       ),
     );
   }

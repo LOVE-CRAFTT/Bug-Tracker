@@ -59,12 +59,14 @@ class _LargeContainerState extends State<LargeContainer> {
                   AppBar(
                     backgroundColor: Colors.transparent,
                     elevation: 0,
-                    leading: IconButton(
-                      icon: const Icon(Icons.close_sharp),
-                      onPressed: () {
-                        // Add your onPressed callback here
-                      },
-                    ),
+                    leading: _hover
+                        ? IconButton(
+                            icon: const Icon(Icons.close_sharp),
+                            onPressed: () {
+                              // Add your onPressed callback here
+                            },
+                          )
+                        : null,
                     title: Text(
                       widget.title,
                       style: kAppBarTextStyle,
