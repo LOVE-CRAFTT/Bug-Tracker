@@ -18,7 +18,7 @@ class FastAccessContainer extends StatelessWidget {
 
 //============ SCREEN WIDTH GOTTEN FROM TESTING ================================
   static const bigScreenMaxWidthLimit = 500;
-  static const smallScreenContainerHeight = 120.0;
+  static const smallScreenContainerHeight = 110.0;
   static const bigScreenContainerHeight = 90.0;
 //============ CONTAINER DIMENSIONS GOTTEN FROM TESTING ========================
 

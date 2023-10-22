@@ -17,7 +17,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: reusableAppBar,
+      appBar: reusableAppBar("Home"),
       body: ListView(
         children: [
           Padding(

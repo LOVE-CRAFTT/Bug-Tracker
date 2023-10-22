@@ -1,54 +1,56 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 
-AppBar reusableAppBar = AppBar(
-  title: Text(
-    "Home",
-    style: kAppBarTextStyle,
-  ),
-  backgroundColor: Colors.black,
-  actions: const [
-    IconButton(
-      onPressed: null,
-      tooltip: "Search",
-      icon: Icon(
-        Icons.search,
-      ),
+AppBar reusableAppBar(String pageName) {
+  return AppBar(
+    title: Text(
+      pageName,
+      style: kAppBarTextStyle,
     ),
-    IconButton(
-      onPressed: null,
-      tooltip: "Timer",
-      icon: Icon(Icons.timer_sharp),
-    ),
-    IconButton(
-      onPressed: null,
-      tooltip: "Notifications",
-      icon: Icon(Icons.notifications_none),
-    ),
-    IconButton(
-      onPressed: null,
-      tooltip: "Settings",
-      icon: Icon(Icons.settings),
-    ),
-    IconButton(
-      onPressed: null,
-      tooltip: "Add",
-      icon: Icon(
-        Icons.add_circle,
-        color: Color(0xFFFF6400),
-      ),
-    ),
-    Material(
-      shape: CircleBorder(),
-      color: Colors.grey,
-      child: IconButton(
+    backgroundColor: Colors.black,
+    actions: const [
+      IconButton(
         onPressed: null,
-        tooltip: "ChukwuemekaChukwudi9",
-        icon: Icon(Icons.account_circle_outlined),
+        tooltip: "Search",
+        icon: Icon(
+          Icons.search,
+        ),
       ),
-    ),
-    SizedBox(
-      width: 10.0,
-    )
-  ],
-);
+      IconButton(
+        onPressed: null,
+        tooltip: "Timer",
+        icon: Icon(Icons.timer_sharp),
+      ),
+      IconButton(
+        onPressed: null,
+        tooltip: "Notifications",
+        icon: Icon(Icons.notifications_none),
+      ),
+      IconButton(
+        onPressed: null,
+        tooltip: "Settings",
+        icon: Icon(Icons.settings),
+      ),
+      IconButton(
+        onPressed: null,
+        tooltip: "Add",
+        icon: Icon(
+          Icons.add_circle,
+          color: Color(0xFFFF6400),
+        ),
+      ),
+      Material(
+        shape: CircleBorder(),
+        color: Colors.grey,
+        child: IconButton(
+          onPressed: null,
+          tooltip: "ChukwuemekaChukwudi9",
+          icon: Icon(Icons.account_circle_outlined),
+        ),
+      ),
+      SizedBox(
+        width: 10.0,
+      )
+    ],
+  );
+}
