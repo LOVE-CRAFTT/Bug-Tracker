@@ -26,7 +26,8 @@ Map<String, Icon> navRailData = {
   'Feed': const Icon(Icons.feed),
   'Discuss': const Icon(Icons.chat_outlined),
   'Calendar': const Icon(Icons.calendar_month),
-  'Projects': const Icon(Icons.work_outline),
+  // Not for staff will replace when doing the admin
+  // 'Projects': const Icon(Icons.work_outline),
   'Bugs': const Icon(Icons.bug_report),
   'Milestones': const Icon(Icons.flag),
   'Timesheets': const Icon(Icons.access_time)
@@ -72,11 +73,6 @@ List<LargeContainer> largeContainers = [
   ),
   const LargeContainer(
     title: "All Bugs",
-    icons: [Icons.edit, Icons.delete],
-    body: Text("Body content goes here"),
-  ),
-  const LargeContainer(
-    title: "My Events",
     icons: [Icons.edit, Icons.delete],
     body: Text("Body content goes here"),
   ),

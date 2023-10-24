@@ -21,13 +21,13 @@ Widget selectPage() {
       return const DiscussPage();
     case 3:
       return const CalendarPage();
+    // case []:
+    //   return const ProjectsPage();
     case 4:
-      return const ProjectsPage();
-    case 5:
       return const BugsPage();
-    case 6:
+    case 5:
       return const MilestonesPage();
-    case 7:
+    case 6:
       return const TimesheetsPage();
     default:
       return const HomePage();
