@@ -17,7 +17,6 @@ class _MainScreenState extends State<MainScreen> {
     page = selectPage();
     return Scaffold(
       body: Row(
-        mainAxisSize: MainAxisSize.min,
         children: [
           CustomNavigationRail(
             onPressed: () {

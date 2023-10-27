@@ -4,7 +4,6 @@ import 'package:bug_tracker/pages/home_page.dart';
 import 'package:bug_tracker/pages/feed_page.dart';
 import 'package:bug_tracker/pages/discuss_page.dart';
 import 'package:bug_tracker/pages/calendar_page.dart';
-import 'package:bug_tracker/pages/projects_page.dart';
 import 'package:bug_tracker/pages/bugs_page.dart';
 import 'package:bug_tracker/pages/milestones_page.dart';
 import 'package:bug_tracker/pages/timesheets_page.dart';
