@@ -8,9 +8,11 @@ class FeedChoiceButton extends StatelessWidget {
     super.key,
     required this.dropDownValue,
     required this.onChanged,
+    required this.constraints,
   });
 
   final String? dropDownValue;
+  final BoxConstraints constraints;
   final void Function(dynamic)? onChanged;
 
   static Container noUnderline = Container(
@@ -21,16 +23,12 @@ class FeedChoiceButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) {
-            return Container(
-              decoration: const BoxDecoration(
-                color: Colors.white12,
-              ),
-              width: constraints.maxWidth,
-              height: 50.0,
-            );
-          },
+        Container(
+          decoration: const BoxDecoration(
+            color: Colors.white12,
+          ),
+          width: constraints.maxWidth,
+          height: 50.0,
         ),
         Padding(
           padding: const EdgeInsets.only(left: 15, right: 10),

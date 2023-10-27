@@ -4,10 +4,14 @@ import 'package:flutter/material.dart';
 class DiscussionTextField extends StatelessWidget {
   const DiscussionTextField({
     super.key,
+    required this.constraints,
   });
+
+  final BoxConstraints constraints;
 
   @override
   Widget build(BuildContext context) {
+    var rightPadding = constraints.maxWidth > 550 ? 150.0 : 50.0;
     return Row(
       children: [
         const Padding(
@@ -23,28 +27,22 @@ class DiscussionTextField extends StatelessWidget {
           ),
         ),
         Expanded(
-          child: LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints constraints) {
-              var rightPadding = constraints.maxWidth > 550 ? 150.0 : 50.0;
-              return Padding(
-                padding: EdgeInsets.only(right: rightPadding),
-                child: TextField(
-                  style: kContainerTextStyle.copyWith(
-                    color: Colors.black,
-                  ),
-                  decoration: InputDecoration(
-                    hintText: "Start a discussion",
-                    hintStyle:
-                        kContainerTextStyle.copyWith(color: Colors.black45),
-                    border: const OutlineInputBorder(),
-                    filled: true,
-                    fillColor: Colors.white70,
-                  ),
-                  onChanged: (text) {},
-                  onSubmitted: (submitText) {},
-                ),
-              );
-            },
+          child: Padding(
+            padding: EdgeInsets.only(right: rightPadding),
+            child: TextField(
+              style: kContainerTextStyle.copyWith(
+                color: Colors.black,
+              ),
+              decoration: InputDecoration(
+                hintText: "Start a discussion",
+                hintStyle: kContainerTextStyle.copyWith(color: Colors.black45),
+                border: const OutlineInputBorder(),
+                filled: true,
+                fillColor: Colors.white70,
+              ),
+              onChanged: (text) {},
+              onSubmitted: (submitText) {},
+            ),
           ),
         ),
       ],
