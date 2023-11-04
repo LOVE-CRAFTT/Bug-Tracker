@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 
 List<String?> choices = ["All Projects", "Project 1", "Project 2"];
 
+/// Dropdown button below the appbar on the feed page
+/// For switching between multiple projects
+/// Implemented as a dropdown button stacked on top of a lighter background
 class FeedChoiceButton extends StatelessWidget {
   const FeedChoiceButton({
     super.key,
@@ -15,9 +18,14 @@ class FeedChoiceButton extends StatelessWidget {
   final BoxConstraints constraints;
   final void Function(dynamic)? onChanged;
 
-  static Container noUnderline = Container(
+  ///Implemented this way to replace the default border with nothing
+  static final Container _noUnderline = Container(
     decoration: const BoxDecoration(border: Border()),
   );
+
+  final _leftPadding = 16.0;
+  final _rightPadding = 10.0;
+  final _lightBackgroundHeight = 50.0;
 
   @override
   Widget build(BuildContext context) {
@@ -28,10 +36,10 @@ class FeedChoiceButton extends StatelessWidget {
             color: Colors.white12,
           ),
           width: constraints.maxWidth,
-          height: 50.0,
+          height: _lightBackgroundHeight,
         ),
         Padding(
-          padding: const EdgeInsets.only(left: 15, right: 10),
+          padding: EdgeInsets.only(left: _leftPadding, right: _rightPadding),
           child: DropdownButton(
             value: dropDownValue,
             items: choices
@@ -43,7 +51,7 @@ class FeedChoiceButton extends StatelessWidget {
                 )
                 .toList(),
             onChanged: onChanged,
-            underline: noUnderline,
+            underline: _noUnderline,
             focusColor: Colors.transparent,
             style: kContainerTextStyle.copyWith(color: const Color(0xFFFF6400)),
           ),

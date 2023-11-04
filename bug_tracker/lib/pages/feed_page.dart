@@ -13,12 +13,16 @@ class FeedPage extends StatefulWidget {
 
 class _FeedPageState extends State<FeedPage> {
   String? dropDownValue = choices.first;
-  final spacingHeight = 50.0;
+  final _spacingHeight = 50.0;
+  final _numberOfPages = 3;
+  final _pageHeight = 600.0;
+  final _leftPadding = 75.0;
+  _rightPadding(constraints) => constraints.maxWidth > 600 ? 150.0 : 50.0;
 
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: _numberOfPages,
       child: Scaffold(
         appBar: reusableAppBar("Feed"),
         body: ListView(
@@ -38,13 +42,13 @@ class _FeedPageState extends State<FeedPage> {
                       constraints: constraints,
                     ),
                     SizedBox(
-                      height: spacingHeight,
+                      height: _spacingHeight,
                     ),
                     DiscussionTextField(
                       constraints: constraints,
                     ),
                     SizedBox(
-                      height: spacingHeight,
+                      height: _spacingHeight,
                     ),
                     DefaultTextStyle(
                       style: kContainerTextStyle,
@@ -56,19 +60,18 @@ class _FeedPageState extends State<FeedPage> {
                         ],
                         indicatorColor: const Color(0xFFFF6400),
                         padding: EdgeInsets.only(
-                          //IconButton width is 45
-                          left: 75,
-                          right: constraints.maxWidth > 550 ? 150.0 : 50.0,
+                          left: _leftPadding,
+                          right: _rightPadding(constraints),
                         ),
                       ),
                     ),
                     SizedBox(
-                      height: 600,
+                      height: _pageHeight,
                       child: Padding(
                         padding: EdgeInsets.only(
-                          left: 75.0,
-                          right: constraints.maxWidth > 550 ? 150.0 : 50.0,
-                          top: spacingHeight,
+                          left: _leftPadding,
+                          right: _rightPadding(constraints),
+                          top: _spacingHeight,
                         ),
                         child: const TabBarView(
                           children: [
