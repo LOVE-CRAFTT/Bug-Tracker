@@ -8,30 +8,30 @@ AppBar reusableAppBar(String pageName) {
       style: kAppBarTextStyle,
     ),
     backgroundColor: Colors.black,
-    actions: const [
-      IconButton(
+    actions: [
+      const IconButton(
         onPressed: null,
         tooltip: "Search",
         icon: Icon(
           Icons.search,
         ),
       ),
-      IconButton(
+      const IconButton(
         onPressed: null,
         tooltip: "Timer",
         icon: Icon(Icons.timer_sharp),
       ),
-      IconButton(
+      const IconButton(
         onPressed: null,
         tooltip: "Notifications",
         icon: Icon(Icons.notifications_none),
       ),
-      IconButton(
+      const IconButton(
         onPressed: null,
         tooltip: "Settings",
         icon: Icon(Icons.settings),
       ),
-      IconButton(
+      const IconButton(
         onPressed: null,
         tooltip: "Add",
         icon: Icon(
@@ -39,16 +39,17 @@ AppBar reusableAppBar(String pageName) {
           color: Color(0xFFFF6400),
         ),
       ),
-      Material(
-        shape: CircleBorder(),
-        color: Colors.grey,
-        child: IconButton(
-          onPressed: null,
-          tooltip: "ChukwuemekaChukwudi9",
-          icon: Icon(Icons.account_circle_outlined),
+      GestureDetector(
+        child: const Tooltip(
+          message: "ChukwuemekaChukwudi9",
+          child: CircleAvatar(
+            backgroundColor: Colors.grey,
+            child: Text("BC"),
+          ),
         ),
+        onTap: () {},
       ),
-      SizedBox(
+      const SizedBox(
         width: 10.0,
       )
     ],

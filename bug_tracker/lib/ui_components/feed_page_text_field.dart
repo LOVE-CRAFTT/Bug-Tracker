@@ -14,16 +14,14 @@ class DiscussionTextField extends StatelessWidget {
     var rightPadding = constraints.maxWidth > 550 ? 150.0 : 50.0;
     return Row(
       children: [
-        const Padding(
-          padding: EdgeInsets.only(left: 15, right: 20),
-          child: Material(
-            shape: CircleBorder(),
-            color: Colors.grey,
-            child: IconButton(
-              onPressed: null,
-              tooltip: "ChukwuemekaChukwudi9",
-              icon: Icon(Icons.account_circle_outlined),
+        Padding(
+          padding: const EdgeInsets.only(left: 15, right: 20),
+          child: GestureDetector(
+            child: const CircleAvatar(
+              backgroundColor: Colors.grey,
+              child: Text("BC"),
             ),
+            onTap: () {},
           ),
         ),
         Expanded(
