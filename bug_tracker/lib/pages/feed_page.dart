@@ -1,5 +1,5 @@
-import 'package:bug_tracker/utilities/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/ui_components/appbar.dart';
 import 'package:bug_tracker/ui_components/feed_page_choice_button.dart';
 import 'package:bug_tracker/ui_components/feed_page_text_field.dart';
