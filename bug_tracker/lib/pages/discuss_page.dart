@@ -25,8 +25,12 @@ class _DiscussPageState extends State<DiscussPage> {
                   children: [
                     Tooltip(
                       message: screenIsWide ? "" : "New Conversation",
-                      child: TextButton(
+                      child: ElevatedButton(
                         onPressed: () {},
+                        style: TextButton.styleFrom(
+                          backgroundColor: const Color(0xFFFF6400),
+                          textStyle: kContainerTextStyle,
+                        ),
                         child: screenIsWide
                             ? const Text("New Conversation")
                             : const Text("+"),
@@ -35,6 +39,7 @@ class _DiscussPageState extends State<DiscussPage> {
                     if (screenIsWide) Expanded(child: Container()),
                     Padding(
                       padding: const EdgeInsets.symmetric(
+                        horizontal: 10.0,
                         vertical: 10.0,
                       ),
                       child: SearchBar(
@@ -46,7 +51,7 @@ class _DiscussPageState extends State<DiscussPage> {
                           maxHeight: 56.0,
                           maxWidth: screenIsWide
                               ? constraints.maxWidth * 0.4
-                              : constraints.maxWidth * 0.7,
+                              : constraints.maxWidth * 0.65,
                         ),
                         textStyle: const MaterialStatePropertyAll<TextStyle>(
                           kContainerTextStyle,
@@ -58,7 +63,7 @@ class _DiscussPageState extends State<DiscussPage> {
                     IconButton(
                       onPressed: () {},
                       icon: const Icon(Icons.filter_alt_outlined),
-                      tooltip: "filter",
+                      tooltip: "Filter",
                       splashRadius: 20.0,
                     )
                   ],
