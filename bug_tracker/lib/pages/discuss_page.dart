@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
+import 'package:bug_tracker/utilities/page_functions.dart';
 import 'package:bug_tracker/ui_components/appbar.dart';
 
 class DiscussPage extends StatefulWidget {
@@ -67,6 +68,40 @@ class _DiscussPageState extends State<DiscussPage> {
                       splashRadius: 20.0,
                     )
                   ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 20.0),
+                  child: DefaultTextStyle(
+                    style: kContainerTextStyle.copyWith(fontSize: 14.0),
+                    child: Table(
+                      border: const TableBorder(
+                        horizontalInside: BorderSide(
+                          color: Color(0xFF979c99),
+                        ),
+                      ),
+                      defaultVerticalAlignment:
+                          TableCellVerticalAlignment.middle,
+                      children: [
+                        buildTableRow(
+                          firstHeader: "CONVERSATION",
+                          secondHeader: "PROJECT",
+                          thirdHeader: "PARTICIPANTS",
+                        ),
+                        buildTableRow(
+                          conversationTitle: "New Sales Data",
+                          projectName: 'Origami Algorithm',
+                          tooltipMessage: 'ChukwuemekaChukwudi9',
+                          avatarText: 'CC',
+                        ),
+                        buildTableRow(
+                          conversationTitle: "Review Bug",
+                          projectName: 'Android Studio',
+                          tooltipMessage: 'WindsorElizabeth',
+                          avatarText: 'WE',
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),

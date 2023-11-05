@@ -7,6 +7,7 @@ import 'package:bug_tracker/pages/calendar_page.dart';
 import 'package:bug_tracker/pages/bugs_page.dart';
 import 'package:bug_tracker/pages/milestones_page.dart';
 import 'package:bug_tracker/pages/timesheets_page.dart';
+import 'package:bug_tracker/utilities/constants.dart';
 
 ///Process to choose page based on currently selected destination
 ///Is run everytime new destination is selected
@@ -31,4 +32,54 @@ Widget selectPage() {
     default:
       return const HomePage();
   }
+}
+
+///Build Table Rows
+TableRow buildTableRow({
+  String? firstHeader,
+  String? secondHeader,
+  String? thirdHeader,
+  String? conversationTitle,
+  String? projectName,
+  String? tooltipMessage,
+  String? avatarText,
+}) {
+  TextStyle cellTextStyle = kContainerTextStyle.copyWith(fontSize: 14.0);
+
+  return TableRow(
+    children: [
+      ListTile(
+        leading: IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.settings,
+              color: Color(0xFFFF6400),
+              size: 15.0,
+            )),
+        title: Text(firstHeader ?? (conversationTitle ?? "Null Value")),
+        titleTextStyle: cellTextStyle,
+        onTap: firstHeader == null ? () {} : null,
+      ),
+      ListTile(
+        title: Text(secondHeader ?? (projectName ?? "Null Value")),
+        titleTextStyle: cellTextStyle,
+        onTap: secondHeader == null ? () {} : null,
+      ),
+      ListTile(
+        title: thirdHeader != null ? Text(thirdHeader) : null,
+        titleTextStyle: cellTextStyle,
+        leading: thirdHeader != null
+            ? null
+            : Tooltip(
+                message: tooltipMessage,
+                child: avatarText != null
+                    ? CircleAvatar(
+                        backgroundColor: Colors.grey,
+                        child: Text(avatarText),
+                      )
+                    : null,
+              ),
+      )
+    ],
+  );
 }
