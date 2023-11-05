@@ -49,13 +49,16 @@ TableRow buildTableRow({
   return TableRow(
     children: [
       ListTile(
-        leading: IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.settings,
-              color: Color(0xFFFF6400),
-              size: 15.0,
-            )),
+        leading: firstHeader == null
+            ? IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.settings,
+                  color: Color(0xFFFF6400),
+                  size: 15.0,
+                ),
+              )
+            : null,
         title: Text(firstHeader ?? (conversationTitle ?? "Null Value")),
         titleTextStyle: cellTextStyle,
         onTap: firstHeader == null ? () {} : null,
