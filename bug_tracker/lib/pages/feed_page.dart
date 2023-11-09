@@ -4,6 +4,9 @@ import 'package:bug_tracker/ui_components/appbar.dart';
 import 'package:bug_tracker/ui_components/feed_page_choice_button.dart';
 import 'package:bug_tracker/ui_components/feed_page_text_field.dart';
 
+/// This page contains a dropdown button for switching between projects
+/// A text field to start conversations and pages containing the feed, status and activity stream
+/// The feed page in contrast to the discussion page is for starting general conversations
 class FeedPage extends StatefulWidget {
   const FeedPage({super.key});
 

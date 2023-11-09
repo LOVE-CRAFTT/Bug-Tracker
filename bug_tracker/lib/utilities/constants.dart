@@ -21,6 +21,7 @@ const TextStyle kContainerTextStyle = TextStyle(
   color: Color(0xFFb6b8aa),
 );
 
+///Used as the secondary theme color to contrast from the grey/black background
 const Color secondaryThemeColor = Color(0xFFFF6400);
 
 Map<String, Icon> navRailData = {

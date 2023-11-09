@@ -3,6 +3,9 @@ import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/ui_components/appbar.dart';
 import 'package:bug_tracker/ui_components/fast_access_container.dart';
 
+/// The homepage contains simple welcome text and quick access information
+/// By default It contains 4 fast access containers to quickly access general information regarding bugs and milestones
+/// It also contains 6 larger containers below that gives more details on the current work context
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 

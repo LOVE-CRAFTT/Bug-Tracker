@@ -3,6 +3,9 @@ import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/page_functions.dart';
 import 'package:bug_tracker/ui_components/appbar.dart';
 
+/// The discuss page is for starting conversations with individuals say for switching tasks between teams/individuals
+/// Contains a button for starting new conversations, a search button, a filter button
+/// and a table containing all the projects
 class DiscussPage extends StatefulWidget {
   const DiscussPage({super.key});
 
@@ -25,6 +28,7 @@ class _DiscussPageState extends State<DiscussPage> {
                 Row(
                   children: [
                     Tooltip(
+                      ///Implemented this way so the tooltip doesn't show up if the button text is already visible
                       message: screenIsWide ? "" : "New Conversation",
                       child: ElevatedButton(
                         onPressed: () {},
@@ -37,6 +41,8 @@ class _DiscussPageState extends State<DiscussPage> {
                             : const Text("+"),
                       ),
                     ),
+
+                    ///Spacing between the button and the search/filter buttons
                     if (screenIsWide) Expanded(child: Container()),
                     Padding(
                       padding: const EdgeInsets.symmetric(
@@ -50,6 +56,9 @@ class _DiscussPageState extends State<DiscussPage> {
                         ),
                         constraints: BoxConstraints(
                           maxHeight: 56.0,
+
+                          /// The width is 40% of the screen is the screen is "wide"
+                          /// Else it takes up 65%
                           maxWidth: screenIsWide
                               ? constraints.maxWidth * 0.4
                               : constraints.maxWidth * 0.65,
