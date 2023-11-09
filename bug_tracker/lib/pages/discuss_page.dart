@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
-import 'package:bug_tracker/utilities/page_functions.dart';
+import 'package:bug_tracker/utilities/build_table_row.dart';
 import 'package:bug_tracker/ui_components/appbar.dart';
 
 /// The discuss page is for starting conversations with individuals say for switching tasks between teams/individuals

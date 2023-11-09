@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/ui_components/custom_navigation_rail.dart';
-import 'package:bug_tracker/utilities/page_functions.dart';
+import 'package:bug_tracker/utilities/select_page.dart';
 
 ///Contains a Static Navigation Rail and changeable pages
 class MainScreen extends StatefulWidget {
@@ -11,10 +11,10 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  late Widget page;
+  late Widget _page;
   @override
   Widget build(BuildContext context) {
-    page = selectPage();
+    _page = selectPage();
     return Scaffold(
       body: Row(
         children: [
@@ -35,7 +35,7 @@ class _MainScreenState extends State<MainScreen> {
             },
           ),
           Expanded(
-            child: page,
+            child: _page,
           )
         ],
       ),
