@@ -13,8 +13,8 @@ TableRow buildTableRow({
   String? thirdHeader,
   String? conversationTitle,
   String? projectName,
-  String? tooltipMessage,
-  String? avatarText,
+  List<String>? avatarText,
+  List<String>? tooltipMessage,
   String? backgroundImage,
 }) {
   TextStyle cellTextStyle = kContainerTextStyle.copyWith(fontSize: 14.0);
@@ -48,19 +48,34 @@ TableRow buildTableRow({
       ListTile(
         /// Creates a list of circle avatars if it is not the third column title
         /// else it just text containing the third header
-        title: thirdHeader != null ? Text(thirdHeader) : null,
+        title: thirdHeader == null
+            ? SizedBox(
+                height: 50.0,
+                child: ListView.builder(
+                  itemCount: tooltipMessage?.length,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (BuildContext context, int index) {
+                    final String? lTooltipMessage = tooltipMessage?[index];
+                    final String? lAvatarMessage = avatarText?[index];
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 3.0),
+                      child: Tooltip(
+                        message: lTooltipMessage,
+                        child: avatarText != null
+                            ? CircleAvatar(
+                                backgroundColor: Colors.grey,
+                                child: lAvatarMessage != null
+                                    ? Text(lAvatarMessage)
+                                    : const Text("Error Value"),
+                              )
+                            : null,
+                      ),
+                    );
+                  },
+                ),
+              )
+            : Text(thirdHeader),
         titleTextStyle: cellTextStyle,
-        leading: thirdHeader != null
-            ? null
-            : Tooltip(
-                message: tooltipMessage,
-                child: avatarText != null
-                    ? CircleAvatar(
-                        backgroundColor: Colors.grey,
-                        child: Text(avatarText),
-                      )
-                    : null,
-              ),
       )
     ],
   );
