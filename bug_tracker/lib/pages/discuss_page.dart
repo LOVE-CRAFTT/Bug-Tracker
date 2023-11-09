@@ -29,7 +29,7 @@ class _DiscussPageState extends State<DiscussPage> {
                       child: ElevatedButton(
                         onPressed: () {},
                         style: TextButton.styleFrom(
-                          backgroundColor: const Color(0xFFFF6400),
+                          backgroundColor: secondaryThemeColor,
                           textStyle: kContainerTextStyle,
                         ),
                         child: screenIsWide

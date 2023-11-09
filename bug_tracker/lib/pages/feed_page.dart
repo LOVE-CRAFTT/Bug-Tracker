@@ -58,7 +58,7 @@ class _FeedPageState extends State<FeedPage> {
                           Text("Status"),
                           Text("Activity Stream"),
                         ],
-                        indicatorColor: const Color(0xFFFF6400),
+                        indicatorColor: secondaryThemeColor,
                         padding: EdgeInsets.only(
                           left: _leftPadding,
                           right: _rightPadding(constraints),

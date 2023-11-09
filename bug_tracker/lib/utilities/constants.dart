@@ -21,6 +21,8 @@ const TextStyle kContainerTextStyle = TextStyle(
   color: Color(0xFFb6b8aa),
 );
 
+const Color secondaryThemeColor = Color(0xFFFF6400);
+
 Map<String, Icon> navRailData = {
   'Home': const Icon(Icons.home),
   'Feed': const Icon(Icons.feed),

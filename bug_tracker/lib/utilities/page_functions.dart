@@ -34,7 +34,7 @@ Widget selectPage() {
   }
 }
 
-///Build Table Rows
+///Build Table Rows in the discuss page
 TableRow buildTableRow({
   String? firstHeader,
   String? secondHeader,
@@ -54,7 +54,7 @@ TableRow buildTableRow({
                 onPressed: () {},
                 icon: const Icon(
                   Icons.settings,
-                  color: Color(0xFFFF6400),
+                  color: secondaryThemeColor,
                   size: 15.0,
                 ),
               )
