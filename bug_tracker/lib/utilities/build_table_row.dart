@@ -52,13 +52,13 @@ TableRow buildTableRow({
             ? SizedBox(
                 height: 50.0,
                 child: ListView.builder(
-                  itemCount: tooltipMessage?.length,
+                  itemCount: avatarText?.length,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (BuildContext context, int index) {
-                    final String? lTooltipMessage = tooltipMessage?[index];
                     final String? lAvatarMessage = avatarText?[index];
+                    final String? lTooltipMessage = tooltipMessage?[index];
                     return Padding(
-                      padding: const EdgeInsets.only(right: 3.0),
+                      padding: const EdgeInsets.only(right: 4.0),
                       child: Tooltip(
                         message: lTooltipMessage,
                         child: avatarText != null

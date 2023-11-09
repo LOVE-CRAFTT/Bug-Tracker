@@ -99,8 +99,11 @@ class _DiscussPageState extends State<DiscussPage> {
                         buildTableRow(
                           conversationTitle: "New Sales Data",
                           projectName: 'Origami Algorithm',
-                          avatarText: ['CC'],
-                          tooltipMessage: ['ChukwuemekaChukwudi9'],
+                          avatarText: ['CC', 'AB'],
+                          tooltipMessage: [
+                            'ChukwuemekaChukwudi9',
+                            'Alan Broker'
+                          ],
                         ),
                         buildTableRow(
                           conversationTitle: "Review Bug",
