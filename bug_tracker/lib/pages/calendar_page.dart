@@ -138,8 +138,7 @@ class _CalendarPageState extends State<CalendarPage> {
                   itemCount: value.length,
                   itemBuilder: (context, index) {
                     return EventCard(
-                      value: value,
-                      index: index,
+                      event: value[index],
                     );
                   },
                 );

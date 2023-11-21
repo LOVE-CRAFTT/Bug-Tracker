@@ -5,12 +5,10 @@ import 'package:bug_tracker/utilities/calendar_utils.dart';
 class EventCard extends StatefulWidget {
   const EventCard({
     super.key,
-    required this.value,
-    required this.index,
+    required this.event,
   });
 
-  final List<Event> value;
-  final int index;
+  final Event event;
 
   @override
   State<EventCard> createState() => _EventCardState();
@@ -36,7 +34,7 @@ class _EventCardState extends State<EventCard> {
         onEnter: (_) => setState(() => _hover = true),
         onExit: (_) => setState(() => _hover = false),
         child: ListTile(
-          onTap: () => print(widget.value[widget.index]),
+          onTap: () => print(widget.event),
           leading: _hover
               ? IconButton(
                   onPressed: () {},
@@ -44,7 +42,7 @@ class _EventCardState extends State<EventCard> {
                   icon: const Icon(Icons.close),
                 )
               : null,
-          title: Text('${widget.value[widget.index]}'),
+          title: Text('${widget.event}'),
         ),
       ),
     );
