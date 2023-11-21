@@ -95,6 +95,7 @@ class _CalendarPageState extends State<CalendarPage> {
               padding: const EdgeInsets.only(
                 top: 8.0,
                 bottom: 8.0,
+                left: 15.0,
               ),
               child: ElevatedButton(
                 onPressed: () {},
@@ -118,6 +119,8 @@ class _CalendarPageState extends State<CalendarPage> {
             eventLoader: _getEventsForDay,
             startingDayOfWeek: StartingDayOfWeek.sunday,
             calendarStyle: kCalendarStyle,
+            headerStyle: kCalendarHeaderStyle,
+            daysOfWeekStyle: kCalendarDOWStyle,
             onDaySelected: _onDaySelected,
             onRangeSelected: _onRangeSelected,
             onFormatChanged: (format) {

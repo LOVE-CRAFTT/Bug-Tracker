@@ -60,6 +60,41 @@ CalendarStyle kCalendarStyle = CalendarStyle(
   rangeHighlightColor: const Color(0xFFFFC05C),
 );
 
+HeaderStyle kCalendarHeaderStyle = const HeaderStyle(
+  titleCentered: true,
+  titleTextStyle: TextStyle(
+    color: Colors.white,
+    fontSize: 20.0,
+    fontFamily: "Nunito",
+  ),
+  formatButtonTextStyle: TextStyle(
+    color: Colors.white,
+    fontSize: 14.0,
+    fontFamily: "Nunito",
+  ),
+  formatButtonDecoration: BoxDecoration(
+    border: Border.fromBorderSide(
+      BorderSide(
+        color: secondaryThemeColor,
+      ),
+    ),
+    borderRadius: BorderRadius.all(Radius.circular(12.0)),
+  ),
+);
+
+DaysOfWeekStyle kCalendarDOWStyle = const DaysOfWeekStyle(
+  weekdayStyle: TextStyle(
+    fontFamily: "Nunito",
+    fontSize: 14.0,
+    color: Color(0xFF6E6E6E),
+  ),
+  weekendStyle: TextStyle(
+    fontFamily: "Nunito",
+    fontSize: 14.0,
+    color: Color(0xFF7F7F7F),
+  ),
+);
+
 ///Used as the secondary theme color to contrast from the grey/black background
 const Color secondaryThemeColor = Color(0xFFFF6400);
 
