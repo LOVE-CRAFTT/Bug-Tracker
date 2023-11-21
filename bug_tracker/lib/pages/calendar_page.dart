@@ -5,6 +5,10 @@ import 'package:bug_tracker/utilities/constants.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:bug_tracker/utilities/calendar_utils.dart';
 
+/// Contains a calendar with tags showing events if available
+/// User can select multiple days at once and set events for any day
+/// Toggle select range by long pressing
+/// Once a day is selected, If there are events to be shown a list of [EventCard]s with details is shown
 class CalendarPage extends StatefulWidget {
   const CalendarPage({super.key});
 
@@ -113,9 +117,7 @@ class _CalendarPageState extends State<CalendarPage> {
             rangeSelectionMode: _rangeSelectionMode,
             eventLoader: _getEventsForDay,
             startingDayOfWeek: StartingDayOfWeek.sunday,
-            calendarStyle: const CalendarStyle(
-              outsideDaysVisible: false,
-            ),
+            calendarStyle: kCalendarStyle,
             onDaySelected: _onDaySelected,
             onRangeSelected: _onRangeSelected,
             onFormatChanged: (format) {

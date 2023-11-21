@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/ui_components/fast_access_container.dart';
 import 'package:bug_tracker/ui_components/large_container.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 ///Width of a big screen, gotten from testing
 ///If screen goes lower than this, screen layout changes to accommodate
@@ -19,6 +20,44 @@ const TextStyle kContainerTextStyle = TextStyle(
   fontSize: 16,
   fontFamily: "Nunito",
   color: Color(0xFFb6b8aa),
+);
+
+///TextStyle for each cell in the calendar except done/stated otherwise
+const TextStyle kCalendarCellTextStyle = TextStyle(
+  color: Color(0xFFFAFAFA),
+  fontSize: 16.0,
+  fontFamily: "Nunito",
+);
+
+CalendarStyle kCalendarStyle = CalendarStyle(
+  outsideDaysVisible: false,
+  defaultTextStyle: kContainerTextStyle,
+  todayTextStyle: kCalendarCellTextStyle,
+  selectedTextStyle: kCalendarCellTextStyle,
+  rangeStartTextStyle: kCalendarCellTextStyle,
+  rangeEndTextStyle: kCalendarCellTextStyle,
+  weekendTextStyle: kCalendarCellTextStyle,
+  markerDecoration: const BoxDecoration(
+    color: Color(0xFFFF7F7F),
+    shape: BoxShape.circle,
+  ),
+  todayDecoration: BoxDecoration(
+    color: const Color(0xFFFF9B44),
+    borderRadius: BorderRadius.circular(11.0),
+  ),
+  selectedDecoration: BoxDecoration(
+    color: secondaryThemeColor,
+    borderRadius: BorderRadius.circular(11.0),
+  ),
+  rangeStartDecoration: const BoxDecoration(
+    color: Color(0xFFFF9B44),
+    shape: BoxShape.circle,
+  ),
+  rangeEndDecoration: const BoxDecoration(
+    color: Color(0xFFFF9B44),
+    shape: BoxShape.circle,
+  ),
+  rangeHighlightColor: const Color(0xFFFFC05C),
 );
 
 ///Used as the secondary theme color to contrast from the grey/black background

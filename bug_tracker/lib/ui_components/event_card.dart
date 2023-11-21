@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/calendar_utils.dart';
 
+///Event card for when a day is selected/focused on in the calendar page
 class EventCard extends StatefulWidget {
   const EventCard({
     super.key,
@@ -43,6 +44,7 @@ class _EventCardState extends State<EventCard> {
                 )
               : null,
           title: Text('${widget.event}'),
+          titleTextStyle: kContainerTextStyle,
         ),
       ),
     );
