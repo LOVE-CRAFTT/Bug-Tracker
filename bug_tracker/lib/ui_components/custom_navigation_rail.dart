@@ -4,7 +4,7 @@ import 'package:bug_tracker/utilities/constants.dart';
 // Variables for displaying the nav bar or not, and current selected in the nav bar
 //Moved out for access in main_screen
 bool showAppBar = true;
-int selectedIndex = 2;
+int selectedIndex = 3;
 
 ///Contains a static [SizedBox] and an Expanded scrollable NavigationRail arranged in a column,
 ///This arrangement is to imitate an appbar at the top
