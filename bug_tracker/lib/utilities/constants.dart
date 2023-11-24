@@ -58,6 +58,12 @@ CalendarStyle kCalendarStyle = CalendarStyle(
     shape: BoxShape.circle,
   ),
   rangeHighlightColor: const Color(0xFFFFC05C),
+  defaultDecoration: BoxDecoration(
+    borderRadius: BorderRadius.circular(11.0),
+  ),
+  // weekendDecoration: BoxDecoration(
+  //   borderRadius: BorderRadius.circular(11.0),
+  // ),
 );
 
 HeaderStyle kCalendarHeaderStyle = const HeaderStyle(
