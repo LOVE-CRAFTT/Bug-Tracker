@@ -123,7 +123,10 @@ List<NavigationRailDestination> kMainNavigationRailDestinations = [
         message: value.key,
         child: value.value,
       ),
-      label: Text(value.key),
+      label: Text(
+        value.key,
+        style: const TextStyle(fontFamily: "Nunito"),
+      ),
     ),
 ];
 

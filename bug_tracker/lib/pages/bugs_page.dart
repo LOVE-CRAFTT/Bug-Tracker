@@ -13,8 +13,18 @@ class _BugsPageState extends State<BugsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: reusableAppBar("Bugs"),
-      body: const Center(
-        child: Text("Bugs contents"),
+      body: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+          // var screenIsWide = constraints.maxWidth > 400;
+          return Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: ListView(
+              children: const [
+                Placeholder(),
+              ],
+            ),
+          );
+        },
       ),
     );
   }
