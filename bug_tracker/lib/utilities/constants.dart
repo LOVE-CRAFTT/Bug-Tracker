@@ -61,9 +61,9 @@ CalendarStyle kCalendarStyle = CalendarStyle(
   defaultDecoration: BoxDecoration(
     borderRadius: BorderRadius.circular(11.0),
   ),
-  // weekendDecoration: BoxDecoration(
-  //   borderRadius: BorderRadius.circular(11.0),
-  // ),
+  weekendDecoration: BoxDecoration(
+    borderRadius: BorderRadius.circular(11.0),
+  ),
 );
 
 HeaderStyle kCalendarHeaderStyle = const HeaderStyle(
