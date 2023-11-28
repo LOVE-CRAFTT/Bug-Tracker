@@ -63,36 +63,43 @@ class CustomDropDown extends StatelessWidget {
     }
   }
 
+  Widget buildButton() => Padding(
+        padding: EdgeInsets.only(left: _leftPadding, right: _rightPadding),
+        child: DropdownButton(
+          value: dropDownValue,
+          items: getSource()
+              .map(
+                (value) => DropdownMenuItem(
+                  value: value,
+                  child: Text(value!),
+                ),
+              )
+              .toList(),
+          onChanged: onChanged,
+          underline: _noUnderline,
+          focusColor: Colors.transparent,
+          style: kContainerTextStyle.copyWith(color: const Color(0xFFFF6400)),
+        ),
+      );
+
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          decoration: const BoxDecoration(
-            color: Colors.white12,
-          ),
-          width: constraints.maxWidth,
-          height: _lightBackgroundHeight,
-        ),
-        Padding(
-          padding: EdgeInsets.only(left: _leftPadding, right: _rightPadding),
-          child: DropdownButton(
-            value: dropDownValue,
-            items: getSource()
-                .map(
-                  (value) => DropdownMenuItem(
-                    value: value,
-                    child: Text(value!),
-                  ),
-                )
-                .toList(),
-            onChanged: onChanged,
-            underline: _noUnderline,
-            focusColor: Colors.transparent,
-            style: kContainerTextStyle.copyWith(color: const Color(0xFFFF6400)),
-          ),
-        ),
-      ],
-    );
+    return page == DropdownPage.feedPage
+        ? Stack(
+            children: [
+              Container(
+                decoration: const BoxDecoration(
+                  color: Colors.white12,
+                ),
+                width: constraints.maxWidth,
+                height: _lightBackgroundHeight,
+              ),
+              buildButton(),
+            ],
+          )
+        : Align(
+            alignment: Alignment.centerLeft,
+            child: buildButton(),
+          );
   }
 }

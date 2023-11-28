@@ -27,19 +27,10 @@ class _DiscussPageState extends State<DiscussPage> {
               children: [
                 Row(
                   children: [
-                    Tooltip(
-                      ///Implemented this way so the tooltip doesn't show up if the button text is already visible
-                      message: screenIsWide ? "" : "New Conversation",
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        style: TextButton.styleFrom(
-                          backgroundColor: secondaryThemeColor,
-                          textStyle: kContainerTextStyle,
-                        ),
-                        child: screenIsWide
-                            ? const Text("New Conversation")
-                            : const Text("+"),
-                      ),
+                    HeaderButton(
+                      screenIsWide: screenIsWide,
+                      buttonText: "New Conversation",
+                      onPress: () {},
                     ),
 
                     ///Spacing between the button and the search/filter buttons
@@ -119,6 +110,35 @@ class _DiscussPageState extends State<DiscussPage> {
             ),
           );
         },
+      ),
+    );
+  }
+}
+
+class HeaderButton extends StatelessWidget {
+  const HeaderButton({
+    super.key,
+    required this.screenIsWide,
+    required this.buttonText,
+    required this.onPress,
+  });
+
+  final bool screenIsWide;
+  final String buttonText;
+  final void Function() onPress;
+
+  @override
+  Widget build(BuildContext context) {
+    return Tooltip(
+      ///Implemented this way so the tooltip doesn't show up if the button text is already visible
+      message: screenIsWide ? "" : buttonText,
+      child: ElevatedButton(
+        onPressed: onPress,
+        style: TextButton.styleFrom(
+          backgroundColor: secondaryThemeColor,
+          textStyle: kContainerTextStyle,
+        ),
+        child: screenIsWide ? Text(buttonText) : const Text("+"),
       ),
     );
   }
