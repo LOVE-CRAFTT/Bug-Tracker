@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/build_table_row.dart';
 import 'package:bug_tracker/ui_components/appbar.dart';
+import 'package:bug_tracker/ui_components/header_button.dart';
 
 /// The discuss page is for starting conversations with individuals say for switching tasks between teams/individuals
 /// Contains a button for starting new conversations, a search button, a filter button
@@ -110,35 +111,6 @@ class _DiscussPageState extends State<DiscussPage> {
             ),
           );
         },
-      ),
-    );
-  }
-}
-
-class HeaderButton extends StatelessWidget {
-  const HeaderButton({
-    super.key,
-    required this.screenIsWide,
-    required this.buttonText,
-    required this.onPress,
-  });
-
-  final bool screenIsWide;
-  final String buttonText;
-  final void Function() onPress;
-
-  @override
-  Widget build(BuildContext context) {
-    return Tooltip(
-      ///Implemented this way so the tooltip doesn't show up if the button text is already visible
-      message: screenIsWide ? "" : buttonText,
-      child: ElevatedButton(
-        onPressed: onPress,
-        style: TextButton.styleFrom(
-          backgroundColor: secondaryThemeColor,
-          textStyle: kContainerTextStyle,
-        ),
-        child: screenIsWide ? Text(buttonText) : const Text("+"),
       ),
     );
   }

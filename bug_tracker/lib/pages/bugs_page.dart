@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/ui_components/custom_dropdown.dart';
+import 'package:bug_tracker/ui_components/header_button.dart';
 import 'package:bug_tracker/ui_components/appbar.dart';
 
 class BugsPage extends StatefulWidget {
@@ -32,6 +32,21 @@ class _BugsPageState extends State<BugsPage> {
                       page: DropdownPage.bugPage,
                       constraints: constraints,
                     ),
+                    Expanded(child: Container()),
+                    HeaderButton(
+                      screenIsWide: screenIsWide,
+                      buttonText: "Submit Bug",
+                      onPress: () {},
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child: IconButton(
+                        onPressed: () {},
+                        icon: const Icon(Icons.filter_alt_outlined),
+                        tooltip: "Filter",
+                        splashRadius: 20.0,
+                      ),
+                    )
                   ],
                 ),
               ],
