@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/ui_components/appbar.dart';
-import 'package:bug_tracker/ui_components/feed_page_choice_button.dart';
+import 'package:bug_tracker/ui_components/custom_dropdown.dart';
 import 'package:bug_tracker/ui_components/feed_page_text_field.dart';
 
 /// This page contains a dropdown button for switching between projects
@@ -15,7 +15,7 @@ class FeedPage extends StatefulWidget {
 }
 
 class _FeedPageState extends State<FeedPage> {
-  String? dropDownValue = choices.first;
+  String? dropDownValue = feedChoices.first;
   final _spacingHeight = 50.0;
   final _numberOfPages = 3;
   final _pageHeight = 600.0;
@@ -35,7 +35,7 @@ class _FeedPageState extends State<FeedPage> {
                 return Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    FeedChoiceButton(
+                    CustomDropDown(
                       dropDownValue: dropDownValue,
                       onChanged: (selected) {
                         setState(() {
@@ -43,6 +43,7 @@ class _FeedPageState extends State<FeedPage> {
                         });
                       },
                       constraints: constraints,
+                      page: DropdownPage.feedPage,
                     ),
                     SizedBox(
                       height: _spacingHeight,
