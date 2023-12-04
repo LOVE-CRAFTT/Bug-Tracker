@@ -3,6 +3,7 @@ import 'package:bug_tracker/ui_components/custom_dropdown.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
 import 'package:bug_tracker/ui_components/appbar.dart';
 
+///Contains interface to all the bugs in the database
 class BugsPage extends StatefulWidget {
   const BugsPage({super.key});
 
@@ -28,7 +29,11 @@ class _BugsPageState extends State<BugsPage> {
                   children: [
                     CustomDropDown(
                       dropDownValue: dropDownValue,
-                      onChanged: (selected) {},
+                      onChanged: (selected) {
+                        setState(() {
+                          dropDownValue = selected;
+                        });
+                      },
                       page: DropdownPage.bugPage,
                       constraints: constraints,
                     ),

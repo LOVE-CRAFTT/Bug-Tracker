@@ -26,9 +26,9 @@ enum DropdownPage {
   bugPage,
 }
 
-/// Dropdown button below the appbar on the feed page
-/// For switching between multiple projects
-/// Implemented as a dropdown button stacked on top of a lighter background
+/// Dropdown button below the appbar on the feed page, bug page and milestone page
+/// Implemented as a dropdown button stacked on top of a lighter background for the feed page
+/// And just the specialized dropdown for other pages
 class CustomDropDown extends StatelessWidget {
   const CustomDropDown({
     super.key,

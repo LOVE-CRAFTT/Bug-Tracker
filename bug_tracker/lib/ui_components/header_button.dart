@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 
+/// The format for the orange button on most pages
 class HeaderButton extends StatelessWidget {
   const HeaderButton({
     super.key,
