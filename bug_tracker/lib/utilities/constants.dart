@@ -121,6 +121,10 @@ List<NavigationRailDestination> kMainNavigationRailDestinations = [
     NavigationRailDestination(
       icon: Tooltip(
         message: value.key,
+        textStyle: kContainerTextStyle.copyWith(
+          fontSize: 14.0,
+          color: Colors.black,
+        ),
         child: value.value,
       ),
       label: Text(
