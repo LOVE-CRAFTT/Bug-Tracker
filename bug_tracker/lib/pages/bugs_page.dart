@@ -56,44 +56,65 @@ class _BugsPageState extends State<BugsPage> {
                     )
                   ],
                 ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 20.0),
-                    child: DefaultTextStyle(
-                      style: kContainerTextStyle.copyWith(fontSize: 14.0),
-                      child: Table(
-                        border: const TableBorder(
-                          horizontalInside: BorderSide(
-                            color: Color(0xFF979c99),
+                SizedBox(
+                  height: constraints.maxHeight - 100,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 20.0),
+                      child: DefaultTextStyle(
+                        style: kContainerTextStyle.copyWith(fontSize: 14.0),
+                        child: Table(
+                          border: const TableBorder(
+                            horizontalInside: BorderSide(
+                              color: Color(0xFF979c99),
+                            ),
                           ),
+                          defaultColumnWidth: const FixedColumnWidth(300),
+                          defaultVerticalAlignment:
+                              TableCellVerticalAlignment.middle,
+                          children: [
+                            TableRow(
+                              children: [...buildTableHeaders()],
+                            ),
+                            buildTableRow(
+                              bugName: "Hexagons don't fold",
+                              projectName: "Origami Algorithm",
+                              reporter: "alanBroker@gmail.com",
+                              timeCreated: DateTime(
+                                2023,
+                                DateTime.december,
+                                DateTime.thursday,
+                              ),
+                              assignee: "chukwuemekachukwudi9@gmail.com",
+                              tags: Tags.performance,
+                              dueDate: DateTime(
+                                2024,
+                                DateTime.january,
+                                DateTime.tuesday,
+                              ),
+                              status: Status.open,
+                            ),
+                            buildTableRow(
+                              bugName: "Font doesn't change",
+                              projectName: "Android studio",
+                              reporter: "lanceArmstrong@gmail.com",
+                              timeCreated: DateTime(
+                                2022,
+                                DateTime.june,
+                                DateTime.sunday,
+                              ),
+                              assignee: "chukwuemekachukwudi9@gmail.com",
+                              tags: Tags.functionality,
+                              dueDate: DateTime(
+                                2022,
+                                DateTime.june,
+                                DateTime.thursday,
+                              ),
+                              status: Status.wontFix,
+                            ),
+                          ],
                         ),
-                        defaultColumnWidth:
-                            FixedColumnWidth(constraints.maxWidth / 3.0),
-                        defaultVerticalAlignment:
-                            TableCellVerticalAlignment.middle,
-                        children: [
-                          buildTableRow(
-                            firstHeader: "CONVERSATION",
-                            secondHeader: "PROJECT",
-                            thirdHeader: "PARTICIPANTS",
-                          ),
-                          buildTableRow(
-                            conversationTitle: "New Sales Data",
-                            projectName: 'Origami Algorithm',
-                            avatarText: ['CC', 'AB'],
-                            tooltipMessage: [
-                              'ChukwuemekaChukwudi9',
-                              'Alan Broker'
-                            ],
-                          ),
-                          buildTableRow(
-                            conversationTitle: "Review Bug",
-                            projectName: 'Android Studio',
-                            avatarText: ['WE'],
-                            tooltipMessage: ['WindsorElizabeth'],
-                          ),
-                        ],
                       ),
                     ),
                   ),

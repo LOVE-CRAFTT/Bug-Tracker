@@ -8,75 +8,130 @@ import 'package:bug_tracker/utilities/constants.dart';
 /// [thirdHeader] => the header of the first column
 /// conversationTitle, projectName, tooltipMessage and avatarText and the backgroundImage
 TableRow buildTableRow({
-  String? firstHeader,
-  String? secondHeader,
-  String? thirdHeader,
-  String? conversationTitle,
+  String? bugName,
   String? projectName,
-  List<String>? avatarText,
-  List<String>? tooltipMessage,
-  String? backgroundImage,
+  String? reporter,
+  DateTime? timeCreated,
+  String? assignee,
+  Tags? tags,
+  DateTime? dueDate,
+  Status? status,
 }) {
-  TextStyle cellTextStyle = kContainerTextStyle.copyWith(fontSize: 14.0);
-
+  ///7 headers
   return TableRow(
     children: [
       ListTile(
-        /// Creates an Icon button, conversation title and makes it clickable if it is not the first column title
-        /// else it is just text containing the first header
-        leading: firstHeader == null
-            ? IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.settings,
-                  color: secondaryThemeColor,
-                  size: 15.0,
+        title: bugName != null ? Text(bugName) : null,
+        titleTextStyle: cellTextStyle,
+        onTap: () {},
+      ),
+      ListTile(
+        title: projectName != null ? Text(projectName) : null,
+        titleTextStyle: cellTextStyle,
+      ),
+      ListTile(
+        title: reporter != null ? Text(reporter) : null,
+        titleTextStyle: cellTextStyle,
+      ),
+      ListTile(
+        title: timeCreated != null
+            ? Text(
+                "${timeCreated.year}-${timeCreated.month}-${timeCreated.day}")
+            : null,
+        titleTextStyle: cellTextStyle,
+      ),
+      ListTile(
+        title: assignee != null ? Text(assignee) : null,
+        titleTextStyle: cellTextStyle,
+      ),
+      ListTile(
+        title: tags != null
+            ? Align(
+                alignment: Alignment.centerLeft,
+                child: Chip(
+                  label: Text(
+                    tags.title,
+                    style: kContainerTextStyle.copyWith(color: Colors.black),
+                  ),
+                  backgroundColor: tags.associatedColor,
                 ),
               )
             : null,
-        title: Text(firstHeader ?? (conversationTitle ?? "Null Value")),
         titleTextStyle: cellTextStyle,
-        onTap: firstHeader == null ? () {} : null,
       ),
       ListTile(
-        /// Creates a project name and makes it clickable if it not the second column title
-        /// else it is just text containing the second header
-        title: Text(secondHeader ?? (projectName ?? "Error Value")),
+        title: dueDate != null
+            ? Text("${dueDate.year}-${dueDate.month}-${dueDate.day}")
+            : null,
         titleTextStyle: cellTextStyle,
-        onTap: secondHeader == null ? () {} : null,
       ),
       ListTile(
-        /// Creates a list of circle avatars if it is not the third column title
-        /// else it just text containing the third header
-        title: thirdHeader == null
-            ? SizedBox(
-                height: 50.0,
-                child: ListView.builder(
-                  itemCount: avatarText?.length,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (BuildContext context, int index) {
-                    final String? lAvatarMessage = avatarText?[index];
-                    final String? lTooltipMessage = tooltipMessage?[index];
-                    return Padding(
-                      padding: const EdgeInsets.only(right: 4.0),
-                      child: Tooltip(
-                        message: lTooltipMessage,
-                        child: avatarText != null
-                            ? CircleAvatar(
-                                backgroundColor: Colors.grey,
-                                child: lAvatarMessage != null
-                                    ? Text(lAvatarMessage)
-                                    : const Text("Error Value"),
-                              )
-                            : null,
-                      ),
-                    );
-                  },
+        title: status != null
+            ? Align(
+                alignment: Alignment.centerLeft,
+                child: Chip(
+                  label: Text(
+                    status.title,
+                    style: kContainerTextStyle.copyWith(color: Colors.black),
+                  ),
+                  backgroundColor: status.associatedColor,
                 ),
               )
-            : Text(thirdHeader),
+            : null,
         titleTextStyle: cellTextStyle,
-      )
+      ),
     ],
   );
+}
+
+TextStyle cellTextStyle = kContainerTextStyle.copyWith(fontSize: 14.0);
+
+List<ListTile> buildTableHeaders() {
+  List<String> headerNames = [
+    "BUG",
+    "PROJECT",
+    "REPORTER",
+    "CREATED",
+    "ASSIGNEE",
+    "TAGS",
+    "DUE DATE",
+    "STATUS",
+  ];
+
+  return headerNames
+      .map((header) => ListTile(
+            title: Text(header),
+            titleTextStyle: cellTextStyle,
+          ))
+      .toList();
+}
+
+enum Status {
+  testing(title: "testing", associatedColor: Colors.blue),
+  closed(title: "closed", associatedColor: Colors.green),
+  open(title: "open", associatedColor: Colors.red),
+  postponed(title: "postponed", associatedColor: Colors.orange),
+  inProgress(title: "in Progress", associatedColor: Colors.yellow),
+  verified(title: "verified", associatedColor: Colors.teal),
+  wontFix(title: "won't Fix", associatedColor: Colors.grey);
+
+  const Status({required this.title, required this.associatedColor});
+  final String title;
+  final Color associatedColor;
+}
+
+enum Tags {
+  ui(title: "ui", associatedColor: Colors.pink),
+  functionality(title: "functionality", associatedColor: Colors.brown),
+  performance(title: "performance", associatedColor: Colors.cyan),
+  security(title: "security", associatedColor: customMaroon),
+  database(title: "database", associatedColor: customOlive),
+  network(title: "network", associatedColor: Colors.lime);
+
+  const Tags({required this.title, required this.associatedColor});
+  final String title;
+  final Color associatedColor;
+
+  static const Color customMaroon = Color(0xFF800000);
+  static const Color customOlive = Color(0xFF808000);
 }
