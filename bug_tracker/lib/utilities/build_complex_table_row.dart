@@ -1,23 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 
-/// Build Table Rows in the discuss page
-/// Parameters are all named and optional and they include
-/// [firstHeader] => the header of the first column
-/// [secondHeader] => the header of the second column
-/// [thirdHeader] => the header of the first column
-/// conversationTitle, projectName, tooltipMessage and avatarText and the backgroundImage
 TableRow buildTableRow({
   String? bugName,
   String? projectName,
   String? reporter,
   DateTime? timeCreated,
   String? assignee,
-  Tags? tags,
+  List<Tags>? tags,
   DateTime? dueDate,
   Status? status,
 }) {
-  ///7 headers
   return TableRow(
     children: [
       ListTile(
@@ -41,31 +34,6 @@ TableRow buildTableRow({
         titleTextStyle: cellTextStyle,
       ),
       ListTile(
-        title: assignee != null ? Text(assignee) : null,
-        titleTextStyle: cellTextStyle,
-      ),
-      ListTile(
-        title: tags != null
-            ? Align(
-                alignment: Alignment.centerLeft,
-                child: Chip(
-                  label: Text(
-                    tags.title,
-                    style: kContainerTextStyle.copyWith(color: Colors.black),
-                  ),
-                  backgroundColor: tags.associatedColor,
-                ),
-              )
-            : null,
-        titleTextStyle: cellTextStyle,
-      ),
-      ListTile(
-        title: dueDate != null
-            ? Text("${dueDate.year}-${dueDate.month}-${dueDate.day}")
-            : null,
-        titleTextStyle: cellTextStyle,
-      ),
-      ListTile(
         title: status != null
             ? Align(
                 alignment: Alignment.centerLeft,
@@ -75,6 +43,44 @@ TableRow buildTableRow({
                     style: kContainerTextStyle.copyWith(color: Colors.black),
                   ),
                   backgroundColor: status.associatedColor,
+                ),
+              )
+            : null,
+        titleTextStyle: cellTextStyle,
+      ),
+      ListTile(
+        title: assignee != null ? Text(assignee) : null,
+        titleTextStyle: cellTextStyle,
+      ),
+      ListTile(
+        title: dueDate != null
+            ? Text("${dueDate.year}-${dueDate.month}-${dueDate.day}")
+            : null,
+        titleTextStyle: cellTextStyle,
+      ),
+      ListTile(
+        title: tags != null
+            ? Align(
+                alignment: Alignment.centerLeft,
+                child: SizedBox(
+                  height: 50.0,
+                  child: ListView.builder(
+                    itemCount: tags.length,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: Chip(
+                          label: Text(
+                            tags[index].title,
+                            style: kContainerTextStyle.copyWith(
+                                color: Colors.black),
+                          ),
+                          backgroundColor: tags[index].associatedColor,
+                        ),
+                      );
+                    },
+                  ),
                 ),
               )
             : null,
@@ -107,13 +113,13 @@ List<ListTile> buildTableHeaders() {
 }
 
 enum Status {
-  testing(title: "testing", associatedColor: Colors.blue),
-  closed(title: "closed", associatedColor: Colors.green),
-  open(title: "open", associatedColor: Colors.red),
-  postponed(title: "postponed", associatedColor: Colors.orange),
-  inProgress(title: "in Progress", associatedColor: Colors.yellow),
-  verified(title: "verified", associatedColor: Colors.teal),
-  wontFix(title: "won't Fix", associatedColor: Colors.grey);
+  testing(title: "Testing", associatedColor: Colors.blue),
+  closed(title: "Closed", associatedColor: Colors.green),
+  open(title: "Open", associatedColor: Colors.red),
+  postponed(title: "Postponed", associatedColor: Colors.orange),
+  inProgress(title: "In Progress", associatedColor: Colors.yellow),
+  verified(title: "Verified", associatedColor: Colors.teal),
+  wontFix(title: "Won't Fix", associatedColor: Colors.grey);
 
   const Status({required this.title, required this.associatedColor});
   final String title;
@@ -121,12 +127,12 @@ enum Status {
 }
 
 enum Tags {
-  ui(title: "ui", associatedColor: Colors.pink),
-  functionality(title: "functionality", associatedColor: Colors.brown),
-  performance(title: "performance", associatedColor: Colors.cyan),
-  security(title: "security", associatedColor: customMaroon),
-  database(title: "database", associatedColor: customOlive),
-  network(title: "network", associatedColor: Colors.lime);
+  ui(title: "UI", associatedColor: Colors.pink),
+  functionality(title: "Functionality", associatedColor: Colors.brown),
+  performance(title: "Performance", associatedColor: Colors.cyan),
+  security(title: "Security", associatedColor: customMaroon),
+  database(title: "Database", associatedColor: customOlive),
+  network(title: "Network", associatedColor: Colors.lime);
 
   const Tags({required this.title, required this.associatedColor});
   final String title;
