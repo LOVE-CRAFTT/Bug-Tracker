@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
-import 'package:bug_tracker/utilities/build_basic_table_row.dart';
+import 'package:bug_tracker/utilities/build_discuss_page_table_row.dart';
 import 'package:bug_tracker/ui_components/appbar.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
 

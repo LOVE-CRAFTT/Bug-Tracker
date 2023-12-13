@@ -3,7 +3,7 @@ import 'package:bug_tracker/ui_components/custom_dropdown.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
 import 'package:bug_tracker/ui_components/appbar.dart';
 import 'package:bug_tracker/utilities/constants.dart';
-import 'package:bug_tracker/utilities/build_complex_table_row.dart';
+import 'package:bug_tracker/utilities/build_bug_page_table_row.dart';
 
 ///Contains interface to all the bugs in the database
 class BugsPage extends StatefulWidget {
