@@ -38,6 +38,7 @@ dependencies:
   table_calendar: ^3.0.9
   side_sheet: ^1.0.4
   provider: ^6.1.1
+  percent_indicator: ^4.2.3
 
 dev_dependencies:
   flutter_test:
