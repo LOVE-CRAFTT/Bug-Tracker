@@ -6,6 +6,7 @@ import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/tools.dart';
 import 'package:bug_tracker/utilities/build_project_page_table_row.dart';
 
+///Contains interface to all the projects in the database
 class ProjectsPage extends StatefulWidget {
   const ProjectsPage({super.key});
 

@@ -111,33 +111,3 @@ List<ListTile> buildTableHeaders() {
           ))
       .toList();
 }
-
-enum Status {
-  testing(title: "Testing", associatedColor: Colors.blue),
-  closed(title: "Closed", associatedColor: Colors.green),
-  open(title: "Open", associatedColor: Colors.red),
-  postponed(title: "Postponed", associatedColor: Colors.orange),
-  inProgress(title: "In Progress", associatedColor: Colors.yellow),
-  verified(title: "Verified", associatedColor: Colors.teal),
-  wontFix(title: "Won't Fix", associatedColor: Colors.grey);
-
-  const Status({required this.title, required this.associatedColor});
-  final String title;
-  final Color associatedColor;
-}
-
-enum Tags {
-  ui(title: "UI", associatedColor: Colors.pink),
-  functionality(title: "Functionality", associatedColor: Colors.brown),
-  performance(title: "Performance", associatedColor: Colors.cyan),
-  security(title: "Security", associatedColor: customMaroon),
-  database(title: "Database", associatedColor: customOlive),
-  network(title: "Network", associatedColor: Colors.lime);
-
-  const Tags({required this.title, required this.associatedColor});
-  final String title;
-  final Color associatedColor;
-
-  static const Color customMaroon = Color(0xFF800000);
-  static const Color customOlive = Color(0xFF808000);
-}
