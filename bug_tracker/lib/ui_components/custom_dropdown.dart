@@ -18,12 +18,18 @@ List<String?> bugChoices = [
   "My Open",
   "My Closed",
 ];
+List<String?> projectChoices = [
+  "All Projects",
+  "Active Projects",
+  "Completed Projects",
+];
 
 ///Pages that have a dropdown button
 enum DropdownPage {
   feedPage,
   milestonePage,
   bugPage,
+  projectPage,
 }
 
 /// Dropdown button below the appbar on the feed page, bug page and milestone page
@@ -58,6 +64,8 @@ class CustomDropDown extends StatelessWidget {
       return feedChoices;
     } else if (page == DropdownPage.milestonePage) {
       return milestoneChoices;
+    } else if (page == DropdownPage.projectPage) {
+      return projectChoices;
     } else {
       return bugChoices;
     }
