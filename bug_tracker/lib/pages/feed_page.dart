@@ -5,7 +5,7 @@ import 'package:bug_tracker/ui_components/custom_dropdown.dart';
 import 'package:bug_tracker/ui_components/feed_page_text_field.dart';
 
 /// This page contains a dropdown button for switching between projects
-/// A text field to start conversations and pages containing the feed, status and activity stream
+/// A text field to start conversations and pages containing the feed, and activity stream
 /// The feed page in contrast to the discussion page is for starting general conversations
 class FeedPage extends StatefulWidget {
   const FeedPage({super.key});
@@ -17,7 +17,7 @@ class FeedPage extends StatefulWidget {
 class _FeedPageState extends State<FeedPage> {
   String? dropDownValue = feedChoices.first;
   final _spacingHeight = 50.0;
-  final _numberOfPages = 3;
+  final _numberOfPages = 2;
   final _pageHeight = 600.0;
   final _leftPadding = 75.0;
   _rightPadding(constraints) => constraints.maxWidth > 600 ? 150.0 : 50.0;
@@ -54,19 +54,15 @@ class _FeedPageState extends State<FeedPage> {
                     SizedBox(
                       height: _spacingHeight,
                     ),
-                    DefaultTextStyle(
-                      style: kContainerTextStyle,
-                      child: TabBar(
-                        tabs: const [
-                          Text("Feed"),
-                          Text("Status"),
-                          Text("Activity Stream"),
-                        ],
-                        indicatorColor: secondaryThemeColor,
-                        padding: EdgeInsets.only(
-                          left: _leftPadding,
-                          right: _rightPadding(constraints),
-                        ),
+                    TabBar(
+                      tabs: const [
+                        Text("Feed", style: kContainerTextStyle),
+                        Text("Activity Stream", style: kContainerTextStyle),
+                      ],
+                      indicatorColor: secondaryThemeColor,
+                      padding: EdgeInsets.only(
+                        left: _leftPadding,
+                        right: _rightPadding(constraints),
                       ),
                     ),
                     SizedBox(
