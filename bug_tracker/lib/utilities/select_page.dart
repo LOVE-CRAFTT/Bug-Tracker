@@ -7,6 +7,7 @@ import 'package:bug_tracker/pages/calendar_page.dart';
 import 'package:bug_tracker/pages/bugs_page.dart';
 import 'package:bug_tracker/pages/milestones_page.dart';
 import 'package:bug_tracker/pages/timesheets_page.dart';
+import 'package:bug_tracker/pages/projects_page.dart';
 
 ///Process to choose page based on currently selected destination
 ///Is run everytime new destination is selected
@@ -20,13 +21,13 @@ Widget selectPage() {
       return const DiscussPage();
     case 3:
       return const CalendarPage();
-    // case []:
-    //   return const ProjectsPage();
     case 4:
-      return const BugsPage();
+      return const ProjectsPage();
     case 5:
-      return const MilestonesPage();
+      return const BugsPage();
     case 6:
+      return const MilestonesPage();
+    case 7:
       return const TimesheetsPage();
     default:
       return const HomePage();

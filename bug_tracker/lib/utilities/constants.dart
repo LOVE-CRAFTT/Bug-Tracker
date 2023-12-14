@@ -110,7 +110,7 @@ Map<String, Icon> navRailData = {
   'Discuss': const Icon(Icons.chat_outlined),
   'Calendar': const Icon(Icons.calendar_month),
   // Not for staff will replace when doing the admin
-  // 'Projects': const Icon(Icons.work_outline),
+  'Projects': const Icon(Icons.work_outline),
   'Bugs': const Icon(Icons.bug_report),
   'Milestones': const Icon(Icons.flag),
   'Timesheets': const Icon(Icons.access_time)

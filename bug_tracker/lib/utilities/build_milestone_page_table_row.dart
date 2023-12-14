@@ -41,6 +41,7 @@ TableRow buildTableRow({
               )
             : null,
         titleTextStyle: cellTextStyle,
+        onTap: () {},
       ),
       ListTile(
         title: timeCreated != null
