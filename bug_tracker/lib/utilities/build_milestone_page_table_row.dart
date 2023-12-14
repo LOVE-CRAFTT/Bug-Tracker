@@ -5,7 +5,7 @@ import 'package:percent_indicator/percent_indicator.dart';
 TableRow buildTableRow({
   String? milestone,
   String? projectName,
-  double? bugs,
+  double? percentBugsCompleted,
   DateTime? timeCreated,
   String? owner,
   List<Tags>? tags,
@@ -24,11 +24,11 @@ TableRow buildTableRow({
         titleTextStyle: cellTextStyle,
       ),
       ListTile(
-        title: bugs != null
+        title: percentBugsCompleted != null
             ? LinearPercentIndicator(
-                percent: bugs,
+                percent: percentBugsCompleted,
                 center: Text(
-                  "${bugs * 100} %",
+                  "${percentBugsCompleted * 100} %",
                   style: kContainerTextStyle.copyWith(
                     color: Colors.black,
                     fontSize: 12.0,

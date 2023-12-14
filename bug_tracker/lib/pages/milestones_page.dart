@@ -81,7 +81,7 @@ class _MilestonesPageState extends State<MilestonesPage> {
                             buildTableRow(
                               milestone: "Release first version",
                               projectName: "Android studio",
-                              bugs: normalize0to1(6),
+                              percentBugsCompleted: normalize0to1(6),
                               timeCreated: DateTime(
                                 2023,
                                 DateTime.december,
