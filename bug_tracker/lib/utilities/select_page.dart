@@ -6,7 +6,6 @@ import 'package:bug_tracker/pages/discuss_page.dart';
 import 'package:bug_tracker/pages/calendar_page.dart';
 import 'package:bug_tracker/pages/bugs_page.dart';
 import 'package:bug_tracker/pages/milestones_page.dart';
-import 'package:bug_tracker/pages/timesheets_page.dart';
 import 'package:bug_tracker/pages/projects_page.dart';
 
 ///Process to choose page based on currently selected destination
@@ -27,8 +26,6 @@ Widget selectPage() {
       return const BugsPage();
     case 6:
       return const MilestonesPage();
-    case 7:
-      return const TimesheetsPage();
     default:
       return const HomePage();
   }

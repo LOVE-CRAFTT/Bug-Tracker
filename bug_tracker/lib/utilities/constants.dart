@@ -113,7 +113,6 @@ Map<String, Icon> navRailData = {
   'Projects': const Icon(Icons.work_outline),
   'Bugs': const Icon(Icons.bug_report),
   'Milestones': const Icon(Icons.flag),
-  'Timesheets': const Icon(Icons.access_time)
 };
 
 List<NavigationRailDestination> kMainNavigationRailDestinations = [
