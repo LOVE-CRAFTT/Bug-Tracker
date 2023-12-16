@@ -138,7 +138,6 @@ List<LargeContainer> largeContainers = [
   for (var type in LargeContainerTypes.values)
     LargeContainer(
       type: type,
-      body: const Text("Body content goes here"),
     )
 ];
 

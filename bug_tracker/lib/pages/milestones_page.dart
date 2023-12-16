@@ -83,9 +83,9 @@ class _MilestonesPageState extends State<MilestonesPage> {
                               projectName: "Android studio",
                               percentBugsCompleted: normalize0to1(6),
                               timeCreated: DateTime(
-                                2023,
-                                DateTime.december,
-                                DateTime.thursday,
+                                2022,
+                                DateTime.june,
+                                DateTime.sunday,
                               ),
                               owner: "chukwuemekachukwudi9@gmail.com",
                               tags: [Tags.performance, Tags.functionality],

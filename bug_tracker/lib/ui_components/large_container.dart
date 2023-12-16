@@ -6,12 +6,10 @@ import 'package:bug_tracker/utilities/constants.dart';
 ///Each container contains an appbar and Expanded body,
 ///Icons in the appbar adds functionality and the body contains the main data
 class LargeContainer extends StatelessWidget {
-  final Widget body;
   final LargeContainerTypes type;
 
   const LargeContainer({
     Key? key,
-    required this.body,
     required this.type,
   }) : super(key: key);
 
@@ -53,7 +51,38 @@ class LargeContainer extends StatelessWidget {
                 ),
                 Expanded(
                   child: Center(
-                    child: body,
+                    child: ListView.builder(
+                      itemCount: getDataSource(type).length,
+                      itemBuilder: (BuildContext context, int index) {
+                        var dataSource = getDataSource(type)[index];
+                        return Column(
+                          children: [
+                            ListTile(
+                              title: Text(dataSource.title),
+                              titleTextStyle: kContainerTextStyle.copyWith(
+                                color: Colors.white,
+                                fontSize: 20.0,
+                              ),
+                              subtitle: Text(dataSource.subtitle),
+                              subtitleTextStyle: kContainerTextStyle.copyWith(
+                                fontSize: 12.0,
+                              ),
+                              trailing: Text(
+                                dataSource.dateTime.toString(),
+                                style: kContainerTextStyle.copyWith(
+                                  fontSize: 12.0,
+                                ),
+                              ),
+                              onTap: () {},
+                            ),
+                            const Divider(
+                              color: Color(0xFFb6b8aa),
+                              thickness: 0.5,
+                            )
+                          ],
+                        );
+                      },
+                    ),
                   ),
                 ),
               ],
@@ -72,6 +101,54 @@ enum LargeContainerTypes {
   milestones(title: "My Milestones"),
   allBugs(title: "All Bugs");
 
-  const LargeContainerTypes({required this.title});
+  const LargeContainerTypes({
+    required this.title,
+  });
   final String title;
+}
+
+class Source {
+  Source({
+    required this.title,
+    required this.subtitle,
+    required this.dateTime,
+  });
+
+  //milestone or bug
+  String title;
+  //project
+  String subtitle;
+  DateTime dateTime;
+}
+
+List<Source> bugSource = [
+  Source(
+    title: "Hexagon's don't fold",
+    subtitle: "Origami Algorithm",
+    dateTime: DateTime(2023, DateTime.december, DateTime.thursday),
+  ),
+  Source(
+    title: "Font doesn't change",
+    subtitle: "Android studio",
+    dateTime: DateTime(2022, DateTime.june, DateTime.sunday),
+  ),
+];
+
+List<Source> milestoneSource = [
+  Source(
+    title: "Release first Version",
+    subtitle: "Android Studio",
+    dateTime: DateTime(2023, DateTime.december, DateTime.thursday),
+  )
+];
+
+List<Source> getDataSource(LargeContainerTypes type) {
+  if (type == LargeContainerTypes.allBugs ||
+      type == LargeContainerTypes.myBugs) {
+    return bugSource;
+  } else if (type == LargeContainerTypes.milestones) {
+    return milestoneSource;
+  } else {
+    return milestoneSource;
+  }
 }
