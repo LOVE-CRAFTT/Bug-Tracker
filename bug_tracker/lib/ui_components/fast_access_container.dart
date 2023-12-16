@@ -8,12 +8,14 @@ class FastAccessContainer extends StatelessWidget {
   final int number;
   final String text;
   final IconData icon;
+  final void Function() onTapped;
 
   const FastAccessContainer({
     Key? key,
     required this.number,
     required this.text,
     required this.icon,
+    required this.onTapped,
   }) : super(key: key);
 
 //============ SCREEN WIDTH GOTTEN FROM TESTING ================================
@@ -32,32 +34,35 @@ class FastAccessContainer extends StatelessWidget {
             constraints.maxWidth <= bigScreenMaxWidthLimit
                 ? (smallScreenContainerHeight, (constraints.maxWidth / 2) - 8)
                 : (bigScreenContainerHeight, (constraints.maxWidth / 4) - 8);
-        return Container(
-          height: containerHeight,
-          width: containerWidth,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            color: const Color(0xFF1e1e1e),
-          ),
-          padding: const EdgeInsets.all(8),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    number.toString(),
-                    style: kContainerTextStyle,
-                  ),
-                  Icon(icon),
-                ],
-              ),
-              Text(
-                text,
-                style: kContainerTextStyle,
-              ),
-            ],
+        return InkWell(
+          onTap: onTapped,
+          child: Container(
+            height: containerHeight,
+            width: containerWidth,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              color: const Color(0xFF1e1e1e),
+            ),
+            padding: const EdgeInsets.all(8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      number.toString(),
+                      style: kContainerTextStyle,
+                    ),
+                    Icon(icon),
+                  ],
+                ),
+                Text(
+                  text,
+                  style: kContainerTextStyle,
+                ),
+              ],
+            ),
           ),
         );
       },

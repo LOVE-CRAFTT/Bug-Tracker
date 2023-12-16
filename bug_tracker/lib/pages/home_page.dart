@@ -62,27 +62,33 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(
                   height: 20,
                 ),
-                const Wrap(
+                Wrap(
                   spacing: 8.0,
                   runSpacing: 8.0,
                   children: [
                     FastAccessContainer(
-                        number: 10,
-                        text: "Open Bugs",
-                        icon: Icons.bug_report_outlined),
+                      number: 10,
+                      text: "Open Bugs",
+                      icon: Icons.bug_report_outlined,
+                      onTapped: () {},
+                    ),
                     FastAccessContainer(
-                        number: 60,
-                        text: "Closed Bugs",
-                        icon: Icons.bug_report_outlined),
+                      number: 60,
+                      text: "Closed Bugs",
+                      icon: Icons.bug_report_outlined,
+                      onTapped: () {},
+                    ),
                     FastAccessContainer(
                       number: 30,
                       text: "Open Milestones",
                       icon: Icons.stars,
+                      onTapped: () {},
                     ),
                     FastAccessContainer(
                       number: 90,
                       text: "Closed Milestones",
                       icon: Icons.stars,
+                      onTapped: () {},
                     ),
                   ],
                 ),
