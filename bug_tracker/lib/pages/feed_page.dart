@@ -77,7 +77,6 @@ class _FeedPageState extends State<FeedPage> {
                           children: [
                             Placeholder(),
                             Placeholder(),
-                            Placeholder(),
                           ],
                         ),
                       ),
