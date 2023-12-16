@@ -135,36 +135,11 @@ List<NavigationRailDestination> kMainNavigationRailDestinations = [
 
 ///List of largeContainers in the home screen
 List<LargeContainer> largeContainers = [
-  const LargeContainer(
-    title: "My Bugs",
-    icons: [Icons.edit, Icons.delete],
-    body: Text("Body content goes here"),
-  ),
-  const LargeContainer(
-    title: "My Work Items Due Today",
-    icons: [Icons.edit, Icons.delete],
-    body: Text("Body content goes here"),
-  ),
-  const LargeContainer(
-    title: "My Overdue Items",
-    icons: [Icons.edit, Icons.delete],
-    body: Text("Body content goes here"),
-  ),
-  const LargeContainer(
-    title: "My Milestones",
-    icons: [Icons.edit, Icons.delete],
-    body: Text("Body content goes here"),
-  ),
-  const LargeContainer(
-    title: "My Timesheet",
-    icons: [Icons.edit, Icons.delete],
-    body: Text("Body content goes here"),
-  ),
-  const LargeContainer(
-    title: "All Bugs",
-    icons: [Icons.edit, Icons.delete],
-    body: Text("Body content goes here"),
-  ),
+  for (var type in LargeContainerTypes.values)
+    LargeContainer(
+      type: type,
+      body: const Text("Body content goes here"),
+    )
 ];
 
 enum Status {
