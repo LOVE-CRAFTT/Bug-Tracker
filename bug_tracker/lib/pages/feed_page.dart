@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/ui_components/appbar.dart';
 import 'package:bug_tracker/ui_components/custom_dropdown.dart';
+import 'package:bug_tracker/ui_components/bug_reports.dart';
 import 'package:bug_tracker/ui_components/feed_page_text_field.dart';
 
 /// This page contains a dropdown button for switching between projects
@@ -56,7 +57,7 @@ class _FeedPageState extends State<FeedPage> {
                     ),
                     TabBar(
                       tabs: const [
-                        Text("Feed", style: kContainerTextStyle),
+                        Text("Bug Reports", style: kContainerTextStyle),
                         Text("Activity Stream", style: kContainerTextStyle),
                       ],
                       indicatorColor: secondaryThemeColor,
@@ -75,7 +76,7 @@ class _FeedPageState extends State<FeedPage> {
                         ),
                         child: const TabBarView(
                           children: [
-                            Placeholder(),
+                            BugReports(),
                             Placeholder(),
                           ],
                         ),
