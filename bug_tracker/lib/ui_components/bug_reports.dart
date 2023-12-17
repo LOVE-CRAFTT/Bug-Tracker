@@ -11,7 +11,7 @@ class BugReports extends StatelessWidget {
       itemBuilder: (BuildContext context, int index) {
         var bugReport = customerReportSource[index];
         return Container(
-          margin: const EdgeInsets.all(8),
+          margin: const EdgeInsets.all(4),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
             border: Border.all(
@@ -34,6 +34,7 @@ class BugReports extends StatelessWidget {
             titleTextStyle: kContainerTextStyle,
             subtitle: Text("Project:  ${bugReport.project}"),
             subtitleTextStyle: kContainerTextStyle.copyWith(fontSize: 12.0),
+            onTap: () {},
           ),
         );
       },
