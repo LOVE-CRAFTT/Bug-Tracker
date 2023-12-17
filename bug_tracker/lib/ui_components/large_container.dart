@@ -77,7 +77,7 @@ class LargeContainer extends StatelessWidget {
                             ),
                             const Divider(
                               color: Color(0xFFb6b8aa),
-                              thickness: 0.5,
+                              thickness: 0.2,
                             )
                           ],
                         );
