@@ -12,7 +12,7 @@ class BugReports extends StatelessWidget {
       itemBuilder: (BuildContext context, int index) {
         var bugReport = customerReportSource[index];
         return Container(
-          margin: const EdgeInsets.all(4),
+          margin: const EdgeInsets.all(2),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
             border: Border.all(
