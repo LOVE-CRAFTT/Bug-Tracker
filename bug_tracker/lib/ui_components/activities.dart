@@ -47,6 +47,7 @@ class Activities extends StatelessWidget {
   }
 }
 
+// Action represents the different actions a user can take in the app.
 enum Action {
   opened(associatedText: "opened"),
   closed(associatedText: "closed"),
@@ -59,6 +60,7 @@ enum Action {
   final String associatedText;
 }
 
+// Item represents the different items a user can interact with in the app.
 enum Item {
   milestone(associatedText: "Milestone"),
   project(associatedText: "Project"),
