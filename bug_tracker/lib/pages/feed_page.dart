@@ -4,7 +4,7 @@ import 'package:bug_tracker/ui_components/appbar.dart';
 import 'package:bug_tracker/ui_components/custom_dropdown.dart';
 import 'package:bug_tracker/ui_components/bug_reports.dart';
 import 'package:bug_tracker/ui_components/feed_page_text_field.dart';
-import 'package:bug_tracker/ui_components/activity_stream.dart';
+import 'package:bug_tracker/ui_components/activities.dart';
 
 /// This page contains a dropdown button for switching between projects
 /// A text field to start conversations and pages containing the feed, and activity stream
@@ -78,7 +78,7 @@ class _FeedPageState extends State<FeedPage> {
                         child: const TabBarView(
                           children: [
                             BugReports(),
-                            ActivityStream(),
+                            Activities(),
                           ],
                         ),
                       ),

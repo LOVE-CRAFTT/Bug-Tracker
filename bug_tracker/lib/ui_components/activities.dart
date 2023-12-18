@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:intl/intl.dart';
 
-class ActivityStream extends StatelessWidget {
-  const ActivityStream({super.key});
+class Activities extends StatelessWidget {
+  const Activities({super.key});
 
   @override
   Widget build(BuildContext context) {
