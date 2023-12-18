@@ -103,6 +103,7 @@ DaysOfWeekStyle kCalendarDOWStyle = const DaysOfWeekStyle(
 
 ///Used as the secondary theme color to contrast from the grey/black background
 const Color secondaryThemeColor = Color(0xFFFF6400);
+const Color secondaryThemeColorGreen = Color(0xFF99FF00);
 
 Map<String, Icon> navRailData = {
   'Home': const Icon(Icons.home),

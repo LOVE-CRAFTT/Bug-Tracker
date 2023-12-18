@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 
 class BugReports extends StatelessWidget {
@@ -34,6 +35,10 @@ class BugReports extends StatelessWidget {
             titleTextStyle: kContainerTextStyle,
             subtitle: Text("Project:  ${bugReport.project}"),
             subtitleTextStyle: kContainerTextStyle.copyWith(fontSize: 12.0),
+            trailing: Text(
+              DateFormat('yyyy-MM-dd HH:mm').format(bugReport.timeReported),
+              style: kContainerTextStyle.copyWith(fontSize: 12.0),
+            ),
             onTap: () {},
           ),
         );
