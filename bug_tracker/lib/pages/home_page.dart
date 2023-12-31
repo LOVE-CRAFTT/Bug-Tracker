@@ -1,6 +1,8 @@
+import 'package:bug_tracker/models/overview.dart';
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/ui_components/appbar.dart';
+import 'package:provider/provider.dart';
 import 'package:bug_tracker/ui_components/fast_access_container.dart';
 
 /// The homepage contains simple welcome text and quick access information
@@ -70,25 +72,33 @@ class _HomePageState extends State<HomePage> {
                       number: 10,
                       text: "Open Bugs",
                       icon: Icons.bug_report_outlined,
-                      onTapped: () {},
+                      onTapped: () {
+                        context.read<Overview>().switchToBug();
+                      },
                     ),
                     FastAccessContainer(
                       number: 60,
                       text: "Closed Bugs",
                       icon: Icons.bug_report_outlined,
-                      onTapped: () {},
+                      onTapped: () {
+                        context.read<Overview>().switchToBug();
+                      },
                     ),
                     FastAccessContainer(
                       number: 30,
                       text: "Open Milestones",
                       icon: Icons.stars,
-                      onTapped: () {},
+                      onTapped: () {
+                        context.read<Overview>().switchToMilestone();
+                      },
                     ),
                     FastAccessContainer(
                       number: 90,
                       text: "Closed Milestones",
                       icon: Icons.stars,
-                      onTapped: () {},
+                      onTapped: () {
+                        context.read<Overview>().switchToMilestone();
+                      },
                     ),
                   ],
                 ),

@@ -1,10 +1,18 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/main_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:bug_tracker/models/overview.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => Overview()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
