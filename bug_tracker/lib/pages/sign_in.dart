@@ -5,6 +5,12 @@ import 'package:bug_tracker/utilities/constants.dart';
 String? userName;
 String? password;
 
+Map<String, String> users = {
+  'admin': 'adminPassword',
+  'user': 'userPassword',
+  'staff': 'staffPassword',
+};
+
 class SignInPage extends StatelessWidget {
   SignInPage({super.key});
 
@@ -60,12 +66,25 @@ class SignInPage extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const MainScreen(),
-                        ),
-                      );
+                      if (users[userName] == password) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const MainScreen(),
+                          ),
+                        );
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'Invalid username or password',
+                              style: kContainerTextStyle.copyWith(
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        );
+                      }
                     }
                   },
                   style: ElevatedButton.styleFrom(
