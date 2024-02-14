@@ -16,7 +16,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String name = "John D. Rockefeller";
+  String adminName = "John D. Rockefeller";
   String companyName = "Standard Oil Company, Inc.";
 
   @override
@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Welcome $name",
+                      "Welcome $adminName",
                       style: const TextStyle(
                         fontSize: 18,
                         fontFamily: "Nunito",

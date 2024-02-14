@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/admin_pages/admin_main_page.dart';
+import 'package:bug_tracker/user_pages/user_main_page.dart';
+import 'package:bug_tracker/staff_pages/staff_main_page.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 
 String? userName;
@@ -16,9 +18,9 @@ void getMainScreen() {
   if (userName == 'admin') {
     mainScreen = const AdminMainPage();
   } else if (userName == 'user') {
-    mainScreen = const AdminMainPage();
+    mainScreen = const UserMainPage();
   } else {
-    mainScreen = const AdminMainPage();
+    mainScreen = const StaffMainPage();
   }
 }
 
