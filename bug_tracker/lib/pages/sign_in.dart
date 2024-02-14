@@ -34,7 +34,7 @@ class SignInPage extends StatelessWidget {
             key: _formKey,
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
+              children: [
                 TextFormField(
                   decoration: const InputDecoration(labelText: 'Username'),
                   style: kContainerTextStyle.copyWith(
