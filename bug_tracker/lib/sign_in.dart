@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:bug_tracker/pages/admin_main_page.dart';
+import 'package:bug_tracker/admin_pages/admin_main_page.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 
 String? userName;

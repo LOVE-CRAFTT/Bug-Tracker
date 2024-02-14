@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/ui_components/custom_navigation_rail.dart';
-import 'package:bug_tracker/pages/home_page.dart';
-import 'package:bug_tracker/pages/feed_page.dart';
-import 'package:bug_tracker/pages/discuss_page.dart';
-import 'package:bug_tracker/pages/calendar_page.dart';
-import 'package:bug_tracker/pages/bugs_page.dart';
-import 'package:bug_tracker/pages/milestones_page.dart';
-import 'package:bug_tracker/pages/projects_page.dart';
+import 'package:bug_tracker/admin_pages/home_page.dart';
+import 'package:bug_tracker/admin_pages/feed_page.dart';
+import 'package:bug_tracker/admin_pages/discuss_page.dart';
+import 'package:bug_tracker/admin_pages/calendar_page.dart';
+import 'package:bug_tracker/admin_pages/bugs_page.dart';
+import 'package:bug_tracker/admin_pages/milestones_page.dart';
+import 'package:bug_tracker/admin_pages/projects_page.dart';
 
 ///Process to choose page based on currently selected destination
 ///Is run everytime new destination is selected
