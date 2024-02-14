@@ -4,12 +4,23 @@ import 'package:bug_tracker/utilities/constants.dart';
 
 String? userName;
 String? password;
+Widget? mainScreen;
 
 Map<String, String> users = {
   'admin': 'adminPassword',
   'user': 'userPassword',
   'staff': 'staffPassword',
 };
+
+void getMainScreen() {
+  if (userName == 'admin') {
+    mainScreen = const AdminMainScreen();
+  } else if (userName == 'user') {
+    mainScreen = const AdminMainScreen();
+  } else {
+    mainScreen = const AdminMainScreen();
+  }
+}
 
 class SignInPage extends StatelessWidget {
   SignInPage({super.key});
@@ -67,10 +78,12 @@ class SignInPage extends StatelessWidget {
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       if (users[userName] == password) {
+                        ///Get entry point for either user, admin or staff
+                        getMainScreen();
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const MainScreen(),
+                            builder: (context) => mainScreen!,
                           ),
                         );
                       } else {

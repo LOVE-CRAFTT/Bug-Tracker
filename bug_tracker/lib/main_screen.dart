@@ -5,14 +5,14 @@ import 'package:bug_tracker/utilities/select_page.dart';
 import 'package:provider/provider.dart';
 
 ///Contains a Static Navigation Rail and changeable pages
-class MainScreen extends StatefulWidget {
-  const MainScreen({Key? key}) : super(key: key);
+class AdminMainScreen extends StatefulWidget {
+  const AdminMainScreen({Key? key}) : super(key: key);
 
   @override
-  State<MainScreen> createState() => _MainScreenState();
+  State<AdminMainScreen> createState() => _AdminMainScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> {
+class _AdminMainScreenState extends State<AdminMainScreen> {
   late Widget _page;
   @override
   Widget build(BuildContext context) {
