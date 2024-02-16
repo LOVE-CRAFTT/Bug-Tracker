@@ -91,7 +91,8 @@ TableRow buildTableRow({
                           label: Text(
                             tags[index].title,
                             style: kContainerTextStyle.copyWith(
-                                color: Colors.black),
+                              color: Colors.black,
+                            ),
                           ),
                           backgroundColor: tags[index].associatedColor,
                         ),

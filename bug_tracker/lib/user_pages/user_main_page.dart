@@ -22,7 +22,11 @@ class _UserMainPageState extends State<UserMainPage> {
           return ListView(
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 15, right: 10, top: 10),
+                padding: const EdgeInsets.only(
+                  left: 15,
+                  right: 10,
+                  top: 10,
+                ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,6 +64,32 @@ class _UserMainPageState extends State<UserMainPage> {
                           onPress: () {},
                         )
                       ],
+                    ),
+                    const SizedBox(
+                      height: 10.0,
+                    ),
+                    Container(
+                      height: constraints.maxHeight - 113,
+                      width: constraints.maxWidth,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF363739),
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: ListView.builder(
+                          itemCount: 3,
+                          itemBuilder: (BuildContext context, int index) {
+                            return const Column(
+                              children: [
+                                Text("#7633449872"),
+                                Text("data"),
+                                Text("data"),
+                              ],
+                            );
+                          },
+                        ),
+                      ),
                     )
                   ],
                 ),
