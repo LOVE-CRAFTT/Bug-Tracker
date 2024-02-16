@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/ui_components/custom_dropdown.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
+import 'package:bug_tracker/ui_components/complaint.dart';
 
 class UserMainPage extends StatefulWidget {
   const UserMainPage({super.key});
@@ -80,13 +81,7 @@ class _UserMainPageState extends State<UserMainPage> {
                         child: ListView.builder(
                           itemCount: 3,
                           itemBuilder: (BuildContext context, int index) {
-                            return const Column(
-                              children: [
-                                Text("#7633449872"),
-                                Text("data"),
-                                Text("data"),
-                              ],
-                            );
+                            return const Complaint();
                           },
                         ),
                       ),
