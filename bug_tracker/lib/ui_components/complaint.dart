@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:bug_tracker/utilities/constants.dart';
 
+/// Widget to describe a complaint in the user page
 class Complaint extends StatelessWidget {
   const Complaint({
     super.key,
@@ -9,18 +11,35 @@ class Complaint extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(
-        top: 15.0,
-        bottom: 15.0,
+        top: 8.0,
+        bottom: 8.0,
       ),
       child: InkWell(
         onTap: () {},
-        child: const Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text("#7633449872"),
-            Text("COMPLAINT"),
-            Text("Project Name"),
-          ],
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: secondaryThemeColor,
+            ),
+            borderRadius: BorderRadius.circular(12.0),
+          ),
+          child: const Padding(
+            padding: EdgeInsets.all(10.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("#7633449872"),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("COMPLAINT"),
+                    Text("Tag"),
+                  ],
+                ),
+                Text("Project Name"),
+              ],
+            ),
+          ),
         ),
       ),
     );

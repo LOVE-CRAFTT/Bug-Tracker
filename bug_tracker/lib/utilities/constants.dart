@@ -171,3 +171,14 @@ enum Tags {
   static const Color customMaroon = Color(0xFF800000);
   static const Color customOlive = Color(0xFF808000);
 }
+
+enum ComplaintState {
+  pending(title: "Pending", associatedColor: Colors.grey),
+  acknowledged(title: "Acknowledged", associatedColor: Colors.lime),
+  inProgress(title: "In Progress", associatedColor: Colors.blue),
+  completed(title: "Completed", associatedColor: Colors.green);
+
+  const ComplaintState({required this.title, required this.associatedColor});
+  final String title;
+  final Color associatedColor;
+}

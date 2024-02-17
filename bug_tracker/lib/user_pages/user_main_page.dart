@@ -79,7 +79,7 @@ class _UserMainPageState extends State<UserMainPage> {
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: ListView.builder(
-                          itemCount: 3,
+                          itemCount: 6,
                           itemBuilder: (BuildContext context, int index) {
                             return const Complaint();
                           },
