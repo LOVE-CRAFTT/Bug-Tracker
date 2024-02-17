@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 
 /// Widget to describe a complaint in the user page
+/// Consists of a column with the ticket number, the complaint title and the associated project
 class Complaint extends StatelessWidget {
   const Complaint({
     super.key,
@@ -37,20 +38,37 @@ class Complaint extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("#$ticketNumber"),
+                Text(
+                  "#$ticketNumber",
+                  style: kContainerTextStyle.copyWith(fontSize: 11),
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(complaint),
+                    Text(
+                      "Complaint: $complaint",
+                      style: kContainerTextStyle.copyWith(
+                        color: Colors.white,
+                      ),
+                    ),
                     Chip(
                       label: Text(
                         complaintState.title,
+                        style: kContainerTextStyle.copyWith(
+                          color: Colors.black,
+                        ),
                       ),
                       backgroundColor: complaintState.associatedColor,
                     ),
                   ],
                 ),
-                Text(projectName),
+                Text(
+                  "Project: $projectName",
+                  style: kContainerTextStyle.copyWith(
+                    fontSize: 14,
+                    color: Colors.white70,
+                  ),
+                ),
               ],
             ),
           ),
