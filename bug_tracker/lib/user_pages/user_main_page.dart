@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:bug_tracker/ui_components/custom_dropdown.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
 import 'package:bug_tracker/utilities/build_complaints.dart';
-import 'package:side_sheet/side_sheet.dart';
+import 'package:bug_tracker/utilities/build_new_complaint_form.dart';
 
 class UserMainPage extends StatefulWidget {
   const UserMainPage({super.key});
@@ -66,18 +66,9 @@ class _UserMainPageState extends State<UserMainPage> {
                           screenIsWide: screenIsWide,
                           buttonText: "New Complaint",
                           onPress: () {
-                            SideSheet.right(
+                            buildNewComplaintForm(
                               context: context,
-                              width: constraints.maxWidth * 0.8,
-                              body: Center(
-                                child: Container(
-                                  decoration: const BoxDecoration(
-                                    color: Colors.green,
-                                  ),
-                                  height: 200.0,
-                                  width: 200.0,
-                                ),
-                              ),
+                              constraints: constraints,
                             );
                           },
                         )
