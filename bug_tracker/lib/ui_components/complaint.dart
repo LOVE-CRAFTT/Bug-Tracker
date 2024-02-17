@@ -5,7 +5,16 @@ import 'package:bug_tracker/utilities/constants.dart';
 class Complaint extends StatelessWidget {
   const Complaint({
     super.key,
+    required this.ticketNumber,
+    required this.complaint,
+    required this.complaintState,
+    required this.projectName,
   });
+
+  final num ticketNumber;
+  final String complaint;
+  final ComplaintState complaintState;
+  final String projectName;
 
   @override
   Widget build(BuildContext context) {
@@ -23,20 +32,25 @@ class Complaint extends StatelessWidget {
             ),
             borderRadius: BorderRadius.circular(12.0),
           ),
-          child: const Padding(
-            padding: EdgeInsets.all(10.0),
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("#7633449872"),
+                Text("#$ticketNumber"),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("COMPLAINT"),
-                    Text("Tag"),
+                    Text(complaint),
+                    Chip(
+                      label: Text(
+                        complaintState.title,
+                      ),
+                      backgroundColor: complaintState.associatedColor,
+                    ),
                   ],
                 ),
-                Text("Project Name"),
+                Text(projectName),
               ],
             ),
           ),

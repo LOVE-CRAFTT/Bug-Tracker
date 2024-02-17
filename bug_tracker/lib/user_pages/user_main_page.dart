@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/ui_components/custom_dropdown.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
-import 'package:bug_tracker/ui_components/complaint.dart';
+import 'package:bug_tracker/utilities/build_complaints.dart';
 
 class UserMainPage extends StatefulWidget {
   const UserMainPage({super.key});
@@ -78,12 +78,7 @@ class _UserMainPageState extends State<UserMainPage> {
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),
-                        child: ListView.builder(
-                          itemCount: 6,
-                          itemBuilder: (BuildContext context, int index) {
-                            return const Complaint();
-                          },
-                        ),
+                        child: buildComplaints(),
                       ),
                     )
                   ],
