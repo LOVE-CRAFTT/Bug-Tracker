@@ -81,9 +81,7 @@ Future buildNewComplaintForm({
                   maxLines: null,
                   expands: true,
                   validator: (notes) {
-                    if (notes == null || notes.isEmpty) {
-                      return "Notes can't be empty";
-                    }
+                    ///Notes can be empty
                     userNotes = notes;
                     return null;
                   },
@@ -97,7 +95,9 @@ Future buildNewComplaintForm({
                 color: Colors.black87,
               ),
               child: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  ///TODO: file_picker package
+                },
                 icon: const Icon(
                   Icons.attach_file_sharp,
                 ),
@@ -111,6 +111,7 @@ Future buildNewComplaintForm({
                 onPressed: () {
                   if (formKey.currentState!.validate()) {
                     /// Here I add the data to the database
+                    Navigator.pop(context);
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(
@@ -121,6 +122,9 @@ Future buildNewComplaintForm({
                         ),
                       ),
                     );
+                    projectIdController.clear();
+                    bugTitleController.clear();
+                    notesController.clear();
                   }
                 },
                 style: TextButton.styleFrom(
