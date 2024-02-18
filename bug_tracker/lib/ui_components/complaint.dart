@@ -13,7 +13,7 @@ class Complaint extends StatelessWidget {
     required this.projectName,
   });
 
-  final num ticketNumber;
+  final int ticketNumber;
   final String complaint;
   final ComplaintState complaintState;
   final String projectName;
@@ -30,7 +30,11 @@ class Complaint extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const ComplaintPage(),
+              builder: (context) => ComplaintPage(
+                ticketNumber: ticketNumber,
+                project: projectName,
+                complaint: complaint,
+              ),
             ),
           );
         },
