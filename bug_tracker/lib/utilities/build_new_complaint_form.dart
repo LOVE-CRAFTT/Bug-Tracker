@@ -30,6 +30,7 @@ Future buildNewComplaintForm({
       child: SizedBox(
         height: constraints.maxHeight,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             /// Project ID to be gotten from the company
             Padding(
@@ -58,7 +59,7 @@ Future buildNewComplaintForm({
                 controller: bugTitleController,
                 validator: (title) {
                   if (title == null || title.isEmpty) {
-                    return "Project ID can't be empty";
+                    return "Bug Title can't be empty";
                   }
                   bugTitle = title;
                   return null;
@@ -69,7 +70,11 @@ Future buildNewComplaintForm({
             /// Notes accompanying the bug title
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding: const EdgeInsets.only(
+                  left: 20.0,
+                  right: 20.0,
+                  top: 20.0,
+                ),
                 child: TextFormField(
                   decoration: complaintTextFieldStyle(hintText: "Notes"),
                   style: kContainerTextStyle.copyWith(color: Colors.white),
@@ -78,12 +83,52 @@ Future buildNewComplaintForm({
                   expands: true,
                   validator: (notes) {
                     if (notes == null || notes.isEmpty) {
-                      return "Project ID can't be empty";
+                      return "Notes can't be empty";
                     }
                     userNotes = notes;
                     return null;
                   },
                 ),
+              ),
+            ),
+            Tooltip(
+              message: "Add files",
+              textStyle: kContainerTextStyle.copyWith(
+                fontSize: 12.0,
+                color: Colors.black87,
+              ),
+              child: IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.attach_file_sharp,
+                ),
+              ),
+            ),
+
+            /// Submit button
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: ElevatedButton(
+                onPressed: () {
+                  if (formKey.currentState!.validate()) {
+                    /// Here I add the data to the database
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          'Complaint added',
+                          style: kContainerTextStyle.copyWith(
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+                },
+                style: TextButton.styleFrom(
+                  backgroundColor: secondaryThemeColor,
+                  textStyle: kContainerTextStyle,
+                ),
+                child: const Text("Submit"),
               ),
             ),
           ],

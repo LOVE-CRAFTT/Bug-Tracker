@@ -88,7 +88,7 @@ class _UserMainPageState extends State<UserMainPage> {
                         padding: const EdgeInsets.all(10.0),
                         child: buildComplaints(),
                       ),
-                    )
+                    ),
                   ],
                 ),
               )
