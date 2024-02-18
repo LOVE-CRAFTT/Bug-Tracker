@@ -79,7 +79,9 @@ class _UserMainPageState extends State<UserMainPage> {
                       height: 10.0,
                     ),
                     Container(
-                      height: constraints.maxHeight - 113,
+                      height: constraints.maxHeight - 113 > 0
+                          ? constraints.maxHeight - 113
+                          : 0,
                       width: constraints.maxWidth,
                       decoration: BoxDecoration(
                         color: const Color(0xFF363739),
