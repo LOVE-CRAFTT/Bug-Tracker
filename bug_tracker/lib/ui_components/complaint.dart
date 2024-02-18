@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
+import 'package:bug_tracker/user_pages/complaint_page.dart';
 
 /// Widget to describe a complaint in the user page
 /// Consists of a column with the ticket number, the complaint title and the associated project
@@ -25,7 +26,14 @@ class Complaint extends StatelessWidget {
         bottom: 8.0,
       ),
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const ComplaintPage(),
+            ),
+          );
+        },
         child: Container(
           decoration: BoxDecoration(
             border: Border.all(
