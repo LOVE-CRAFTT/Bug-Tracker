@@ -4,6 +4,7 @@ import 'package:bug_tracker/ui_components/header_button.dart';
 import 'package:bug_tracker/utilities/build_complaints.dart';
 import 'package:bug_tracker/utilities/build_new_complaint_form.dart';
 
+/// Page the user sees when logged in.
 class UserMainPage extends StatefulWidget {
   const UserMainPage({super.key});
 
