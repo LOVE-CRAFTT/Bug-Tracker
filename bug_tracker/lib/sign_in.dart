@@ -14,7 +14,7 @@ Map<String, String> users = {
   'staff': 'staffPassword',
 };
 
-void getMainScreen() {
+void setMainScreen() {
   if (userName == 'admin') {
     mainScreen = const AdminMainPage();
   } else if (userName == 'user') {
@@ -81,7 +81,7 @@ class SignInPage extends StatelessWidget {
                     if (_formKey.currentState!.validate()) {
                       if (users[userName] == password) {
                         ///Get entry point for either user, admin or staff
-                        getMainScreen();
+                        setMainScreen();
                         Navigator.push(
                           context,
                           MaterialPageRoute(
