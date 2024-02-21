@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:bug_tracker/utilities/constants.dart';
 
 class StaffMainPage extends StatefulWidget {
   const StaffMainPage({super.key});
@@ -12,8 +13,13 @@ class _StaffMainPageState extends State<StaffMainPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text(staffName),
+    return Scaffold(
+      body: Center(
+        child: Text(
+          staffName,
+          style: kContainerTextStyle,
+        ),
+      ),
     );
   }
 }
