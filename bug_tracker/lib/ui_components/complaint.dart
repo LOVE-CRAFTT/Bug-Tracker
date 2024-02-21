@@ -34,6 +34,7 @@ class Complaint extends StatelessWidget {
                 ticketNumber: ticketNumber,
                 project: projectName,
                 complaint: complaint,
+                complaintState: complaintState,
               ),
             ),
           );

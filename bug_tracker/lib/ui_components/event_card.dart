@@ -35,7 +35,7 @@ class _EventCardState extends State<EventCard> {
         onEnter: (_) => setState(() => _hover = true),
         onExit: (_) => setState(() => _hover = false),
         child: ListTile(
-          onTap: () => print(widget.event),
+          onTap: () => debugPrint(widget.event.toString()),
           leading: _hover
               ? IconButton(
                   onPressed: () {},
