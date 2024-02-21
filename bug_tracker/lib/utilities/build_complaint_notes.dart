@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 
+/// Notes from staff
 ListView buildNotes() {
   return ListView.builder(
     itemCount: noteSource.length,
