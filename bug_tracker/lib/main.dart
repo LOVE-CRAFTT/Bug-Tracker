@@ -2,7 +2,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bug_tracker/models/overview.dart';
-import 'package:bug_tracker/user_pages/user_main_page.dart';
 import 'package:bug_tracker/sign_in.dart';
 
 void main() {
@@ -33,8 +32,7 @@ class MyApp extends StatelessWidget {
         },
       ),
       title: 'Bug tracker',
-      // home: SignInPage(),
-      home: const UserMainPage(),
+      home: SignInPage(),
     );
   }
 }
