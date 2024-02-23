@@ -98,8 +98,8 @@ List<ListTile> buildTableHeaders() {
     "PROJECT",
     "REPORTER",
     "CREATED",
-    "ASSIGNEE",
     "TAGS",
+    "ASSIGNEE",
     "DUE DATE",
     "STATUS",
   ];

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/ui_components/custom_dropdown.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
-import 'package:bug_tracker/ui_components/appbar.dart';
+import 'package:bug_tracker/ui_components/admin_appbar.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/build_bug_page_table_row.dart';
 

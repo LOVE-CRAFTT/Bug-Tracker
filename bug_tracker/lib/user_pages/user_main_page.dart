@@ -39,6 +39,7 @@ class _UserMainPageState extends State<UserMainPage> {
                         top: 10.0,
                         bottom: 10.0,
                       ),
+                      //TODO: Make welcome message a row and add search functionality
                       child: Text(
                         "Welcome $usersName",
                         style: const TextStyle(

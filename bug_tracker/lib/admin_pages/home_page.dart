@@ -1,7 +1,7 @@
 import 'package:bug_tracker/models/overview.dart';
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
-import 'package:bug_tracker/ui_components/appbar.dart';
+import 'package:bug_tracker/ui_components/admin_appbar.dart';
 import 'package:provider/provider.dart';
 import 'package:bug_tracker/ui_components/fast_access_container.dart';
 
