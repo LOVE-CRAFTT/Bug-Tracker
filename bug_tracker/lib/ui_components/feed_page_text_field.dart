@@ -7,11 +7,13 @@ class DiscussionTextField extends StatelessWidget {
   const DiscussionTextField({
     super.key,
     required this.constraints,
+    required this.userInitials,
   });
 
   final BoxConstraints constraints;
   final _iconLeftPadding = 15.0;
   final _iconRightPadding = 20.0;
+  final String userInitials;
   _rightPadding(constraints) => constraints.maxWidth > 600 ? 150.0 : 50.0;
 
   @override
@@ -22,9 +24,9 @@ class DiscussionTextField extends StatelessWidget {
           padding:
               EdgeInsets.only(left: _iconLeftPadding, right: _iconRightPadding),
           child: GestureDetector(
-            child: const CircleAvatar(
+            child: CircleAvatar(
               backgroundColor: Colors.grey,
-              child: Text("BC"),
+              child: Text(userInitials),
             ),
             onTap: () {},
           ),

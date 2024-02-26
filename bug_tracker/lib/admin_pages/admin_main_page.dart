@@ -17,7 +17,7 @@ class _AdminMainPageState extends State<AdminMainPage> {
   @override
   Widget build(BuildContext context) {
     context.watch<Overview>();
-    _page = selectPage();
+    _page = selectPageAdmin();
     return Scaffold(
       body: Row(
         children: [

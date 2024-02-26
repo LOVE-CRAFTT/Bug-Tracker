@@ -140,6 +140,45 @@ List<NavigationRailDestination> kMainNavigationRailDestinations = [
     ),
 ];
 
+List<NavigationRailDestination> staffNavigationRailDestinations = [
+  NavigationRailDestination(
+    icon: Tooltip(
+      message: "Tasks",
+      textStyle: kContainerTextStyle.copyWith(
+        fontSize: 14.0,
+        color: Colors.black,
+      ),
+      child: const Icon(Icons.task_outlined),
+    ),
+    label: const Text(
+      "Tasks",
+      style: TextStyle(fontFamily: "Nunito"),
+    ),
+  ),
+  for (var value in [
+    //feed
+    navRailData.entries.elementAt(1),
+    //discuss
+    navRailData.entries.elementAt(2),
+    //calendar
+    navRailData.entries.elementAt(3),
+  ])
+    NavigationRailDestination(
+      icon: Tooltip(
+        message: value.key,
+        textStyle: kContainerTextStyle.copyWith(
+          fontSize: 14.0,
+          color: Colors.black,
+        ),
+        child: value.value,
+      ),
+      label: Text(
+        value.key,
+        style: const TextStyle(fontFamily: "Nunito"),
+      ),
+    ),
+];
+
 ///List of largeContainers in the home screen
 List<LargeContainer> largeContainers = [
   for (var type in LargeContainerTypes.values)

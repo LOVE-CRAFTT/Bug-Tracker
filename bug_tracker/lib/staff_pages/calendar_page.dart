@@ -9,14 +9,14 @@ import 'package:bug_tracker/utilities/calendar_utils.dart';
 /// User can select multiple days at once and set events for any day
 /// Toggle select range by long pressing
 /// Once a day is selected, If there are events to be shown a list of [EventCard]s with details is shown
-class AdminCalendarPage extends StatefulWidget {
-  const AdminCalendarPage({super.key});
+class StaffCalendarPage extends StatefulWidget {
+  const StaffCalendarPage({super.key});
 
   @override
-  State<AdminCalendarPage> createState() => _AdminCalendarPageState();
+  State<StaffCalendarPage> createState() => _StaffCalendarPageState();
 }
 
-class _AdminCalendarPageState extends State<AdminCalendarPage> {
+class _StaffCalendarPageState extends State<StaffCalendarPage> {
   late final ValueNotifier<List<Event>> _selectedEvents;
   CalendarFormat _calendarFormat = CalendarFormat.month;
   RangeSelectionMode _rangeSelectionMode = RangeSelectionMode.toggledOff;

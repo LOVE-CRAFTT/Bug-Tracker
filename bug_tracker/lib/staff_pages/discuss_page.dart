@@ -7,14 +7,14 @@ import 'package:bug_tracker/ui_components/header_button.dart';
 /// The discuss page is for starting conversations with individuals say for switching tasks between teams/individuals
 /// Contains a button for starting new conversations, a search button, a filter button
 /// and a table containing all the projects
-class AdminDiscussPage extends StatefulWidget {
-  const AdminDiscussPage({super.key});
+class StaffDiscussPage extends StatefulWidget {
+  const StaffDiscussPage({super.key});
 
   @override
-  State<AdminDiscussPage> createState() => _AdminDiscussPageState();
+  State<StaffDiscussPage> createState() => _StaffDiscussPageState();
 }
 
-class _AdminDiscussPageState extends State<AdminDiscussPage> {
+class _StaffDiscussPageState extends State<StaffDiscussPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

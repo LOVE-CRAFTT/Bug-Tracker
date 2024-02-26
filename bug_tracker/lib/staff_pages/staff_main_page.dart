@@ -1,6 +1,10 @@
+import 'package:bug_tracker/utilities/select_page.dart';
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
-import 'package:bug_tracker/ui_components/staff_appbar.dart';
+import 'package:bug_tracker/staff_pages/tasks_page.dart';
+
+//
+int selectedIndexStaff = 0;
 
 class StaffMainPage extends StatefulWidget {
   const StaffMainPage({super.key});
@@ -11,28 +15,27 @@ class StaffMainPage extends StatefulWidget {
 
 class _StaffMainPageState extends State<StaffMainPage> {
   String staffName = "Engineer Bill Gates";
+  late Widget _page;
 
   @override
   Widget build(BuildContext context) {
+    _page = selectPageStaff();
     return Scaffold(
-      appBar: staffReusableAppBar("Tasks"),
-      body: Center(
-        child: Row(
-          children: [
-            Expanded(
-              child: Text(
-                staffName,
-                style: kContainerTextStyle,
-              ),
-            ),
-            Expanded(
-              child: Text(
-                staffName,
-                style: kContainerTextStyle,
-              ),
-            ),
-          ],
-        ),
+      body: Row(
+        children: [
+          NavigationRail(
+            destinations: staffNavigationRailDestinations,
+            selectedIndex: selectedIndexStaff,
+            onDestinationSelected: (index) {
+              setState(() {
+                selectedIndexStaff = index;
+              });
+            },
+          ),
+          Expanded(
+            child: _page,
+          ),
+        ],
       ),
     );
   }

@@ -2,24 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/ui_components/admin_appbar.dart';
 import 'package:bug_tracker/ui_components/custom_dropdown.dart';
-import 'package:bug_tracker/ui_components/bug_reports.dart';
 import 'package:bug_tracker/ui_components/feed_page_text_field.dart';
 import 'package:bug_tracker/ui_components/activities.dart';
 
 /// This page contains a dropdown button for switching between projects
 /// A text field to start conversations and pages containing the feed, and activity stream
 /// The feed page in contrast to the discussion page is for starting general conversations
-class AdminFeedPage extends StatefulWidget {
-  const AdminFeedPage({super.key});
+class StaffFeedPage extends StatefulWidget {
+  const StaffFeedPage({super.key});
 
   @override
-  State<AdminFeedPage> createState() => _AdminFeedPageState();
+  State<StaffFeedPage> createState() => _StaffFeedPageState();
 }
 
-class _AdminFeedPageState extends State<AdminFeedPage> {
+class _StaffFeedPageState extends State<StaffFeedPage> {
   String? dropDownValue = feedChoices.first;
   final _spacingHeight = 50.0;
-  final _numberOfPages = 2;
   final _pageHeight = 600.0;
   final _leftPadding = 75.0;
   _rightPadding(constraints) => constraints.maxWidth > 600 ? 150.0 : 50.0;
@@ -27,7 +25,7 @@ class _AdminFeedPageState extends State<AdminFeedPage> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: _numberOfPages,
+      length: 1,
       child: Scaffold(
         appBar: adminReusableAppBar("Feed"),
         body: ListView(
@@ -52,7 +50,7 @@ class _AdminFeedPageState extends State<AdminFeedPage> {
                     ),
                     DiscussionTextField(
                       constraints: constraints,
-                      userInitials: "BC",
+                      userInitials: "BG",
                     ),
                     SizedBox(
                       height: _spacingHeight,
@@ -60,7 +58,6 @@ class _AdminFeedPageState extends State<AdminFeedPage> {
                     TabBar(
                       tabs: const [
                         Text("Bug Reports", style: kContainerTextStyle),
-                        Text("Activity Stream", style: kContainerTextStyle),
                       ],
                       indicatorColor: secondaryThemeColor,
                       padding: EdgeInsets.only(
@@ -78,7 +75,6 @@ class _AdminFeedPageState extends State<AdminFeedPage> {
                         ),
                         child: const TabBarView(
                           children: [
-                            BugReports(),
                             Activities(),
                           ],
                         ),
