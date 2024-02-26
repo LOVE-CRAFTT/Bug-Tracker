@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/build_discuss_page_table_row.dart';
-import 'package:bug_tracker/ui_components/admin_appbar.dart';
+import 'package:bug_tracker/ui_components/staff_appbar.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
 
 /// The discuss page is for starting conversations with individuals say for switching tasks between teams/individuals
@@ -18,7 +18,7 @@ class _StaffDiscussPageState extends State<StaffDiscussPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: adminReusableAppBar("Discuss"),
+      appBar: staffReusableAppBar("Discuss"),
       body: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
           var screenIsWide = constraints.maxWidth > 400;

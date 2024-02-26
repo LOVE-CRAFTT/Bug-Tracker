@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:bug_tracker/ui_components/admin_appbar.dart';
+import 'package:bug_tracker/ui_components/staff_appbar.dart';
 import 'package:bug_tracker/ui_components/event_card.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -85,7 +85,7 @@ class _StaffCalendarPageState extends State<StaffCalendarPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: adminReusableAppBar("Calendar"),
+      appBar: staffReusableAppBar("Calendar"),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
-import 'package:bug_tracker/ui_components/admin_appbar.dart';
 import 'package:bug_tracker/ui_components/custom_dropdown.dart';
 import 'package:bug_tracker/ui_components/feed_page_text_field.dart';
 import 'package:bug_tracker/ui_components/activities.dart';
+import 'package:bug_tracker/ui_components/staff_appbar.dart';
 
 /// This page contains a dropdown button for switching between projects
 /// A text field to start conversations and pages containing the feed, and activity stream
@@ -27,7 +27,7 @@ class _StaffFeedPageState extends State<StaffFeedPage> {
     return DefaultTabController(
       length: 1,
       child: Scaffold(
-        appBar: adminReusableAppBar("Feed"),
+        appBar: staffReusableAppBar("Feed"),
         body: ListView(
           children: [
             LayoutBuilder(
@@ -57,7 +57,7 @@ class _StaffFeedPageState extends State<StaffFeedPage> {
                     ),
                     TabBar(
                       tabs: const [
-                        Text("Bug Reports", style: kContainerTextStyle),
+                        Text("Activities", style: kContainerTextStyle),
                       ],
                       indicatorColor: secondaryThemeColor,
                       padding: EdgeInsets.only(
