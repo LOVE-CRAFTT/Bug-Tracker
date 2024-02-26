@@ -1,7 +1,6 @@
 import 'package:bug_tracker/utilities/select_page.dart';
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
-import 'package:bug_tracker/staff_pages/tasks_page.dart';
 
 //
 int selectedIndexStaff = 0;
