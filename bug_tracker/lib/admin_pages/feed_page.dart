@@ -29,7 +29,7 @@ class _FeedPageState extends State<FeedPage> {
     return DefaultTabController(
       length: _numberOfPages,
       child: Scaffold(
-        appBar: reusableAppBar("Feed"),
+        appBar: adminReusableAppBar("Feed"),
         body: ListView(
           children: [
             LayoutBuilder(

@@ -29,6 +29,12 @@ const TextStyle kCalendarCellTextStyle = TextStyle(
   fontFamily: "Nunito",
 );
 
+///TextStyle for appbar tooltips
+TextStyle kAppBarTooltipTextStyle = kContainerTextStyle.copyWith(
+  color: Colors.black,
+  fontSize: 14.0,
+);
+
 CalendarStyle kCalendarStyle = CalendarStyle(
   outsideDaysVisible: false,
   defaultTextStyle: kContainerTextStyle,
@@ -111,7 +117,6 @@ Map<String, Icon> navRailData = {
   'Feed': const Icon(Icons.feed),
   'Discuss': const Icon(Icons.chat_outlined),
   'Calendar': const Icon(Icons.calendar_month),
-  // Not for staff will replace when doing the admin
   'Projects': const Icon(Icons.work_outline),
   'Bugs': const Icon(Icons.bug_report),
   'Milestones': const Icon(Icons.flag),

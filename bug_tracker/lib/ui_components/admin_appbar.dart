@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 
 ///AppBar at the top of every page
-AppBar reusableAppBar(String pageName) {
+AppBar adminReusableAppBar(String pageName) {
   return AppBar(
     title: Text(
       pageName,

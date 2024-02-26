@@ -22,7 +22,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: reusableAppBar("Home"),
+      appBar: adminReusableAppBar("Home"),
       body: ListView(
         children: [
           Padding(

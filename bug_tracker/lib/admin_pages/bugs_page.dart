@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/ui_components/custom_dropdown.dart';
-import 'package:bug_tracker/ui_components/header_button.dart';
 import 'package:bug_tracker/ui_components/admin_appbar.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/build_bug_page_table_row.dart';
@@ -19,10 +18,9 @@ class _BugsPageState extends State<BugsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: reusableAppBar("Bugs"),
+      appBar: adminReusableAppBar("Bugs"),
       body: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
-          var screenIsWide = constraints.maxWidth > 400;
           return Padding(
             padding: const EdgeInsets.all(15.0),
             child: ListView(
@@ -40,11 +38,6 @@ class _BugsPageState extends State<BugsPage> {
                       constraints: constraints,
                     ),
                     Expanded(child: Container()),
-                    HeaderButton(
-                      screenIsWide: screenIsWide,
-                      buttonText: "Submit Bug",
-                      onPress: () {},
-                    ),
                     Padding(
                       padding: const EdgeInsets.only(left: 20.0),
                       child: IconButton(

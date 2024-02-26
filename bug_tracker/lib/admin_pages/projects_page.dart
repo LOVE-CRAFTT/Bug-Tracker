@@ -20,7 +20,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: reusableAppBar("Projects"),
+        appBar: adminReusableAppBar("Projects"),
         body: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
             var screenIsWide = constraints.maxWidth > 400;
