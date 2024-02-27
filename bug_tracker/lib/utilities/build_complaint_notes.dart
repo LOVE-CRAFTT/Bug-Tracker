@@ -51,6 +51,7 @@ ListView buildNotes() {
   );
 }
 
+/// Lorem ipsum notes
 List<String> noteSource = [
   "ACTION PLAN \n"
       "Step 1: \n"

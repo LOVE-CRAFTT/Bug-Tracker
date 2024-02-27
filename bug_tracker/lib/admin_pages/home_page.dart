@@ -31,35 +31,21 @@ class _HomePageState extends State<HomePage> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Welcome $adminName",
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontFamily: "Nunito",
-                        color: Color(0xFFb6b8aa),
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.more_horiz),
-                    ),
-                  ],
+                Text(
+                  "Welcome $adminName",
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontFamily: "Nunito",
+                    color: Color(0xFFb6b8aa),
+                  ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Company: $companyName",
-                      style: const TextStyle(
-                        fontSize: 15,
-                        fontFamily: "Nunito",
-                        color: Color(0xFFb6b8aa),
-                      ),
-                    ),
-                  ],
+                Text(
+                  "Company: $companyName",
+                  style: const TextStyle(
+                    fontSize: 15,
+                    fontFamily: "Nunito",
+                    color: Color(0xFFb6b8aa),
+                  ),
                 ),
                 const SizedBox(
                   height: 20,
