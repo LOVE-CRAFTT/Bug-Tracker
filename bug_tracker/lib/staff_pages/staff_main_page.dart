@@ -13,7 +13,6 @@ class StaffMainPage extends StatefulWidget {
 }
 
 class _StaffMainPageState extends State<StaffMainPage> {
-  String staffName = "Bill Gates";
   late Widget _page;
 
   @override

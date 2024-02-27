@@ -22,81 +22,79 @@ class _UserMainPageState extends State<UserMainPage> {
       body: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
           var screenIsWide = constraints.maxWidth > 400;
-          return ListView(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 15,
-                  right: 10,
-                  top: 10,
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        top: 10.0,
-                        bottom: 10.0,
-                      ),
-                      //TODO: Make welcome message a row and add search functionality
-                      child: Text(
-                        "Welcome $usersName",
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontFamily: "Nunito",
-                          color: Color(0xFFb6b8aa),
-                        ),
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.only(
+                left: 15,
+                right: 10,
+                top: 10,
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: 10.0,
+                      bottom: 10.0,
+                    ),
+                    //TODO: Make welcome message a row and add search functionality based on complaint ID
+                    child: Text(
+                      "Welcome $usersName",
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontFamily: "Nunito",
+                        color: Color(0xFFb6b8aa),
                       ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        CustomDropDown(
-                          dropDownValue: dropDownValue,
-                          onChanged: (selected) {
-                            setState(
-                              () {
-                                dropDownValue = selected;
-                              },
-                            );
-                          },
-                          constraints: constraints,
-                          page: DropdownPage.userComplaintsPage,
-                        ),
-                        HeaderButton(
-                          screenIsWide: screenIsWide,
-                          buttonText: "New Complaint",
-                          onPress: () {
-                            buildNewComplaintForm(
-                              context: context,
-                              constraints: constraints,
-                            );
-                          },
-                        )
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10.0,
-                    ),
-                    Container(
-                      height: constraints.maxHeight - 113 > 0
-                          ? constraints.maxHeight - 113
-                          : 0,
-                      width: constraints.maxWidth,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF363739),
-                        borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      CustomDropDown(
+                        dropDownValue: dropDownValue,
+                        onChanged: (selected) {
+                          setState(
+                            () {
+                              dropDownValue = selected;
+                            },
+                          );
+                        },
+                        constraints: constraints,
+                        page: DropdownPage.userComplaintsPage,
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: buildComplaints(),
-                      ),
+                      HeaderButton(
+                        screenIsWide: screenIsWide,
+                        buttonText: "New Complaint",
+                        onPress: () {
+                          buildNewComplaintForm(
+                            context: context,
+                            constraints: constraints,
+                          );
+                        },
+                      )
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 10.0,
+                  ),
+                  Container(
+                    height: constraints.maxHeight - 113 > 0
+                        ? constraints.maxHeight - 113
+                        : 0,
+                    width: constraints.maxWidth,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF363739),
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
-                  ],
-                ),
-              )
-            ],
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: buildComplaints(),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           );
         },
       ),

@@ -6,5 +6,5 @@ user screen => user sees a single page that contains a list of previous complain
 
 staff tasks => Just a list of tasks, with the accompanying project.
                 The admin sees a bug, clicks it and the form that opens up shows a place to add team members
-                A team member is assigned as the team lead, they are responsible for updating milestones.
+                A team member is assigned as the team lead, they are responsible for updating milestones and adding notes for the user.
                 for each team member, the admin assigns tasks, which is what they see in their tasks page
