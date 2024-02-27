@@ -1,0 +1,10 @@
+feed page: feed=> user complaints, activity stream => bug opened/ closed, milestone opened/closed ...
+
+user screen => user sees a single page that contains a list of previous complaints and a button to add new complaints
+                previous complaints can be sorted by closed or open.
+                Also a search button for finding bugs
+
+staff tasks => Just a list of tasks, with the accompanying project.
+                The admin sees a bug, clicks it and the form that opens up shows a place to add team members
+                A team member is assigned as the team lead, they are responsible for updating milestones.
+                for each team member, the admin assigns tasks, which is what they see in their tasks page
