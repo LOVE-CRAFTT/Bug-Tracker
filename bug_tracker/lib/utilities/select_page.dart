@@ -12,7 +12,7 @@ import 'package:bug_tracker/admin_pages/projects_page.dart';
 
 //=============== STAFF ===========
 import 'package:bug_tracker/staff_pages/staff_main_page.dart';
-import 'package:bug_tracker/staff_pages/tasks_page.dart';
+import 'package:bug_tracker/staff_pages/staff_tasks_page.dart';
 import 'package:bug_tracker/staff_pages/feed_page.dart';
 import 'package:bug_tracker/staff_pages/discuss_page.dart';
 import 'package:bug_tracker/staff_pages/calendar_page.dart';

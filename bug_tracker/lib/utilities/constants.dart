@@ -110,7 +110,7 @@ DaysOfWeekStyle kCalendarDOWStyle = const DaysOfWeekStyle(
 ///Used as the secondary theme color to contrast from the grey/black background
 const Color secondaryThemeColor = Color(0xFFFF6400);
 const Color secondaryThemeColorGreen = Color(0xFF99FF00);
-const Color secondaryThemeColorBrightBlue = Color(0xFF0000FF);
+const Color secondaryThemeColorBlue = Color(0xFFADD8E6);
 const Color lightAshyNavyBlue = Color(0xFF3D4042);
 
 Map<String, Icon> navRailData = {
@@ -225,6 +225,18 @@ enum ComplaintState {
   completed(title: "Completed", associatedColor: Colors.green);
 
   const ComplaintState({required this.title, required this.associatedColor});
+  final String title;
+  final Color associatedColor;
+}
+
+enum TaskState {
+  newTask(title: "New (2 days)", associatedColor: Colors.orange),
+  inProgress(title: "In Progress", associatedColor: Colors.blue),
+  dueToday(title: "Due Today", associatedColor: Colors.yellow),
+  completed(title: "Completed", associatedColor: Colors.green),
+  overdue(title: "Overdue", associatedColor: Colors.red);
+
+  const TaskState({required this.title, required this.associatedColor});
   final String title;
   final Color associatedColor;
 }

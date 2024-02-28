@@ -30,6 +30,14 @@ List<String?> complaintsChoices = [
   "In Progress",
   "Completed",
 ];
+List<String?> tasksChoices = [
+  "All tasks",
+  "New (2 days)",
+  "In Progress",
+  "Due Today",
+  "Completed",
+  "Overdue",
+];
 
 ///Pages that have a dropdown button
 enum DropdownPage {
@@ -37,7 +45,8 @@ enum DropdownPage {
   milestonePage,
   bugPage,
   projectPage,
-  userComplaintsPage,
+  complaintsPage,
+  tasksPage,
 }
 
 /// Dropdown button below the appbar on the feed page, bug page and milestone page
@@ -76,8 +85,10 @@ class CustomDropDown extends StatelessWidget {
       return projectChoices;
     } else if (page == DropdownPage.bugPage) {
       return bugChoices;
-    } else {
+    } else if (page == DropdownPage.complaintsPage) {
       return complaintsChoices;
+    } else {
+      return tasksChoices;
     }
   }
 

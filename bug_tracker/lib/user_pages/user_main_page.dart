@@ -61,7 +61,7 @@ class _UserMainPageState extends State<UserMainPage> {
                           );
                         },
                         constraints: constraints,
-                        page: DropdownPage.userComplaintsPage,
+                        page: DropdownPage.complaintsPage,
                       ),
                       HeaderButton(
                         screenIsWide: screenIsWide,
