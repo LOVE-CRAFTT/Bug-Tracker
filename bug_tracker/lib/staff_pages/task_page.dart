@@ -131,7 +131,10 @@ class _TaskPageState extends State<TaskPage> {
                     child: buildFilesPlaceHolders(),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(20.0),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10.0,
+                      vertical: 20.0,
+                    ),
                     child: Text(
                       "TASK: ${widget.task}",
                       style: kContainerTextStyle.copyWith(
@@ -193,6 +196,10 @@ class _TaskPageState extends State<TaskPage> {
                       ),
                     ),
                   ),
+                  SizedBox(
+                    height: 50,
+                    child: buildTeamMembers(),
+                  )
                 ],
               ),
             ),
@@ -217,6 +224,42 @@ ListView buildFilesPlaceHolders() {
           decoration: BoxDecoration(
             color: Colors.greenAccent,
             borderRadius: BorderRadius.circular(10.0),
+          ),
+        ),
+      );
+    },
+  );
+}
+
+/// Will also replace with real team members
+ListView buildTeamMembers() {
+  return ListView.builder(
+    scrollDirection: Axis.horizontal,
+    itemCount: 3,
+    itemBuilder: (BuildContext context, int index) {
+      List teamMembers = [
+        "Alan Broker",
+        "Windsor Elizabeth",
+        "Winston Churchill",
+      ];
+      List teamMembersInitials = ["AB", "WE", "WC"];
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 3.0),
+        child: Tooltip(
+          message: teamMembers[index],
+          textStyle: kContainerTextStyle.copyWith(
+            color: Colors.black,
+            fontSize: 14,
+          ),
+          child: CircleAvatar(
+            backgroundColor: Colors.grey,
+            radius: 30,
+            child: Text(
+              teamMembersInitials[index],
+              style: kContainerTextStyle.copyWith(
+                color: Colors.black,
+              ),
+            ),
           ),
         ),
       );
