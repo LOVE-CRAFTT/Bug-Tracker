@@ -5,7 +5,7 @@ import 'package:bug_tracker/utilities/tools.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
 import 'package:bug_tracker/ui_components/complaint.dart';
 
-class TaskPage extends StatelessWidget {
+class TaskPage extends StatefulWidget {
   const TaskPage({
     super.key,
     required this.isTeamLead,
@@ -17,6 +17,11 @@ class TaskPage extends StatelessWidget {
   final Complaint complaint;
   final String task;
 
+  @override
+  State<TaskPage> createState() => _TaskPageState();
+}
+
+class _TaskPageState extends State<TaskPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +42,7 @@ class TaskPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Project: ${complaint.projectName}",
+                          "Project: ${widget.complaint.projectName}",
                           style: kContainerTextStyle.copyWith(
                             fontSize: 15.0,
                           ),
@@ -54,7 +59,7 @@ class TaskPage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Text(
-                      "Complaint ID: ${complaint.ticketNumber}",
+                      "Complaint ID: ${widget.complaint.ticketNumber}",
                       style: kContainerTextStyle.copyWith(
                         fontSize: 14.0,
                       ),
@@ -63,7 +68,7 @@ class TaskPage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Text(
-                      "Complaint: ${complaint.complaint}",
+                      "Complaint: ${widget.complaint.complaint}",
                       style: kContainerTextStyle.copyWith(
                         fontSize: 16.0,
                       ),
@@ -128,7 +133,7 @@ class TaskPage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Text(
-                      "TASK: $task",
+                      "TASK: ${widget.task}",
                       style: kContainerTextStyle.copyWith(
                         fontSize: 25.0,
                         color: Colors.white,
@@ -165,7 +170,27 @@ class TaskPage extends StatelessWidget {
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
-                      child: buildMilestones(isUpdate: true),
+                      child: buildMilestones(
+                        isUpdatePage: false,
+                        redraw: () {
+                          setState(() {});
+                        },
+                      ),
+                    ),
+                  ),
+
+                  ///Team member(s)
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 10.0,
+                      right: 10.0,
+                      top: 20.0,
+                    ),
+                    child: Text(
+                      "Team Member(s): ",
+                      style: kContainerTextStyle.copyWith(
+                        fontSize: 16.0,
+                      ),
                     ),
                   ),
                 ],
