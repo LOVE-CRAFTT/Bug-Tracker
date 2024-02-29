@@ -11,3 +11,6 @@ staff tasks => Just a list of tasks, with the accompanying project.
 
 
                 - Task will have associated complaint, task title and project
+
+for admin => When a complaint is opened for the first time, it is automatically marked as acknowledged
+             and once team member(s) are given it is marked as in progress

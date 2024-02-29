@@ -56,6 +56,44 @@ class ComplaintPage extends StatelessWidget {
                     ),
                   ),
 
+                  /// Below is an expanded uneditable text field title "Complaint Notes" showing any additional notes from the user if any
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 20.0,
+                      right: 20.0,
+                      top: 20.0,
+                    ),
+                    child: Text(
+                      "Complaint Notes",
+                      style: kContainerTextStyle.copyWith(
+                        fontSize: 16.0,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Container(
+                      height: constraints.maxHeight - 450 > 0
+                          ? constraints.maxHeight - 450
+                          : 0,
+                      decoration: BoxDecoration(
+                        color: lightAshyNavyBlue,
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: SingleChildScrollView(
+                          child: Text(
+                            complaintNotesPlaceholder,
+                            style: kContainerTextStyle.copyWith(
+                              fontSize: 15.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+
                   /// All states of the complaints are available as chips and they are each grayed out or colored
                   /// based on the state of the complaint
                   /// Enums are compared with names because the hashCodes change as new objects are created

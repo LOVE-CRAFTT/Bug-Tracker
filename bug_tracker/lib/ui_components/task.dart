@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
-import 'package:bug_tracker/user_pages/complaint_page.dart';
+import 'package:bug_tracker/staff_pages/task_page.dart';
 import 'package:bug_tracker/ui_components/complaint.dart';
 
 /// Widget to describe a complaint in the user page
@@ -26,17 +26,16 @@ class Task extends StatelessWidget {
       ),
       child: InkWell(
         onTap: () {
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(
-          //     builder: (context) => ComplaintPage(
-          //       ticketNumber: ticketNumber,
-          //       project: projectName,
-          //       complaint: complaint,
-          //       complaintState: complaintState,
-          //     ),
-          //   ),
-          // );
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => TaskPage(
+                isTeamLead: true,
+                task: task,
+                complaint: complaint,
+              ),
+            ),
+          );
         },
         child: Container(
           decoration: BoxDecoration(
