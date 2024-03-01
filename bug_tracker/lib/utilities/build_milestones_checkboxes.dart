@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 
 List<bool> isChecked = [true, false, true];
 
-ListView buildMilestones({
+TextStyle checkboxTextStyle = kContainerTextStyle.copyWith(color: Colors.white);
+
+ListView buildMilestonesCheckboxes({
   required bool isUpdatePage,
   required VoidCallback redraw,
 }) {
@@ -15,9 +17,6 @@ ListView buildMilestones({
           }
         : null;
   }
-
-  TextStyle checkboxTextStyle =
-      kContainerTextStyle.copyWith(color: Colors.white);
 
   List<CheckboxListTile> mileStoneSource = [
     CheckboxListTile(

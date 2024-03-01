@@ -7,7 +7,7 @@ late int projectID;
 late String bugTitle;
 
 /// Nullable in case the user doesn't input any notes
-String? userNotes;
+String userNotes = "";
 
 final TextEditingController projectIdController = TextEditingController();
 final TextEditingController bugTitleController = TextEditingController();
@@ -83,7 +83,7 @@ Future buildNewComplaintForm({
                     expands: true,
                     validator: (notes) {
                       ///Notes can be empty
-                      userNotes = notes;
+                      userNotes = notes ?? "";
                       return null;
                     },
                   ),

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
-import 'package:bug_tracker/utilities/build_milestones.dart';
+import 'package:bug_tracker/utilities/build_milestones_checkboxes.dart';
 import 'package:bug_tracker/utilities/tools.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
 import 'package:bug_tracker/ui_components/complaint.dart';
+import 'package:bug_tracker/utilities/build_tasks_update_page.dart';
 
 class TaskPage extends StatefulWidget {
   const TaskPage({
@@ -51,7 +52,12 @@ class _TaskPageState extends State<TaskPage> {
                         HeaderButton(
                           screenIsWide: screenIsWide,
                           buttonText: "Update",
-                          onPress: () {},
+                          onPress: () {
+                            buildTaskUpdatePage(
+                              context: context,
+                              constraints: constraints,
+                            );
+                          },
                         )
                       ],
                     ),
@@ -173,7 +179,7 @@ class _TaskPageState extends State<TaskPage> {
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
-                      child: buildMilestones(
+                      child: buildMilestonesCheckboxes(
                         isUpdatePage: false,
                         redraw: () {
                           setState(() {});
