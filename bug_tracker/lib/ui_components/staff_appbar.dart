@@ -50,9 +50,14 @@ AppBar staffReusableAppBar(String pageName) {
           textStyle: kContainerTextStyle.copyWith(
             color: Colors.black,
           ),
-          child: const CircleAvatar(
+          child: CircleAvatar(
             backgroundColor: Colors.grey,
-            child: Text("BG"),
+            child: Text(
+              "BG",
+              style: kContainerTextStyle.copyWith(
+                color: Colors.black,
+              ),
+            ),
           ),
         ),
         onTap: () {},
