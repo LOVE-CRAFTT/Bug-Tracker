@@ -247,15 +247,18 @@ class _TasksUpdatePageState extends State<TasksUpdatePage> {
           /// Once done is clicked navigator.pop and then redraw
           Align(
             alignment: Alignment.bottomRight,
-            child: HeaderButton(
-              screenIsWide: true,
-              buttonText: "Done",
-              onPress: () {
-                Navigator.pop(context);
-                widget.redraw();
-                transferTaskController.clear();
-                userNoteController.clear();
-              },
+            child: Padding(
+              padding: const EdgeInsets.all(40.0),
+              child: HeaderButton(
+                screenIsWide: true,
+                buttonText: "Done",
+                onPress: () {
+                  Navigator.pop(context);
+                  widget.redraw();
+                  transferTaskController.clear();
+                  userNoteController.clear();
+                },
+              ),
             ),
           )
         ],
