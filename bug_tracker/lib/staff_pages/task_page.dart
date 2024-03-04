@@ -12,11 +12,13 @@ class TaskPage extends StatefulWidget {
     required this.isTeamLead,
     required this.task,
     required this.complaint,
+    required this.dueDate,
   });
 
   final bool isTeamLead;
   final Complaint complaint;
   final String task;
+  final String dueDate;
 
   @override
   State<TaskPage> createState() => _TaskPageState();
@@ -76,11 +78,22 @@ class _TaskPageState extends State<TaskPage> {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(10.0),
-                    child: Text(
-                      "Complaint: ${widget.complaint.complaint}",
-                      style: kContainerTextStyle.copyWith(
-                        fontSize: 16.0,
-                      ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Complaint: ${widget.complaint.complaint}",
+                          style: kContainerTextStyle.copyWith(
+                            fontSize: 16.0,
+                          ),
+                        ),
+                        Text(
+                          "Due date: ${widget.dueDate}",
+                          style: kContainerTextStyle.copyWith(
+                            fontSize: 16.0,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
 

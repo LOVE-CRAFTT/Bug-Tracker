@@ -36,9 +36,9 @@ class MyApp extends StatelessWidget {
       ),
       title: 'Bug tracker',
       // home: SignInPage(),
-      // home: const StaffMainPage(),
+      home: const StaffMainPage(),
       // home: const AdminMainPage(),
-      home: const UserMainPage(),
+      // home: const UserMainPage(),
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
+import 'package:bug_tracker/utilities/tools.dart';
 import 'package:bug_tracker/staff_pages/task_page.dart';
 import 'package:bug_tracker/ui_components/complaint.dart';
 
@@ -11,11 +12,13 @@ class Task extends StatelessWidget {
     required this.task,
     required this.taskState,
     required this.complaint,
+    required this.dueDate,
   });
 
   final Complaint complaint;
   final String task;
   final TaskState taskState;
+  final DateTime dueDate;
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +36,7 @@ class Task extends StatelessWidget {
                 isTeamLead: true,
                 task: task,
                 complaint: complaint,
+                dueDate: convertToDateString(dueDate),
               ),
             ),
           );
@@ -49,11 +53,22 @@ class Task extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  "Complaint ID: ${complaint.ticketNumber}",
-                  style: kContainerTextStyle.copyWith(
-                    fontSize: 11,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Complaint ID: ${complaint.ticketNumber}",
+                      style: kContainerTextStyle.copyWith(
+                        fontSize: 11,
+                      ),
+                    ),
+                    Text(
+                      "Due date: ${convertToDateString(dueDate)}",
+                      style: kContainerTextStyle.copyWith(
+                        fontSize: 12,
+                      ),
+                    ),
+                  ],
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(

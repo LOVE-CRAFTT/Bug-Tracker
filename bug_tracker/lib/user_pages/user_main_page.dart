@@ -4,6 +4,7 @@ import 'package:bug_tracker/ui_components/header_button.dart';
 import 'package:bug_tracker/utilities/build_complaints.dart';
 import 'package:bug_tracker/utilities/build_new_complaint_form.dart';
 import 'package:bug_tracker/utilities/constants.dart';
+import 'package:bug_tracker/utilities/tools.dart';
 
 /// Page the user sees when logged in.
 class UserMainPage extends StatefulWidget {
@@ -78,8 +79,8 @@ class _UserMainPageState extends State<UserMainPage> {
                               ? constraints.maxWidth * 0.4
                               : constraints.maxWidth * 0.65,
                         ),
-                        textStyle: const MaterialStatePropertyAll<TextStyle>(
-                          kContainerTextStyle,
+                        textStyle: MaterialStatePropertyAll<TextStyle>(
+                          kContainerTextStyle.copyWith(),
                         ),
                         hintText: "Search complaints",
                         hintStyle: MaterialStatePropertyAll<TextStyle>(
@@ -105,9 +106,10 @@ class _UserMainPageState extends State<UserMainPage> {
                     height: 10.0,
                   ),
                   Container(
-                    height: constraints.maxHeight - 113 > 0
-                        ? constraints.maxHeight - 113
-                        : 0,
+                    height: determineContainerDimensionFromConstraint(
+                      constraintValue: constraints.maxHeight,
+                      subtractValue: 113,
+                    ),
                     width: constraints.maxWidth,
                     decoration: BoxDecoration(
                       color: const Color(0xFF363739),

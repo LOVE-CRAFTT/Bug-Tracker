@@ -11,3 +11,8 @@ double determineContainerDimensionFromConstraint(
       ? constraintValue - subtractValue
       : 0;
 }
+
+///
+String convertToDateString(DateTime dateTime) {
+  return "${dateTime.year}-${dateTime.month}-${dateTime.day}";
+}
