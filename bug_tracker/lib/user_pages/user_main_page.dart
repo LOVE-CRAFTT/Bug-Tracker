@@ -3,6 +3,7 @@ import 'package:bug_tracker/ui_components/custom_dropdown.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
 import 'package:bug_tracker/utilities/build_complaints.dart';
 import 'package:bug_tracker/utilities/build_new_complaint_form.dart';
+import 'package:bug_tracker/utilities/constants.dart';
 
 /// Page the user sees when logged in.
 class UserMainPage extends StatefulWidget {
@@ -62,6 +63,31 @@ class _UserMainPageState extends State<UserMainPage> {
                         },
                         constraints: constraints,
                         page: DropdownPage.complaintsPage,
+                      ),
+                      SearchBar(
+                        leading: const Icon(Icons.search),
+                        padding: const MaterialStatePropertyAll<EdgeInsets>(
+                          EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                        ),
+                        constraints: BoxConstraints(
+                          maxHeight: 56.0,
+
+                          /// The width is 40% of the screen is the screen is "wide"
+                          /// Else it takes up 65%
+                          maxWidth: screenIsWide
+                              ? constraints.maxWidth * 0.4
+                              : constraints.maxWidth * 0.65,
+                        ),
+                        textStyle: const MaterialStatePropertyAll<TextStyle>(
+                          kContainerTextStyle,
+                        ),
+                        hintText: "Search complaints",
+                        hintStyle: MaterialStatePropertyAll<TextStyle>(
+                          kContainerTextStyle.copyWith(fontSize: 14.0),
+                        ),
+                        onChanged: (input) {
+                          ///set state here to rebuild complaints
+                        },
                       ),
                       HeaderButton(
                         screenIsWide: screenIsWide,

@@ -22,6 +22,7 @@ class _TasksPageState extends State<TasksPage> {
       appBar: staffReusableAppBar("Tasks"),
       body: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
+          var screenIsWide = constraints.maxWidth > 400;
           return SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.only(
@@ -49,23 +50,56 @@ class _TasksPageState extends State<TasksPage> {
                       color: Color(0xFFb6b8aa),
                     ),
                   ),
+
+                  /// Dropdown value and search tasks
                   Padding(
                     padding: const EdgeInsets.symmetric(
                       vertical: 10.0,
                     ),
-                    child: CustomDropDown(
-                      dropDownValue: dropDownValue,
-                      onChanged: (selected) {
-                        setState(
-                          () {
-                            dropDownValue = selected;
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        CustomDropDown(
+                          dropDownValue: dropDownValue,
+                          onChanged: (selected) {
+                            setState(
+                              () {
+                                dropDownValue = selected;
 
-                            ///sort
+                                ///sort
+                              },
+                            );
                           },
-                        );
-                      },
-                      constraints: constraints,
-                      page: DropdownPage.tasksPage,
+                          constraints: constraints,
+                          page: DropdownPage.tasksPage,
+                        ),
+                        SearchBar(
+                          leading: const Icon(Icons.search),
+                          padding: const MaterialStatePropertyAll<EdgeInsets>(
+                            EdgeInsets.symmetric(
+                                horizontal: 16.0, vertical: 8.0),
+                          ),
+                          constraints: BoxConstraints(
+                            maxHeight: 56.0,
+
+                            /// The width is 40% of the screen is the screen is "wide"
+                            /// Else it takes up 65%
+                            maxWidth: screenIsWide
+                                ? constraints.maxWidth * 0.4
+                                : constraints.maxWidth * 0.65,
+                          ),
+                          textStyle: const MaterialStatePropertyAll<TextStyle>(
+                            kContainerTextStyle,
+                          ),
+                          hintText: "Search tasks",
+                          hintStyle: MaterialStatePropertyAll<TextStyle>(
+                            kContainerTextStyle.copyWith(fontSize: 14.0),
+                          ),
+                          onChanged: (input) {
+                            ///set state here to rebuild tasks
+                          },
+                        ),
+                      ],
                     ),
                   ),
                   Padding(
