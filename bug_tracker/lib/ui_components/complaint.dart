@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
+import 'package:bug_tracker/utilities/tools.dart';
 import 'package:bug_tracker/user_pages/complaint_page.dart';
 
 /// Widget to describe a complaint in the user page
@@ -11,12 +12,14 @@ class Complaint extends StatelessWidget {
     required this.complaint,
     required this.complaintState,
     required this.projectName,
+    required this.dateCreated,
   });
 
   final int ticketNumber;
   final String complaint;
   final ComplaintState complaintState;
   final String projectName;
+  final DateTime dateCreated;
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +38,7 @@ class Complaint extends StatelessWidget {
                 project: projectName,
                 complaint: complaint,
                 complaintState: complaintState,
+                dateCreated: convertToDateString(dateCreated),
               ),
             ),
           );
@@ -51,9 +55,23 @@ class Complaint extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  "#$ticketNumber",
-                  style: kContainerTextStyle.copyWith(fontSize: 11),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 3.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "#$ticketNumber",
+                        style: kContainerTextStyle.copyWith(fontSize: 11),
+                      ),
+                      Text(
+                        "Date Created: ${convertToDateString(dateCreated)}",
+                        style: kContainerTextStyle.copyWith(
+                          fontSize: 11.0,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

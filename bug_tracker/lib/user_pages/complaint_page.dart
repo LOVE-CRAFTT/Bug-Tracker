@@ -9,11 +9,13 @@ class ComplaintPage extends StatelessWidget {
     required this.project,
     required this.complaint,
     required this.complaintState,
+    required this.dateCreated,
   });
 
   final int ticketNumber;
   final String project;
   final String complaint;
+  final String dateCreated;
   final ComplaintState complaintState;
 
   @override
@@ -30,11 +32,22 @@ class ComplaintPage extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(20.0),
-                    child: Text(
-                      "Complaint ID: $ticketNumber",
-                      style: kContainerTextStyle.copyWith(
-                        fontSize: 14.0,
-                      ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Complaint ID: $ticketNumber",
+                          style: kContainerTextStyle.copyWith(
+                            fontSize: 14.0,
+                          ),
+                        ),
+                        Text(
+                          "Date Created: $dateCreated",
+                          style: kContainerTextStyle.copyWith(
+                            fontSize: 14.0,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   Padding(
