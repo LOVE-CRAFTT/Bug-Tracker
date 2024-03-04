@@ -11,37 +11,11 @@ AppBar staffReusableAppBar(String pageName) {
     backgroundColor: Colors.black,
     actions: [
       Tooltip(
-        message: "Search",
-        textStyle: kAppBarTooltipTextStyle,
-        child: const IconButton(
-          onPressed: null,
-          icon: Icon(
-            Icons.search,
-          ),
-        ),
-      ),
-      Tooltip(
-        message: "Timer",
-        textStyle: kAppBarTooltipTextStyle,
-        child: const IconButton(
-          onPressed: null,
-          icon: Icon(Icons.timer_sharp),
-        ),
-      ),
-      Tooltip(
         message: "Notifications",
         textStyle: kAppBarTooltipTextStyle,
         child: const IconButton(
           onPressed: null,
           icon: Icon(Icons.notifications_none),
-        ),
-      ),
-      Tooltip(
-        message: "Settings",
-        textStyle: kAppBarTooltipTextStyle,
-        child: const IconButton(
-          onPressed: null,
-          icon: Icon(Icons.settings),
         ),
       ),
       GestureDetector(

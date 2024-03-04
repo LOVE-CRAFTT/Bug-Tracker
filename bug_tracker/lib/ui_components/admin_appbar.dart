@@ -12,25 +12,8 @@ AppBar adminReusableAppBar(String pageName) {
     actions: [
       const IconButton(
         onPressed: null,
-        tooltip: "Search",
-        icon: Icon(
-          Icons.search,
-        ),
-      ),
-      const IconButton(
-        onPressed: null,
-        tooltip: "Timer",
-        icon: Icon(Icons.timer_sharp),
-      ),
-      const IconButton(
-        onPressed: null,
         tooltip: "Notifications",
         icon: Icon(Icons.notifications_none),
-      ),
-      const IconButton(
-        onPressed: null,
-        tooltip: "Settings",
-        icon: Icon(Icons.settings),
       ),
       const IconButton(
         onPressed: null,
