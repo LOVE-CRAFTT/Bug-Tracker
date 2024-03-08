@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/ui_components/custom_dropdown.dart';
-import 'package:bug_tracker/ui_components/feed_page_text_field.dart';
 import 'package:bug_tracker/ui_components/activities.dart';
 import 'package:bug_tracker/ui_components/staff_appbar.dart';
 
@@ -45,13 +44,13 @@ class _StaffFeedPageState extends State<StaffFeedPage> {
                       constraints: constraints,
                       page: DropdownPage.feedPage,
                     ),
-                    SizedBox(
-                      height: _spacingHeight,
-                    ),
-                    DiscussionTextField(
-                      constraints: constraints,
-                      userInitials: "BG",
-                    ),
+                    // SizedBox(
+                    //   height: _spacingHeight,
+                    // ),
+                    // DiscussionTextField(
+                    //   constraints: constraints,
+                    //   userInitials: "BG",
+                    // ),
                     SizedBox(
                       height: _spacingHeight,
                     ),

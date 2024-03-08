@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/ui_components/custom_dropdown.dart';
-import 'package:bug_tracker/ui_components/header_button.dart';
 import 'package:bug_tracker/ui_components/admin_appbar.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/tools.dart';
@@ -23,12 +22,12 @@ class _ProjectsPageState extends State<ProjectsPage> {
         appBar: adminReusableAppBar("Projects"),
         body: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
-            var screenIsWide = constraints.maxWidth > 400;
             return Padding(
               padding: const EdgeInsets.all(15.0),
               child: ListView(
                 children: [
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       CustomDropDown(
                         dropDownValue: dropDownValue,
@@ -39,12 +38,6 @@ class _ProjectsPageState extends State<ProjectsPage> {
                         },
                         page: DropdownPage.projectPage,
                         constraints: constraints,
-                      ),
-                      Expanded(child: Container()),
-                      HeaderButton(
-                        screenIsWide: screenIsWide,
-                        buttonText: "Add Milestone",
-                        onPress: () {},
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 20.0),

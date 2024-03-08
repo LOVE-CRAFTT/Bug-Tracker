@@ -3,7 +3,6 @@ import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/ui_components/admin_appbar.dart';
 import 'package:bug_tracker/ui_components/custom_dropdown.dart';
 import 'package:bug_tracker/ui_components/bug_reports.dart';
-import 'package:bug_tracker/ui_components/feed_page_text_field.dart';
 import 'package:bug_tracker/ui_components/activities.dart';
 
 /// This page contains a dropdown button for switching between projects
@@ -50,13 +49,13 @@ class _AdminFeedPageState extends State<AdminFeedPage> {
                     SizedBox(
                       height: _spacingHeight,
                     ),
-                    DiscussionTextField(
-                      constraints: constraints,
-                      userInitials: "BC",
-                    ),
-                    SizedBox(
-                      height: _spacingHeight,
-                    ),
+                    // DiscussionTextField(
+                    //   constraints: constraints,
+                    //   userInitials: "BC",
+                    // ),
+                    // SizedBox(
+                    //   height: _spacingHeight,
+                    // ),
                     TabBar(
                       tabs: const [
                         Text("Bug Reports", style: kContainerTextStyle),
