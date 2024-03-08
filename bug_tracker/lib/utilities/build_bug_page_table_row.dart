@@ -98,10 +98,10 @@ List<ListTile> buildTableHeaders() {
     "PROJECT",
     "REPORTER",
     "CREATED",
-    "TAGS",
+    "STATUS",
     "ASSIGNEE",
     "DUE DATE",
-    "STATUS",
+    "TAGS",
   ];
 
   return headerNames

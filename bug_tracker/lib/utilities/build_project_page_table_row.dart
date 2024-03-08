@@ -10,7 +10,6 @@ TableRow buildTableRow({
   double? percentBugsCompleted,
   DateTime? timeCreated,
   DateTime? timeCompleted,
-  List<Tags>? tags,
 }) {
   /// Draw percent indicator
   LinearPercentIndicator? percentIndicator(double? percent) {
@@ -82,34 +81,6 @@ TableRow buildTableRow({
             : null,
         titleTextStyle: cellTextStyle,
       ),
-      ListTile(
-        title: tags != null
-            ? Align(
-                alignment: Alignment.centerLeft,
-                child: SizedBox(
-                  height: 50.0,
-                  child: ListView.builder(
-                    itemCount: tags.length,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: Chip(
-                          label: Text(
-                            tags[index].title,
-                            style: kContainerTextStyle.copyWith(
-                                color: Colors.black),
-                          ),
-                          backgroundColor: tags[index].associatedColor,
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              )
-            : null,
-        titleTextStyle: cellTextStyle,
-      ),
     ],
   );
 }
@@ -121,11 +92,10 @@ List<ListTile> buildTableHeaders() {
     "PROJECT",
     "OWNER",
     "STATUS",
-    "MILESTONE",
+    "MILESTONES",
     "BUGS",
     "CREATED",
     "COMPLETED",
-    "TAGS",
   ];
 
   return headerNames

@@ -157,92 +157,62 @@ class _TasksUpdatePageState extends State<TasksUpdatePage> {
             ),
           ),
 
-          /// Update milestone if teamLead and mark Complaint as completed
+          /// Mark Complaint as completed if isTeamLead
           ///
           /// Title
-          makeTitle(title: "Update Milestone"),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Container(
-                  height: determineContainerDimensionFromConstraint(
-                    constraintValue: widget.maxHeight,
-                    subtractValue: 300,
-                  ),
-                  width: determineContainerDimensionFromConstraint(
-                    constraintValue: widget.maxHeight,
-                    subtractValue: 300,
-                  ),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: secondaryThemeColorBlue),
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: buildMilestonesCheckboxes(
-                      isUpdatePage: true,
-                      redraw: () {
-                        setState(() {});
-                      },
-                    ),
-                  ),
-                ),
+          if (widget.isTeamLead)
+            SizedBox(
+              width: determineContainerDimensionFromConstraint(
+                constraintValue: widget.maxHeight,
+                subtractValue: 300,
               ),
-              SizedBox(
-                width: determineContainerDimensionFromConstraint(
-                  constraintValue: widget.maxHeight,
-                  subtractValue: 300,
-                ),
-                child: CheckboxListTile(
-                  value: complaintCompleted,
-                  onChanged: (value) {
-                    complaintCompleted = value!;
-                    setState(() {});
-                  },
-                  title: Text(
-                    "Mark Complaint as Completed",
-                    style: checkboxTextStyle.copyWith(fontSize: 20.0),
-                  ),
-                ),
-              ),
-            ],
-          ),
-
-          ///Notes to user
-          makeTitle(title: "Notes to User: "),
-          SizedBox(
-            height: determineContainerDimensionFromConstraint(
-              constraintValue: widget.maxHeight,
-              subtractValue: 300,
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 20.0,
-                vertical: 15.0,
-              ),
-              child: TextField(
-                style: kContainerTextStyle.copyWith(
-                  color: Colors.black,
-                ),
-                controller: userNoteController,
-                decoration: InputDecoration(
-                  hintText: "Notes",
-                  hintStyle:
-                      kContainerTextStyle.copyWith(color: Colors.black45),
-                  border: const OutlineInputBorder(),
-                  filled: true,
-                  fillColor: Colors.white70,
-                ),
-                expands: true,
-                maxLines: null,
-                onChanged: (text) {
-                  noteToUser = text;
+              child: CheckboxListTile(
+                value: complaintCompleted,
+                onChanged: (value) {
+                  complaintCompleted = value!;
+                  setState(() {});
                 },
+                title: Text(
+                  "Mark Complaint as Completed",
+                  style: checkboxTextStyle.copyWith(fontSize: 30.0),
+                ),
               ),
             ),
-          ),
+
+          ///Notes to user if isTeamLead
+          if (widget.isTeamLead) makeTitle(title: "Notes to User: "),
+          if (widget.isTeamLead)
+            SizedBox(
+              height: determineContainerDimensionFromConstraint(
+                constraintValue: widget.maxHeight,
+                subtractValue: 300,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20.0,
+                  vertical: 15.0,
+                ),
+                child: TextField(
+                  style: kContainerTextStyle.copyWith(
+                    color: Colors.black,
+                  ),
+                  controller: userNoteController,
+                  decoration: InputDecoration(
+                    hintText: "Notes",
+                    hintStyle:
+                        kContainerTextStyle.copyWith(color: Colors.black45),
+                    border: const OutlineInputBorder(),
+                    filled: true,
+                    fillColor: Colors.white70,
+                  ),
+                  expands: true,
+                  maxLines: null,
+                  onChanged: (text) {
+                    noteToUser = text;
+                  },
+                ),
+              ),
+            ),
 
           /// Once done is clicked navigator.pop and then redraw
           Align(

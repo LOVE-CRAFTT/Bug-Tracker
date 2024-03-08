@@ -52,9 +52,9 @@ class LargeContainer extends StatelessWidget {
                 Expanded(
                   child: Center(
                     child: ListView.builder(
-                      itemCount: getDataSource(type).length,
+                      itemCount: bugSource.length,
                       itemBuilder: (BuildContext context, int index) {
-                        var dataSource = getDataSource(type)[index];
+                        var dataSource = bugSource[index];
                         return Column(
                           children: [
                             ListTile(
@@ -98,7 +98,6 @@ enum LargeContainerTypes {
   myBugs(title: "My Bugs"),
   workItemsDueToday(title: "My Work Items Due Today"),
   overdueItems(title: "My Overdue Items"),
-  milestones(title: "My Milestones"),
   allBugs(title: "All Bugs");
 
   const LargeContainerTypes({
@@ -141,14 +140,3 @@ List<Source> milestoneSource = [
     dateTime: DateTime(2023, DateTime.december, DateTime.thursday),
   )
 ];
-
-List<Source> getDataSource(LargeContainerTypes type) {
-  if (type == LargeContainerTypes.allBugs ||
-      type == LargeContainerTypes.myBugs) {
-    return bugSource;
-  } else if (type == LargeContainerTypes.milestones) {
-    return milestoneSource;
-  } else {
-    return milestoneSource;
-  }
-}

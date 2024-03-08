@@ -31,9 +31,7 @@ class FastAccessContainer extends StatelessWidget {
         ///Reducing the width by 8 since the higher wrap widget
         ///spaces them by 8 so, they just fit the screen
         var (containerHeight, containerWidth) =
-            constraints.maxWidth <= bigScreenMaxWidthLimit
-                ? (smallScreenContainerHeight, (constraints.maxWidth / 2) - 8)
-                : (bigScreenContainerHeight, (constraints.maxWidth / 4) - 8);
+            (bigScreenContainerHeight, (constraints.maxWidth / 2) - 8);
         return InkWell(
           onTap: onTapped,
           child: Container(

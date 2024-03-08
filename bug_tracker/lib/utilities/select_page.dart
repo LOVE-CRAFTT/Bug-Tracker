@@ -7,7 +7,6 @@ import 'package:bug_tracker/admin_pages/feed_page.dart';
 import 'package:bug_tracker/admin_pages/discuss_page.dart';
 import 'package:bug_tracker/admin_pages/calendar_page.dart';
 import 'package:bug_tracker/admin_pages/bugs_page.dart';
-import 'package:bug_tracker/admin_pages/milestones_page.dart';
 import 'package:bug_tracker/admin_pages/projects_page.dart';
 
 //=============== STAFF ===========
@@ -33,8 +32,6 @@ Widget selectPageAdmin() {
       return const ProjectsPage();
     case 5:
       return const BugsPage();
-    case 6:
-      return const MilestonesPage();
     default:
       return const HomePage();
   }

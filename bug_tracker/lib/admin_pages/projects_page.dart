@@ -86,7 +86,6 @@ class _ProjectsPageState extends State<ProjectsPage> {
                                   DateTime.tuesday,
                                 ),
                                 owner: "chukwuemekachukwudi9@gmail.com",
-                                tags: [Tags.performance, Tags.functionality],
                                 status: Status.inProgress,
                               ),
                             ],

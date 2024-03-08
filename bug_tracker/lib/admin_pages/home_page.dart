@@ -70,22 +70,6 @@ class _HomePageState extends State<HomePage> {
                         context.read<Overview>().switchToBug();
                       },
                     ),
-                    FastAccessContainer(
-                      number: 30,
-                      text: "Open Milestones",
-                      icon: Icons.stars,
-                      onTapped: () {
-                        context.read<Overview>().switchToMilestone();
-                      },
-                    ),
-                    FastAccessContainer(
-                      number: 90,
-                      text: "Closed Milestones",
-                      icon: Icons.stars,
-                      onTapped: () {
-                        context.read<Overview>().switchToMilestone();
-                      },
-                    ),
                   ],
                 ),
                 const SizedBox(

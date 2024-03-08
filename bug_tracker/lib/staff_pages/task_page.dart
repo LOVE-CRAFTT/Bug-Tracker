@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
-import 'package:bug_tracker/utilities/build_milestones_checkboxes.dart';
 import 'package:bug_tracker/utilities/tools.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
 import 'package:bug_tracker/ui_components/complaint.dart';
@@ -162,44 +161,6 @@ class _TaskPageState extends State<TaskPage> {
                       style: kContainerTextStyle.copyWith(
                         fontSize: 25.0,
                         color: Colors.white,
-                      ),
-                    ),
-                  ),
-
-                  ///Non - interactive Milestones
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 10.0,
-                      right: 10.0,
-                      top: 20.0,
-                    ),
-                    child: Text(
-                      "Milestones: ",
-                      style: kContainerTextStyle.copyWith(
-                        fontSize: 16.0,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    height: determineContainerDimensionFromConstraint(
-                      constraintValue: constraints.maxHeight,
-                      subtractValue: 300,
-                    ),
-                    width: determineContainerDimensionFromConstraint(
-                      constraintValue: constraints.maxHeight,
-                      subtractValue: 300,
-                    ),
-                    decoration: BoxDecoration(
-                      color: lightAshyNavyBlue,
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: buildMilestonesCheckboxes(
-                        isUpdatePage: false,
-                        redraw: () {
-                          setState(() {});
-                        },
                       ),
                     ),
                   ),
