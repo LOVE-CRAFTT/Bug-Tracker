@@ -13,28 +13,25 @@ AppBar staffReusableAppBar(String pageName) {
       Tooltip(
         message: "Notifications",
         textStyle: kAppBarTooltipTextStyle,
-        child: const IconButton(
-          onPressed: null,
-          icon: Icon(Icons.notifications_none),
+        child: IconButton(
+          onPressed: () {},
+          icon: const Icon(Icons.notifications_none),
         ),
       ),
-      GestureDetector(
-        child: Tooltip(
-          message: "Bill Gates",
-          textStyle: kContainerTextStyle.copyWith(
-            color: Colors.black,
-          ),
-          child: CircleAvatar(
-            backgroundColor: Colors.grey,
-            child: Text(
-              "BG",
-              style: kContainerTextStyle.copyWith(
-                color: Colors.black,
-              ),
+      Tooltip(
+        message: "Bill Gates",
+        textStyle: kContainerTextStyle.copyWith(
+          color: Colors.black,
+        ),
+        child: CircleAvatar(
+          backgroundColor: Colors.grey,
+          child: Text(
+            "BG",
+            style: kContainerTextStyle.copyWith(
+              color: Colors.black,
             ),
           ),
         ),
-        onTap: () {},
       ),
       const SizedBox(
         width: 10.0,

@@ -10,28 +10,88 @@ AppBar adminReusableAppBar(String pageName) {
     ),
     backgroundColor: Colors.black,
     actions: [
-      const IconButton(
-        onPressed: null,
+      IconButton(
+        onPressed: () {},
         tooltip: "Notifications",
-        icon: Icon(Icons.notifications_none),
+        icon: const Icon(Icons.notifications_none),
       ),
-      const IconButton(
-        onPressed: null,
-        tooltip: "Add",
-        icon: Icon(
-          Icons.add_circle,
-          color: Color(0xFFFF6400),
-        ),
-      ),
-      GestureDetector(
-        child: const Tooltip(
-          message: "ChukwuemekaChukwudi9",
-          child: CircleAvatar(
-            backgroundColor: Colors.grey,
-            child: Text("BC"),
+      MenuAnchor(
+        style: MenuStyle(
+          backgroundColor: const MaterialStatePropertyAll(
+            lightAshyNavyBlue,
+          ),
+          shape: MaterialStatePropertyAll(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.0),
+            ),
           ),
         ),
-        onTap: () {},
+        menuChildren: [
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: MenuItemButton(
+              style: TextButton.styleFrom(
+                side: const BorderSide(
+                  color: secondaryThemeColorBlue,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                ),
+              ),
+              onPressed: () {},
+              child: const Text(
+                "New Project",
+                style: kContainerTextStyle,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: MenuItemButton(
+              style: TextButton.styleFrom(
+                side: const BorderSide(
+                  color: secondaryThemeColorBlue,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                ),
+              ),
+              onPressed: () {},
+              child: const Text(
+                "Add Staff",
+                style: kContainerTextStyle,
+              ),
+            ),
+          ),
+        ],
+        builder:
+            (BuildContext context, MenuController controller, Widget? child) {
+          return IconButton(
+            onPressed: () {
+              if (controller.isOpen) {
+                controller.close();
+              } else {
+                controller.open();
+              }
+            },
+            tooltip: "Add",
+            iconSize: 40.0,
+            icon: const Icon(
+              Icons.add_circle,
+              color: Color(0xFFFF6400),
+            ),
+          );
+        },
+      ),
+      Tooltip(
+        message: "ChukwuemekaChukwudi9",
+        child: CircleAvatar(
+          backgroundColor: Colors.grey,
+          child: Text(
+            "BC",
+            style: kContainerTextStyle.copyWith(color: Colors.black),
+          ),
+        ),
       ),
       const SizedBox(
         width: 10.0,

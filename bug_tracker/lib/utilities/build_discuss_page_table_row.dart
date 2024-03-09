@@ -22,18 +22,8 @@ TableRow buildTableRow({
   return TableRow(
     children: [
       ListTile(
-        /// Creates an Icon button, conversation title and makes it clickable if it is not the first column title
+        /// Creates the conversation title and makes it clickable if it is not the first column title
         /// else it is just text containing the first header
-        leading: firstHeader == null
-            ? IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.settings,
-                  color: secondaryThemeColor,
-                  size: 15.0,
-                ),
-              )
-            : null,
         title: Text(firstHeader ?? (conversationTitle ?? "Null Value")),
         titleTextStyle: cellTextStyle,
         onTap: firstHeader == null ? () {} : null,
