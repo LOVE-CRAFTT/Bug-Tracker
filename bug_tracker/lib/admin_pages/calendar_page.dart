@@ -85,7 +85,7 @@ class _AdminCalendarPageState extends State<AdminCalendarPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: adminReusableAppBar("Calendar"),
+      appBar: adminReusableAppBar("Calendar", context),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

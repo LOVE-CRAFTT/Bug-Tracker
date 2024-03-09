@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 
 ///AppBar at the top of every page
-AppBar staffReusableAppBar(String pageName) {
+AppBar staffReusableAppBar(String pageName, BuildContext context) {
   return AppBar(
     title: Text(
       pageName,

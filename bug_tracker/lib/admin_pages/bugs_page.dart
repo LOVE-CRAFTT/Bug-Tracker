@@ -18,7 +18,7 @@ class _BugsPageState extends State<BugsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: adminReusableAppBar("Bugs"),
+      appBar: adminReusableAppBar("Bugs", context),
       body: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
           return Padding(

@@ -20,7 +20,7 @@ class _MilestonesPageState extends State<MilestonesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: adminReusableAppBar("Bugs"),
+      appBar: adminReusableAppBar("Milestones", context),
       body: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
           var screenIsWide = constraints.maxWidth > 400;

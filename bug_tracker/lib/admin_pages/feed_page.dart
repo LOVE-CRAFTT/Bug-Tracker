@@ -28,7 +28,7 @@ class _AdminFeedPageState extends State<AdminFeedPage> {
     return DefaultTabController(
       length: _numberOfPages,
       child: Scaffold(
-        appBar: adminReusableAppBar("Feed"),
+        appBar: adminReusableAppBar("Feed", context),
         body: ListView(
           children: [
             LayoutBuilder(

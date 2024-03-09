@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 
 ///AppBar at the top of every page
-AppBar adminReusableAppBar(String pageName) {
+AppBar adminReusableAppBar(String pageName, BuildContext context) {
   return AppBar(
     title: Text(
       pageName,
@@ -46,32 +46,38 @@ AppBar adminReusableAppBar(String pageName) {
           );
         },
       ),
-      Tooltip(
-        message: "ChukwuemekaChukwudi9",
-        child: CircleAvatar(
-          backgroundColor: Colors.grey,
-          child: Text(
-            "BC",
-            style: kContainerTextStyle.copyWith(color: Colors.black),
+      Padding(
+        padding: const EdgeInsets.only(right: 10.0),
+        child: Tooltip(
+          message: "ChukwuemekaChukwudi9",
+          child: CircleAvatar(
+            backgroundColor: Colors.grey,
+            child: Text(
+              "BC",
+              style: kContainerTextStyle.copyWith(color: Colors.black),
+            ),
           ),
         ),
       ),
-      const SizedBox(
-        width: 10.0,
-      )
     ],
   );
 }
 
 List createMenuChildren() {
-  var buttonStrings = [
-    "New Project",
-    "Add Staff",
+  List<List> buttonStrings = [
+    [
+      "New Project",
+      const Placeholder(),
+    ],
+    [
+      "Add Staff",
+      const Placeholder(),
+    ],
   ];
 
   return buttonStrings
       .map(
-        (string) => Padding(
+        (detail) => Padding(
           padding: const EdgeInsets.all(10.0),
           child: MenuItemButton(
             style: TextButton.styleFrom(
@@ -84,7 +90,7 @@ List createMenuChildren() {
             ),
             onPressed: () {},
             child: Text(
-              string,
+              detail.first,
               style: kContainerTextStyle,
             ),
           ),

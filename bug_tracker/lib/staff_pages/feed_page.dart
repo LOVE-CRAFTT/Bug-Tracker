@@ -26,7 +26,7 @@ class _StaffFeedPageState extends State<StaffFeedPage> {
     return DefaultTabController(
       length: 1,
       child: Scaffold(
-        appBar: staffReusableAppBar("Feed"),
+        appBar: staffReusableAppBar("Feed", context),
         body: ListView(
           children: [
             LayoutBuilder(

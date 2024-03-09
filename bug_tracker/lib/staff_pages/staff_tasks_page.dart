@@ -19,7 +19,7 @@ class _TasksPageState extends State<TasksPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: staffReusableAppBar("Tasks"),
+      appBar: staffReusableAppBar("Tasks", context),
       body: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
           var screenIsWide = constraints.maxWidth > 400;

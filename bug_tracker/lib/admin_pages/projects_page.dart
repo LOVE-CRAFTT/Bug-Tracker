@@ -19,7 +19,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: adminReusableAppBar("Projects"),
+        appBar: adminReusableAppBar("Projects", context),
         body: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
             return Padding(

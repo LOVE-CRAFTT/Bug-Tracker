@@ -18,7 +18,7 @@ class _AdminDiscussPageState extends State<AdminDiscussPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: adminReusableAppBar("Discuss"),
+      appBar: adminReusableAppBar("Discuss", context),
       body: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
           var screenIsWide = constraints.maxWidth > 400;
