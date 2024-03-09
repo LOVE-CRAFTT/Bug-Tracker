@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
+import 'package:bug_tracker/utilities/build_new_staff_page.dart';
 
 ///AppBar at the top of every page
 AppBar adminReusableAppBar(String pageName, BuildContext context) {
@@ -26,7 +27,7 @@ AppBar adminReusableAppBar(String pageName, BuildContext context) {
             ),
           ),
         ),
-        menuChildren: [...createMenuChildren()],
+        menuChildren: [...createMenuChildren(context)],
         builder:
             (BuildContext context, MenuController controller, Widget? child) {
           return IconButton(
@@ -63,15 +64,15 @@ AppBar adminReusableAppBar(String pageName, BuildContext context) {
   );
 }
 
-List createMenuChildren() {
+List createMenuChildren(BuildContext context) {
   List<List> buttonStrings = [
     [
       "New Project",
-      const Placeholder(),
+      buildNewStaffPage,
     ],
     [
-      "Add Staff",
-      const Placeholder(),
+      "New Staff",
+      buildNewStaffPage,
     ],
   ];
 
@@ -88,7 +89,9 @@ List createMenuChildren() {
                 borderRadius: BorderRadius.circular(12.0),
               ),
             ),
-            onPressed: () {},
+            onPressed: () {
+              detail.last(context: context);
+            },
             child: Text(
               detail.first,
               style: kContainerTextStyle,

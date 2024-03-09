@@ -15,6 +15,9 @@ const kAppBarTextStyle = TextStyle(
   color: Color(0xFF979c99),
 );
 
+///TextStyle for checkboxes
+TextStyle checkboxTextStyle = kContainerTextStyle.copyWith(color: Colors.white);
+
 ///TextStyle for [FastAccessContainer] and [LargeContainer]
 const TextStyle kContainerTextStyle = TextStyle(
   fontSize: 16,
