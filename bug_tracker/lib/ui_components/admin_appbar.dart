@@ -26,44 +26,7 @@ AppBar adminReusableAppBar(String pageName) {
             ),
           ),
         ),
-        menuChildren: [
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: MenuItemButton(
-              style: TextButton.styleFrom(
-                side: const BorderSide(
-                  color: secondaryThemeColorBlue,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                ),
-              ),
-              onPressed: () {},
-              child: const Text(
-                "New Project",
-                style: kContainerTextStyle,
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: MenuItemButton(
-              style: TextButton.styleFrom(
-                side: const BorderSide(
-                  color: secondaryThemeColorBlue,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                ),
-              ),
-              onPressed: () {},
-              child: const Text(
-                "Add Staff",
-                style: kContainerTextStyle,
-              ),
-            ),
-          ),
-        ],
+        menuChildren: [...createMenuChildren()],
         builder:
             (BuildContext context, MenuController controller, Widget? child) {
           return IconButton(
@@ -98,4 +61,34 @@ AppBar adminReusableAppBar(String pageName) {
       )
     ],
   );
+}
+
+List createMenuChildren() {
+  var buttonStrings = [
+    "New Project",
+    "Add Staff",
+  ];
+
+  return buttonStrings
+      .map(
+        (string) => Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: MenuItemButton(
+            style: TextButton.styleFrom(
+              side: const BorderSide(
+                color: secondaryThemeColorBlue,
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.0),
+              ),
+            ),
+            onPressed: () {},
+            child: Text(
+              string,
+              style: kContainerTextStyle,
+            ),
+          ),
+        ),
+      )
+      .toList();
 }
