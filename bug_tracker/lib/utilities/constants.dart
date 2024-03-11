@@ -123,6 +123,7 @@ Map<String, Icon> navRailData = {
   'Calendar': const Icon(Icons.calendar_month),
   'Projects': const Icon(Icons.work_outline),
   'Bugs': const Icon(Icons.bug_report),
+  'Staff': const Icon(Icons.people_outlined),
 };
 
 List<NavigationRailDestination> kMainNavigationRailDestinations = [
@@ -253,13 +254,13 @@ String complaintNotesPlaceholder =
     "Present bandit Podio eu enum. Interpellates sed dui ut argue bandit sodales. "
     "Vestibule ante ipsum primes in faucets orc quits et ult-rices exposure cub ilia Curae; Aliquot nib. "
     "Maris ac Lauris sed peed interpellates ferment. Nascence adipiscing ante non diam sodales ditherer.\n"
-    "\nUt veldt Lauris, gestates sed, gravida nec, ornare ut, mi. Aenean ut orci vel massa suscipit pulvinar. "
-    "Nulla sollicitudin. Fusce varius, ligula non tempus aliquam, nunc turpis ullamcorper nibh, in tempus sapien eros vitae ligula. "
-    "Pellentesque rhoncus nunc et augue. Integer id felis. "
-    "Curabitur aliquet pellentesque diam. "
-    "Integer quis metes vitae elit lobortis gestates. "
-    "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. "
-    "Morbi vel erat non mauris convallis vehicula. Nulla et sapien. "
-    "Integer tortor tellus, aliquam faucibus, convallis id, congue eu, quam. "
-    "Maris ullamcorper felis vitae erat. "
-    "Proin fugitive, augue non elementum exposure, metes purus iaculis lectus, et tristique ligula justo vitae magna.";
+    "\nUt veldt Lauris, gestates sed, gravid nec, ornate ut, mi. Aeneas ut orc vel mass suspicious pulmonary. "
+    "Null sollicitudin. Fuse various, gulag non tempus aliquam, nun turps ullamcorper nib, in tempus sapiens eros vitae gulag. "
+    "Interpellates rhonchus nun et argue. Integer id fells. "
+    "Curability aliquot interpellates diam. "
+    "Integer quits metes vitae elite lobotomist gestates. "
+    "Lorem ipsum dolor sit amet, consecrate adipiscing elite. "
+    "Morbid vel erat non Lauris collision vehicular. Null et sapiens. "
+    "Integer tortor tells, aliquot faucets, collision id, tongue eu, qualm. "
+    "Maris ullamcorper fells vitae erat. "
+    "Pron fugitive, argue non elementum exposure, metes purus oculist lectures, et critique gulag justo vitae magna.";

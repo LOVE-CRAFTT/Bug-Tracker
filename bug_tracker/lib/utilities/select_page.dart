@@ -8,6 +8,7 @@ import 'package:bug_tracker/admin_pages/discuss_page.dart';
 import 'package:bug_tracker/admin_pages/calendar_page.dart';
 import 'package:bug_tracker/admin_pages/bugs_page.dart';
 import 'package:bug_tracker/admin_pages/projects_page.dart';
+import 'package:bug_tracker/admin_pages/staff_page.dart';
 
 //=============== STAFF ===========
 import 'package:bug_tracker/staff_pages/staff_main_page.dart';
@@ -32,6 +33,8 @@ Widget selectPageAdmin() {
       return const ProjectsPage();
     case 5:
       return const BugsPage();
+    case 6:
+      return const StaffPage();
     default:
       return const HomePage();
   }
