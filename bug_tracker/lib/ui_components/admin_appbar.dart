@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
-import 'package:bug_tracker/utilities/build_new_staff_page.dart';
+import 'package:bug_tracker/utilities/build_add_new_staff_page.dart';
 
 ///AppBar at the top of every page
 AppBar adminReusableAppBar(String pageName, BuildContext context) {

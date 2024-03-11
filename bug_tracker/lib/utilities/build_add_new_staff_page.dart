@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:side_sheet/side_sheet.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
@@ -20,6 +20,7 @@ Future buildNewStaffPage({
 TextEditingController surnameController = TextEditingController();
 TextEditingController middleNameController = TextEditingController();
 TextEditingController firstNameController = TextEditingController();
+TextEditingController staffEmailController = TextEditingController();
 
 ///value of isAdmin
 bool isAdmin = false;
@@ -38,6 +39,7 @@ class _NewStaffPageState extends State<NewStaffPage> {
   String surname = "";
   String middleName = "";
   String firstName = "";
+  String email = "";
 
   @override
   Widget build(BuildContext context) {
@@ -115,33 +117,48 @@ class _NewStaffPageState extends State<NewStaffPage> {
                     },
                   ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: TextFormField(
+                    decoration: newStaffFormTextFieldStyle(hintText: 'E-mail'),
+                    style: kContainerTextStyle.copyWith(color: Colors.white),
+                    controller: staffEmailController,
+                    validator: (lEmail) {
+                      if (lEmail == null || lEmail.isEmpty) {
+                        return "Email can't be empty";
+                      }
+                      email = lEmail;
+                      return null;
+                    },
+                  ),
+                ),
               ],
             ),
           ),
-          //TODO: Probably figure out adding pictures
           Align(
-              alignment: Alignment.bottomRight,
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: HeaderButton(
-                  screenIsWide: true,
-                  buttonText: "Add",
-                  onPress: () {
-                    formKey.currentState!.validate();
+            alignment: Alignment.bottomRight,
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: HeaderButton(
+                screenIsWide: true,
+                buttonText: "Add",
+                onPress: () async {
+                  if (formKey.currentState!.validate()) {
                     Navigator.pop(context);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          'Staff ID Created',
-                          style: kContainerTextStyle.copyWith(
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
+                    surnameController.clear();
+                    middleNameController.clear();
+                    firstNameController.clear();
+                    staffEmailController.clear();
+                    buildConfirmationPopup(
+                      context,
+                      newProjectID: null,
+                      newStaffID: 1234567,
                     );
-                  },
-                ),
-              ))
+                  }
+                },
+              ),
+            ),
+          )
         ],
       ),
     );
@@ -154,5 +171,70 @@ InputDecoration newStaffFormTextFieldStyle({required String hintText}) {
     hintText: hintText,
     hintStyle: kContainerTextStyle,
     isCollapsed: false,
+    errorStyle: kContainerTextStyle.copyWith(
+      color: Colors.red,
+      fontSize: 15,
+    ),
+  );
+}
+
+Future buildConfirmationPopup(BuildContext context,
+    {required int? newStaffID, required int? newProjectID}) {
+  int id;
+  if (newStaffID != null) {
+    id = newStaffID;
+  } else {
+    id = newProjectID!;
+  }
+
+  ///
+  return showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) => AlertDialog(
+      title: const Text('New staff added successfully'),
+      titleTextStyle: kContainerTextStyle.copyWith(
+        color: Colors.white,
+        fontSize: 20.0,
+      ),
+      content: Text('New Staff ID: $id,\ndefault password 000000 i.e 6 zeros'),
+      contentTextStyle: kContainerTextStyle.copyWith(
+        color: Colors.white,
+        fontSize: 16.0,
+      ),
+      actions: <Widget>[
+        TextButton(
+          child: Text(
+            'Copy ID',
+            style: kContainerTextStyle.copyWith(
+                fontSize: 14.0, color: Colors.blue),
+          ),
+          onPressed: () async {
+            /// copy to clipboard then notify
+            await Clipboard.setData(ClipboardData(text: id.toString()))
+                .then((_) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text(
+                'Copied to your clipboard !',
+                style: kContainerTextStyle.copyWith(color: Colors.black),
+              )));
+            });
+            if (context.mounted) {
+              Navigator.of(context).pop();
+            }
+          },
+        ),
+        TextButton(
+          child: Text(
+            'OK',
+            style: kContainerTextStyle.copyWith(
+                fontSize: 14.0, color: Colors.blue),
+          ),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ],
+    ),
   );
 }
