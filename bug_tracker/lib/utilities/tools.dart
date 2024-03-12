@@ -14,5 +14,5 @@ double determineContainerDimensionFromConstraint(
 
 ///
 String convertToDateString(DateTime dateTime) {
-  return "${dateTime.year}-${dateTime.month}-${dateTime.day}";
+  return "${dateTime.year}-${dateTime.month}-${dateTime.day}   ${dateTime.hour}:${dateTime.minute}";
 }

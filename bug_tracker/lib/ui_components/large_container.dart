@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
+import 'package:bug_tracker/utilities/tools.dart';
 
 ///Provides access to main work data
 ///Implemented as a container of fixed height and variable width
@@ -61,14 +62,14 @@ class LargeContainer extends StatelessWidget {
                               title: Text(dataSource.title),
                               titleTextStyle: kContainerTextStyle.copyWith(
                                 color: Colors.white,
-                                fontSize: 20.0,
+                                fontSize: 30.0,
                               ),
                               subtitle: Text(dataSource.subtitle),
                               subtitleTextStyle: kContainerTextStyle.copyWith(
                                 fontSize: 12.0,
                               ),
                               trailing: Text(
-                                dataSource.dateTime.toString(),
+                                convertToDateString(dataSource.dateTime),
                                 style: kContainerTextStyle.copyWith(
                                   fontSize: 12.0,
                                 ),
@@ -122,21 +123,13 @@ class Source {
 
 List<Source> bugSource = [
   Source(
-    title: "Hexagon's don't fold",
+    title: "Hexagons don't fold",
     subtitle: "Origami Algorithm",
-    dateTime: DateTime(2023, DateTime.december, DateTime.thursday),
+    dateTime: DateTime(2023, DateTime.december, DateTime.thursday, 12, 30),
   ),
   Source(
     title: "Font doesn't change",
     subtitle: "Android studio",
-    dateTime: DateTime(2022, DateTime.june, DateTime.sunday),
+    dateTime: DateTime(2022, DateTime.june, DateTime.sunday, 3, 16),
   ),
-];
-
-List<Source> milestoneSource = [
-  Source(
-    title: "Release first Version",
-    subtitle: "Android Studio",
-    dateTime: DateTime(2023, DateTime.december, DateTime.thursday),
-  )
 ];

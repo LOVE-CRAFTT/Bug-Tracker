@@ -50,13 +50,16 @@ AppBar adminReusableAppBar(String pageName, BuildContext context) {
       ),
       Padding(
         padding: const EdgeInsets.only(right: 10.0),
-        child: Tooltip(
-          message: "ChukwuemekaChukwudi9",
-          child: CircleAvatar(
-            backgroundColor: Colors.grey,
-            child: Text(
-              "BC",
-              style: kContainerTextStyle.copyWith(color: Colors.black),
+        child: InkWell(
+          onTap: () {},
+          child: Tooltip(
+            message: "ChukwuemekaChukwudi9",
+            child: CircleAvatar(
+              backgroundColor: Colors.grey,
+              child: Text(
+                "BC",
+                style: kContainerTextStyle.copyWith(color: Colors.black),
+              ),
             ),
           ),
         ),
