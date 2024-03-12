@@ -183,14 +183,6 @@ List<NavigationRailDestination> staffNavigationRailDestinations = [
     ),
 ];
 
-///List of largeContainers in the home screen
-List<LargeContainer> largeContainers = [
-  for (var type in LargeContainerTypes.values)
-    LargeContainer(
-      type: type,
-    )
-];
-
 enum Status {
   testing(title: "Testing", associatedColor: Colors.blue),
   closed(title: "Closed", associatedColor: Colors.green),

@@ -121,6 +121,14 @@ class Source {
   DateTime dateTime;
 }
 
+///List of largeContainers in the home screen
+List<LargeContainer> largeContainers = [
+  for (var type in LargeContainerTypes.values)
+    LargeContainer(
+      type: type,
+    )
+];
+
 List<Source> bugSource = [
   Source(
     title: "Hexagons don't fold",
