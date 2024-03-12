@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/build_add_new_staff_page.dart';
+import 'package:bug_tracker/utilities/build_add_new_project_page.dart';
 
 ///AppBar at the top of every page
 AppBar adminReusableAppBar(String pageName, BuildContext context) {
@@ -68,7 +69,7 @@ List createMenuChildren(BuildContext context) {
   List<List> buttonStrings = [
     [
       "New Project",
-      buildNewStaffPage,
+      buildNewProjectPage,
     ],
     [
       "New Staff",

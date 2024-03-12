@@ -73,7 +73,8 @@ class _NewStaffPageState extends State<NewStaffPage> {
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: TextFormField(
-                    decoration: newStaffFormTextFieldStyle(hintText: 'Surname'),
+                    decoration: newStaffOrProjectFormTextFieldStyle(
+                        hintText: 'Surname'),
                     style: kContainerTextStyle.copyWith(color: Colors.white),
                     controller: surnameController,
                     validator: (lSurname) {
@@ -88,8 +89,8 @@ class _NewStaffPageState extends State<NewStaffPage> {
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: TextFormField(
-                    decoration:
-                        newStaffFormTextFieldStyle(hintText: 'Middle Name'),
+                    decoration: newStaffOrProjectFormTextFieldStyle(
+                        hintText: 'Middle Name'),
                     style: kContainerTextStyle.copyWith(color: Colors.white),
                     controller: middleNameController,
                     validator: (lMiddleName) {
@@ -104,8 +105,8 @@ class _NewStaffPageState extends State<NewStaffPage> {
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: TextFormField(
-                    decoration:
-                        newStaffFormTextFieldStyle(hintText: 'First Name'),
+                    decoration: newStaffOrProjectFormTextFieldStyle(
+                        hintText: 'First Name'),
                     style: kContainerTextStyle.copyWith(color: Colors.white),
                     controller: firstNameController,
                     validator: (lFirstName) {
@@ -120,7 +121,8 @@ class _NewStaffPageState extends State<NewStaffPage> {
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: TextFormField(
-                    decoration: newStaffFormTextFieldStyle(hintText: 'E-mail'),
+                    decoration:
+                        newStaffOrProjectFormTextFieldStyle(hintText: 'E-mail'),
                     style: kContainerTextStyle.copyWith(color: Colors.white),
                     controller: staffEmailController,
                     validator: (lEmail) {
@@ -165,7 +167,8 @@ class _NewStaffPageState extends State<NewStaffPage> {
   }
 }
 
-InputDecoration newStaffFormTextFieldStyle({required String hintText}) {
+InputDecoration newStaffOrProjectFormTextFieldStyle(
+    {required String hintText}) {
   return InputDecoration(
     border: const OutlineInputBorder(),
     hintText: hintText,
@@ -192,12 +195,14 @@ Future buildConfirmationPopup(BuildContext context,
     context: context,
     barrierDismissible: false,
     builder: (BuildContext context) => AlertDialog(
-      title: const Text('New staff added successfully'),
+      title: Text(
+          'New ${newStaffID != null ? "staff" : "project"} added successfully'),
       titleTextStyle: kContainerTextStyle.copyWith(
         color: Colors.white,
         fontSize: 20.0,
       ),
-      content: Text('New Staff ID: $id,\ndefault password 000000 i.e 6 zeros'),
+      content: Text('New ${newStaffID != null ? "staff" : "project"} ID: $id,\n'
+          '${newStaffID != null ? "default password 000000 i.e 6 zeros" : ""} '),
       contentTextStyle: kContainerTextStyle.copyWith(
         color: Colors.white,
         fontSize: 16.0,
