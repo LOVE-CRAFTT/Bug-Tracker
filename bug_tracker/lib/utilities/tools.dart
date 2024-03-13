@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 ///
 double normalize0to1(double value) {
   value = value.clamp(0, 100);
@@ -14,5 +16,5 @@ double determineContainerDimensionFromConstraint(
 
 ///
 String convertToDateString(DateTime dateTime) {
-  return "${dateTime.year}-${dateTime.month}-${dateTime.day}   ${dateTime.hour}:${dateTime.minute}";
+  return DateFormat('yyyy-MM-dd HH:mm').format(dateTime);
 }
