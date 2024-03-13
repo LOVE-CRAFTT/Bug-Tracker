@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/build_add_new_staff_page.dart';
 import 'package:bug_tracker/utilities/build_add_new_project_page.dart';
+import 'package:bug_tracker/utilities/build_update_password_page.dart';
 
 ///AppBar at the top of every page
 AppBar adminReusableAppBar(String pageName, BuildContext context) {
@@ -17,70 +18,92 @@ AppBar adminReusableAppBar(String pageName, BuildContext context) {
         tooltip: "Notifications",
         icon: const Icon(Icons.notifications_none),
       ),
-      MenuAnchor(
-        style: MenuStyle(
-          backgroundColor: const MaterialStatePropertyAll(
-            lightAshyNavyBlue,
-          ),
-          shape: MaterialStatePropertyAll(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12.0),
-            ),
-          ),
+
+      /// Add new project or staff
+      buildMenuAnchor(
+        context: context,
+        isAddButton: true,
+        menuChildren: createMenuChildren(
+          context,
+          [
+            ["New Project", buildNewProjectPage],
+            ["New Staff", buildNewStaffPage],
+          ],
         ),
-        menuChildren: [...createMenuChildren(context)],
-        builder:
-            (BuildContext context, MenuController controller, Widget? child) {
-          return IconButton(
-            onPressed: () {
-              if (controller.isOpen) {
-                controller.close();
-              } else {
-                controller.open();
-              }
-            },
-            tooltip: "Add",
-            iconSize: 40.0,
-            icon: const Icon(
-              Icons.add_circle,
-              color: Color(0xFFFF6400),
-            ),
-          );
-        },
       ),
-      Padding(
-        padding: const EdgeInsets.only(right: 10.0),
-        child: InkWell(
-          onTap: () {},
-          child: Tooltip(
-            message: "ChukwuemekaChukwudi9",
-            child: CircleAvatar(
-              backgroundColor: Colors.grey,
-              child: Text(
-                "BC",
-                style: kContainerTextStyle.copyWith(color: Colors.black),
-              ),
-            ),
-          ),
+
+      /// Update password
+      buildMenuAnchor(
+        context: context,
+        isAddButton: false,
+        menuChildren: createMenuChildren(
+          context,
+          [
+            ["Update Password", buildUpdatePasswordPage]
+          ],
         ),
+        username: "ChukwuemekaChukwudi9",
+        userInitials: "BC",
       ),
     ],
   );
 }
 
-List createMenuChildren(BuildContext context) {
-  List<List> buttonStrings = [
-    [
-      "New Project",
-      buildNewProjectPage,
-    ],
-    [
-      "New Staff",
-      buildNewStaffPage,
-    ],
-  ];
+MenuAnchor buildMenuAnchor({
+  required BuildContext context,
+  required bool isAddButton,
+  required List<Widget> menuChildren,
+  String username = "",
+  String userInitials = "",
+}) {
+  return MenuAnchor(
+    style: MenuStyle(
+      backgroundColor: const MaterialStatePropertyAll(
+        lightAshyNavyBlue,
+      ),
+      shape: MaterialStatePropertyAll(
+        RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+      ),
+    ),
+    menuChildren: menuChildren,
+    builder: (BuildContext context, MenuController controller, Widget? child) {
+      return isAddButton
+          ? IconButton(
+              onPressed: () =>
+                  controller.isOpen ? controller.close() : controller.open(),
+              tooltip: "Add",
+              iconSize: 40.0,
+              icon: const Icon(
+                Icons.add_circle,
+                color: Color(0xFFFF6400),
+              ),
+            )
+          : Padding(
+              padding: const EdgeInsets.only(right: 10.0),
+              child: InkWell(
+                onTap: () =>
+                    controller.isOpen ? controller.close() : controller.open(),
+                child: Tooltip(
+                  message: username,
+                  child: CircleAvatar(
+                    backgroundColor: Colors.grey,
+                    child: Text(
+                      userInitials,
+                      style: kContainerTextStyle.copyWith(color: Colors.black),
+                    ),
+                  ),
+                ),
+              ),
+            );
+    },
+  );
+}
 
-  return buttonStrings
+List<Padding> createMenuChildren(
+    BuildContext context, List<List> buttonContents) {
+  return buttonContents
       .map(
         (detail) => Padding(
           padding: const EdgeInsets.all(10.0),

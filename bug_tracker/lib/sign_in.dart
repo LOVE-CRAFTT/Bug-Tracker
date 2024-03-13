@@ -4,7 +4,7 @@ import 'package:bug_tracker/user_pages/user_main_page.dart';
 import 'package:bug_tracker/staff_pages/staff_main_page.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 
-String? userName;
+String? email;
 String? password;
 Widget? mainScreen;
 
@@ -15,9 +15,9 @@ Map<String, String> users = {
 };
 
 void setMainScreen() {
-  if (userName == 'admin') {
+  if (email == 'admin') {
     mainScreen = const AdminMainPage();
-  } else if (userName == 'user') {
+  } else if (email == 'user') {
     mainScreen = const UserMainPage();
   } else {
     mainScreen = const StaffMainPage();
@@ -49,15 +49,15 @@ class SignInPage extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 TextFormField(
-                  decoration: const InputDecoration(labelText: 'Username'),
+                  decoration: const InputDecoration(labelText: 'E-mail'),
                   style: kContainerTextStyle.copyWith(
                     color: const Color(0xFF979c99),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your username';
+                      return 'Please enter your email';
                     }
-                    userName = value;
+                    email = value;
                     return null;
                   },
                 ),
@@ -79,7 +79,7 @@ class SignInPage extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      if (users[userName] == password) {
+                      if (users[email] == password) {
                         ///Get entry point for either user, admin or staff
                         setMainScreen();
                         Navigator.push(
@@ -92,7 +92,7 @@ class SignInPage extends StatelessWidget {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text(
-                              'Invalid username or password',
+                              'Invalid email or password',
                               style: kContainerTextStyle.copyWith(
                                 color: Colors.black,
                               ),
