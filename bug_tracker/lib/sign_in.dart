@@ -9,9 +9,9 @@ String? password;
 Widget? mainScreen;
 
 Map<String, String> users = {
-  'admin': 'adminPassword',
-  'user': 'userPassword',
-  'staff': 'staffPassword',
+  'admin': 'a',
+  'user': 'u',
+  'staff': 's',
 };
 
 void setMainScreen() {

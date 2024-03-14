@@ -84,7 +84,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                                   DateTime.january,
                                   DateTime.tuesday,
                                 ),
-                                status: Status.open,
+                                status: ProjectState.open,
                               ),
                             ],
                           ),

@@ -8,7 +8,7 @@ TableRow buildTableRow({
   DateTime? timeCreated,
   String? assignee,
   List<Tags>? tags,
-  Status? status,
+  ComplaintState? status,
 }) {
   return TableRow(
     children: [

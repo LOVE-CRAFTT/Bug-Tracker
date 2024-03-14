@@ -10,7 +10,6 @@ TableRow buildTableRow({
   String? owner,
   List<Tags>? tags,
   DateTime? dueDate,
-  Status? status,
 }) {
   return TableRow(
     children: [
@@ -52,21 +51,6 @@ TableRow buildTableRow({
       ),
       ListTile(
         title: owner != null ? Text(owner) : null,
-        titleTextStyle: cellTextStyle,
-      ),
-      ListTile(
-        title: status != null
-            ? Align(
-                alignment: Alignment.centerLeft,
-                child: Chip(
-                  label: Text(
-                    status.title,
-                    style: kContainerTextStyle.copyWith(color: Colors.black),
-                  ),
-                  backgroundColor: status.associatedColor,
-                ),
-              )
-            : null,
         titleTextStyle: cellTextStyle,
       ),
       ListTile(
@@ -119,7 +103,6 @@ List<ListTile> buildTableHeaders() {
     "OWNER",
     "TAGS",
     "DUE DATE",
-    "STATUS",
   ];
 
   return headerNames

@@ -81,7 +81,7 @@ class _BugsPageState extends State<BugsPage> {
                               ),
                               assignee: "chukwuemekachukwudi9@gmail.com",
                               tags: [Tags.performance, Tags.functionality],
-                              status: Status.open,
+                              status: ComplaintState.inProgress,
                             ),
                             buildTableRow(
                               bugName: "Font doesn't change",
@@ -94,7 +94,7 @@ class _BugsPageState extends State<BugsPage> {
                               ),
                               assignee: "chukwuemekachukwudi9@gmail.com",
                               tags: [Tags.functionality, Tags.ui],
-                              status: Status.inProgress,
+                              status: ComplaintState.completed,
                             ),
                           ],
                         ),

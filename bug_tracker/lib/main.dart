@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bug_tracker/models/overview.dart';
 import 'package:bug_tracker/sign_in.dart';
-import 'package:bug_tracker/admin_pages/admin_main_page.dart';
 
 void main() {
   runApp(
@@ -34,7 +33,6 @@ class MyApp extends StatelessWidget {
       ),
       title: 'Bug tracker',
       home: SignInPage(),
-      // home: const AdminMainPage(),
     );
   }
 }

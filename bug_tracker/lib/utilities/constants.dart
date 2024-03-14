@@ -183,19 +183,37 @@ List<NavigationRailDestination> staffNavigationRailDestinations = [
     ),
 ];
 
-enum Status {
+enum ProjectState {
+  closed(title: "Closed", associatedColor: Colors.green),
+  open(title: "Open", associatedColor: Colors.red),
+  postponed(title: "Postponed", associatedColor: Colors.orange),
+  inProgress(title: "In Progress", associatedColor: Colors.yellow),
+  cancelled(title: "Cancelled", associatedColor: Colors.grey);
+
+  const ProjectState({required this.title, required this.associatedColor});
+  final String title;
+  final Color associatedColor;
+}
+
+enum ComplaintState {
   pending(title: "Pending", associatedColor: Colors.grey),
   acknowledged(title: "Acknowledged", associatedColor: Colors.lime),
   inProgress(title: "In Progress", associatedColor: Colors.blue),
-  completed(title: "Completed", associatedColor: Colors.green),
-  fresh(title: "Fresh", associatedColor: Colors.orange),
-  dueToday(title: "Due Today", associatedColor: Colors.yellow),
-  overdue(title: "Overdue", associatedColor: Colors.red),
-  open(title: "Open", associatedColor: Colors.brown),
-  postponed(title: "Postponed", associatedColor: Colors.teal),
-  cancelled(title: "Cancelled", associatedColor: Colors.black);
+  completed(title: "Completed", associatedColor: Colors.green);
 
-  const Status({required this.title, required this.associatedColor});
+  const ComplaintState({required this.title, required this.associatedColor});
+  final String title;
+  final Color associatedColor;
+}
+
+enum TaskState {
+  fresh(title: "New", associatedColor: Colors.orange),
+  inProgress(title: "In Progress", associatedColor: Colors.blue),
+  dueToday(title: "Due Today", associatedColor: Colors.yellow),
+  completed(title: "Completed", associatedColor: Colors.green),
+  overdue(title: "Overdue", associatedColor: Colors.red);
+
+  const TaskState({required this.title, required this.associatedColor});
   final String title;
   final Color associatedColor;
 }

@@ -94,7 +94,6 @@ class _MilestonesPageState extends State<MilestonesPage> {
                                 DateTime.january,
                                 DateTime.tuesday,
                               ),
-                              status: Status.inProgress,
                             ),
                           ],
                         ),

@@ -57,7 +57,7 @@ class _TaskPageState extends State<TaskPage> {
                             buildTaskUpdatePage(
                                 context: context,
                                 constraints: constraints,
-                                isTeamLead: true,
+                                isTeamLead: widget.isTeamLead,
                                 redraw: () {
                                   setState(() {});
                                 });

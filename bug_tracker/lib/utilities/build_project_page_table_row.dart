@@ -4,7 +4,7 @@ import 'package:percent_indicator/percent_indicator.dart';
 
 TableRow buildTableRow({
   String? projectName,
-  Status? status,
+  ProjectState? status,
   double? percentBugsCompleted,
   DateTime? timeCreated,
   DateTime? timeCompleted,

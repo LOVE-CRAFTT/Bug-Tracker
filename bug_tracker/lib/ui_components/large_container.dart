@@ -1,3 +1,4 @@
+import 'package:bug_tracker/user_pages/complaint_page.dart';
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/tools.dart';
@@ -57,56 +58,9 @@ class LargeContainer extends StatelessWidget {
                 ),
                 Expanded(
                   child: Center(
-                    child: ListView.builder(
-                      itemCount: tasksSource.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        Task dataSource = tasksSource[index];
-                        return Column(
-                          children: [
-                            ListTile(
-                              /// task/bug
-                              title: Text(dataSource.task),
-                              titleTextStyle: kContainerTextStyle.copyWith(
-                                color: Colors.white,
-                                fontSize: 20.0,
-                              ),
-
-                              /// project
-                              subtitle: Text(dataSource.complaint.projectName),
-                              subtitleTextStyle: kContainerTextStyle.copyWith(
-                                fontSize: 12.0,
-                              ),
-
-                              /// due date
-                              trailing: Text(
-                                convertToDateString(dataSource.dueDate),
-                                style: kContainerTextStyle.copyWith(
-                                  fontSize: 12.0,
-                                ),
-                              ),
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => TaskPage(
-                                      isTeamLead: true,
-                                      task: dataSource.task,
-                                      complaint: dataSource.complaint,
-                                      dueDate: convertToDateString(
-                                          dataSource.dueDate),
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-                            const Divider(
-                              color: Color(0xFFb6b8aa),
-                              thickness: 0.2,
-                            )
-                          ],
-                        );
-                      },
-                    ),
+                    child: (type == LargeContainerTypes.allBugs)
+                        ? getBugsList(context)
+                        : getTasksList(context),
                   ),
                 ),
               ],
@@ -119,9 +73,9 @@ class LargeContainer extends StatelessWidget {
 }
 
 enum LargeContainerTypes {
-  myBugs(title: "My Tasks"),
-  workItemsDueToday(title: "My Tasks Due Today"),
-  overdueItems(title: "My Overdue Tasks"),
+  myTasks(title: "My Tasks"),
+  tasksDueToday(title: "My Tasks Due Today"),
+  overdueTasks(title: "My Overdue Tasks"),
   allBugs(title: "All Bugs");
 
   const LargeContainerTypes({
@@ -137,3 +91,109 @@ List<LargeContainer> largeContainers = [
       type: type,
     )
 ];
+
+ListView getTasksList(BuildContext context) {
+  return ListView.builder(
+    itemCount: tasksSource.length,
+    itemBuilder: (BuildContext context, int index) {
+      Task dataSource = tasksSource[index];
+      return Column(
+        children: [
+          ListTile(
+            /// task/bug
+            title: Text(dataSource.task),
+            titleTextStyle: kContainerTextStyle.copyWith(
+              color: Colors.white,
+              fontSize: 20.0,
+            ),
+
+            /// project
+            subtitle: Text(dataSource.complaint.projectName),
+            subtitleTextStyle: kContainerTextStyle.copyWith(
+              fontSize: 12.0,
+            ),
+
+            /// due date
+            trailing: Text(
+              convertToDateString(dataSource.dueDate),
+              style: kContainerTextStyle.copyWith(
+                fontSize: 12.0,
+              ),
+            ),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => TaskPage(
+                    isTeamLead: false,
+                    task: dataSource.task,
+                    complaint: dataSource.complaint,
+                    dueDate: convertToDateString(dataSource.dueDate),
+                  ),
+                ),
+              );
+            },
+          ),
+          const Divider(
+            color: Color(0xFFb6b8aa),
+            thickness: 0.2,
+          )
+        ],
+      );
+    },
+  );
+}
+
+///
+ListView getBugsList(BuildContext context) {
+  return ListView.builder(
+    itemCount: complaintsSource.length,
+    itemBuilder: (BuildContext context, int index) {
+      Complaint dataSource = complaintsSource[index];
+      return Column(
+        children: [
+          ListTile(
+            /// task/bug
+            title: Text(dataSource.complaint),
+            titleTextStyle: kContainerTextStyle.copyWith(
+              color: Colors.white,
+              fontSize: 20.0,
+            ),
+
+            /// project
+            subtitle: Text(dataSource.projectName),
+            subtitleTextStyle: kContainerTextStyle.copyWith(
+              fontSize: 12.0,
+            ),
+
+            /// date created
+            trailing: Text(
+              convertToDateString(dataSource.dateCreated),
+              style: kContainerTextStyle.copyWith(
+                fontSize: 12.0,
+              ),
+            ),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ComplaintPage(
+                    ticketNumber: dataSource.ticketNumber,
+                    project: dataSource.projectName,
+                    complaint: dataSource.complaint,
+                    complaintState: dataSource.complaintState,
+                    dateCreated: convertToDateString(dataSource.dateCreated),
+                  ),
+                ),
+              );
+            },
+          ),
+          const Divider(
+            color: Color(0xFFb6b8aa),
+            thickness: 0.2,
+          )
+        ],
+      );
+    },
+  );
+}
