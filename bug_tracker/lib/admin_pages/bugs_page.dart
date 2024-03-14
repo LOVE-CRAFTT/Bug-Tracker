@@ -71,6 +71,7 @@ class _BugsPageState extends State<BugsPage> {
                               children: [...buildTableHeaders()],
                             ),
                             buildTableRow(
+                              bugID: 10992836682,
                               bugName: "Hexagons don't fold",
                               projectName: "Origami Algorithm",
                               reporter: "alanBroker@gmail.com",
@@ -84,6 +85,7 @@ class _BugsPageState extends State<BugsPage> {
                               status: ComplaintState.inProgress,
                             ),
                             buildTableRow(
+                              bugID: 10992836682,
                               bugName: "Font doesn't change",
                               projectName: "Android studio",
                               reporter: "lanceArmstrong@gmail.com",

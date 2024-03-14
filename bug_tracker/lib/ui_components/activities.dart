@@ -62,7 +62,6 @@ enum Action {
 
 // Item represents the different items a user can interact with in the app.
 enum Item {
-  milestone(associatedText: "Milestone"),
   project(associatedText: "Project"),
   discussion(associatedText: "Discussion");
 
@@ -97,7 +96,7 @@ List<Activity> activitySource = [
     actor: "Kenny McCormack",
     actorInitials: "KM",
     action: Action.opened,
-    item: Item.milestone,
+    item: Item.project,
     milestone: "Add consolas font",
     timeOfAction: DateTime(
       2020,

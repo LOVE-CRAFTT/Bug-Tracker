@@ -62,9 +62,9 @@ class ComplaintPage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Text(
-                      "Bug: $complaint",
+                      "Complaint: $complaint",
                       style: kContainerTextStyle.copyWith(
-                        fontSize: 16.0,
+                        fontSize: 20.0,
                       ),
                     ),
                   ),

@@ -2,49 +2,50 @@ import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 
 TableRow buildTableRow({
-  String? bugName,
-  String? projectName,
-  String? reporter,
-  DateTime? timeCreated,
+  required int bugID,
+  required String bugName,
+  required String projectName,
+  required String reporter,
+  required DateTime timeCreated,
   String? assignee,
   List<Tags>? tags,
-  ComplaintState? status,
+  required ComplaintState status,
 }) {
   return TableRow(
     children: [
       ListTile(
-        title: bugName != null ? Text(bugName) : null,
+        title: Text(bugID.toString()),
         titleTextStyle: cellTextStyle,
         onTap: () {},
       ),
       ListTile(
-        title: projectName != null ? Text(projectName) : null,
+        title: Text(bugName),
         titleTextStyle: cellTextStyle,
       ),
       ListTile(
-        title: reporter != null ? Text(reporter) : null,
+        title: Text(projectName),
         titleTextStyle: cellTextStyle,
       ),
       ListTile(
-        title: timeCreated != null
-            ? Text(
-                "${timeCreated.year}-${timeCreated.month}-${timeCreated.day}")
-            : null,
+        title: Text(reporter),
         titleTextStyle: cellTextStyle,
       ),
       ListTile(
-        title: status != null
-            ? Align(
-                alignment: Alignment.centerLeft,
-                child: Chip(
-                  label: Text(
-                    status.title,
-                    style: kContainerTextStyle.copyWith(color: Colors.black),
-                  ),
-                  backgroundColor: status.associatedColor,
-                ),
-              )
-            : null,
+        title:
+            Text("${timeCreated.year}-${timeCreated.month}-${timeCreated.day}"),
+        titleTextStyle: cellTextStyle,
+      ),
+      ListTile(
+        title: Align(
+          alignment: Alignment.centerLeft,
+          child: Chip(
+            label: Text(
+              status.title,
+              style: kContainerTextStyle.copyWith(color: Colors.black),
+            ),
+            backgroundColor: status.associatedColor,
+          ),
+        ),
         titleTextStyle: cellTextStyle,
       ),
       ListTile(
@@ -87,6 +88,7 @@ TextStyle cellTextStyle = kContainerTextStyle.copyWith(fontSize: 14.0);
 
 List<ListTile> buildTableHeaders() {
   List<String> headerNames = [
+    "BUG ID",
     "BUG",
     "PROJECT",
     "REPORTER",

@@ -72,6 +72,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                                 children: [...buildTableHeaders()],
                               ),
                               buildTableRow(
+                                projectID: 1552634899504,
                                 projectName: "Android studio",
                                 percentBugsCompleted: normalize0to1(6),
                                 timeCreated: DateTime(
