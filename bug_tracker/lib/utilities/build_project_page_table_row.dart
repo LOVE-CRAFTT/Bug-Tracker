@@ -4,9 +4,7 @@ import 'package:percent_indicator/percent_indicator.dart';
 
 TableRow buildTableRow({
   String? projectName,
-  String? owner,
   Status? status,
-  double? percentMilestonesCompleted,
   double? percentBugsCompleted,
   DateTime? timeCreated,
   DateTime? timeCompleted,
@@ -39,10 +37,6 @@ TableRow buildTableRow({
         onTap: () {},
       ),
       ListTile(
-        title: owner != null ? Text(owner) : null,
-        titleTextStyle: cellTextStyle,
-      ),
-      ListTile(
         title: status != null
             ? Align(
                 alignment: Alignment.centerLeft,
@@ -56,11 +50,6 @@ TableRow buildTableRow({
               )
             : null,
         titleTextStyle: cellTextStyle,
-      ),
-      ListTile(
-        title: percentIndicator(percentMilestonesCompleted),
-        titleTextStyle: cellTextStyle,
-        onTap: () {},
       ),
       ListTile(
         title: percentIndicator(percentBugsCompleted),
@@ -90,9 +79,7 @@ TextStyle cellTextStyle = kContainerTextStyle.copyWith(fontSize: 14.0);
 List<ListTile> buildTableHeaders() {
   List<String> headerNames = [
     "PROJECT",
-    "OWNER",
     "STATUS",
-    "MILESTONES",
     "BUGS",
     "CREATED",
     "COMPLETED",

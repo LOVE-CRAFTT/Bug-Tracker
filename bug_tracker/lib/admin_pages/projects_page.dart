@@ -72,7 +72,6 @@ class _ProjectsPageState extends State<ProjectsPage> {
                                 children: [...buildTableHeaders()],
                               ),
                               buildTableRow(
-                                percentMilestonesCompleted: normalize0to1(60),
                                 projectName: "Android studio",
                                 percentBugsCompleted: normalize0to1(6),
                                 timeCreated: DateTime(
@@ -85,8 +84,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                                   DateTime.january,
                                   DateTime.tuesday,
                                 ),
-                                owner: "chukwuemekachukwudi9@gmail.com",
-                                status: Status.inProgress,
+                                status: Status.open,
                               ),
                             ],
                           ),

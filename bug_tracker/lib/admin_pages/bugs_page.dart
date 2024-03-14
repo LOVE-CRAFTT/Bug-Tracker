@@ -81,11 +81,6 @@ class _BugsPageState extends State<BugsPage> {
                               ),
                               assignee: "chukwuemekachukwudi9@gmail.com",
                               tags: [Tags.performance, Tags.functionality],
-                              dueDate: DateTime(
-                                2024,
-                                DateTime.january,
-                                DateTime.tuesday,
-                              ),
                               status: Status.open,
                             ),
                             buildTableRow(
@@ -99,11 +94,6 @@ class _BugsPageState extends State<BugsPage> {
                               ),
                               assignee: "chukwuemekachukwudi9@gmail.com",
                               tags: [Tags.functionality, Tags.ui],
-                              dueDate: DateTime(
-                                2022,
-                                DateTime.june,
-                                DateTime.thursday,
-                              ),
                               status: Status.inProgress,
                             ),
                           ],

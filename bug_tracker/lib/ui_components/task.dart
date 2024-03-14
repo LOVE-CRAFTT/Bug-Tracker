@@ -10,14 +10,14 @@ class Task extends StatelessWidget {
   const Task({
     super.key,
     required this.task,
-    required this.taskState,
+    required this.taskStatus,
     required this.complaint,
     required this.dueDate,
   });
 
   final Complaint complaint;
   final String task;
-  final TaskState taskState;
+  final Status taskStatus;
   final DateTime dueDate;
 
   @override
@@ -91,12 +91,12 @@ class Task extends StatelessWidget {
                     ),
                     Chip(
                       label: Text(
-                        taskState.title,
+                        taskStatus.title,
                         style: kContainerTextStyle.copyWith(
                           color: Colors.black,
                         ),
                       ),
-                      backgroundColor: taskState.associatedColor,
+                      backgroundColor: taskStatus.associatedColor,
                     ),
                   ],
                 ),

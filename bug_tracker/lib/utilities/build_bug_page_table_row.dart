@@ -8,7 +8,6 @@ TableRow buildTableRow({
   DateTime? timeCreated,
   String? assignee,
   List<Tags>? tags,
-  DateTime? dueDate,
   Status? status,
 }) {
   return TableRow(
@@ -53,12 +52,6 @@ TableRow buildTableRow({
         titleTextStyle: cellTextStyle,
       ),
       ListTile(
-        title: dueDate != null
-            ? Text("${dueDate.year}-${dueDate.month}-${dueDate.day}")
-            : null,
-        titleTextStyle: cellTextStyle,
-      ),
-      ListTile(
         title: tags != null
             ? Align(
                 alignment: Alignment.centerLeft,
@@ -100,7 +93,6 @@ List<ListTile> buildTableHeaders() {
     "CREATED",
     "STATUS",
     "ASSIGNEE",
-    "DUE DATE",
     "TAGS",
   ];
 

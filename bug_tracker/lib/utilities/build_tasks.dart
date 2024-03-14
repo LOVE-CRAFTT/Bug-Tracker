@@ -16,31 +16,31 @@ List tasksSource = [
   Task(
     complaint: complaintsSource[0],
     task: "Run Youtube main branch in sandbox to replicate issue",
-    taskState: TaskState.newTask,
+    taskStatus: Status.fresh,
     dueDate: DateTime(2024, 2, 13),
   ),
   Task(
     complaint: complaintsSource[1],
     task: "Ascertain from user files if user is premium user",
-    taskState: TaskState.inProgress,
+    taskStatus: Status.inProgress,
     dueDate: DateTime(2023, 2, 13),
   ),
   Task(
     complaint: complaintsSource[1],
     task: "Replicate issue in main branch",
-    taskState: TaskState.dueToday,
+    taskStatus: Status.dueToday,
     dueDate: DateTime(2024, 3, 4),
   ),
   Task(
     complaint: complaintsSource[2],
     task: "Figure out which other types of phone numbers don't work",
-    taskState: TaskState.completed,
+    taskStatus: Status.completed,
     dueDate: DateTime(2024, 2, 13),
   ),
   Task(
     complaint: complaintsSource[3],
     task: "Try to obtain the device specifications from user files",
-    taskState: TaskState.overdue,
+    taskStatus: Status.overdue,
     dueDate: DateTime(2024, 1, 1),
   ),
 ];

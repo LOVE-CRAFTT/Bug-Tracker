@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:bug_tracker/ui_components/admin_appbar.dart';
 
 class StaffPage extends StatefulWidget {
   const StaffPage({super.key});
@@ -10,6 +11,16 @@ class StaffPage extends StatefulWidget {
 class _StaffPageState extends State<StaffPage> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: adminReusableAppBar("Staff", context),
+      body: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+          return const Padding(
+            padding: EdgeInsets.all(15.0),
+            child: Placeholder(),
+          );
+        },
+      ),
+    );
   }
 }

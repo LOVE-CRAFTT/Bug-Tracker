@@ -184,13 +184,16 @@ List<NavigationRailDestination> staffNavigationRailDestinations = [
 ];
 
 enum Status {
-  testing(title: "Testing", associatedColor: Colors.blue),
-  closed(title: "Closed", associatedColor: Colors.green),
-  open(title: "Open", associatedColor: Colors.red),
-  postponed(title: "Postponed", associatedColor: Colors.orange),
-  inProgress(title: "In Progress", associatedColor: Colors.yellow),
-  verified(title: "Verified", associatedColor: Colors.teal),
-  cancelled(title: "Cancelled", associatedColor: Colors.grey);
+  pending(title: "Pending", associatedColor: Colors.grey),
+  acknowledged(title: "Acknowledged", associatedColor: Colors.lime),
+  inProgress(title: "In Progress", associatedColor: Colors.blue),
+  completed(title: "Completed", associatedColor: Colors.green),
+  fresh(title: "Fresh", associatedColor: Colors.orange),
+  dueToday(title: "Due Today", associatedColor: Colors.yellow),
+  overdue(title: "Overdue", associatedColor: Colors.red),
+  open(title: "Open", associatedColor: Colors.brown),
+  postponed(title: "Postponed", associatedColor: Colors.teal),
+  cancelled(title: "Cancelled", associatedColor: Colors.black);
 
   const Status({required this.title, required this.associatedColor});
   final String title;
@@ -211,29 +214,6 @@ enum Tags {
 
   static const Color customMaroon = Color(0xFF800000);
   static const Color customOlive = Color(0xFF808000);
-}
-
-enum ComplaintState {
-  pending(title: "Pending", associatedColor: Colors.grey),
-  acknowledged(title: "Acknowledged", associatedColor: Colors.lime),
-  inProgress(title: "In Progress", associatedColor: Colors.blue),
-  completed(title: "Completed", associatedColor: Colors.green);
-
-  const ComplaintState({required this.title, required this.associatedColor});
-  final String title;
-  final Color associatedColor;
-}
-
-enum TaskState {
-  newTask(title: "New", associatedColor: Colors.orange),
-  inProgress(title: "In Progress", associatedColor: Colors.blue),
-  dueToday(title: "Due Today", associatedColor: Colors.yellow),
-  completed(title: "Completed", associatedColor: Colors.green),
-  overdue(title: "Overdue", associatedColor: Colors.red);
-
-  const TaskState({required this.title, required this.associatedColor});
-  final String title;
-  final Color associatedColor;
 }
 
 String complaintNotesPlaceholder =

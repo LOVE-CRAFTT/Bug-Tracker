@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/tools.dart';
+import 'package:bug_tracker/staff_pages/task_page.dart';
+import 'package:bug_tracker/ui_components/complaint.dart';
+import 'package:bug_tracker/ui_components/task.dart';
+import 'package:bug_tracker/utilities/build_complaints.dart';
+import 'package:bug_tracker/utilities/build_tasks.dart';
 
 ///Provides access to main work data
 ///Implemented as a container of fixed height and variable width
@@ -53,28 +58,46 @@ class LargeContainer extends StatelessWidget {
                 Expanded(
                   child: Center(
                     child: ListView.builder(
-                      itemCount: bugSource.length,
+                      itemCount: tasksSource.length,
                       itemBuilder: (BuildContext context, int index) {
-                        var dataSource = bugSource[index];
+                        Task dataSource = tasksSource[index];
                         return Column(
                           children: [
                             ListTile(
-                              title: Text(dataSource.title),
+                              /// task/bug
+                              title: Text(dataSource.task),
                               titleTextStyle: kContainerTextStyle.copyWith(
                                 color: Colors.white,
-                                fontSize: 30.0,
+                                fontSize: 20.0,
                               ),
-                              subtitle: Text(dataSource.subtitle),
+
+                              /// project
+                              subtitle: Text(dataSource.complaint.projectName),
                               subtitleTextStyle: kContainerTextStyle.copyWith(
                                 fontSize: 12.0,
                               ),
+
+                              /// due date
                               trailing: Text(
-                                convertToDateString(dataSource.dateTime),
+                                convertToDateString(dataSource.dueDate),
                                 style: kContainerTextStyle.copyWith(
                                   fontSize: 12.0,
                                 ),
                               ),
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => TaskPage(
+                                      isTeamLead: true,
+                                      task: dataSource.task,
+                                      complaint: dataSource.complaint,
+                                      dueDate: convertToDateString(
+                                          dataSource.dueDate),
+                                    ),
+                                  ),
+                                );
+                              },
                             ),
                             const Divider(
                               color: Color(0xFFb6b8aa),
@@ -96,9 +119,9 @@ class LargeContainer extends StatelessWidget {
 }
 
 enum LargeContainerTypes {
-  myBugs(title: "My Bugs"),
-  workItemsDueToday(title: "My Work Items Due Today"),
-  overdueItems(title: "My Overdue Items"),
+  myBugs(title: "My Tasks"),
+  workItemsDueToday(title: "My Tasks Due Today"),
+  overdueItems(title: "My Overdue Tasks"),
   allBugs(title: "All Bugs");
 
   const LargeContainerTypes({
@@ -107,37 +130,10 @@ enum LargeContainerTypes {
   final String title;
 }
 
-class Source {
-  Source({
-    required this.title,
-    required this.subtitle,
-    required this.dateTime,
-  });
-
-  //milestone or bug
-  String title;
-  //project
-  String subtitle;
-  DateTime dateTime;
-}
-
 ///List of largeContainers in the home screen
 List<LargeContainer> largeContainers = [
   for (var type in LargeContainerTypes.values)
     LargeContainer(
       type: type,
     )
-];
-
-List<Source> bugSource = [
-  Source(
-    title: "Hexagons don't fold",
-    subtitle: "Origami Algorithm",
-    dateTime: DateTime(2023, DateTime.december, DateTime.thursday, 12, 30),
-  ),
-  Source(
-    title: "Font doesn't change",
-    subtitle: "Android studio",
-    dateTime: DateTime(2022, DateTime.june, DateTime.sunday, 3, 16),
-  ),
 ];

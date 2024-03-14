@@ -10,14 +10,14 @@ class Complaint extends StatelessWidget {
     super.key,
     required this.ticketNumber,
     required this.complaint,
-    required this.complaintState,
+    required this.complaintStatus,
     required this.projectName,
     required this.dateCreated,
   });
 
   final int ticketNumber;
   final String complaint;
-  final ComplaintState complaintState;
+  final Status complaintStatus;
   final String projectName;
   final DateTime dateCreated;
 
@@ -37,7 +37,7 @@ class Complaint extends StatelessWidget {
                 ticketNumber: ticketNumber,
                 project: projectName,
                 complaint: complaint,
-                complaintState: complaintState,
+                complaintStatus: complaintStatus,
                 dateCreated: convertToDateString(dateCreated),
               ),
             ),
@@ -84,12 +84,12 @@ class Complaint extends StatelessWidget {
                     ),
                     Chip(
                       label: Text(
-                        complaintState.title,
+                        complaintStatus.title,
                         style: kContainerTextStyle.copyWith(
                           color: Colors.black,
                         ),
                       ),
-                      backgroundColor: complaintState.associatedColor,
+                      backgroundColor: complaintStatus.associatedColor,
                     ),
                   ],
                 ),

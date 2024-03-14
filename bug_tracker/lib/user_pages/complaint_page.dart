@@ -8,7 +8,7 @@ class ComplaintPage extends StatelessWidget {
     required this.ticketNumber,
     required this.project,
     required this.complaint,
-    required this.complaintState,
+    required this.complaintStatus,
     required this.dateCreated,
   });
 
@@ -16,7 +16,7 @@ class ComplaintPage extends StatelessWidget {
   final String project;
   final String complaint;
   final String dateCreated;
-  final ComplaintState complaintState;
+  final Status complaintStatus;
 
   @override
   Widget build(BuildContext context) {
@@ -123,8 +123,8 @@ class ComplaintPage extends StatelessWidget {
                             ),
                           ),
                           backgroundColor:
-                              complaintState.name == ComplaintState.pending.name
-                                  ? complaintState.associatedColor
+                              complaintStatus.name == Status.pending.name
+                                  ? complaintStatus.associatedColor
                                   : Colors.grey.withAlpha(25),
                         ),
                       ),
@@ -137,10 +137,10 @@ class ComplaintPage extends StatelessWidget {
                               color: Colors.black,
                             ),
                           ),
-                          backgroundColor: complaintState.name ==
-                                  ComplaintState.acknowledged.name
-                              ? complaintState.associatedColor
-                              : Colors.grey.withAlpha(25),
+                          backgroundColor:
+                              complaintStatus.name == Status.acknowledged.name
+                                  ? complaintStatus.associatedColor
+                                  : Colors.grey.withAlpha(25),
                         ),
                       ),
                       Padding(
@@ -152,10 +152,10 @@ class ComplaintPage extends StatelessWidget {
                               color: Colors.black,
                             ),
                           ),
-                          backgroundColor: complaintState.name ==
-                                  ComplaintState.inProgress.name
-                              ? complaintState.associatedColor
-                              : Colors.grey.withAlpha(25),
+                          backgroundColor:
+                              complaintStatus.name == Status.inProgress.name
+                                  ? complaintStatus.associatedColor
+                                  : Colors.grey.withAlpha(25),
                         ),
                       ),
                       Padding(
@@ -167,10 +167,10 @@ class ComplaintPage extends StatelessWidget {
                               color: Colors.black,
                             ),
                           ),
-                          backgroundColor: complaintState.name ==
-                                  ComplaintState.completed.name
-                              ? complaintState.associatedColor
-                              : Colors.grey.withAlpha(25),
+                          backgroundColor:
+                              complaintStatus.name == Status.completed.name
+                                  ? complaintStatus.associatedColor
+                                  : Colors.grey.withAlpha(25),
                         ),
                       ),
                     ],
