@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:bug_tracker/ui_components/task.dart';
+import 'package:bug_tracker/utilities/task.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/build_complaints.dart';
 import 'package:bug_tracker/utilities/tools.dart';

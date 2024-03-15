@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:bug_tracker/ui_components/complaint.dart';
+import 'package:bug_tracker/utilities/complaint.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/tools.dart';
 import 'package:bug_tracker/user_pages/complaint_page.dart';
