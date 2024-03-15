@@ -5,10 +5,11 @@ class Complaint {
   const Complaint({
     required this.ticketNumber,
     required this.complaint,
+    this.complaintNotes,
     required this.complaintState,
     required this.projectName,
     required this.dateCreated,
-    required this.reporter,
+    required this.author,
     this.teamLead,
     this.teamMembers,
     this.tags,
@@ -16,11 +17,12 @@ class Complaint {
 
   final int ticketNumber;
   final String complaint;
+  final String? complaintNotes;
   final ComplaintState complaintState;
   final String projectName;
   final DateTime dateCreated;
-  final String reporter;
+  final String author;
   final String? teamLead;
   final List<String>? teamMembers;
-  final Tags? tags;
+  final List<Tags>? tags;
 }

@@ -179,10 +179,15 @@ ListView getBugsList(BuildContext context) {
                 MaterialPageRoute(
                   builder: (context) => BugDetailPage(
                     ticketNumber: dataSource.ticketNumber,
-                    project: dataSource.projectName,
+                    projectName: dataSource.projectName,
                     bug: dataSource.complaint,
+                    bugNotes: dataSource.complaintNotes,
                     bugState: dataSource.complaintState,
                     dateCreated: convertToDateString(dataSource.dateCreated),
+                    author: dataSource.author,
+                    tags: dataSource.tags,
+                    teamLead: dataSource.teamLead,
+                    teamMembers: dataSource.teamMembers,
                   ),
                 ),
               );

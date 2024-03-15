@@ -1,23 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/build_complaint_notes.dart';
+import 'package:bug_tracker/utilities/tools.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
 
 class BugDetailPage extends StatelessWidget {
   const BugDetailPage({
     super.key,
     required this.ticketNumber,
-    required this.project,
+    required this.projectName,
     required this.bug,
+    required this.bugNotes,
     required this.bugState,
     required this.dateCreated,
+    required this.author,
+    this.tags,
+    this.teamLead,
+    this.teamMembers,
   });
 
   final int ticketNumber;
-  final String project;
+  final String projectName;
   final String bug;
+  final String? bugNotes;
+  final String author;
   final String dateCreated;
   final ComplaintState bugState;
+  final List<Tags>? tags;
+  final String? teamLead;
+  final List<String>? teamMembers;
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +75,16 @@ class BugDetailPage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Text(
-                      "Project: $project",
+                      "Author: $author",
+                      style: kContainerTextStyle.copyWith(
+                        fontSize: 15.0,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Text(
+                      "Project: $projectName",
                       style: kContainerTextStyle.copyWith(
                         fontSize: 15.0,
                       ),
@@ -81,7 +101,8 @@ class BugDetailPage extends StatelessWidget {
                     ),
                   ),
 
-                  /// Below is an expanded uneditable text field title "Complaint Notes" showing any additional notes from the user if any
+                  /// Below is an expanded uneditable text field title "Complaint Notes" showing any additional notes from the user if
+                  /// any else it says none
                   Padding(
                     padding: const EdgeInsets.only(
                       left: 20.0,
@@ -89,49 +110,45 @@ class BugDetailPage extends StatelessWidget {
                       top: 20.0,
                     ),
                     child: Text(
-                      "Complaint Notes From Reporter",
+                      "Complaint Notes From Reporter${(bugNotes != null ? "" : ": None")}",
                       style: kContainerTextStyle.copyWith(
                         fontSize: 16.0,
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Container(
-                      height: constraints.maxHeight - 450 > 0
-                          ? constraints.maxHeight - 450
-                          : 0,
-                      decoration: BoxDecoration(
-                        color: lightAshyNavyBlue,
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: SingleChildScrollView(
-                          child: Text(
-                            complaintNotesPlaceholder,
-                            style: kContainerTextStyle.copyWith(
-                              fontSize: 15.0,
+                  if (bugNotes != null)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: Container(
+                        height: constraints.maxHeight - 450 > 0
+                            ? constraints.maxHeight - 450
+                            : 0,
+                        decoration: BoxDecoration(
+                          color: lightAshyNavyBlue,
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: SingleChildScrollView(
+                            child: Text(
+                              bugNotes!,
+                              style: kContainerTextStyle.copyWith(
+                                fontSize: 15.0,
+                              ),
                             ),
                           ),
                         ),
                       ),
                     ),
-                  ),
 
                   ///Files from user
-                  Padding(
-                    padding: const EdgeInsets.only(
+                  const Padding(
+                    padding: EdgeInsets.only(
                       left: 20.0,
                       right: 20.0,
                       top: 20.0,
                     ),
-                    child: Text(
-                      "Files: ",
-                      style: kContainerTextStyle.copyWith(
-                        fontSize: 16.0,
-                      ),
-                    ),
+                    child: Text("Files: ", style: kContainerTextStyle),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -147,6 +164,10 @@ class BugDetailPage extends StatelessWidget {
                   /// Since hashCodes are used in the equality comparison, the changing hashCodes can break it
                   Row(
                     children: [
+                      const Padding(
+                        padding: EdgeInsets.all(20.0),
+                        child: Text("Status: ", style: kContainerTextStyle),
+                      ),
                       Padding(
                         padding: const EdgeInsets.all(20.0),
                         child: Chip(
@@ -193,7 +214,7 @@ class BugDetailPage extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(20.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
                         child: Chip(
                           label: Text(
                             "Completed",
@@ -207,6 +228,44 @@ class BugDetailPage extends StatelessWidget {
                                   : Colors.grey.withAlpha(25),
                         ),
                       ),
+                    ],
+                  ),
+
+                  /// Tags associated with the bug if available
+                  Row(
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.only(left: 20.0),
+                        child: Text("Tags: ", style: kContainerTextStyle),
+                      ),
+                      if (tags != null)
+                        SizedBox(
+                          width: determineContainerDimensionFromConstraint(
+                            constraintValue: constraints.maxWidth,
+                            subtractValue: 300,
+                          ),
+                          height: 70,
+                          child: ListView.builder(
+                            itemCount: tags!.length,
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 20.0,
+                                ),
+                                child: Chip(
+                                  label: Text(
+                                    tags![index].title,
+                                    style: kContainerTextStyle.copyWith(
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  backgroundColor: tags![index].associatedColor,
+                                ),
+                              );
+                            },
+                          ),
+                        ),
                     ],
                   ),
 

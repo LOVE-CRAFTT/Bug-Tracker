@@ -6,7 +6,7 @@ TableRow buildTableRow({
   required int bugID,
   required String bugName,
   required String projectName,
-  required String reporter,
+  required String author,
   required DateTime timeCreated,
   required double percentCompleted,
   required ComplaintState status,
@@ -29,7 +29,7 @@ TableRow buildTableRow({
         titleTextStyle: cellTextStyle,
       ),
       ListTile(
-        title: Text(reporter),
+        title: Text(author),
         titleTextStyle: cellTextStyle,
       ),
       ListTile(
@@ -98,7 +98,7 @@ List<ListTile> buildTableHeaders() {
     "BUG ID",
     "BUG",
     "PROJECT",
-    "REPORTER",
+    "AUTHOR",
     "CREATED",
     "PROGRESS",
     "STATUS",

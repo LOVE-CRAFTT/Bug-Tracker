@@ -75,7 +75,7 @@ class _BugsPageState extends State<BugsPage> {
                               bugID: 10992836682,
                               bugName: "Hexagons don't fold",
                               projectName: "Origami Algorithm",
-                              reporter: "alanBroker@gmail.com",
+                              author: "alanBroker@gmail.com",
                               timeCreated: DateTime(
                                 2023,
                                 DateTime.december,
@@ -91,7 +91,7 @@ class _BugsPageState extends State<BugsPage> {
                               bugID: 10992836682,
                               bugName: "Font doesn't change",
                               projectName: "Android studio",
-                              reporter: "lanceArmstrong@gmail.com",
+                              author: "lanceArmstrong@gmail.com",
                               timeCreated: DateTime(
                                 2022,
                                 DateTime.june,
