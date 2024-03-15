@@ -186,8 +186,6 @@ ListView getBugsList(BuildContext context) {
                     dateCreated: convertToDateString(dataSource.dateCreated),
                     author: dataSource.author,
                     tags: dataSource.tags,
-                    teamLead: dataSource.teamLead,
-                    teamMembers: dataSource.teamMembers,
                   ),
                 ),
               );

@@ -29,10 +29,7 @@ class Activities extends StatelessWidget {
                 "${activity.actor} ${activity.action.associatedText} ${activity.item.associatedText}"),
             titleTextStyle: kContainerTextStyle.copyWith(fontSize: 12.0),
             subtitle: Text(
-              activity.milestone ??
-                  activity.project ??
-                  activity.discussion ??
-                  "",
+              activity.task ?? activity.discussion ?? "",
             ),
             subtitleTextStyle: kContainerTextStyle.copyWith(fontSize: 18.0),
             trailing: Text(
@@ -54,6 +51,7 @@ enum Action {
   started(associatedText: "started"),
   added(associatedText: "added"),
   removed(associatedText: "removed"),
+  finished(associatedText: "finished"),
   deleted(associatedText: "deleted");
 
   const Action({required this.associatedText});
@@ -62,7 +60,7 @@ enum Action {
 
 // Item represents the different items a user can interact with in the app.
 enum Item {
-  project(associatedText: "Project"),
+  task(associatedText: "Task"),
   discussion(associatedText: "Discussion");
 
   const Item({required this.associatedText});
@@ -75,9 +73,8 @@ class Activity {
     required this.actorInitials,
     required this.action,
     required this.item,
-    this.milestone,
-    this.project,
     this.discussion,
+    this.task,
     required this.timeOfAction,
   });
 
@@ -85,9 +82,8 @@ class Activity {
   final String actorInitials;
   final Action action;
   final Item item;
-  final String? milestone;
-  final String? project;
   final String? discussion;
+  final String? task;
   final DateTime timeOfAction;
 }
 
@@ -95,9 +91,9 @@ List<Activity> activitySource = [
   Activity(
     actor: "Kenny McCormack",
     actorInitials: "KM",
-    action: Action.opened,
-    item: Item.project,
-    milestone: "Add consolas font",
+    action: Action.started,
+    item: Item.task,
+    task: "Re release",
     timeOfAction: DateTime(
       2020,
       DateTime.february,

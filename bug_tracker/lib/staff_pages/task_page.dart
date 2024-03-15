@@ -12,12 +12,14 @@ class TaskPage extends StatefulWidget {
     required this.task,
     required this.complaint,
     required this.dueDate,
+    this.viewingFromBug,
   });
 
   final bool isTeamLead;
   final Complaint complaint;
   final String task;
   final String dueDate;
+  final bool? viewingFromBug;
 
   @override
   State<TaskPage> createState() => _TaskPageState();
@@ -49,20 +51,24 @@ class _TaskPageState extends State<TaskPage> {
                             fontSize: 15.0,
                           ),
                         ),
+
+                        ///TODO: IF viewing from bug then check if its their task before viewing
                         //update complaint state
-                        HeaderButton(
-                          screenIsWide: screenIsWide,
-                          buttonText: "Update",
-                          onPress: () {
-                            buildTaskUpdatePage(
-                                context: context,
-                                constraints: constraints,
-                                isTeamLead: widget.isTeamLead,
-                                redraw: () {
-                                  setState(() {});
-                                });
-                          },
-                        )
+                        if (widget.viewingFromBug == false ||
+                            widget.viewingFromBug == null)
+                          HeaderButton(
+                            screenIsWide: screenIsWide,
+                            buttonText: "Update",
+                            onPress: () {
+                              buildTaskUpdatePage(
+                                  context: context,
+                                  constraints: constraints,
+                                  isTeamLead: widget.isTeamLead,
+                                  redraw: () {
+                                    setState(() {});
+                                  });
+                            },
+                          )
                       ],
                     ),
                   ),

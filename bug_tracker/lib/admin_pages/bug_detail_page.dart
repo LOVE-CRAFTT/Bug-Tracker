@@ -1,8 +1,10 @@
+import 'package:bug_tracker/utilities/build_tasks.dart';
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/build_complaint_notes.dart';
 import 'package:bug_tracker/utilities/tools.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
+import 'package:bug_tracker/ui_components/staff_task_card.dart';
 
 class BugDetailPage extends StatelessWidget {
   const BugDetailPage({
@@ -15,8 +17,6 @@ class BugDetailPage extends StatelessWidget {
     required this.dateCreated,
     required this.author,
     this.tags,
-    this.teamLead,
-    this.teamMembers,
   });
 
   final int ticketNumber;
@@ -27,8 +27,6 @@ class BugDetailPage extends StatelessWidget {
   final String dateCreated;
   final ComplaintState bugState;
   final List<Tags>? tags;
-  final String? teamLead;
-  final List<String>? teamMembers;
 
   @override
   Widget build(BuildContext context) {
@@ -43,13 +41,18 @@ class BugDetailPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(20.0),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20.0,
+                      vertical: 10.0,
+                    ),
                     child: Align(
                       alignment: Alignment.topRight,
                       child: HeaderButton(
                           screenIsWide: true,
                           buttonText: "Update",
-                          onPress: () {}),
+                          onPress: () {
+                            //open admin update bug page
+                          }),
                     ),
                   ),
                   Padding(
@@ -110,7 +113,7 @@ class BugDetailPage extends StatelessWidget {
                       top: 20.0,
                     ),
                     child: Text(
-                      "Complaint Notes From Reporter${(bugNotes != null ? "" : ": None")}",
+                      "Complaint Notes From Author${(bugNotes != null ? "" : ": None")}",
                       style: kContainerTextStyle.copyWith(
                         fontSize: 16.0,
                       ),
@@ -269,6 +272,58 @@ class BugDetailPage extends StatelessWidget {
                     ],
                   ),
 
+                  /// Assigned Team i.e team lead and other staff
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 20.0,
+                      right: 20.0,
+                      top: 20.0,
+                    ),
+                    child: Text(
+                      "Assigned Team",
+                      style: kContainerTextStyle.copyWith(
+                        fontSize: 18.0,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+
+                  ///Team Lead
+                  const Padding(
+                    padding: EdgeInsets.only(
+                      left: 20.0,
+                      right: 20.0,
+                      top: 20.0,
+                    ),
+                    child: Text("Team Lead", style: kContainerTextStyle),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: StaffTaskCard(task: tasksSource[0]),
+                  ),
+
+                  ///Team Members
+                  const Padding(
+                    padding: EdgeInsets.only(
+                      left: 20.0,
+                      right: 20.0,
+                      top: 20.0,
+                    ),
+                    child: Text("Team Members", style: kContainerTextStyle),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Container(
+                      height: 300,
+                      decoration: BoxDecoration(
+                        color: lightAshyNavyBlue,
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      padding: const EdgeInsets.all(10.0),
+                      child: buildOtherStaffTaskCards(),
+                    ),
+                  ),
+
                   /// Below is an expanded uneditable text field title "Staff Notes and Work Plan" showing the notes from the staff
                   Padding(
                     padding: const EdgeInsets.only(
@@ -283,17 +338,20 @@ class BugDetailPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Container(
-                    height: constraints.maxHeight - 200 > 0
-                        ? constraints.maxHeight - 200
-                        : 0,
-                    decoration: BoxDecoration(
-                      color: lightAshyNavyBlue,
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: buildNotes(),
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Container(
+                      height: constraints.maxHeight - 200 > 0
+                          ? constraints.maxHeight - 200
+                          : 0,
+                      decoration: BoxDecoration(
+                        color: lightAshyNavyBlue,
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: buildNotes(),
+                      ),
                     ),
                   ),
                 ],
@@ -323,6 +381,15 @@ ListView buildFilesPlaceHolders() {
           ),
         ),
       );
+    },
+  );
+}
+
+ListView buildOtherStaffTaskCards() {
+  return ListView.builder(
+    itemCount: tasksSource.length,
+    itemBuilder: (BuildContext context, int index) {
+      return StaffTaskCard(task: tasksSource[index]);
     },
   );
 }

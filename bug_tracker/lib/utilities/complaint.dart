@@ -10,8 +10,6 @@ class Complaint {
     required this.projectName,
     required this.dateCreated,
     required this.author,
-    this.teamLead,
-    this.teamMembers,
     this.tags,
   });
 
@@ -22,7 +20,5 @@ class Complaint {
   final String projectName;
   final DateTime dateCreated;
   final String author;
-  final String? teamLead;
-  final List<String>? teamMembers;
   final List<Tags>? tags;
 }

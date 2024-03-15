@@ -101,7 +101,7 @@ List complaintsSource = [
   Complaint(
     ticketNumber: 34923099,
     complaint: "App doesn't play in background",
-    complaintNotes: null,
+    complaintNotes: complaintNotesPlaceholder,
     complaintState: ComplaintState.completed,
     projectName: 'Youtube',
     dateCreated: DateTime(2024, 2, 13),

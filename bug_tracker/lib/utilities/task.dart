@@ -8,10 +8,14 @@ class Task {
     required this.taskState,
     required this.complaint,
     required this.dueDate,
+    required this.assignedStaff,
+    required this.assignedStaffInitials,
   });
 
   final Complaint complaint;
   final String task;
   final TaskState taskState;
   final DateTime dueDate;
+  final String assignedStaff;
+  final String assignedStaffInitials;
 }
