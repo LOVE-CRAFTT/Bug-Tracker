@@ -74,6 +74,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                               buildTableRow(
                                 projectID: 1552634899504,
                                 projectName: "Android studio",
+                                // normalize percentage completed from 0 - 1
                                 percentBugsCompleted: normalize0to1(6),
                                 timeCreated: DateTime(
                                   2023,

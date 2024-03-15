@@ -156,6 +156,8 @@ class _TaskPageState extends State<TaskPage> {
                       horizontal: 10.0,
                       vertical: 20.0,
                     ),
+
+                    /// Actual task
                     child: Text(
                       "TASK: ${widget.task}",
                       style: kContainerTextStyle.copyWith(

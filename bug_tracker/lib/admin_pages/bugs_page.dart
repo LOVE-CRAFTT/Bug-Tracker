@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:bug_tracker/ui_components/custom_dropdown.dart';
 import 'package:bug_tracker/ui_components/admin_appbar.dart';
 import 'package:bug_tracker/utilities/constants.dart';
+import 'package:bug_tracker/utilities/tools.dart';
 import 'package:bug_tracker/utilities/build_bug_page_table_row.dart';
 
 ///Contains interface to all the bugs in the database
@@ -83,6 +84,8 @@ class _BugsPageState extends State<BugsPage> {
                               assignee: "chukwuemekachukwudi9@gmail.com",
                               tags: [Tags.performance, Tags.functionality],
                               status: ComplaintState.inProgress,
+                              // normalize percentage completed from 0 - 1
+                              percentCompleted: normalize0to1(40),
                             ),
                             buildTableRow(
                               bugID: 10992836682,
@@ -97,6 +100,8 @@ class _BugsPageState extends State<BugsPage> {
                               assignee: "chukwuemekachukwudi9@gmail.com",
                               tags: [Tags.functionality, Tags.ui],
                               status: ComplaintState.completed,
+                              // normalize percentage completed from 0 - 1
+                              percentCompleted: normalize0to1(11),
                             ),
                           ],
                         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
+import 'package:bug_tracker/ui_components/custom_linear_percent_indicator.dart';
 
 TableRow buildTableRow({
   required int bugID,
@@ -7,9 +8,10 @@ TableRow buildTableRow({
   required String projectName,
   required String reporter,
   required DateTime timeCreated,
+  required double percentCompleted,
+  required ComplaintState status,
   String? assignee,
   List<Tags>? tags,
-  required ComplaintState status,
 }) {
   return TableRow(
     children: [
@@ -34,6 +36,11 @@ TableRow buildTableRow({
         title:
             Text("${timeCreated.year}-${timeCreated.month}-${timeCreated.day}"),
         titleTextStyle: cellTextStyle,
+      ),
+      ListTile(
+        title: percentIndicator(percentCompleted),
+        titleTextStyle: cellTextStyle,
+        onTap: () {},
       ),
       ListTile(
         title: Align(
@@ -93,6 +100,7 @@ List<ListTile> buildTableHeaders() {
     "PROJECT",
     "REPORTER",
     "CREATED",
+    "PROGRESS",
     "STATUS",
     "ASSIGNEE",
     "TAGS",

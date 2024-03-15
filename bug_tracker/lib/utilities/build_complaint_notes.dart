@@ -12,39 +12,22 @@ ListView buildNotes() {
           top: 8.0,
           bottom: 8.0,
         ),
-        child: Stack(
-          children: [
-            Align(
-              alignment: Alignment.bottomLeft,
-              child: CircleAvatar(
-                backgroundColor: secondaryThemeColorGreen,
-                radius: 10.0,
-                child: Text(
-                  (index + 1).toString(),
-                  style: kContainerTextStyle.copyWith(
-                    color: Colors.black,
-                  ),
-                ),
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: secondaryThemeColorGreen,
+            ),
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(25.0),
+            child: Text(
+              note,
+              style: kContainerTextStyle.copyWith(
+                color: Colors.white70,
               ),
             ),
-            Container(
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: secondaryThemeColorGreen,
-                ),
-                borderRadius: BorderRadius.circular(15.0),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(25.0),
-                child: Text(
-                  note,
-                  style: kContainerTextStyle.copyWith(
-                    color: Colors.white70,
-                  ),
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
       );
     },

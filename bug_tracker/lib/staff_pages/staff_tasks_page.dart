@@ -116,7 +116,7 @@ class _TasksPageState extends State<TasksPage> {
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),
-                        child: buildTasks(),
+                        child: buildTasks(isTeamLead: true),
                       ),
                     ),
                   ),

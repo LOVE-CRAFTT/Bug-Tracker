@@ -107,6 +107,28 @@ class ComplaintPage extends StatelessWidget {
                     ),
                   ),
 
+                  ///Files from user
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 20.0,
+                      right: 20.0,
+                      top: 20.0,
+                    ),
+                    child: Text(
+                      "Files: ",
+                      style: kContainerTextStyle.copyWith(
+                        fontSize: 16.0,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: SizedBox(
+                      height: 100,
+                      child: buildFilesPlaceHolders(),
+                    ),
+                  ),
+
                   /// All states of the complaints are available as chips and they are each grayed out or colored
                   /// based on the state of the complaint
                   /// Enums are compared with names because the hashCodes change as new objects are created
@@ -211,4 +233,25 @@ class ComplaintPage extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Will replace with real files later
+ListView buildFilesPlaceHolders() {
+  return ListView.builder(
+    scrollDirection: Axis.horizontal,
+    itemCount: 4,
+    itemBuilder: (BuildContext context, int index) {
+      return Padding(
+        padding: const EdgeInsets.only(right: 8.0),
+        child: Container(
+          width: 100,
+          height: 100.0,
+          decoration: BoxDecoration(
+            color: Colors.greenAccent,
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+        ),
+      );
+    },
+  );
 }
