@@ -4,6 +4,7 @@ import 'package:bug_tracker/ui_components/admin_appbar.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/tools.dart';
 import 'package:bug_tracker/utilities/build_bug_page_table_row.dart';
+import 'package:bug_tracker/utilities/build_complaints.dart';
 
 ///Contains interface to all the bugs in the database
 class BugsPage extends StatefulWidget {
@@ -58,36 +59,16 @@ class _BugsPageState extends State<BugsPage> {
                               children: [...buildTableHeaders()],
                             ),
                             buildTableRow(
-                              bugID: 10992836682,
-                              bugName: "Hexagons don't fold",
-                              projectName: "Origami Algorithm",
-                              author: "alanBroker@gmail.com",
-                              timeCreated: DateTime(
-                                2023,
-                                DateTime.december,
-                                DateTime.thursday,
-                              ),
+                              context: context,
                               assignee: "chukwuemekachukwudi9@gmail.com",
-                              tags: [Tags.performance, Tags.functionality],
-                              status: ComplaintState.inProgress,
-                              // normalize percentage completed from 0 - 1
                               percentCompleted: normalize0to1(40),
+                              complaint: complaintsSource[0],
                             ),
                             buildTableRow(
-                              bugID: 10992836682,
-                              bugName: "Font doesn't change",
-                              projectName: "Android studio",
-                              author: "lanceArmstrong@gmail.com",
-                              timeCreated: DateTime(
-                                2022,
-                                DateTime.june,
-                                DateTime.sunday,
-                              ),
+                              context: context,
                               assignee: "chukwuemekachukwudi9@gmail.com",
-                              tags: [Tags.functionality, Tags.ui],
-                              status: ComplaintState.completed,
-                              // normalize percentage completed from 0 - 1
                               percentCompleted: normalize0to1(11),
+                              complaint: complaintsSource[1],
                             ),
                           ],
                         ),

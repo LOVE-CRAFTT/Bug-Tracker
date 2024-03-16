@@ -1,40 +1,53 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
+import 'package:bug_tracker/utilities/complaint.dart';
+import 'package:bug_tracker/utilities/tools.dart';
 import 'package:bug_tracker/ui_components/custom_linear_percent_indicator.dart';
+import 'package:bug_tracker/admin_pages/bug_detail_page.dart';
 
 TableRow buildTableRow({
-  required int bugID,
-  required String bugName,
-  required String projectName,
-  required String author,
-  required DateTime timeCreated,
+  required BuildContext context,
+  required Complaint complaint,
   required double percentCompleted,
-  required ComplaintState status,
   String? assignee,
-  List<Tags>? tags,
 }) {
   return TableRow(
     children: [
       ListTile(
-        title: Text(bugID.toString()),
+        title: Text(complaint.ticketNumber.toString()),
         titleTextStyle: cellTextStyle,
-        onTap: () {},
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => BugDetailPage(
+                ticketNumber: complaint.ticketNumber,
+                projectName: complaint.projectName,
+                bug: complaint.complaint,
+                bugNotes: complaint.complaintNotes,
+                bugState: complaint.complaintState,
+                dateCreated: convertToDateString(complaint.dateCreated),
+                author: complaint.author,
+                tags: complaint.tags,
+              ),
+            ),
+          );
+        },
       ),
       ListTile(
-        title: Text(bugName),
+        title: Text(complaint.complaint),
         titleTextStyle: cellTextStyle,
       ),
       ListTile(
-        title: Text(projectName),
+        title: Text(complaint.projectName),
         titleTextStyle: cellTextStyle,
       ),
       ListTile(
-        title: Text(author),
+        title: Text(complaint.author),
         titleTextStyle: cellTextStyle,
       ),
       ListTile(
-        title:
-            Text("${timeCreated.year}-${timeCreated.month}-${timeCreated.day}"),
+        title: Text(convertToDateString(complaint.dateCreated)),
         titleTextStyle: cellTextStyle,
       ),
       ListTile(
@@ -46,10 +59,10 @@ TableRow buildTableRow({
           alignment: Alignment.centerLeft,
           child: Chip(
             label: Text(
-              status.title,
+              complaint.complaintState.title,
               style: kContainerTextStyle.copyWith(color: Colors.black),
             ),
-            backgroundColor: status.associatedColor,
+            backgroundColor: complaint.complaintState.associatedColor,
           ),
         ),
         titleTextStyle: cellTextStyle,
@@ -59,24 +72,25 @@ TableRow buildTableRow({
         titleTextStyle: cellTextStyle,
       ),
       ListTile(
-        title: tags != null
+        title: complaint.tags != null
             ? Align(
                 alignment: Alignment.centerLeft,
                 child: SizedBox(
                   height: 50.0,
                   child: ListView.builder(
-                    itemCount: tags.length,
+                    itemCount: complaint.tags!.length,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (BuildContext context, int index) {
                       return Padding(
                         padding: const EdgeInsets.only(left: 8.0),
                         child: Chip(
                           label: Text(
-                            tags[index].title,
+                            complaint.tags![index].title,
                             style: kContainerTextStyle.copyWith(
                                 color: Colors.black),
                           ),
-                          backgroundColor: tags[index].associatedColor,
+                          backgroundColor:
+                              complaint.tags![index].associatedColor,
                         ),
                       );
                     },

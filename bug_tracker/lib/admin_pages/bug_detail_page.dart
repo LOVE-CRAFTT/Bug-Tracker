@@ -331,7 +331,7 @@ class _BugDetailPageState extends State<BugDetailPage> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: Container(
-                      height: 300,
+                      height: 400,
                       decoration: BoxDecoration(
                         color: lightAshyNavyBlue,
                         borderRadius: BorderRadius.circular(10.0),

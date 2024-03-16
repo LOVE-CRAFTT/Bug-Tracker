@@ -135,4 +135,30 @@ List complaintsSource = [
     dateCreated: DateTime(2020, 2, 13),
     author: "person@gmail.com",
   ),
+  Complaint(
+    ticketNumber: 450089791,
+    author: "Bob Schmidt@yahoo.com",
+    complaint: "Constant crashing on windows 7",
+    projectName: "Android Studio",
+    dateCreated: DateTime(
+      2023,
+      DateTime.august,
+      DateTime.monday,
+    ),
+    complaintState: ComplaintState.completed,
+    tags: [Tags.database],
+  ),
+  Complaint(
+    ticketNumber: 5774883002,
+    author: "Steve Cohen@yahoo.com",
+    complaint: "Loud sound before app opens",
+    projectName: "Origami Algorithm",
+    dateCreated: DateTime(
+      2023,
+      DateTime.january,
+      DateTime.saturday,
+    ),
+    complaintState: ComplaintState.acknowledged,
+    tags: [Tags.security, Tags.network],
+  ),
 ];
