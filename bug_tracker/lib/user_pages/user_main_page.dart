@@ -22,6 +22,31 @@ class _UserMainPageState extends State<UserMainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          "Home",
+          style: kAppBarTextStyle,
+        ),
+        backgroundColor: Colors.black,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 10.0),
+            child: InkWell(
+              onTap: () {},
+              child: Tooltip(
+                message: usersName,
+                child: CircleAvatar(
+                  backgroundColor: Colors.grey,
+                  child: Text(
+                    "KH",
+                    style: kContainerTextStyle.copyWith(color: Colors.black),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
       body: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
           var screenIsWide = constraints.maxWidth > 400;
@@ -36,40 +61,19 @@ class _UserMainPageState extends State<UserMainPage> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(right: 10.0),
-                        child: InkWell(
-                          onTap: () {},
-                          child: Tooltip(
-                            message: usersName,
-                            child: CircleAvatar(
-                              backgroundColor: Colors.grey,
-                              child: Text(
-                                "KH",
-                                style: kContainerTextStyle.copyWith(
-                                    color: Colors.black),
-                              ),
-                            ),
-                          ),
-                        ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: 10.0,
+                      bottom: 10.0,
+                    ),
+                    child: Text(
+                      "Welcome $usersName",
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontFamily: "Nunito",
+                        color: Color(0xFFb6b8aa),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          top: 10.0,
-                          bottom: 10.0,
-                        ),
-                        child: Text(
-                          "Welcome $usersName",
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontFamily: "Nunito",
-                            color: Color(0xFFb6b8aa),
-                          ),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

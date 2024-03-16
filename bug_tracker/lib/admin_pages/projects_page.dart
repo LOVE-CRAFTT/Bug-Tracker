@@ -26,29 +26,15 @@ class _ProjectsPageState extends State<ProjectsPage> {
               padding: const EdgeInsets.all(15.0),
               child: ListView(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      CustomDropDown(
-                        dropDownValue: dropDownValue,
-                        onChanged: (selected) {
-                          setState(() {
-                            dropDownValue = selected;
-                          });
-                        },
-                        page: DropdownPage.projectPage,
-                        constraints: constraints,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20.0),
-                        child: IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.filter_alt_outlined),
-                          tooltip: "Filter",
-                          splashRadius: 20.0,
-                        ),
-                      )
-                    ],
+                  CustomDropDown(
+                    dropDownValue: dropDownValue,
+                    onChanged: (selected) {
+                      setState(() {
+                        dropDownValue = selected;
+                      });
+                    },
+                    page: DropdownPage.projectPage,
+                    constraints: constraints,
                   ),
                   SizedBox(
                     height: constraints.maxHeight - 100,

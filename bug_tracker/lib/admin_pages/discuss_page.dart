@@ -27,15 +27,13 @@ class _AdminDiscussPageState extends State<AdminDiscussPage> {
             child: ListView(
               children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     HeaderButton(
                       screenIsWide: screenIsWide,
                       buttonText: "New Conversation",
                       onPress: () {},
                     ),
-
-                    ///Spacing between the button and the search/filter buttons
-                    if (screenIsWide) Expanded(child: Container()),
                     Padding(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 10.0,
@@ -62,12 +60,6 @@ class _AdminDiscussPageState extends State<AdminDiscussPage> {
                         onChanged: (input) {},
                       ),
                     ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.filter_alt_outlined),
-                      tooltip: "Filter",
-                      splashRadius: 20.0,
-                    )
                   ],
                 ),
                 Padding(
