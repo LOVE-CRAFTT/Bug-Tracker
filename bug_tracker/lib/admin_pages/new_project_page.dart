@@ -1,20 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:side_sheet/side_sheet.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
-import 'package:bug_tracker/utilities/build_add_new_staff_page.dart';
-
-Future buildNewProjectPage({
-  required BuildContext context,
-}) {
-  return SideSheet.right(
-    context: context,
-    width: MediaQuery.of(context).size.width * 0.7,
-    sheetColor: lightAshyNavyBlue,
-    sheetBorderRadius: 10.0,
-    body: const NewProjectPage(),
-  );
-}
+import 'package:bug_tracker/admin_pages/new_staff_page.dart';
 
 ///Text editing Controllers
 TextEditingController projectTitleController = TextEditingController();

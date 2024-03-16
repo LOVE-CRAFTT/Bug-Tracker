@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:side_sheet/side_sheet.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/tools.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
 import 'package:bug_tracker/utilities/complaint.dart';
-import 'package:bug_tracker/utilities/build_tasks_update_page.dart';
+import 'package:bug_tracker/staff_pages/tasks_update_page.dart';
 
 class TaskPage extends StatefulWidget {
   const TaskPage({
@@ -60,10 +61,16 @@ class _TaskPageState extends State<TaskPage> {
                             screenIsWide: screenIsWide,
                             buttonText: "Update",
                             onPress: () {
-                              buildTaskUpdatePage(
+                              SideSheet.right(
                                 context: context,
-                                constraints: constraints,
-                                isTeamLead: widget.isTeamLead,
+                                width: constraints.maxWidth * 0.9,
+                                sheetColor: lightAshyNavyBlue,
+                                sheetBorderRadius: 10.0,
+                                body: TasksUpdatePage(
+                                  maxHeight: constraints.maxHeight,
+                                  maxWidth: constraints.maxWidth,
+                                  isTeamLead: widget.isTeamLead,
+                                ),
                               );
                             },
                           )

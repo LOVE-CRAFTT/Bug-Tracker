@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:side_sheet/side_sheet.dart';
 import 'package:bug_tracker/utilities/constants.dart';
-import 'package:bug_tracker/utilities/build_update_password_page.dart';
+import 'package:bug_tracker/admin_pages/update_password_page.dart';
 
 ///AppBar at the top of every page
 AppBar staffReusableAppBar(String pageName, BuildContext context) {
@@ -43,7 +44,13 @@ AppBar staffReusableAppBar(String pageName, BuildContext context) {
                 ),
               ),
               onPressed: () {
-                buildUpdatePasswordPage(context: context);
+                SideSheet.right(
+                  context: context,
+                  width: MediaQuery.of(context).size.width * 0.3,
+                  sheetColor: lightAshyNavyBlue,
+                  sheetBorderRadius: 10.0,
+                  body: const UpdatePasswordPage(),
+                );
               },
               child: const Text(
                 "Update Password",

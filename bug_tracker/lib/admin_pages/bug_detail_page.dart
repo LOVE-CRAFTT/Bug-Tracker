@@ -5,7 +5,8 @@ import 'package:bug_tracker/utilities/build_complaint_notes.dart';
 import 'package:bug_tracker/utilities/tools.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
 import 'package:bug_tracker/ui_components/staff_task_card.dart';
-import 'package:bug_tracker/utilities/build_bug_detail_update_page.dart';
+import 'package:bug_tracker/admin_pages/bug_detail_update_page.dart';
+import 'package:side_sheet/side_sheet.dart';
 
 class BugDetailPage extends StatefulWidget {
   const BugDetailPage({
@@ -54,14 +55,20 @@ class _BugDetailPageState extends State<BugDetailPage> {
                     child: Align(
                       alignment: Alignment.topRight,
                       child: HeaderButton(
-                          screenIsWide: true,
-                          buttonText: "Update",
-                          onPress: () {
-                            buildBugDetailUpdatePage(
-                              context: context,
+                        screenIsWide: true,
+                        buttonText: "Update",
+                        onPress: () {
+                          SideSheet.right(
+                            context: context,
+                            width: constraints.maxWidth * 0.9,
+                            sheetColor: lightAshyNavyBlue,
+                            sheetBorderRadius: 10.0,
+                            body: BugDetailUpdatePage(
                               constraints: constraints,
-                            );
-                          }),
+                            ),
+                          );
+                        },
+                      ),
                     ),
                   ),
                   Padding(

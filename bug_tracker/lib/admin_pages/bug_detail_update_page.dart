@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
-import 'package:side_sheet/side_sheet.dart';
 import 'package:bug_tracker/ui_components/task_assignment_form.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
 
@@ -18,21 +16,6 @@ List<bool> selectedTags = List.filled(Tags.values.length, false);
 
 ///
 bool showTeamSection = false;
-
-Future buildBugDetailUpdatePage({
-  required BuildContext context,
-  required BoxConstraints constraints,
-}) {
-  return SideSheet.right(
-    context: context,
-    width: constraints.maxWidth * 0.9,
-    sheetColor: lightAshyNavyBlue,
-    sheetBorderRadius: 10.0,
-    body: BugDetailUpdatePage(
-      constraints: constraints,
-    ),
-  );
-}
 
 class BugDetailUpdatePage extends StatefulWidget {
   const BugDetailUpdatePage({
@@ -185,7 +168,7 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
                   buttonText: "Done",
                   onPress: () {
                     /// Store in database
-                    /// set task as updated if necessary
+                    /// set taskState as updated if necessary
                     Navigator.pop(context);
                     teamLeadTaskController.clear();
                     for (var controller in teamMembersTaskControllers) {

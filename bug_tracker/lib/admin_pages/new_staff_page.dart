@@ -1,20 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:side_sheet/side_sheet.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
-
-Future buildNewStaffPage({
-  required BuildContext context,
-}) {
-  return SideSheet.right(
-    context: context,
-    width: MediaQuery.of(context).size.width * 0.7,
-    sheetColor: lightAshyNavyBlue,
-    sheetBorderRadius: 10.0,
-    body: const NewStaffPage(),
-  );
-}
 
 ///Text editing Controllers
 TextEditingController surnameController = TextEditingController();

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:side_sheet/side_sheet.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 
 late int projectID;
@@ -13,18 +12,18 @@ final TextEditingController projectIdController = TextEditingController();
 final TextEditingController bugTitleController = TextEditingController();
 final TextEditingController notesController = TextEditingController();
 
-Future buildNewComplaintForm({
-  required BuildContext context,
-  required BoxConstraints constraints,
-}) {
-  final formKey = GlobalKey<FormState>();
+class NewComplaintForm extends StatelessWidget {
+  const NewComplaintForm({
+    super.key,
+    required this.constraints,
+  });
 
-  return SideSheet.right(
-    context: context,
-    width: constraints.maxWidth * 0.9,
-    sheetColor: lightAshyNavyBlue,
-    sheetBorderRadius: 10.0,
-    body: SingleChildScrollView(
+  final BoxConstraints constraints;
+
+  @override
+  Widget build(BuildContext context) {
+    final formKey = GlobalKey<FormState>();
+    return SingleChildScrollView(
       child: Form(
         key: formKey,
         child: SizedBox(
@@ -139,8 +138,8 @@ Future buildNewComplaintForm({
           ),
         ),
       ),
-    ),
-  );
+    );
+  }
 }
 
 InputDecoration complaintTextFieldStyle({required String hintText}) {

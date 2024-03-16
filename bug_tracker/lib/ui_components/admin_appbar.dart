@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:side_sheet/side_sheet.dart';
 import 'package:bug_tracker/utilities/constants.dart';
-import 'package:bug_tracker/utilities/build_add_new_staff_page.dart';
-import 'package:bug_tracker/utilities/build_add_new_project_page.dart';
-import 'package:bug_tracker/utilities/build_update_password_page.dart';
+import 'package:bug_tracker/admin_pages/new_staff_page.dart';
+import 'package:bug_tracker/admin_pages/new_project_page.dart';
+import 'package:bug_tracker/admin_pages/update_password_page.dart';
 
 ///AppBar at the top of every page
 AppBar adminReusableAppBar(String pageName, BuildContext context) {
@@ -26,9 +27,10 @@ AppBar adminReusableAppBar(String pageName, BuildContext context) {
         menuChildren: createMenuChildren(
           context,
           [
-            ["New Project", buildNewProjectPage],
-            ["New Staff", buildNewStaffPage],
+            ["New Project", const NewProjectPage()],
+            ["New Staff", const NewStaffPage()],
           ],
+          isUpdatePasswordPage: false,
         ),
       ),
 
@@ -39,8 +41,9 @@ AppBar adminReusableAppBar(String pageName, BuildContext context) {
         menuChildren: createMenuChildren(
           context,
           [
-            ["Update Password", buildUpdatePasswordPage]
+            ["Update Password", const UpdatePasswordPage()]
           ],
+          isUpdatePasswordPage: true,
         ),
         username: "ChukwuemekaChukwudi9",
         userInitials: "BC",
@@ -102,7 +105,8 @@ MenuAnchor buildMenuAnchor({
 }
 
 List<Padding> createMenuChildren(
-    BuildContext context, List<List> buttonContents) {
+    BuildContext context, List<List> buttonContents,
+    {required isUpdatePasswordPage}) {
   return buttonContents
       .map(
         (detail) => Padding(
@@ -117,7 +121,14 @@ List<Padding> createMenuChildren(
               ),
             ),
             onPressed: () {
-              detail.last(context: context);
+              SideSheet.right(
+                context: context,
+                width: MediaQuery.of(context).size.width *
+                    (isUpdatePasswordPage == true ? 0.3 : 0.7),
+                sheetColor: lightAshyNavyBlue,
+                sheetBorderRadius: 10.0,
+                body: detail.last,
+              );
             },
             child: Text(
               detail.first,

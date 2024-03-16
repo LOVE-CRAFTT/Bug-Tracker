@@ -1,26 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:side_sheet/side_sheet.dart';
 import 'package:bug_tracker/utilities/tools.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
-
-Future buildTaskUpdatePage({
-  required BuildContext context,
-  required BoxConstraints constraints,
-  required bool isTeamLead,
-}) {
-  return SideSheet.right(
-    context: context,
-    width: constraints.maxWidth * 0.9,
-    sheetColor: lightAshyNavyBlue,
-    sheetBorderRadius: 10.0,
-    body: TasksUpdatePage(
-      maxHeight: constraints.maxHeight,
-      maxWidth: constraints.maxWidth,
-      isTeamLead: isTeamLead,
-    ),
-  );
-}
 
 ///Text editing Controllers
 TextEditingController transferTaskController = TextEditingController();

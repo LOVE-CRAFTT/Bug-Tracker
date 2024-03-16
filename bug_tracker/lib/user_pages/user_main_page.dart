@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:side_sheet/side_sheet.dart';
 import 'package:bug_tracker/ui_components/custom_dropdown.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
 import 'package:bug_tracker/utilities/build_complaints.dart';
-import 'package:bug_tracker/utilities/build_new_complaint_form.dart';
+import 'package:bug_tracker/user_pages/new_complaint_form.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/tools.dart';
 
@@ -114,9 +115,14 @@ class _UserMainPageState extends State<UserMainPage> {
                         screenIsWide: screenIsWide,
                         buttonText: "New Complaint",
                         onPress: () {
-                          buildNewComplaintForm(
+                          SideSheet.right(
                             context: context,
-                            constraints: constraints,
+                            width: constraints.maxWidth * 0.9,
+                            sheetColor: lightAshyNavyBlue,
+                            sheetBorderRadius: 10.0,
+                            body: NewComplaintForm(
+                              constraints: constraints,
+                            ),
                           );
                         },
                       )
