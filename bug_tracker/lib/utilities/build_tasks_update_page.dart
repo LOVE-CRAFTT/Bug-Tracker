@@ -8,7 +8,6 @@ Future buildTaskUpdatePage({
   required BuildContext context,
   required BoxConstraints constraints,
   required bool isTeamLead,
-  required VoidCallback redraw,
 }) {
   return SideSheet.right(
     context: context,
@@ -19,7 +18,6 @@ Future buildTaskUpdatePage({
       maxHeight: constraints.maxHeight,
       maxWidth: constraints.maxWidth,
       isTeamLead: isTeamLead,
-      redraw: redraw,
     ),
   );
 }
@@ -35,13 +33,11 @@ class TasksUpdatePage extends StatefulWidget {
     required this.maxHeight,
     required this.maxWidth,
     required this.isTeamLead,
-    required this.redraw,
   });
 
   final double maxHeight;
   final double maxWidth;
   final bool isTeamLead;
-  final VoidCallback redraw;
 
   @override
   State<TasksUpdatePage> createState() => _TasksUpdatePageState();
@@ -157,9 +153,9 @@ class _TasksUpdatePageState extends State<TasksUpdatePage> {
           ),
 
           /// Mark Complaint as completed if isTeamLead
-          ///
-          /// Title
-          if (widget.isTeamLead)
+
+          if (widget.isTeamLead) ...[
+            /// Title
             SizedBox(
               width: determineContainerDimensionFromConstraint(
                 constraintValue: widget.maxHeight,
@@ -178,9 +174,9 @@ class _TasksUpdatePageState extends State<TasksUpdatePage> {
               ),
             ),
 
-          ///Notes to user if isTeamLead
-          if (widget.isTeamLead) makeTitle(title: "Notes to User: "),
-          if (widget.isTeamLead)
+            ///Notes to user if isTeamLead
+            makeTitle(title: "Notes to User: "),
+
             SizedBox(
               height: determineContainerDimensionFromConstraint(
                 constraintValue: widget.maxHeight,
@@ -212,6 +208,7 @@ class _TasksUpdatePageState extends State<TasksUpdatePage> {
                 ),
               ),
             ),
+          ],
 
           /// Once done is clicked navigator.pop and then redraw
           Align(
@@ -223,7 +220,6 @@ class _TasksUpdatePageState extends State<TasksUpdatePage> {
                 buttonText: "Done",
                 onPress: () {
                   Navigator.pop(context);
-                  widget.redraw();
                   transferTaskController.clear();
                   userNoteController.clear();
                 },

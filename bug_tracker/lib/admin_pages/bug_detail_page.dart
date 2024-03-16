@@ -5,8 +5,9 @@ import 'package:bug_tracker/utilities/build_complaint_notes.dart';
 import 'package:bug_tracker/utilities/tools.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
 import 'package:bug_tracker/ui_components/staff_task_card.dart';
+import 'package:bug_tracker/utilities/build_bug_detail_update_page.dart';
 
-class BugDetailPage extends StatelessWidget {
+class BugDetailPage extends StatefulWidget {
   const BugDetailPage({
     super.key,
     required this.ticketNumber,
@@ -28,6 +29,11 @@ class BugDetailPage extends StatelessWidget {
   final ComplaintState bugState;
   final List<Tags>? tags;
 
+  @override
+  State<BugDetailPage> createState() => _BugDetailPageState();
+}
+
+class _BugDetailPageState extends State<BugDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,7 +57,10 @@ class BugDetailPage extends StatelessWidget {
                           screenIsWide: true,
                           buttonText: "Update",
                           onPress: () {
-                            //open admin update bug page
+                            buildBugDetailUpdatePage(
+                              context: context,
+                              constraints: constraints,
+                            );
                           }),
                     ),
                   ),
@@ -61,13 +70,13 @@ class BugDetailPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Bug ID: $ticketNumber",
+                          "Bug ID: ${widget.ticketNumber}",
                           style: kContainerTextStyle.copyWith(
                             fontSize: 14.0,
                           ),
                         ),
                         Text(
-                          "Date Created: $dateCreated",
+                          "Date Created: ${widget.dateCreated}",
                           style: kContainerTextStyle.copyWith(
                             fontSize: 14.0,
                           ),
@@ -78,7 +87,7 @@ class BugDetailPage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Text(
-                      "Author: $author",
+                      "Author: ${widget.author}",
                       style: kContainerTextStyle.copyWith(
                         fontSize: 15.0,
                       ),
@@ -87,7 +96,7 @@ class BugDetailPage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Text(
-                      "Project: $projectName",
+                      "Project: ${widget.projectName}",
                       style: kContainerTextStyle.copyWith(
                         fontSize: 15.0,
                       ),
@@ -96,7 +105,7 @@ class BugDetailPage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Text(
-                      "Bug: $bug",
+                      "Bug: ${widget.bug}",
                       style: kContainerTextStyle.copyWith(
                         fontSize: 30.0,
                         color: Colors.white,
@@ -113,13 +122,13 @@ class BugDetailPage extends StatelessWidget {
                       top: 20.0,
                     ),
                     child: Text(
-                      "Complaint Notes From Author${(bugNotes != null ? "" : ": None")}",
+                      "Complaint Notes From Author${(widget.bugNotes != null ? "" : ": None")}",
                       style: kContainerTextStyle.copyWith(
                         fontSize: 16.0,
                       ),
                     ),
                   ),
-                  if (bugNotes != null)
+                  if (widget.bugNotes != null)
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20.0),
                       child: Container(
@@ -134,7 +143,7 @@ class BugDetailPage extends StatelessWidget {
                           padding: const EdgeInsets.all(10.0),
                           child: SingleChildScrollView(
                             child: Text(
-                              bugNotes!,
+                              widget.bugNotes!,
                               style: kContainerTextStyle.copyWith(
                                 fontSize: 15.0,
                               ),
@@ -180,10 +189,10 @@ class BugDetailPage extends StatelessWidget {
                               color: Colors.black,
                             ),
                           ),
-                          backgroundColor:
-                              bugState.name == ComplaintState.pending.name
-                                  ? bugState.associatedColor
-                                  : Colors.grey.withAlpha(25),
+                          backgroundColor: widget.bugState.name ==
+                                  ComplaintState.pending.name
+                              ? widget.bugState.associatedColor
+                              : Colors.grey.withAlpha(25),
                         ),
                       ),
                       Padding(
@@ -195,10 +204,10 @@ class BugDetailPage extends StatelessWidget {
                               color: Colors.black,
                             ),
                           ),
-                          backgroundColor:
-                              bugState.name == ComplaintState.acknowledged.name
-                                  ? bugState.associatedColor
-                                  : Colors.grey.withAlpha(25),
+                          backgroundColor: widget.bugState.name ==
+                                  ComplaintState.acknowledged.name
+                              ? widget.bugState.associatedColor
+                              : Colors.grey.withAlpha(25),
                         ),
                       ),
                       Padding(
@@ -210,10 +219,10 @@ class BugDetailPage extends StatelessWidget {
                               color: Colors.black,
                             ),
                           ),
-                          backgroundColor:
-                              bugState.name == ComplaintState.inProgress.name
-                                  ? bugState.associatedColor
-                                  : Colors.grey.withAlpha(25),
+                          backgroundColor: widget.bugState.name ==
+                                  ComplaintState.inProgress.name
+                              ? widget.bugState.associatedColor
+                              : Colors.grey.withAlpha(25),
                         ),
                       ),
                       Padding(
@@ -225,10 +234,10 @@ class BugDetailPage extends StatelessWidget {
                               color: Colors.black,
                             ),
                           ),
-                          backgroundColor:
-                              bugState.name == ComplaintState.completed.name
-                                  ? bugState.associatedColor
-                                  : Colors.grey.withAlpha(25),
+                          backgroundColor: widget.bugState.name ==
+                                  ComplaintState.completed.name
+                              ? widget.bugState.associatedColor
+                              : Colors.grey.withAlpha(25),
                         ),
                       ),
                     ],
@@ -241,7 +250,7 @@ class BugDetailPage extends StatelessWidget {
                         padding: EdgeInsets.only(left: 20.0),
                         child: Text("Tags: ", style: kContainerTextStyle),
                       ),
-                      if (tags != null)
+                      if (widget.tags != null)
                         SizedBox(
                           width: determineContainerDimensionFromConstraint(
                             constraintValue: constraints.maxWidth,
@@ -249,7 +258,7 @@ class BugDetailPage extends StatelessWidget {
                           ),
                           height: 70,
                           child: ListView.builder(
-                            itemCount: tags!.length,
+                            itemCount: widget.tags!.length,
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (BuildContext context, int index) {
                               return Padding(
@@ -258,12 +267,13 @@ class BugDetailPage extends StatelessWidget {
                                 ),
                                 child: Chip(
                                   label: Text(
-                                    tags![index].title,
+                                    widget.tags![index].title,
                                     style: kContainerTextStyle.copyWith(
                                       color: Colors.black,
                                     ),
                                   ),
-                                  backgroundColor: tags![index].associatedColor,
+                                  backgroundColor:
+                                      widget.tags![index].associatedColor,
                                 ),
                               );
                             },
