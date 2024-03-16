@@ -77,12 +77,10 @@ class _AdminDiscussPageState extends State<AdminDiscussPage> {
                       children: [
                         buildTableRow(
                           firstHeader: "CONVERSATION",
-                          secondHeader: "PROJECT",
-                          thirdHeader: "PARTICIPANTS",
+                          secondHeader: "PARTICIPANTS",
                         ),
                         buildTableRow(
                           conversationTitle: "New Sales Data",
-                          projectName: 'Origami Algorithm',
                           avatarText: ['CC', 'AB'],
                           tooltipMessage: [
                             'ChukwuemekaChukwudi9',
@@ -91,7 +89,6 @@ class _AdminDiscussPageState extends State<AdminDiscussPage> {
                         ),
                         buildTableRow(
                           conversationTitle: "Review Bug",
-                          projectName: 'Android Studio',
                           avatarText: ['WE'],
                           tooltipMessage: ['WindsorElizabeth'],
                         ),

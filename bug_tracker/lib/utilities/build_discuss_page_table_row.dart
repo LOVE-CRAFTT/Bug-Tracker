@@ -5,14 +5,11 @@ import 'package:bug_tracker/utilities/constants.dart';
 /// Parameters are all named and optional and they include
 /// [firstHeader] => the header of the first column
 /// [secondHeader] => the header of the second column
-/// [thirdHeader] => the header of the first column
-/// conversationTitle, projectName, tooltipMessage and avatarText and the backgroundImage
+/// conversationTitle, tooltipMessage and avatarText and the backgroundImage
 TableRow buildTableRow({
   String? firstHeader,
   String? secondHeader,
-  String? thirdHeader,
   String? conversationTitle,
-  String? projectName,
   List<String>? avatarText,
   List<String>? tooltipMessage,
   String? backgroundImage,
@@ -29,16 +26,9 @@ TableRow buildTableRow({
         onTap: firstHeader == null ? () {} : null,
       ),
       ListTile(
-        /// Creates a project name and makes it clickable if it not the second column title
-        /// else it is just text containing the second header
-        title: Text(secondHeader ?? (projectName ?? "Error Value")),
-        titleTextStyle: cellTextStyle,
-        onTap: secondHeader == null ? () {} : null,
-      ),
-      ListTile(
-        /// Creates a list of circle avatars if it is not the third column title
-        /// else it just text containing the third header
-        title: thirdHeader == null
+        /// Creates a list of circle avatars if it is not the second column title
+        /// else it just text containing the second header
+        title: secondHeader == null
             ? SizedBox(
                 height: 50.0,
                 child: ListView.builder(
@@ -64,7 +54,7 @@ TableRow buildTableRow({
                   },
                 ),
               )
-            : Text(thirdHeader),
+            : Text(secondHeader),
         titleTextStyle: cellTextStyle,
       )
     ],
