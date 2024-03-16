@@ -40,7 +40,6 @@ TableRow buildTableRow({
       ListTile(
         title: percentIndicator(percentCompleted),
         titleTextStyle: cellTextStyle,
-        onTap: () {},
       ),
       ListTile(
         title: Align(

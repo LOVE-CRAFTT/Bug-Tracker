@@ -39,7 +39,6 @@ TableRow buildTableRow({
       ListTile(
         title: percentIndicator(percentBugsCompleted),
         titleTextStyle: cellTextStyle,
-        onTap: () {},
       ),
       ListTile(
         title:

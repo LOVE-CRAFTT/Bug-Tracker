@@ -44,13 +44,6 @@ class _StaffFeedPageState extends State<StaffFeedPage> {
                       constraints: constraints,
                       page: DropdownPage.feedPage,
                     ),
-                    // SizedBox(
-                    //   height: _spacingHeight,
-                    // ),
-                    // DiscussionTextField(
-                    //   constraints: constraints,
-                    //   userInitials: "BG",
-                    // ),
                     SizedBox(
                       height: _spacingHeight,
                     ),

@@ -49,13 +49,6 @@ class _AdminFeedPageState extends State<AdminFeedPage> {
                     SizedBox(
                       height: _spacingHeight,
                     ),
-                    // DiscussionTextField(
-                    //   constraints: constraints,
-                    //   userInitials: "BC",
-                    // ),
-                    // SizedBox(
-                    //   height: _spacingHeight,
-                    // ),
                     TabBar(
                       tabs: const [
                         Text("Bug Reports", style: kContainerTextStyle),
