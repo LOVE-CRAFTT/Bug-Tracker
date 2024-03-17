@@ -1,9 +1,9 @@
-import 'package:bug_tracker/utilities/staff.dart';
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/task.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/build_complaints.dart';
 import 'package:bug_tracker/utilities/tools.dart';
+import 'package:bug_tracker/utilities/build_staff.dart';
 import 'package:bug_tracker/staff_pages/task_page.dart';
 
 ListView buildTasks({required bool isTeamLead}) {
@@ -112,59 +112,34 @@ List tasksSource = [
     task: "Run Youtube main branch in sandbox to replicate issue",
     taskState: TaskState.fresh,
     dueDate: DateTime(2024, 2, 13),
-    assignedStaff: const Staff(
-      id: 34566728,
-      name: "assigned Staff",
-      initials: "AS",
-      email: "assignedStaff@gmail.com",
-    ),
+    assignedStaff: staffSource[0],
   ),
   Task(
     complaint: complaintsSource[1],
     task: "Ascertain from user files if user is premium user",
     taskState: TaskState.inProgress,
     dueDate: DateTime(2023, 2, 13),
-    assignedStaff: const Staff(
-      id: 27364746,
-      name: "assigned Staff1",
-      initials: "AS1",
-      email: "assignedStaff1@gmail.com",
-    ),
+    assignedStaff: staffSource[1],
   ),
   Task(
     complaint: complaintsSource[1],
     task: "Replicate issue in main branch",
     taskState: TaskState.dueToday,
     dueDate: DateTime(2024, 3, 4),
-    assignedStaff: const Staff(
-      id: 09898762,
-      name: "assigned Staff2",
-      initials: "AS2",
-      email: "assignedStaff2@gmail.com",
-    ),
+    assignedStaff: staffSource[2],
   ),
   Task(
     complaint: complaintsSource[2],
     task: "Figure out which other types of phone numbers don't work",
     taskState: TaskState.completed,
     dueDate: DateTime(2024, 2, 13),
-    assignedStaff: const Staff(
-      id: 12341288,
-      name: "assigned Staff3",
-      initials: "AS3",
-      email: "assignedStaff3@gmail.com",
-    ),
+    assignedStaff: staffSource[3],
   ),
   Task(
-    complaint: complaintsSource[3],
+    complaint: complaintsSource[4],
     task: "Try to obtain the device specifications from user files",
     taskState: TaskState.overdue,
     dueDate: DateTime(2024, 1, 1),
-    assignedStaff: const Staff(
-      id: 65654354,
-      name: "assigned Staff4",
-      initials: "AS4",
-      email: "assignedStaff4@gmail.com",
-    ),
+    assignedStaff: staffSource[0],
   ),
 ];

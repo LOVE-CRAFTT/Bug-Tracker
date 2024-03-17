@@ -1,5 +1,3 @@
-import 'package:bug_tracker/utilities/task.dart';
-
 class Staff {
   const Staff({
     required this.id,
