@@ -47,7 +47,7 @@ class _TaskPageState extends State<TaskPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Project: ${widget.complaint.projectName}",
+                          "Project: ${widget.complaint.associatedProject.name}",
                           style: kContainerTextStyle.copyWith(
                             fontSize: 15.0,
                           ),

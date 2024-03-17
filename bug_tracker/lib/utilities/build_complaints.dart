@@ -1,3 +1,4 @@
+import 'package:bug_tracker/utilities/project.dart';
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/complaint.dart';
 import 'package:bug_tracker/utilities/constants.dart';
@@ -21,7 +22,7 @@ ListView buildComplaints() {
               MaterialPageRoute(
                 builder: (context) => ComplaintPage(
                   ticketNumber: complaint.ticketNumber,
-                  project: complaint.projectName,
+                  project: complaint.associatedProject.name,
                   complaint: complaint.complaint,
                   complaintState: complaint.complaintState,
                   dateCreated: convertToDateString(complaint.dateCreated),
@@ -81,7 +82,7 @@ ListView buildComplaints() {
                     ],
                   ),
                   Text(
-                    "Project: ${complaint.projectName}",
+                    "Project: ${complaint.associatedProject.name}",
                     style: kContainerTextStyle.copyWith(
                       fontSize: 14,
                       color: Colors.white70,
@@ -103,7 +104,11 @@ List complaintsSource = [
     complaint: "App doesn't play in background",
     complaintNotes: complaintNotesPlaceholder,
     complaintState: ComplaintState.completed,
-    projectName: 'Youtube',
+    associatedProject: Project(
+        id: 98098790,
+        name: "Youtube",
+        state: ProjectState.cancelled,
+        dateCreated: DateTime(2023, 2, 13)),
     dateCreated: DateTime(2024, 2, 13),
     author: "person1@gmail.com",
     tags: [Tags.functionality, Tags.ui],
@@ -113,7 +118,12 @@ List complaintsSource = [
     complaint: "Discover page doesn't load",
     complaintNotes: complaintNotesPlaceholder,
     complaintState: ComplaintState.acknowledged,
-    projectName: "Github mobile",
+    associatedProject: Project(
+      id: 12656564,
+      name: "Github Mobile",
+      state: ProjectState.postponed,
+      dateCreated: DateTime(2022, 12, 3),
+    ),
     dateCreated: DateTime(2022, 12, 3),
     author: "person2@gmail.com",
   ),
@@ -122,7 +132,12 @@ List complaintsSource = [
     complaint: "Can't sign in using phone number",
     complaintNotes: null,
     complaintState: ComplaintState.pending,
-    projectName: "Whatsapp",
+    associatedProject: Project(
+      id: 09653097,
+      name: "Whatsapp",
+      state: ProjectState.inProgress,
+      dateCreated: DateTime(2022, 7, 11),
+    ),
     dateCreated: DateTime(2023, 6, 17),
     author: "person3@gmail.com",
   ),
@@ -131,7 +146,13 @@ List complaintsSource = [
     complaint: "App crashes after 3 tabs are open",
     complaintNotes: complaintNotesPlaceholder,
     complaintState: ComplaintState.inProgress,
-    projectName: "Google Chrome",
+    associatedProject: Project(
+      id: 24563000,
+      name: "Google Chrome",
+      state: ProjectState.closed,
+      dateCreated: DateTime(2019, 2, 13),
+      dateClosed: DateTime(2024, 2, 16),
+    ),
     dateCreated: DateTime(2020, 2, 13),
     author: "person@gmail.com",
   ),
@@ -139,7 +160,16 @@ List complaintsSource = [
     ticketNumber: 450089791,
     author: "Bob Schmidt@yahoo.com",
     complaint: "Constant crashing on windows 7",
-    projectName: "Android Studio",
+    associatedProject: Project(
+      id: 22220029,
+      name: "Android Studio",
+      state: ProjectState.open,
+      dateCreated: DateTime(
+        2022,
+        DateTime.august,
+        DateTime.monday,
+      ),
+    ),
     dateCreated: DateTime(
       2023,
       DateTime.august,
@@ -152,7 +182,12 @@ List complaintsSource = [
     ticketNumber: 5774883002,
     author: "Steve Cohen@yahoo.com",
     complaint: "Loud sound before app opens",
-    projectName: "Origami Algorithm",
+    associatedProject: Project(
+      id: 55867223,
+      name: "Origami Algorithm",
+      state: ProjectState.open,
+      dateCreated: DateTime(2020, 2, 13),
+    ),
     dateCreated: DateTime(
       2023,
       DateTime.january,

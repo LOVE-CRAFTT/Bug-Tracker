@@ -1,4 +1,5 @@
 import 'package:bug_tracker/utilities/constants.dart';
+import 'package:bug_tracker/utilities/project.dart';
 
 /// Complaint Class
 class Complaint {
@@ -7,7 +8,7 @@ class Complaint {
     required this.complaint,
     this.complaintNotes,
     required this.complaintState,
-    required this.projectName,
+    required this.associatedProject,
     required this.dateCreated,
     required this.author,
     this.tags,
@@ -17,7 +18,7 @@ class Complaint {
   final String complaint;
   final String? complaintNotes;
   final ComplaintState complaintState;
-  final String projectName;
+  final Project associatedProject;
   final DateTime dateCreated;
   final String author;
   final List<Tags>? tags;

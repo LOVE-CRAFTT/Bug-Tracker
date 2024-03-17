@@ -24,10 +24,10 @@ class StaffTaskCard extends StatelessWidget {
       child: ListTile(
         leading: CircleAvatar(
           backgroundColor: Colors.grey,
-          child: Text(task.assignedStaffInitials),
+          child: Text(task.assignedStaff.initials),
         ),
         // e.g Kenny McCormack opened Milestone
-        title: Text(task.assignedStaff),
+        title: Text(task.assignedStaff.name),
         titleTextStyle: kContainerTextStyle.copyWith(fontSize: 12.0),
         subtitle: Text("Task: ${task.task}"),
         subtitleTextStyle: kContainerTextStyle.copyWith(fontSize: 18.0),

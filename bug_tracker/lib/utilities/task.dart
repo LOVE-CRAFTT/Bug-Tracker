@@ -1,5 +1,6 @@
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/complaint.dart';
+import 'package:bug_tracker/utilities/staff.dart';
 
 /// Task Class
 class Task {
@@ -9,13 +10,11 @@ class Task {
     required this.complaint,
     required this.dueDate,
     required this.assignedStaff,
-    required this.assignedStaffInitials,
   });
 
   final Complaint complaint;
   final String task;
   final TaskState taskState;
   final DateTime dueDate;
-  final String assignedStaff;
-  final String assignedStaffInitials;
+  final Staff assignedStaff;
 }

@@ -3,10 +3,10 @@ import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/build_discuss_page_table_row.dart';
 import 'package:bug_tracker/ui_components/admin_appbar.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
+import 'package:side_sheet/side_sheet.dart';
 
 /// The discuss page is for starting conversations with individuals say for switching tasks between teams/individuals
-/// Contains a button for starting new conversations, a search button, a filter button
-/// and a table containing all the projects
+/// Contains a button for starting new conversations and a search button
 class AdminDiscussPage extends StatefulWidget {
   const AdminDiscussPage({super.key});
 
@@ -32,7 +32,18 @@ class _AdminDiscussPageState extends State<AdminDiscussPage> {
                     HeaderButton(
                       screenIsWide: screenIsWide,
                       buttonText: "New Conversation",
-                      onPress: () {},
+                      onPress: () {
+                        SideSheet.right(
+                          context: context,
+                          width: constraints.maxWidth * 0.7,
+                          sheetColor: lightAshyNavyBlue,
+                          sheetBorderRadius: 10.0,
+                          body: const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Placeholder(),
+                          ),
+                        );
+                      },
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(

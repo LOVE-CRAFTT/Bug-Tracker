@@ -36,7 +36,7 @@ class BugReports extends StatelessWidget {
             ),
             title: Text("Bug: ${bugReport.complaint}"),
             titleTextStyle: kContainerTextStyle,
-            subtitle: Text("Project:  ${bugReport.projectName}"),
+            subtitle: Text("Project:  ${bugReport.associatedProject.name}"),
             subtitleTextStyle: kContainerTextStyle.copyWith(fontSize: 12.0),
             trailing: Text(
               convertToDateString(bugReport.dateCreated),
@@ -48,7 +48,7 @@ class BugReports extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (context) => BugDetailPage(
                     ticketNumber: bugReport.ticketNumber,
-                    projectName: bugReport.projectName,
+                    projectName: bugReport.associatedProject.name,
                     bug: bugReport.complaint,
                     bugNotes: bugReport.complaintNotes,
                     bugState: bugReport.complaintState,

@@ -22,7 +22,7 @@ TableRow buildTableRow({
             MaterialPageRoute(
               builder: (context) => BugDetailPage(
                 ticketNumber: complaint.ticketNumber,
-                projectName: complaint.projectName,
+                projectName: complaint.associatedProject.name,
                 bug: complaint.complaint,
                 bugNotes: complaint.complaintNotes,
                 bugState: complaint.complaintState,
@@ -39,7 +39,7 @@ TableRow buildTableRow({
         titleTextStyle: cellTextStyle,
       ),
       ListTile(
-        title: Text(complaint.projectName),
+        title: Text(complaint.associatedProject.name),
         titleTextStyle: cellTextStyle,
       ),
       ListTile(

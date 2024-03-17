@@ -174,6 +174,7 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
                     for (var controller in teamMembersTaskControllers) {
                       controller.clear();
                     }
+                    showTeamSection = false;
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(

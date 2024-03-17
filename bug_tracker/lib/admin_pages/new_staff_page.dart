@@ -66,7 +66,7 @@ class _NewStaffPageState extends State<NewStaffPage> {
                     controller: surnameController,
                     validator: (lSurname) {
                       if (lSurname == null || lSurname.isEmpty) {
-                        lSurname = "";
+                        return "Surname can't be empty";
                       }
                       surname = lSurname;
                       return null;

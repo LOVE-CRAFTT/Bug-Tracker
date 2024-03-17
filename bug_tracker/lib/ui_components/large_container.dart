@@ -108,7 +108,7 @@ ListView getTasksList(BuildContext context) {
             ),
 
             /// project
-            subtitle: Text(dataSource.complaint.projectName),
+            subtitle: Text(dataSource.complaint.associatedProject.name),
             subtitleTextStyle: kContainerTextStyle.copyWith(
               fontSize: 12.0,
             ),
@@ -161,7 +161,7 @@ ListView getBugsList(BuildContext context) {
             ),
 
             /// project
-            subtitle: Text(dataSource.projectName),
+            subtitle: Text(dataSource.associatedProject.name),
             subtitleTextStyle: kContainerTextStyle.copyWith(
               fontSize: 12.0,
             ),
@@ -179,7 +179,7 @@ ListView getBugsList(BuildContext context) {
                 MaterialPageRoute(
                   builder: (context) => BugDetailPage(
                     ticketNumber: dataSource.ticketNumber,
-                    projectName: dataSource.projectName,
+                    projectName: dataSource.associatedProject.name,
                     bug: dataSource.complaint,
                     bugNotes: dataSource.complaintNotes,
                     bugState: dataSource.complaintState,
