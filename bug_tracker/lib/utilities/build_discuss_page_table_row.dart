@@ -1,3 +1,4 @@
+import 'package:bug_tracker/admin_pages/conversation_page.dart';
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 
@@ -13,6 +14,7 @@ TableRow buildTableRow({
   List<String>? avatarText,
   List<String>? tooltipMessage,
   String? backgroundImage,
+  required BuildContext context,
 }) {
   TextStyle cellTextStyle = kContainerTextStyle.copyWith(fontSize: 14.0);
 
@@ -23,7 +25,16 @@ TableRow buildTableRow({
         /// else it is just text containing the first header
         title: Text(firstHeader ?? (conversationTitle ?? "Null Value")),
         titleTextStyle: cellTextStyle,
-        onTap: firstHeader == null ? () {} : null,
+        onTap: firstHeader == null
+            ? () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ConversationPage(),
+                  ),
+                );
+              }
+            : null,
       ),
       ListTile(
         /// Creates a list of circle avatars if it is not the second column title

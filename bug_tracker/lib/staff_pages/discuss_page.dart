@@ -92,6 +92,7 @@ class _StaffDiscussPageState extends State<StaffDiscussPage> {
                         buildTableRow(
                           firstHeader: "CONVERSATION",
                           secondHeader: "PARTICIPANTS",
+                          context: context,
                         ),
                         buildTableRow(
                           conversationTitle: "New Sales Data",
@@ -100,11 +101,13 @@ class _StaffDiscussPageState extends State<StaffDiscussPage> {
                             'ChukwuemekaChukwudi9',
                             'Alan Broker'
                           ],
+                          context: context,
                         ),
                         buildTableRow(
                           conversationTitle: "Review Bug",
                           avatarText: ['WE'],
                           tooltipMessage: ['WindsorElizabeth'],
+                          context: context,
                         ),
                       ],
                     ),
