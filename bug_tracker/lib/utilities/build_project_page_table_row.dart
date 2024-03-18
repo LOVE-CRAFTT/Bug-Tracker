@@ -1,26 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
+import 'package:bug_tracker/utilities/project.dart';
+import 'package:bug_tracker/utilities/tools.dart';
 import 'package:bug_tracker/ui_components/custom_linear_percent_indicator.dart';
 
 TableRow buildTableRow({
-  required int projectID,
-  required String projectName,
-  required ProjectState status,
+  required BuildContext context,
+  required Project project,
   required double percentBugsCompleted,
-  required DateTime timeCreated,
-  DateTime? timeCompleted,
 }) {
   /// Draw percent indicator
 
   return TableRow(
     children: [
       ListTile(
-        title: Text(projectID.toString()),
+        title: Text(project.id.toString()),
         titleTextStyle: cellTextStyle,
-        onTap: () {},
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const Placeholder(),
+            ),
+          );
+        },
       ),
       ListTile(
-        title: Text(projectName),
+        title: Text(project.name),
         titleTextStyle: cellTextStyle,
       ),
       ListTile(
@@ -28,10 +34,10 @@ TableRow buildTableRow({
           alignment: Alignment.centerLeft,
           child: Chip(
             label: Text(
-              status.title,
+              project.state.title,
               style: kContainerTextStyle.copyWith(color: Colors.black),
             ),
-            backgroundColor: status.associatedColor,
+            backgroundColor: project.state.associatedColor,
           ),
         ),
         titleTextStyle: cellTextStyle,
@@ -41,14 +47,14 @@ TableRow buildTableRow({
         titleTextStyle: cellTextStyle,
       ),
       ListTile(
-        title:
-            Text("${timeCreated.year}-${timeCreated.month}-${timeCreated.day}"),
+        title: Text(convertToDateString(project.dateCreated)),
         titleTextStyle: cellTextStyle,
       ),
       ListTile(
-        title: timeCompleted != null
+        title: project.dateClosed != null
             ? Text(
-                "${timeCompleted.year}-${timeCompleted.month}-${timeCompleted.day}")
+                convertToDateString(project.dateClosed!),
+              )
             : null,
         titleTextStyle: cellTextStyle,
       ),

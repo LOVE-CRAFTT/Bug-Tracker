@@ -184,8 +184,8 @@ List<NavigationRailDestination> staffNavigationRailDestinations = [
 ];
 
 enum ProjectState {
-  closed(title: "Closed", associatedColor: Colors.green),
-  open(title: "Open", associatedColor: Colors.red),
+  closed(title: "Closed", associatedColor: Colors.red),
+  open(title: "Open", associatedColor: Colors.green),
   postponed(title: "Postponed", associatedColor: Colors.orange),
   inProgress(title: "In Progress", associatedColor: Colors.yellow),
   cancelled(title: "Cancelled", associatedColor: Colors.grey);

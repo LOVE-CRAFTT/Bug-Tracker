@@ -4,6 +4,7 @@ import 'package:bug_tracker/ui_components/admin_appbar.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/tools.dart';
 import 'package:bug_tracker/utilities/build_project_page_table_row.dart';
+import 'package:bug_tracker/utilities/project.dart';
 
 ///Contains interface to all the projects in the database
 class ProjectsPage extends StatefulWidget {
@@ -58,21 +59,24 @@ class _ProjectsPageState extends State<ProjectsPage> {
                                 children: [...buildTableHeaders()],
                               ),
                               buildTableRow(
-                                projectID: 1552634899504,
-                                projectName: "Android studio",
+                                context: context,
+                                project: Project(
+                                  id: 1552634899504,
+                                  name: "Android studio",
+                                  state: ProjectState.closed,
+                                  dateCreated: DateTime(
+                                    2023,
+                                    DateTime.december,
+                                    DateTime.thursday,
+                                  ),
+                                  dateClosed: DateTime(
+                                    2024,
+                                    DateTime.january,
+                                    DateTime.tuesday,
+                                  ),
+                                ),
                                 // normalize percentage completed from 0 - 1
                                 percentBugsCompleted: normalize0to1(6),
-                                timeCreated: DateTime(
-                                  2023,
-                                  DateTime.december,
-                                  DateTime.thursday,
-                                ),
-                                timeCompleted: DateTime(
-                                  2024,
-                                  DateTime.january,
-                                  DateTime.tuesday,
-                                ),
-                                status: ProjectState.open,
                               ),
                             ],
                           ),
