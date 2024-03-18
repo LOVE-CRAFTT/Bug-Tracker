@@ -157,38 +157,38 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
                 child: const Text('Add Team Member'),
               ),
             ),
+          ],
 
-            /// done
-            Align(
-              alignment: Alignment.bottomRight,
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: HeaderButton(
-                  screenIsWide: true,
-                  buttonText: "Done",
-                  onPress: () {
-                    /// Store in database
-                    /// set taskState as updated if necessary
-                    Navigator.pop(context);
-                    teamLeadTaskController.clear();
-                    for (var controller in teamMembersTaskControllers) {
-                      controller.clear();
-                    }
-                    showTeamSection = false;
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          "Updated successfully",
-                          style:
-                              kContainerTextStyle.copyWith(color: Colors.black),
-                        ),
+          /// done
+          Align(
+            alignment: Alignment.bottomRight,
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: HeaderButton(
+                screenIsWide: true,
+                buttonText: "Done",
+                onPress: () {
+                  /// Store in database
+                  /// set taskState as updated if necessary
+                  Navigator.pop(context);
+                  teamLeadTaskController.clear();
+                  for (var controller in teamMembersTaskControllers) {
+                    controller.clear();
+                  }
+                  showTeamSection = false;
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        "Updated successfully",
+                        style:
+                            kContainerTextStyle.copyWith(color: Colors.black),
                       ),
-                    );
-                  },
-                ),
+                    ),
+                  );
+                },
               ),
             ),
-          ],
+          ),
         ],
       ),
     );
