@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/project.dart';
 import 'package:bug_tracker/utilities/tools.dart';
+import 'package:bug_tracker/admin_pages/project_detail_page.dart';
 import 'package:bug_tracker/ui_components/custom_linear_percent_indicator.dart';
 
 TableRow buildTableRow({
@@ -20,7 +21,16 @@ TableRow buildTableRow({
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const Placeholder(),
+              builder: (context) => ProjectDetailPage(
+                projectID: project.id,
+                projectName: project.name,
+                projectDetails: project.details,
+                projectState: project.state,
+                dateCreated: convertToDateString(project.dateCreated),
+                dateClosed: (project.dateClosed != null)
+                    ? convertToDateString(project.dateClosed!)
+                    : null,
+              ),
             ),
           );
         },

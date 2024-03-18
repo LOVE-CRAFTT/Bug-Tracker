@@ -186,7 +186,7 @@ class _TaskPageState extends State<TaskPage> {
                       top: 20.0,
                     ),
                     child: Text(
-                      "Team Member(s): ",
+                      "Team: ",
                       style: kContainerTextStyle.copyWith(
                         fontSize: 16.0,
                       ),

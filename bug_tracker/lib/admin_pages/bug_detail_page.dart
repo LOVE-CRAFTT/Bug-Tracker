@@ -4,7 +4,7 @@ import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/build_complaint_notes.dart';
 import 'package:bug_tracker/utilities/tools.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
-import 'package:bug_tracker/ui_components/staff_task_card.dart';
+import 'package:bug_tracker/ui_components/task_preview_card.dart';
 import 'package:bug_tracker/admin_pages/bug_detail_update_page.dart';
 import 'package:side_sheet/side_sheet.dart';
 
@@ -316,7 +316,7 @@ class _BugDetailPageState extends State<BugDetailPage> {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: StaffTaskCard(task: tasksSource[0]),
+                    child: DetailPageTaskPreviewCard(task: tasksSource[0]),
                   ),
 
                   ///Team Members
@@ -337,7 +337,7 @@ class _BugDetailPageState extends State<BugDetailPage> {
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                       padding: const EdgeInsets.all(10.0),
-                      child: buildOtherStaffTaskCards(),
+                      child: buildOtherTaskPreviewCards(),
                     ),
                   ),
 
@@ -402,11 +402,11 @@ ListView buildFilesPlaceHolders() {
   );
 }
 
-ListView buildOtherStaffTaskCards() {
+ListView buildOtherTaskPreviewCards() {
   return ListView.builder(
     itemCount: tasksSource.length,
     itemBuilder: (BuildContext context, int index) {
-      return StaffTaskCard(task: tasksSource[index]);
+      return DetailPageTaskPreviewCard(task: tasksSource[index]);
     },
   );
 }
