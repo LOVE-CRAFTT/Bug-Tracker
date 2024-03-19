@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:bug_tracker/utilities/constants.dart';
 
 class ConversationPage extends StatefulWidget {
   const ConversationPage({super.key});
@@ -12,9 +13,16 @@ class _ConversationPageState extends State<ConversationPage> {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.all(8.0),
-      child: Placeholder(),
+    return Scaffold(
+      appBar: genericTaskBar("Conversation"),
+      body: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+          return Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: ListView(),
+          );
+        },
+      ),
     );
   }
 }

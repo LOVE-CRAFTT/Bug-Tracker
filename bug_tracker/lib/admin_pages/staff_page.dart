@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/ui_components/admin_appbar.dart';
 
@@ -15,9 +16,9 @@ class _StaffPageState extends State<StaffPage> {
       appBar: adminReusableAppBar("Staff", context),
       body: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
-          return const Padding(
-            padding: EdgeInsets.all(15.0),
-            child: Placeholder(),
+          return Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: ListView(),
           );
         },
       ),
