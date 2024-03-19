@@ -1,38 +1,38 @@
-import 'package:bug_tracker/utilities/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:bug_tracker/utilities/constants.dart';
+import 'package:bug_tracker/admin_pages/projects_page.dart';
 
-List<String?> feedChoices = [
+List<String> feedChoices = [
   "All Projects",
-  "Project 1",
-  "Project 2",
+  ...List.generate(projectSource.length, (index) => projectSource[index].name),
 ];
 List<String?> milestoneChoices = [
   "All Milestones",
   "Active Milestones",
   "Completed Milestones",
 ];
-List<String?> bugChoices = [
+List<String> bugChoices = [
   "All Bugs",
-  "All Open",
-  "All Closed",
-  "My Open",
-  "My Closed",
+  "Pending",
+  "Acknowledged",
+  "In Progress",
+  "Completed",
 ];
-List<String?> projectChoices = [
+List<String> projectChoices = [
   "All Projects",
   "Open Projects",
   "Postponed Projects",
   "Cancelled Projects",
   "Closed Projects",
 ];
-List<String?> complaintsChoices = [
+List<String> complaintsChoices = [
   "All complaints",
   "Pending",
   "Acknowledged",
   "In Progress",
   "Completed",
 ];
-List<String?> tasksChoices = [
+List<String> tasksChoices = [
   "All tasks",
   "New (2 days)",
   "In Progress",
@@ -102,7 +102,7 @@ class CustomDropDown extends StatelessWidget {
               .map(
                 (value) => DropdownMenuItem(
                   value: value,
-                  child: Text(value!),
+                  child: Text(value),
                 ),
               )
               .toList(),
