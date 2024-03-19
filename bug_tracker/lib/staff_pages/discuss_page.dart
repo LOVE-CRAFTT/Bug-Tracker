@@ -67,8 +67,12 @@ class _StaffDiscussPageState extends State<StaffDiscussPage> {
                               ? constraints.maxWidth * 0.4
                               : constraints.maxWidth * 0.65,
                         ),
-                        textStyle: const MaterialStatePropertyAll<TextStyle>(
+                        hintText: "Search Discussions",
+                        hintStyle: const MaterialStatePropertyAll<TextStyle>(
                           kContainerTextStyle,
+                        ),
+                        textStyle: MaterialStatePropertyAll<TextStyle>(
+                          kContainerTextStyle.copyWith(color: Colors.white),
                         ),
                         onSubmitted: (target) {},
                         onChanged: (input) {},
