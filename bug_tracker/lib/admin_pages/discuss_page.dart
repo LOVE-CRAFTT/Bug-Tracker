@@ -67,6 +67,10 @@ class _AdminDiscussPageState extends State<AdminDiscussPage> {
                               ? constraints.maxWidth * 0.4
                               : constraints.maxWidth * 0.65,
                         ),
+                        hintText: "Search Discussions",
+                        hintStyle: const MaterialStatePropertyAll<TextStyle>(
+                          kContainerTextStyle,
+                        ),
                         textStyle: const MaterialStatePropertyAll<TextStyle>(
                           kContainerTextStyle,
                         ),

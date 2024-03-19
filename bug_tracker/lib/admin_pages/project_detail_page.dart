@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
-import 'package:bug_tracker/ui_components/bug_preview_card.dart';
+import 'package:bug_tracker/ui_components/detail_page_bug_preview_card.dart';
 import 'package:bug_tracker/utilities/build_complaints.dart';
 
 class ProjectDetailPage extends StatefulWidget {

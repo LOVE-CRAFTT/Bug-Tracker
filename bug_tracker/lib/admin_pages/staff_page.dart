@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
+import 'package:bug_tracker/utilities/tools.dart';
 import 'package:bug_tracker/ui_components/admin_appbar.dart';
+import 'package:bug_tracker/ui_components/staff_preview_card.dart';
+import 'package:bug_tracker/utilities/build_staff.dart';
 
 class StaffPage extends StatefulWidget {
   const StaffPage({super.key});
@@ -21,12 +24,13 @@ class _StaffPageState extends State<StaffPage> {
             padding: const EdgeInsets.all(15.0),
             child: ListView(
               children: [
+                /// Search Bar
                 Padding(
                   padding: const EdgeInsets.only(
                     left: 10.0,
-                    right: 500.0,
+                    right: 200.0,
                     top: 10.0,
-                    bottom: 10.0,
+                    bottom: 20.0,
                   ),
                   child: SearchBar(
                     leading: const Icon(Icons.search),
@@ -51,6 +55,30 @@ class _StaffPageState extends State<StaffPage> {
                     ),
                     onSubmitted: (target) {},
                     onChanged: (input) {},
+                  ),
+                ),
+
+                /// List of staff
+                Container(
+                  width: determineContainerDimensionFromConstraint(
+                    constraintValue: constraints.maxWidth,
+                    subtractValue: 0,
+                  ),
+                  height: determineContainerDimensionFromConstraint(
+                    constraintValue: constraints.maxHeight,
+                    subtractValue: 106,
+                  ),
+                  decoration: BoxDecoration(
+                    color: lightAshyNavyBlue,
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                  child: ListView.builder(
+                    itemCount: staffSource.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return StaffPreviewCard(
+                        staff: staffSource[index],
+                      );
+                    },
                   ),
                 ),
               ],

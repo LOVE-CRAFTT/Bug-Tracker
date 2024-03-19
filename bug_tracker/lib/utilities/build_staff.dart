@@ -1,34 +1,39 @@
 import 'package:bug_tracker/utilities/staff.dart';
 
 List<Staff> staffSource = [
-  const Staff(
+  Staff(
     id: 34566728,
-    name: "assigned Staff",
-    initials: "AS",
+    surname: "assigned",
+    middleName: "staff",
+    firstName: "0",
     email: "assignedStaff@gmail.com",
   ),
-  const Staff(
+  Staff(
     id: 27364746,
-    name: "assigned Staff1",
-    initials: "AS1",
+    surname: "assigned",
+    middleName: "staff",
+    firstName: null,
     email: "assignedStaff1@gmail.com",
   ),
-  const Staff(
+  Staff(
     id: 09898762,
-    name: "assigned Staff2",
-    initials: "AS2",
+    surname: "assigned",
+    middleName: "staff",
+    firstName: "2",
     email: "assignedStaff2@gmail.com",
   ),
-  const Staff(
+  Staff(
     id: 12341288,
-    name: "assigned Staff3",
-    initials: "AS3",
+    surname: "assigned",
+    middleName: "staff",
+    firstName: null,
     email: "assignedStaff3@gmail.com",
   ),
-  const Staff(
+  Staff(
     id: 65654354,
-    name: "assigned Staff4",
-    initials: "AS4",
+    surname: "assigned",
+    middleName: "staff",
+    firstName: "4",
     email: "assignedStaff4@gmail.com",
   ),
 ];

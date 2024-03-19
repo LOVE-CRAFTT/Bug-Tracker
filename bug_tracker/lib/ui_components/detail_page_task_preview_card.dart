@@ -26,7 +26,11 @@ class DetailPageTaskPreviewCard extends StatelessWidget {
           backgroundColor: Colors.grey,
           child: Text(task.assignedStaff.initials),
         ),
-        title: Text(task.assignedStaff.name),
+        title: Text(
+          task.assignedStaff.surname +
+              (task.assignedStaff.firstName ?? "") +
+              (task.assignedStaff.middleName ?? ""),
+        ),
         titleTextStyle: kContainerTextStyle.copyWith(fontSize: 12.0),
         subtitle: Text("Task: ${task.task}"),
         subtitleTextStyle: kContainerTextStyle.copyWith(fontSize: 18.0),
