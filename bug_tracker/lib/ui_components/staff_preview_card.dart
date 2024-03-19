@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/staff.dart';
+import 'package:bug_tracker/admin_pages/staff_detail_page.dart';
 
 class StaffPreviewCard extends StatelessWidget {
   const StaffPreviewCard({
@@ -44,7 +45,14 @@ class StaffPreviewCard extends StatelessWidget {
           ),
           titleTextStyle: kContainerTextStyle.copyWith(fontSize: 12.0),
           subtitleTextStyle: kContainerTextStyle.copyWith(fontSize: 18.0),
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const StaffDetailPage(),
+              ),
+            );
+          },
         ),
       ),
     );
