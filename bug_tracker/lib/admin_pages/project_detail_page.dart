@@ -33,6 +33,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: genericTaskBar("Project Detail"),
       body: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
           return Padding(

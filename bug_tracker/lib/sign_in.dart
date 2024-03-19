@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/admin_pages/admin_main_page.dart';
-import 'package:bug_tracker/user_pages/user_main_page.dart';
+import 'package:bug_tracker/user_pages/complaint_page.dart';
 import 'package:bug_tracker/staff_pages/staff_main_page.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 

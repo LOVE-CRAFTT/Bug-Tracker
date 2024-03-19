@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/tools.dart';
-import 'package:bug_tracker/staff_pages/task_page.dart';
+import 'package:bug_tracker/staff_pages/task_detail_page.dart';
 import 'package:bug_tracker/utilities/complaint.dart';
 import 'package:bug_tracker/utilities/task.dart';
 import 'package:bug_tracker/utilities/build_complaints.dart';
@@ -108,7 +108,8 @@ ListView getTasksList(BuildContext context) {
             ),
 
             /// project
-            subtitle: Text(dataSource.complaint.associatedProject.name),
+            subtitle:
+                Text(dataSource.associatedComplaint.associatedProject.name),
             subtitleTextStyle: kContainerTextStyle.copyWith(
               fontSize: 12.0,
             ),
@@ -124,10 +125,10 @@ ListView getTasksList(BuildContext context) {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => TaskPage(
+                  builder: (context) => TaskDetailPage(
                     isTeamLead: false,
                     task: dataSource.task,
-                    complaint: dataSource.complaint,
+                    complaint: dataSource.associatedComplaint,
                     dueDate: convertToDateString(dataSource.dueDate),
                   ),
                 ),

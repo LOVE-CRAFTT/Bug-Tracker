@@ -7,12 +7,12 @@ class Task {
   const Task({
     required this.task,
     required this.taskState,
-    required this.complaint,
+    required this.associatedComplaint,
     required this.dueDate,
     required this.assignedStaff,
   });
 
-  final Complaint complaint;
+  final Complaint associatedComplaint;
   final String task;
   final TaskState taskState;
   final DateTime dueDate;

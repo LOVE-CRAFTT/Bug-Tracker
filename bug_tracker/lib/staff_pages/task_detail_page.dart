@@ -6,8 +6,8 @@ import 'package:bug_tracker/ui_components/header_button.dart';
 import 'package:bug_tracker/utilities/complaint.dart';
 import 'package:bug_tracker/staff_pages/tasks_update_page.dart';
 
-class TaskPage extends StatefulWidget {
-  const TaskPage({
+class TaskDetailPage extends StatefulWidget {
+  const TaskDetailPage({
     super.key,
     required this.isTeamLead,
     required this.task,
@@ -23,13 +23,14 @@ class TaskPage extends StatefulWidget {
   final bool? viewingFromBug;
 
   @override
-  State<TaskPage> createState() => _TaskPageState();
+  State<TaskDetailPage> createState() => _TaskDetailPageState();
 }
 
-class _TaskPageState extends State<TaskPage> {
+class _TaskDetailPageState extends State<TaskDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: genericTaskBar("Task Detail"),
       body: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
           var screenIsWide = constraints.maxWidth > 400;

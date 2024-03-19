@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/complaint.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/tools.dart';
-import 'package:bug_tracker/user_pages/complaint_page.dart';
+import 'package:bug_tracker/user_pages/complaint_detail_page.dart';
 import 'package:bug_tracker/admin_pages/projects_page.dart';
 
 ListView buildComplaints() {
@@ -20,7 +20,7 @@ ListView buildComplaints() {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => ComplaintPage(
+                builder: (context) => ComplaintDetailPage(
                   ticketNumber: complaint.ticketNumber,
                   project: complaint.associatedProject.name,
                   complaint: complaint.complaint,

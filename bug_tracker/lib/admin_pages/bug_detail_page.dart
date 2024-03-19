@@ -38,6 +38,7 @@ class _BugDetailPageState extends State<BugDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: genericTaskBar("Bug Detail"),
       body: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
           return Padding(

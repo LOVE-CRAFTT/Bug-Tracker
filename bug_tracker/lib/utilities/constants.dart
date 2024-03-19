@@ -38,6 +38,15 @@ TextStyle kAppBarTooltipTextStyle = kContainerTextStyle.copyWith(
   fontSize: 14.0,
 );
 
+/// Appbar for non "major" pages
+AppBar genericTaskBar(String title) => AppBar(
+      title: Text(
+        title,
+        style: kAppBarTextStyle,
+      ),
+      backgroundColor: Colors.black,
+    );
+
 CalendarStyle kCalendarStyle = CalendarStyle(
   outsideDaysVisible: false,
   defaultTextStyle: kContainerTextStyle,

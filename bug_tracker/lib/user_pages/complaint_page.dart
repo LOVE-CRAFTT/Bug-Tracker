@@ -1,228 +1,204 @@
 import 'package:flutter/material.dart';
+import 'package:side_sheet/side_sheet.dart';
+import 'package:bug_tracker/ui_components/custom_dropdown.dart';
+import 'package:bug_tracker/ui_components/header_button.dart';
+import 'package:bug_tracker/utilities/build_complaints.dart';
+import 'package:bug_tracker/user_pages/new_complaint_form.dart';
 import 'package:bug_tracker/utilities/constants.dart';
-import 'package:bug_tracker/utilities/build_complaint_notes.dart';
+import 'package:bug_tracker/utilities/tools.dart';
+import 'package:bug_tracker/admin_pages/update_password_page.dart';
 
-class ComplaintPage extends StatelessWidget {
-  const ComplaintPage({
-    super.key,
-    required this.ticketNumber,
-    required this.project,
-    required this.complaint,
-    required this.complaintState,
-    required this.dateCreated,
-  });
+/// Page the user sees when logged in.
+class UserMainPage extends StatefulWidget {
+  const UserMainPage({super.key});
 
-  final int ticketNumber;
-  final String project;
-  final String complaint;
-  final String dateCreated;
-  final ComplaintState complaintState;
+  @override
+  State<UserMainPage> createState() => _UserMainPageState();
+}
+
+class _UserMainPageState extends State<UserMainPage> {
+  String usersName = "Kamala Harris";
+  String? dropDownValue = complaintsChoices.first;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          "Home",
+          style: kAppBarTextStyle,
+        ),
+        backgroundColor: Colors.black,
+        actions: [
+          MenuAnchor(
+            style: MenuStyle(
+              backgroundColor: const MaterialStatePropertyAll(
+                lightAshyNavyBlue,
+              ),
+              shape: MaterialStatePropertyAll(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                ),
+              ),
+            ),
+            menuChildren: [
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: MenuItemButton(
+                  style: TextButton.styleFrom(
+                    side: const BorderSide(
+                      color: secondaryThemeColorBlue,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                  ),
+                  onPressed: () {
+                    SideSheet.right(
+                      context: context,
+                      width: MediaQuery.of(context).size.width * 0.3,
+                      sheetColor: lightAshyNavyBlue,
+                      sheetBorderRadius: 10.0,
+                      body: const UpdatePasswordPage(),
+                    );
+                  },
+                  child: const Text(
+                    "Update Password",
+                    style: kContainerTextStyle,
+                  ),
+                ),
+              )
+            ],
+            builder: (BuildContext context, MenuController controller,
+                Widget? child) {
+              return Padding(
+                padding: const EdgeInsets.only(right: 10.0),
+                child: InkWell(
+                  onTap: () => controller.isOpen
+                      ? controller.close()
+                      : controller.open(),
+                  child: Tooltip(
+                    message: usersName,
+                    textStyle: kContainerTextStyle.copyWith(
+                      color: Colors.black,
+                    ),
+                    child: CircleAvatar(
+                      backgroundColor: Colors.grey,
+                      child: Text(
+                        "KH",
+                        style: kContainerTextStyle.copyWith(
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
       body: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
-          return Padding(
-            padding: const EdgeInsets.all(30.0),
-            child: SingleChildScrollView(
+          var screenIsWide = constraints.maxWidth > 400;
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.only(
+                left: 15,
+                right: 10,
+                top: 10,
+              ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Complaint ID: $ticketNumber",
-                          style: kContainerTextStyle.copyWith(
-                            fontSize: 14.0,
-                          ),
-                        ),
-                        Text(
-                          "Date Created: $dateCreated",
-                          style: kContainerTextStyle.copyWith(
-                            fontSize: 14.0,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Text(
-                      "Project: $project",
-                      style: kContainerTextStyle.copyWith(
-                        fontSize: 15.0,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Text(
-                      "Complaint: $complaint",
-                      style: kContainerTextStyle.copyWith(
-                        fontSize: 20.0,
-                      ),
-                    ),
-                  ),
-
-                  /// Below is an expanded uneditable text field title "Complaint Notes" showing any additional notes from the user if any
-                  Padding(
                     padding: const EdgeInsets.only(
-                      left: 20.0,
-                      right: 20.0,
-                      top: 20.0,
+                      top: 10.0,
+                      bottom: 10.0,
                     ),
                     child: Text(
-                      "Complaint Notes",
-                      style: kContainerTextStyle.copyWith(
-                        fontSize: 16.0,
+                      "Welcome $usersName",
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontFamily: "Nunito",
+                        color: Color(0xFFb6b8aa),
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Container(
-                      height: constraints.maxHeight - 450 > 0
-                          ? constraints.maxHeight - 450
-                          : 0,
-                      decoration: BoxDecoration(
-                        color: lightAshyNavyBlue,
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: SingleChildScrollView(
-                          child: Text(
-                            complaintNotesPlaceholder,
-                            style: kContainerTextStyle.copyWith(
-                              fontSize: 15.0,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  ///Files from user
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 20.0,
-                      right: 20.0,
-                      top: 20.0,
-                    ),
-                    child: Text(
-                      "Files: ",
-                      style: kContainerTextStyle.copyWith(
-                        fontSize: 16.0,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: SizedBox(
-                      height: 100,
-                      child: buildFilesPlaceHolders(),
-                    ),
-                  ),
-
-                  /// All states of the complaints are available as chips and they are each grayed out or colored
-                  /// based on the state of the complaint
-                  /// Enums are compared with names because the hashCodes change as new objects are created
-                  /// Since hashCodes are used in the equality comparison, the changing hashCodes can break it
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Chip(
-                          label: Text(
-                            "Pending",
-                            style: kContainerTextStyle.copyWith(
-                              color: Colors.black,
-                            ),
-                          ),
-                          backgroundColor:
-                              complaintState.name == ComplaintState.pending.name
-                                  ? complaintState.associatedColor
-                                  : Colors.grey.withAlpha(25),
-                        ),
+                      CustomDropDown(
+                        dropDownValue: dropDownValue,
+                        onChanged: (selected) {
+                          setState(
+                            () {
+                              dropDownValue = selected;
+                            },
+                          );
+                        },
+                        constraints: constraints,
+                        page: DropdownPage.complaintsPage,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Chip(
-                          label: Text(
-                            "Acknowledged",
-                            style: kContainerTextStyle.copyWith(
-                              color: Colors.black,
-                            ),
-                          ),
-                          backgroundColor: complaintState.name ==
-                                  ComplaintState.acknowledged.name
-                              ? complaintState.associatedColor
-                              : Colors.grey.withAlpha(25),
+                      SearchBar(
+                        leading: const Icon(Icons.search),
+                        padding: const MaterialStatePropertyAll<EdgeInsets>(
+                          EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Chip(
-                          label: Text(
-                            "In Progress",
-                            style: kContainerTextStyle.copyWith(
-                              color: Colors.black,
-                            ),
-                          ),
-                          backgroundColor: complaintState.name ==
-                                  ComplaintState.inProgress.name
-                              ? complaintState.associatedColor
-                              : Colors.grey.withAlpha(25),
+                        constraints: BoxConstraints(
+                          maxHeight: 56.0,
+
+                          /// The width is 40% of the screen is the screen is "wide"
+                          /// Else it takes up 65%
+                          maxWidth: screenIsWide
+                              ? constraints.maxWidth * 0.4
+                              : constraints.maxWidth * 0.65,
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Chip(
-                          label: Text(
-                            "Completed",
-                            style: kContainerTextStyle.copyWith(
-                              color: Colors.black,
-                            ),
-                          ),
-                          backgroundColor: complaintState.name ==
-                                  ComplaintState.completed.name
-                              ? complaintState.associatedColor
-                              : Colors.grey.withAlpha(25),
+                        textStyle: MaterialStatePropertyAll<TextStyle>(
+                          kContainerTextStyle.copyWith(),
                         ),
+                        hintText: "Search complaints",
+                        hintStyle: MaterialStatePropertyAll<TextStyle>(
+                          kContainerTextStyle.copyWith(fontSize: 14.0),
+                        ),
+                        onChanged: (input) {
+                          ///set state here to rebuild complaints
+                        },
                       ),
+                      HeaderButton(
+                        screenIsWide: screenIsWide,
+                        buttonText: "New Complaint",
+                        onPress: () {
+                          SideSheet.right(
+                            context: context,
+                            width: constraints.maxWidth * 0.9,
+                            sheetColor: lightAshyNavyBlue,
+                            sheetBorderRadius: 10.0,
+                            body: NewComplaintForm(
+                              constraints: constraints,
+                            ),
+                          );
+                        },
+                      )
                     ],
                   ),
-
-                  /// Below is an expanded uneditable text field title "Staff Notes and Work Plan" showing the notes from the staff
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 20.0,
-                      right: 20.0,
-                      top: 20.0,
-                    ),
-                    child: Text(
-                      "Staff Notes",
-                      style: kContainerTextStyle.copyWith(
-                        fontSize: 18.0,
-                      ),
-                    ),
+                  const SizedBox(
+                    height: 10.0,
                   ),
                   Container(
-                    height: constraints.maxHeight - 200 > 0
-                        ? constraints.maxHeight - 200
-                        : 0,
+                    height: determineContainerDimensionFromConstraint(
+                      constraintValue: constraints.maxHeight,
+                      subtractValue: 113,
+                    ),
+                    width: constraints.maxWidth,
                     decoration: BoxDecoration(
-                      color: lightAshyNavyBlue,
+                      color: const Color(0xFF363739),
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
-                      child: buildNotes(),
+                      child: buildComplaints(),
                     ),
                   ),
                 ],
@@ -233,25 +209,4 @@ class ComplaintPage extends StatelessWidget {
       ),
     );
   }
-}
-
-/// Will replace with real files later
-ListView buildFilesPlaceHolders() {
-  return ListView.builder(
-    scrollDirection: Axis.horizontal,
-    itemCount: 4,
-    itemBuilder: (BuildContext context, int index) {
-      return Padding(
-        padding: const EdgeInsets.only(right: 8.0),
-        child: Container(
-          width: 100,
-          height: 100.0,
-          decoration: BoxDecoration(
-            color: Colors.greenAccent,
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-        ),
-      );
-    },
-  );
 }

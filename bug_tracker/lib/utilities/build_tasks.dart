@@ -4,7 +4,7 @@ import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/build_complaints.dart';
 import 'package:bug_tracker/utilities/tools.dart';
 import 'package:bug_tracker/utilities/build_staff.dart';
-import 'package:bug_tracker/staff_pages/task_page.dart';
+import 'package:bug_tracker/staff_pages/task_detail_page.dart';
 
 ListView buildTasks({required bool isTeamLead}) {
   return ListView.builder(
@@ -21,10 +21,10 @@ ListView buildTasks({required bool isTeamLead}) {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => TaskPage(
+                builder: (context) => TaskDetailPage(
                   isTeamLead: isTeamLead,
                   task: task.task,
-                  complaint: task.complaint,
+                  complaint: task.associatedComplaint,
                   dueDate: convertToDateString(task.dueDate),
                 ),
               ),
@@ -46,7 +46,7 @@ ListView buildTasks({required bool isTeamLead}) {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Complaint ID: ${task.complaint.ticketNumber}",
+                        "Complaint ID: ${task.associatedComplaint.ticketNumber}",
                         style: kContainerTextStyle.copyWith(
                           fontSize: 11,
                         ),
@@ -64,7 +64,7 @@ ListView buildTasks({required bool isTeamLead}) {
                       vertical: 2.0,
                     ),
                     child: Text(
-                      "Complaint: ${task.complaint.complaint}",
+                      "Complaint: ${task.associatedComplaint.complaint}",
                       style: kContainerTextStyle,
                     ),
                   ),
@@ -90,7 +90,7 @@ ListView buildTasks({required bool isTeamLead}) {
                     ],
                   ),
                   Text(
-                    "Project: ${task.complaint.associatedProject.name}",
+                    "Project: ${task.associatedComplaint.associatedProject.name}",
                     style: kContainerTextStyle.copyWith(
                       fontSize: 14,
                       color: Colors.white70,
@@ -108,35 +108,35 @@ ListView buildTasks({required bool isTeamLead}) {
 
 List tasksSource = [
   Task(
-    complaint: complaintsSource[0],
+    associatedComplaint: complaintsSource[0],
     task: "Run Youtube main branch in sandbox to replicate issue",
     taskState: TaskState.fresh,
     dueDate: DateTime(2024, 2, 13),
     assignedStaff: staffSource[0],
   ),
   Task(
-    complaint: complaintsSource[1],
+    associatedComplaint: complaintsSource[1],
     task: "Ascertain from user files if user is premium user",
     taskState: TaskState.inProgress,
     dueDate: DateTime(2023, 2, 13),
     assignedStaff: staffSource[1],
   ),
   Task(
-    complaint: complaintsSource[1],
+    associatedComplaint: complaintsSource[1],
     task: "Replicate issue in main branch",
     taskState: TaskState.dueToday,
     dueDate: DateTime(2024, 3, 4),
     assignedStaff: staffSource[2],
   ),
   Task(
-    complaint: complaintsSource[2],
+    associatedComplaint: complaintsSource[2],
     task: "Figure out which other types of phone numbers don't work",
     taskState: TaskState.completed,
     dueDate: DateTime(2024, 2, 13),
     assignedStaff: staffSource[3],
   ),
   Task(
-    complaint: complaintsSource[4],
+    associatedComplaint: complaintsSource[4],
     task: "Try to obtain the device specifications from user files",
     taskState: TaskState.overdue,
     dueDate: DateTime(2024, 1, 1),

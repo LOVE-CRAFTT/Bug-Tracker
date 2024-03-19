@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/task.dart';
 import 'package:bug_tracker/utilities/tools.dart';
-import 'package:bug_tracker/staff_pages/task_page.dart';
+import 'package:bug_tracker/staff_pages/task_detail_page.dart';
 
 class DetailPageTaskPreviewCard extends StatelessWidget {
   const DetailPageTaskPreviewCard({
@@ -43,11 +43,11 @@ class DetailPageTaskPreviewCard extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => TaskPage(
+              builder: (context) => TaskDetailPage(
                 ///isTeamLead should always be false for when admin is viewing tasks from bug page
                 isTeamLead: true,
                 task: task.task,
-                complaint: task.complaint,
+                complaint: task.associatedComplaint,
                 dueDate: convertToDateString(task.dueDate),
                 viewingFromBug: true,
               ),

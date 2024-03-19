@@ -20,8 +20,10 @@ List<String?> bugChoices = [
 ];
 List<String?> projectChoices = [
   "All Projects",
-  "Active Projects",
-  "Completed Projects",
+  "Open Projects",
+  "Postponed Projects",
+  "Cancelled Projects",
+  "Closed Projects",
 ];
 List<String?> complaintsChoices = [
   "All complaints",
