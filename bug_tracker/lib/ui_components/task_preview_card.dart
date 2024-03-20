@@ -51,11 +51,13 @@ class TaskPreviewCard extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) => TaskDetailPage(
-                ///isTeamLead should always be false for when admin is viewing tasks from bug page
-                isTeamLead: true,
+                ///isTeamLead should always be false for when admin is viewing other staff tasks
+                /// which always happens when clicking the TaskPreviewCard
+                isTeamLead: false,
                 task: task.task,
                 complaint: task.associatedComplaint,
                 dueDate: convertToDateString(task.dueDate),
+                // so the update option isn't shown in the task detail page
                 viewingFromBug: true,
               ),
             ),
