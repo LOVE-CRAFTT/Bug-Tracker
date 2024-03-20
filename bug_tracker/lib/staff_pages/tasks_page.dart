@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/ui_components/staff_appbar.dart';
 import 'package:bug_tracker/ui_components/custom_dropdown.dart';
-import 'package:bug_tracker/utilities/build_tasks.dart';
+import 'package:bug_tracker/ui_components/task_overview_card.dart';
 
 class TasksPage extends StatefulWidget {
   const TasksPage({super.key});
@@ -116,7 +116,15 @@ class _TasksPageState extends State<TasksPage> {
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),
-                        child: buildTasks(isTeamLead: true),
+                        child: ListView.builder(
+                          itemCount: tasksSource.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return TaskOverviewCard(
+                              task: tasksSource[index],
+                              isTeamLead: index == 0 ? true : false,
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ),

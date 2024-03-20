@@ -4,8 +4,8 @@ import 'package:bug_tracker/utilities/complaint.dart';
 import 'package:bug_tracker/utilities/tools.dart';
 import 'package:bug_tracker/admin_pages/bug_detail_page.dart';
 
-class DetailPageBugPreviewCard extends StatelessWidget {
-  const DetailPageBugPreviewCard({
+class BugPreviewCard extends StatelessWidget {
+  const BugPreviewCard({
     super.key,
     required this.complaint,
   });

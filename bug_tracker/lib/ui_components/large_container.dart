@@ -4,8 +4,8 @@ import 'package:bug_tracker/utilities/tools.dart';
 import 'package:bug_tracker/staff_pages/task_detail_page.dart';
 import 'package:bug_tracker/utilities/complaint.dart';
 import 'package:bug_tracker/utilities/task.dart';
-import 'package:bug_tracker/utilities/build_complaints.dart';
-import 'package:bug_tracker/utilities/build_tasks.dart';
+import 'package:bug_tracker/ui_components/complaint_overview_card.dart';
+import 'package:bug_tracker/ui_components/task_overview_card.dart';
 import 'package:bug_tracker/admin_pages/bug_detail_page.dart';
 
 ///Provides access to main work data

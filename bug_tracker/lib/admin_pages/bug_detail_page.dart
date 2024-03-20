@@ -1,10 +1,10 @@
-import 'package:bug_tracker/utilities/build_tasks.dart';
+import 'package:bug_tracker/ui_components/task_overview_card.dart';
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/build_complaint_notes.dart';
 import 'package:bug_tracker/utilities/tools.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
-import 'package:bug_tracker/ui_components/detail_page_task_preview_card.dart';
+import 'package:bug_tracker/ui_components/task_preview_card.dart';
 import 'package:bug_tracker/admin_pages/bug_detail_update_page.dart';
 import 'package:side_sheet/side_sheet.dart';
 
@@ -131,9 +131,7 @@ class _BugDetailPageState extends State<BugDetailPage> {
                     ),
                     child: Text(
                       "Complaint Notes From Author${(widget.bugNotes != null ? "" : ": None")}",
-                      style: kContainerTextStyle.copyWith(
-                        fontSize: 16.0,
-                      ),
+                      style: kContainerTextStyle,
                     ),
                   ),
                   if (widget.bugNotes != null)
@@ -317,7 +315,7 @@ class _BugDetailPageState extends State<BugDetailPage> {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: DetailPageTaskPreviewCard(task: tasksSource[0]),
+                    child: TaskPreviewCard(task: tasksSource[0]),
                   ),
 
                   ///Team Members
@@ -407,7 +405,7 @@ ListView buildOtherTaskPreviewCards() {
   return ListView.builder(
     itemCount: tasksSource.length,
     itemBuilder: (BuildContext context, int index) {
-      return DetailPageTaskPreviewCard(task: tasksSource[index]);
+      return TaskPreviewCard(task: tasksSource[index]);
     },
   );
 }

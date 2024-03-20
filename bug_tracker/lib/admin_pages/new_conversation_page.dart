@@ -89,9 +89,7 @@ class _NewConversationState extends State<NewConversation> {
                     },
                     hoverColor: Colors.green,
                     title: Text(
-                      staffSource[index].surname +
-                          (staffSource[index].firstName ?? "") +
-                          (staffSource[index].middleName ?? ""),
+                      "${staffSource[index].surname} ${staffSource[index].firstName ?? ""} ${staffSource[index].middleName ?? ""}",
                       style: checkboxTextStyle,
                     ),
                   );

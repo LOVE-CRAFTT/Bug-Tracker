@@ -2,7 +2,7 @@ import 'package:bug_tracker/utilities/complaint.dart';
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/tools.dart';
-import 'package:bug_tracker/utilities/build_complaints.dart';
+import 'package:bug_tracker/ui_components/complaint_overview_card.dart';
 import 'package:bug_tracker/admin_pages/bug_detail_page.dart';
 
 class BugReports extends StatelessWidget {

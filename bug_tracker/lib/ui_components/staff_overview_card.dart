@@ -3,8 +3,8 @@ import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/staff.dart';
 import 'package:bug_tracker/admin_pages/staff_detail_page.dart';
 
-class StaffPreviewCard extends StatelessWidget {
-  const StaffPreviewCard({
+class StaffOverviewCard extends StatelessWidget {
+  const StaffOverviewCard({
     super.key,
     required this.staff,
   });
@@ -16,7 +16,7 @@ class StaffPreviewCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
-          color: secondaryThemeColor,
+          color: Colors.grey,
         ),
         borderRadius: BorderRadius.circular(10.0),
       ),
@@ -39,8 +39,11 @@ class StaffPreviewCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                  'Name: ${staff.surname + (staff.firstName ?? "") + (staff.middleName ?? "")}'),
-              Text('Email: ${staff.email}'),
+                'Name: ${staff.surname} ${staff.firstName ?? ""} ${staff.middleName ?? ""}',
+              ),
+              Text(
+                'Email: ${staff.email}',
+              ),
             ],
           ),
           titleTextStyle: kContainerTextStyle.copyWith(fontSize: 12.0),
@@ -49,7 +52,9 @@ class StaffPreviewCard extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const StaffDetailPage(),
+                builder: (context) => StaffDetailPage(
+                  staff: staff,
+                ),
               ),
             );
           },

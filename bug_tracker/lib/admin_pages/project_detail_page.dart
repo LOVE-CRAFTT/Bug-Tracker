@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
-import 'package:bug_tracker/ui_components/detail_page_bug_preview_card.dart';
-import 'package:bug_tracker/utilities/build_complaints.dart';
+import 'package:bug_tracker/ui_components/bug_preview_card.dart';
+import 'package:bug_tracker/ui_components/complaint_overview_card.dart';
 
 class ProjectDetailPage extends StatefulWidget {
   const ProjectDetailPage({
@@ -317,7 +317,7 @@ ListView buildBugPreviewCards() {
   return ListView.builder(
     itemCount: complaintsSource.length,
     itemBuilder: (BuildContext context, int index) {
-      return DetailPageBugPreviewCard(complaint: complaintsSource[index]);
+      return BugPreviewCard(complaint: complaintsSource[index]);
     },
   );
 }

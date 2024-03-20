@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/tools.dart';
 import 'package:bug_tracker/ui_components/admin_appbar.dart';
-import 'package:bug_tracker/ui_components/staff_preview_card.dart';
+import 'package:bug_tracker/ui_components/staff_overview_card.dart';
 import 'package:bug_tracker/utilities/build_staff.dart';
 
 class StaffPage extends StatefulWidget {
@@ -69,13 +69,13 @@ class _StaffPageState extends State<StaffPage> {
                     subtractValue: 106,
                   ),
                   decoration: BoxDecoration(
-                    color: lightAshyNavyBlue,
-                    borderRadius: BorderRadius.circular(5.0),
+                    color: const Color(0xFF1e1e1e),
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
                   child: ListView.builder(
                     itemCount: staffSource.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return StaffPreviewCard(
+                      return StaffOverviewCard(
                         staff: staffSource[index],
                       );
                     },

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:side_sheet/side_sheet.dart';
 import 'package:bug_tracker/ui_components/custom_dropdown.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
-import 'package:bug_tracker/utilities/build_complaints.dart';
+import 'package:bug_tracker/ui_components/complaint_overview_card.dart';
 import 'package:bug_tracker/user_pages/new_complaint_form.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/tools.dart';
@@ -198,7 +198,13 @@ class _UserMainPageState extends State<UserMainPage> {
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
-                      child: buildComplaints(),
+                      child: ListView.builder(
+                        itemCount: complaintsSource.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return ComplaintOverviewCard(
+                              complaint: complaintsSource[index]);
+                        },
+                      ),
                     ),
                   ),
                 ],

@@ -4,8 +4,8 @@ import 'package:bug_tracker/utilities/task.dart';
 import 'package:bug_tracker/utilities/tools.dart';
 import 'package:bug_tracker/staff_pages/task_detail_page.dart';
 
-class DetailPageTaskPreviewCard extends StatelessWidget {
-  const DetailPageTaskPreviewCard({
+class TaskPreviewCard extends StatelessWidget {
+  const TaskPreviewCard({
     super.key,
     required this.task,
   });
@@ -27,9 +27,7 @@ class DetailPageTaskPreviewCard extends StatelessWidget {
           child: Text(task.assignedStaff.initials),
         ),
         title: Text(
-          task.assignedStaff.surname +
-              (task.assignedStaff.firstName ?? "") +
-              (task.assignedStaff.middleName ?? ""),
+          "${task.assignedStaff.surname} ${task.assignedStaff.firstName ?? ""} ${task.assignedStaff.middleName ?? ""}",
         ),
         titleTextStyle: kContainerTextStyle.copyWith(fontSize: 12.0),
         subtitle: Text("Task: ${task.task}"),
