@@ -15,6 +15,20 @@ class StaffDetailPage extends StatefulWidget {
 }
 
 class _StaffDetailPageState extends State<StaffDetailPage> {
+  late String updatedEmail;
+  late String updatedSurname;
+  String? updatedFirstName;
+  String? updatedMiddleName;
+
+  //==========
+  bool updateEmailIntent = false;
+  bool updateNameIntent = false;
+
+  List<GlobalKey<FormState>> formKeys = [
+    GlobalKey<FormState>(),
+    GlobalKey<FormState>()
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +55,9 @@ class _StaffDetailPageState extends State<StaffDetailPage> {
                     HeaderButton(
                       screenIsWide: true,
                       buttonText: "Delete",
-                      onPress: () {},
+                      onPress: () {
+                        showDeletionWarningAlert(context);
+                      },
                     ),
                   ],
                 ),
@@ -58,17 +74,97 @@ class _StaffDetailPageState extends State<StaffDetailPage> {
                         fontSize: 15.0,
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: HeaderButton(
-                        screenIsWide: true,
-                        buttonText: "Edit",
-                        onPress: () {},
+                    if (updateEmailIntent == false)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        child: HeaderButton(
+                          screenIsWide: true,
+                          buttonText: "Update",
+                          onPress: () {
+                            updateEmailIntent = true;
+                            setState(() {});
+                          },
+                        ),
                       ),
-                    ),
                   ],
                 ),
               ),
+
+              /// update staff email if intended
+              if (updateEmailIntent) ...[
+                Container(
+                  height: 180,
+                  width: 500,
+                  decoration: BoxDecoration(
+                    color: lightAshyNavyBlue,
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: Form(
+                    key: formKeys.first,
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Column(
+                        children: [
+                          TextFormField(
+                            decoration: formTextFieldDecoration(
+                                hintText: "Updated Email"),
+                            style: kContainerTextStyle.copyWith(
+                                color: Colors.white),
+                            validator: (lUpdatedEmail) {
+                              if (lUpdatedEmail == null ||
+                                  lUpdatedEmail.isEmpty) {
+                                return "Updated email can't be empty";
+                              }
+                              updatedEmail = lUpdatedEmail;
+                              return null;
+                            },
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 20.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                HeaderButton(
+                                  screenIsWide: true,
+                                  buttonText: "Done",
+                                  onPress: () {
+                                    if (formKeys.first.currentState!
+                                        .validate()) {
+                                      updateEmailIntent = false;
+                                      setState(() {});
+
+                                      ///TODO: Update db here
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                            'Email Updated Successfully!',
+                                            style: kContainerTextStyle.copyWith(
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                ),
+                                HeaderButton(
+                                  screenIsWide: true,
+                                  buttonText: "Cancel",
+                                  onPress: () {
+                                    updateEmailIntent = false;
+                                    setState(() {});
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
 
               /// Staff Name and edit
               Padding(
@@ -82,17 +178,134 @@ class _StaffDetailPageState extends State<StaffDetailPage> {
                         color: Colors.white,
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: HeaderButton(
-                        screenIsWide: true,
-                        buttonText: "Edit",
-                        onPress: () {},
+                    if (updateNameIntent == false)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        child: HeaderButton(
+                          screenIsWide: true,
+                          buttonText: "Update",
+                          onPress: () {
+                            updateNameIntent = true;
+                            setState(() {});
+                          },
+                        ),
                       ),
-                    ),
                   ],
                 ),
               ),
+
+              /// update staff name
+              if (updateNameIntent) ...[
+                Container(
+                  height: 370,
+                  width: 500,
+                  decoration: BoxDecoration(
+                    color: lightAshyNavyBlue,
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: Form(
+                    key: formKeys.last,
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 10.0),
+                            child: TextFormField(
+                              decoration:
+                                  formTextFieldDecoration(hintText: "Surname"),
+                              style: kContainerTextStyle.copyWith(
+                                  color: Colors.white),
+                              validator: (lUpdatedSurname) {
+                                if (lUpdatedSurname == null ||
+                                    lUpdatedSurname.isEmpty) {
+                                  return "Updated surname can't be empty";
+                                }
+                                updatedSurname = lUpdatedSurname;
+                                return null;
+                              },
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 10.0),
+                            child: TextFormField(
+                              decoration: formTextFieldDecoration(
+                                  hintText: "First Name"),
+                              style: kContainerTextStyle.copyWith(
+                                  color: Colors.white),
+                              validator: (lUpdatedFirstName) {
+                                if (lUpdatedFirstName == null ||
+                                    lUpdatedFirstName.isEmpty) {
+                                  return "Updated first name can't be empty";
+                                }
+                                updatedFirstName = lUpdatedFirstName;
+                                return null;
+                              },
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 10.0),
+                            child: TextFormField(
+                              decoration: formTextFieldDecoration(
+                                  hintText: "Middle Name"),
+                              style: kContainerTextStyle.copyWith(
+                                  color: Colors.white),
+                              validator: (lUpdatedMiddleName) {
+                                if (lUpdatedMiddleName == null ||
+                                    lUpdatedMiddleName.isEmpty) {
+                                  return "Updated middle name can't be empty";
+                                }
+                                updatedMiddleName = lUpdatedMiddleName;
+                                return null;
+                              },
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 20.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                HeaderButton(
+                                  screenIsWide: true,
+                                  buttonText: "Done",
+                                  onPress: () {
+                                    if (formKeys.last.currentState!
+                                        .validate()) {
+                                      updateNameIntent = false;
+                                      setState(() {});
+
+                                      ///TODO: Update db here
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                            'Name Updated Successfully!',
+                                            style: kContainerTextStyle.copyWith(
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                ),
+                                HeaderButton(
+                                  screenIsWide: true,
+                                  buttonText: "Cancel",
+                                  onPress: () {
+                                    updateNameIntent = false;
+                                    setState(() {});
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
 
               /// List of tasks the staff currently has
               ///
@@ -135,4 +348,67 @@ class _StaffDetailPageState extends State<StaffDetailPage> {
       ),
     );
   }
+}
+
+Future showDeletionWarningAlert(BuildContext context) async => await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('Staff Deletion Confirmation'),
+        titleTextStyle: kContainerTextStyle.copyWith(
+          color: Colors.white,
+          fontSize: 20.0,
+        ),
+        // project doesn't have password so not necessary to show default password
+        content: const Text('WARNING! This action is irreversible'),
+        contentTextStyle: kContainerTextStyle.copyWith(
+          color: Colors.white,
+          fontSize: 16.0,
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: Text(
+              'Proceed',
+              style: kContainerTextStyle.copyWith(
+                  fontSize: 14.0, color: Colors.blue),
+            ),
+            onPressed: () {
+              /// Remove from database / mark as disabled
+              Navigator.of(context).pop();
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    "Staff deleted successfully!",
+                    style: kContainerTextStyle.copyWith(color: Colors.black),
+                  ),
+                ),
+              );
+              Navigator.of(context).pop();
+            },
+          ),
+          TextButton(
+            child: Text(
+              'Cancel',
+              style: kContainerTextStyle.copyWith(
+                  fontSize: 14.0, color: Colors.blue),
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      ),
+    );
+
+InputDecoration formTextFieldDecoration({required String hintText}) {
+  return InputDecoration(
+    border: const OutlineInputBorder(),
+    hintText: hintText,
+    hintStyle: kContainerTextStyle,
+    isCollapsed: false,
+    errorStyle: kContainerTextStyle.copyWith(
+      color: Colors.red,
+      fontSize: 15,
+    ),
+  );
 }

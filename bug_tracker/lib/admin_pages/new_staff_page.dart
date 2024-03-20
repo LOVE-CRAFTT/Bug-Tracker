@@ -77,22 +77,6 @@ class _NewStaffPageState extends State<NewStaffPage> {
                   padding: const EdgeInsets.all(20.0),
                   child: TextFormField(
                     decoration: newStaffOrProjectFormTextFieldStyle(
-                        hintText: 'Middle Name'),
-                    style: kContainerTextStyle.copyWith(color: Colors.white),
-                    controller: middleNameController,
-                    validator: (lMiddleName) {
-                      if (lMiddleName == null || lMiddleName.isEmpty) {
-                        lMiddleName = "";
-                      }
-                      middleName = lMiddleName;
-                      return null;
-                    },
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: TextFormField(
-                    decoration: newStaffOrProjectFormTextFieldStyle(
                         hintText: 'First Name'),
                     style: kContainerTextStyle.copyWith(color: Colors.white),
                     controller: firstNameController,
@@ -101,6 +85,22 @@ class _NewStaffPageState extends State<NewStaffPage> {
                         lFirstName = "";
                       }
                       firstName = lFirstName;
+                      return null;
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: TextFormField(
+                    decoration: newStaffOrProjectFormTextFieldStyle(
+                        hintText: 'Middle Name'),
+                    style: kContainerTextStyle.copyWith(color: Colors.white),
+                    controller: middleNameController,
+                    validator: (lMiddleName) {
+                      if (lMiddleName == null || lMiddleName.isEmpty) {
+                        lMiddleName = "";
+                      }
+                      middleName = lMiddleName;
                       return null;
                     },
                   ),
@@ -169,7 +169,7 @@ InputDecoration newStaffOrProjectFormTextFieldStyle(
 }
 
 Future buildConfirmationPopup(BuildContext context,
-    {required int? newStaffID, required int? newProjectID}) {
+    {required int? newStaffID, required int? newProjectID}) async {
   int id;
   if (newStaffID != null) {
     id = newStaffID;
@@ -178,18 +178,22 @@ Future buildConfirmationPopup(BuildContext context,
   }
 
   ///
-  return showDialog(
+  return await showDialog(
     context: context,
     barrierDismissible: false,
     builder: (BuildContext context) => AlertDialog(
       title: Text(
-          'New ${newStaffID != null ? "staff" : "project"} added successfully'),
+        'New ${newStaffID != null ? "staff" : "project"} added successfully',
+      ),
       titleTextStyle: kContainerTextStyle.copyWith(
         color: Colors.white,
         fontSize: 20.0,
       ),
-      content: Text('New ${newStaffID != null ? "staff" : "project"} ID: $id,\n'
-          '${newStaffID != null ? "default password 000000 i.e 6 zeros" : ""} '),
+      // project doesn't have password so not necessary to show default password
+      content: Text(
+        'New ${newStaffID != null ? "staff" : "project"} ID: $id,\n'
+        '${newStaffID != null ? "default password 000000 i.e 6 zeros" : ""} ',
+      ),
       contentTextStyle: kContainerTextStyle.copyWith(
         color: Colors.white,
         fontSize: 16.0,

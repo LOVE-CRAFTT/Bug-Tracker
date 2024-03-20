@@ -35,7 +35,7 @@ class _UpdatePasswordPageState extends State<UpdatePasswordPage> {
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: TextFormField(
-                    decoration: updatePasswordFormTextFieldStyle(
+                    decoration: updatePasswordFormTextFieldDecoration(
                         hintText: 'Previous Password'),
                     style: kContainerTextStyle.copyWith(color: Colors.white),
                     controller: previousPasswordController,
@@ -52,7 +52,7 @@ class _UpdatePasswordPageState extends State<UpdatePasswordPage> {
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: TextFormField(
-                    decoration: updatePasswordFormTextFieldStyle(
+                    decoration: updatePasswordFormTextFieldDecoration(
                         hintText: 'New Password'),
                     style: kContainerTextStyle.copyWith(color: Colors.white),
                     controller: newPasswordController,
@@ -103,7 +103,8 @@ class _UpdatePasswordPageState extends State<UpdatePasswordPage> {
   }
 }
 
-InputDecoration updatePasswordFormTextFieldStyle({required String hintText}) {
+InputDecoration updatePasswordFormTextFieldDecoration(
+    {required String hintText}) {
   return InputDecoration(
     border: const OutlineInputBorder(),
     hintText: hintText,
