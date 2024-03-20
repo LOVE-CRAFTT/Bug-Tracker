@@ -1,3 +1,4 @@
+import 'package:bug_tracker/ui_components/task_preview_card.dart';
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/complaint.dart';
 import 'package:bug_tracker/utilities/constants.dart';
@@ -5,6 +6,11 @@ import 'package:bug_tracker/utilities/tools.dart';
 import 'package:bug_tracker/user_pages/complaint_detail_page.dart';
 import 'package:bug_tracker/admin_pages/projects_page.dart';
 
+/// Naming convention in this project dictates a difference between overview and preview cards
+/// Overview cards are for when the card contents are the "main focus" of that view/context
+/// For example [TaskOverviewCard] is what staff sees however, the admin sees the [TaskPreviewCard] in the bug_detail_page
+///
+/// Preview cards are the opposite of Overview cards
 class ComplaintOverviewCard extends StatelessWidget {
   const ComplaintOverviewCard({
     super.key,

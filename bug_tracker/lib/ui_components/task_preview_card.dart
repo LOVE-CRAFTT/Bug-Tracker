@@ -4,6 +4,11 @@ import 'package:bug_tracker/utilities/task.dart';
 import 'package:bug_tracker/utilities/tools.dart';
 import 'package:bug_tracker/staff_pages/task_detail_page.dart';
 
+/// Naming convention in this project dictates a difference between overview and preview cards
+/// Overview cards are for when the card contents are the "main focus" of that view/context
+/// For example [TaskOverviewCard] is what staff sees however, the admin sees the [TaskPreviewCard] in the bug_detail_page
+///
+/// Preview cards are the opposite of Overview cards
 class TaskPreviewCard extends StatelessWidget {
   const TaskPreviewCard({
     super.key,
