@@ -114,6 +114,7 @@ class SignUpPage extends StatelessWidget {
                   buttonText: "Sign Up",
                   onPress: () {
                     if (_formKey.currentState!.validate()) {
+                      /// if user already exists let them know
                       Navigator.push(
                         context,
                         MaterialPageRoute(

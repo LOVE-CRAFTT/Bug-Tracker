@@ -126,6 +126,7 @@ ListView getTasksList(BuildContext context) {
                 context,
                 MaterialPageRoute(
                   builder: (context) => TaskDetailPage(
+                    taskId: dataSource.id,
                     isTeamLead: false,
                     task: dataSource.task,
                     complaint: dataSource.associatedComplaint,

@@ -11,6 +11,7 @@ class TaskDetailPage extends StatefulWidget {
     super.key,
     required this.isTeamLead,
     required this.task,
+    required this.taskId,
     required this.complaint,
     required this.dueDate,
     this.viewingFromBug,
@@ -19,6 +20,7 @@ class TaskDetailPage extends StatefulWidget {
   final bool isTeamLead;
   final Complaint complaint;
   final String task;
+  final int taskId;
   final String dueDate;
   final bool? viewingFromBug;
 
@@ -80,11 +82,22 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(10.0),
-                    child: Text(
-                      "Complaint ID: ${widget.complaint.ticketNumber}",
-                      style: kContainerTextStyle.copyWith(
-                        fontSize: 14.0,
-                      ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Task ID: ${widget.taskId}",
+                          style: kContainerTextStyle.copyWith(
+                            fontSize: 14.0,
+                          ),
+                        ),
+                        Text(
+                          "Complaint ID: ${widget.complaint.ticketNumber}",
+                          style: kContainerTextStyle.copyWith(
+                            fontSize: 14.0,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   Padding(

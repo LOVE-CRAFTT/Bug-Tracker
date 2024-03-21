@@ -36,6 +36,7 @@ class TaskOverviewCard extends StatelessWidget {
               builder: (context) => TaskDetailPage(
                 isTeamLead: isTeamLead,
                 task: task.task,
+                taskId: task.id,
                 complaint: task.associatedComplaint,
                 dueDate: convertToDateString(task.dueDate),
               ),
@@ -119,6 +120,7 @@ class TaskOverviewCard extends StatelessWidget {
 
 List tasksSource = [
   Task(
+    id: 299386366281,
     associatedComplaint: complaintsSource[0],
     task: "Run Youtube main branch in sandbox to replicate issue",
     taskState: TaskState.fresh,
@@ -126,6 +128,7 @@ List tasksSource = [
     assignedStaff: staffSource[0],
   ),
   Task(
+    id: 299386366281,
     associatedComplaint: complaintsSource[1],
     task: "Ascertain from user files if user is premium user",
     taskState: TaskState.inProgress,
@@ -133,6 +136,7 @@ List tasksSource = [
     assignedStaff: staffSource[1],
   ),
   Task(
+    id: 299386366281,
     associatedComplaint: complaintsSource[1],
     task: "Replicate issue in main branch",
     taskState: TaskState.dueToday,
@@ -140,6 +144,7 @@ List tasksSource = [
     assignedStaff: staffSource[2],
   ),
   Task(
+    id: 299386366281,
     associatedComplaint: complaintsSource[2],
     task: "Figure out which other types of phone numbers don't work",
     taskState: TaskState.completed,
@@ -147,6 +152,7 @@ List tasksSource = [
     assignedStaff: staffSource[3],
   ),
   Task(
+    id: 299386366281,
     associatedComplaint: complaintsSource[4],
     task: "Try to obtain the device specifications from user files",
     taskState: TaskState.overdue,

@@ -55,6 +55,7 @@ class TaskPreviewCard extends StatelessWidget {
                 /// which always happens when clicking the TaskPreviewCard
                 isTeamLead: false,
                 task: task.task,
+                taskId: task.id,
                 complaint: task.associatedComplaint,
                 dueDate: convertToDateString(task.dueDate),
                 // so the update option isn't shown in the task detail page

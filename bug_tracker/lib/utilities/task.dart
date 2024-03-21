@@ -5,6 +5,7 @@ import 'package:bug_tracker/utilities/staff.dart';
 /// Task Class
 class Task {
   const Task({
+    required this.id,
     required this.task,
     required this.taskState,
     required this.associatedComplaint,
@@ -12,6 +13,7 @@ class Task {
     required this.assignedStaff,
   });
 
+  final int id;
   final Complaint associatedComplaint;
   final String task;
   final TaskState taskState;
