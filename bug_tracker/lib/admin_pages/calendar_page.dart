@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:side_sheet/side_sheet.dart';
 import 'package:bug_tracker/ui_components/admin_appbar.dart';
 import 'package:bug_tracker/ui_components/event_card.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:bug_tracker/utilities/calendar_utils.dart';
+import 'package:bug_tracker/staff_pages/add_calendar_activity_page.dart';
 
 /// Contains a calendar with tags showing events if available
 /// User can select multiple days at once and set events for any day
@@ -86,71 +88,86 @@ class _AdminCalendarPageState extends State<AdminCalendarPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: adminReusableAppBar("Calendar", context),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: 50.0,
-            child: Padding(
-              padding: const EdgeInsets.only(
-                top: 8.0,
-                bottom: 8.0,
-                left: 15.0,
-              ),
-              child: ElevatedButton(
-                onPressed: () {},
-                style: TextButton.styleFrom(
-                  backgroundColor: secondaryThemeColor,
-                  textStyle: kContainerTextStyle,
+      body: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 50.0,
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    top: 8.0,
+                    bottom: 8.0,
+                    left: 15.0,
+                  ),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      SideSheet.right(
+                        context: context,
+                        width: constraints.maxWidth * 0.7,
+                        sheetColor: lightAshyNavyBlue,
+                        sheetBorderRadius: 10.0,
+                        body: const Padding(
+                          padding: EdgeInsets.all(20.0),
+                          child: AddCalendarActivityPage(),
+                        ),
+                      );
+                    },
+                    style: TextButton.styleFrom(
+                      backgroundColor: secondaryThemeColor,
+                      textStyle: kContainerTextStyle,
+                    ),
+                    child: const Text("Add activity"),
+                  ),
                 ),
-                child: const Text("Add activity"),
               ),
-            ),
-          ),
-          TableCalendar<Event>(
-            firstDay: kFirstDay,
-            lastDay: kLastDay,
-            focusedDay: _focusedDay,
-            selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
-            rangeStartDay: _rangeStart,
-            rangeEndDay: _rangeEnd,
-            calendarFormat: _calendarFormat,
-            rangeSelectionMode: _rangeSelectionMode,
-            eventLoader: _getEventsForDay,
-            startingDayOfWeek: StartingDayOfWeek.sunday,
-            calendarStyle: kCalendarStyle,
-            headerStyle: kCalendarHeaderStyle,
-            daysOfWeekStyle: kCalendarDOWStyle,
-            onDaySelected: _onDaySelected,
-            onRangeSelected: _onRangeSelected,
-            onFormatChanged: (format) {
-              if (_calendarFormat != format) {
-                setState(() {
-                  _calendarFormat = format;
-                });
-              }
-            },
-            onPageChanged: (focusedDay) {
-              _focusedDay = focusedDay;
-            },
-          ),
-          const SizedBox(height: 8.0),
-          Expanded(
-            child: ValueListenableBuilder<List<Event>>(
-              valueListenable: _selectedEvents,
-              builder: (context, value, _) {
-                return ListView.builder(
-                  itemCount: value.length,
-                  itemBuilder: (context, index) {
-                    return EventCard(
-                      event: value[index],
+              TableCalendar<Event>(
+                firstDay: kFirstDay,
+                lastDay: kLastDay,
+                focusedDay: _focusedDay,
+                selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
+                rangeStartDay: _rangeStart,
+                rangeEndDay: _rangeEnd,
+                calendarFormat: _calendarFormat,
+                rangeSelectionMode: _rangeSelectionMode,
+                eventLoader: _getEventsForDay,
+                startingDayOfWeek: StartingDayOfWeek.sunday,
+                calendarStyle: kCalendarStyle,
+                headerStyle: kCalendarHeaderStyle,
+                daysOfWeekStyle: kCalendarDOWStyle,
+                onDaySelected: _onDaySelected,
+                onRangeSelected: _onRangeSelected,
+                onFormatChanged: (format) {
+                  if (_calendarFormat != format) {
+                    setState(() {
+                      _calendarFormat = format;
+                    });
+                  }
+                },
+                onPageChanged: (focusedDay) {
+                  _focusedDay = focusedDay;
+                },
+              ),
+              const SizedBox(height: 8.0),
+              Expanded(
+                child: ValueListenableBuilder<List<Event>>(
+                  valueListenable: _selectedEvents,
+                  builder: (context, value, _) {
+                    return ListView.builder(
+                      itemCount: value.length,
+                      itemBuilder: (context, index) {
+                        return EventCard(
+                          event: value[index],
+                        );
+                      },
                     );
                   },
-                );
-              },
-            ),
-          ),
-        ],
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }

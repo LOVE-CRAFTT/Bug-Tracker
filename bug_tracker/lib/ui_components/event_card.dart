@@ -16,8 +16,6 @@ class EventCard extends StatefulWidget {
 }
 
 class _EventCardState extends State<EventCard> {
-  bool _hover = false;
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -31,21 +29,10 @@ class _EventCardState extends State<EventCard> {
         ),
         borderRadius: BorderRadius.circular(12.0),
       ),
-      child: MouseRegion(
-        onEnter: (_) => setState(() => _hover = true),
-        onExit: (_) => setState(() => _hover = false),
-        child: ListTile(
-          onTap: () => debugPrint(widget.event.toString()),
-          leading: _hover
-              ? IconButton(
-                  onPressed: () {},
-                  splashRadius: 20.0,
-                  icon: const Icon(Icons.close),
-                )
-              : null,
-          title: Text('${widget.event}'),
-          titleTextStyle: kContainerTextStyle,
-        ),
+      child: ListTile(
+        onTap: () => debugPrint(widget.event.toString()),
+        title: Text('${widget.event}'),
+        titleTextStyle: kContainerTextStyle,
       ),
     );
   }
