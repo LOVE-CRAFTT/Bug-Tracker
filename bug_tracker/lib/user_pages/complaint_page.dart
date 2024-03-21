@@ -9,14 +9,14 @@ import 'package:bug_tracker/utilities/tools.dart';
 import 'package:bug_tracker/admin_pages/update_password_page.dart';
 
 /// Page the user sees when logged in.
-class UserMainPage extends StatefulWidget {
-  const UserMainPage({super.key});
+class ComplaintPage extends StatefulWidget {
+  const ComplaintPage({super.key});
 
   @override
-  State<UserMainPage> createState() => _UserMainPageState();
+  State<ComplaintPage> createState() => _ComplaintPageState();
 }
 
-class _UserMainPageState extends State<UserMainPage> {
+class _ComplaintPageState extends State<ComplaintPage> {
   String usersName = "Kamala Harris";
   String? dropDownValue = complaintsChoices.first;
 

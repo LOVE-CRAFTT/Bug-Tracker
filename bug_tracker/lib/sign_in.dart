@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/admin_pages/admin_main_page.dart';
+import 'package:bug_tracker/user_pages/sign_up_page.dart';
 import 'package:bug_tracker/user_pages/complaint_page.dart';
 import 'package:bug_tracker/staff_pages/staff_main_page.dart';
 import 'package:bug_tracker/utilities/constants.dart';
@@ -19,7 +20,7 @@ void setMainScreen() {
   if (email == 'admin') {
     mainScreen = const AdminMainPage();
   } else if (email == 'user') {
-    mainScreen = const UserMainPage();
+    mainScreen = const ComplaintPage();
   } else {
     mainScreen = const StaffMainPage();
   }
@@ -33,13 +34,7 @@ class SignInPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Sign In',
-          style: kAppBarTextStyle,
-        ),
-        backgroundColor: Colors.black,
-      ),
+      appBar: genericTaskBar("Sign In"),
       body: Center(
         child: SizedBox(
           width: 500,
@@ -116,7 +111,14 @@ class SignInPage extends StatelessWidget {
                     HeaderButton(
                       screenIsWide: true,
                       buttonText: "Sign Up",
-                      onPress: () {},
+                      onPress: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SignUpPage(),
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),
