@@ -3,6 +3,7 @@ import 'package:bug_tracker/admin_pages/admin_main_page.dart';
 import 'package:bug_tracker/user_pages/complaint_page.dart';
 import 'package:bug_tracker/staff_pages/staff_main_page.dart';
 import 'package:bug_tracker/utilities/constants.dart';
+import 'package:bug_tracker/ui_components/header_button.dart';
 
 String? email;
 String? password;
@@ -49,7 +50,9 @@ class SignInPage extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 TextFormField(
-                  decoration: const InputDecoration(labelText: 'E-mail'),
+                  decoration: textFormFieldDecoration("E-mail").copyWith(
+                    border: const UnderlineInputBorder(),
+                  ),
                   style: kContainerTextStyle.copyWith(
                     color: const Color(0xFF979c99),
                   ),
@@ -62,7 +65,9 @@ class SignInPage extends StatelessWidget {
                   },
                 ),
                 TextFormField(
-                  decoration: const InputDecoration(labelText: 'Password'),
+                  decoration: textFormFieldDecoration("Password").copyWith(
+                    border: const UnderlineInputBorder(),
+                  ),
                   obscureText: true,
                   style: kContainerTextStyle,
                   validator: (value) {
@@ -76,39 +81,44 @@ class SignInPage extends StatelessWidget {
                 const SizedBox(
                   height: 50,
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      if (users[email] == password) {
-                        ///Get entry point for either user, admin or staff
-                        setMainScreen();
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => mainScreen!,
-                          ),
-                        );
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              'Invalid email or password',
-                              style: kContainerTextStyle.copyWith(
-                                color: Colors.black,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    HeaderButton(
+                      screenIsWide: true,
+                      buttonText: "Sign In",
+                      onPress: () {
+                        if (_formKey.currentState!.validate()) {
+                          if (users[email] == password) {
+                            ///Get entry point for either user, admin or staff
+                            setMainScreen();
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => mainScreen!,
                               ),
-                            ),
-                          ),
-                        );
-                      }
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: secondaryThemeColor,
-                  ),
-                  child: const Text(
-                    'Sign In',
-                    style: TextStyle(fontFamily: "Nunito"),
-                  ),
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  'Invalid email or password',
+                                  style: kContainerTextStyle.copyWith(
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
+                            );
+                          }
+                        }
+                      },
+                    ),
+                    HeaderButton(
+                      screenIsWide: true,
+                      buttonText: "Sign Up",
+                      onPress: () {},
+                    ),
+                  ],
                 ),
               ],
             ),

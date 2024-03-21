@@ -37,8 +37,7 @@ class _NewProjectPageState extends State<NewProjectPage> {
                   Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: TextFormField(
-                      decoration: newStaffOrProjectFormTextFieldStyle(
-                          hintText: 'Project Title'),
+                      decoration: textFormFieldDecoration("Project Title"),
                       style: kContainerTextStyle.copyWith(color: Colors.white),
                       controller: projectTitleController,
                       validator: (lProjectTitle) {
@@ -54,8 +53,7 @@ class _NewProjectPageState extends State<NewProjectPage> {
                     child: Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: TextFormField(
-                        decoration: newStaffOrProjectFormTextFieldStyle(
-                            hintText: 'Project Details'),
+                        decoration: textFormFieldDecoration("Project Details"),
                         expands: true,
                         maxLines: null,
                         style:

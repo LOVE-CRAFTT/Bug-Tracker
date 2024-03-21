@@ -35,7 +35,7 @@ class NewComplaintForm extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: TextFormField(
-                  decoration: complaintTextFieldStyle(hintText: 'Project ID'),
+                  decoration: textFormFieldDecoration('Project ID'),
                   style: kContainerTextStyle.copyWith(color: Colors.white),
                   controller: projectIdController,
                   inputFormatters: [
@@ -53,7 +53,7 @@ class NewComplaintForm extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: TextFormField(
-                  decoration: complaintTextFieldStyle(hintText: "Bug Title"),
+                  decoration: textFormFieldDecoration("Bug Title"),
                   style: kContainerTextStyle.copyWith(color: Colors.white),
                   controller: bugTitleController,
                   validator: (title) {
@@ -75,7 +75,7 @@ class NewComplaintForm extends StatelessWidget {
                     top: 20.0,
                   ),
                   child: TextFormField(
-                    decoration: complaintTextFieldStyle(hintText: "Notes"),
+                    decoration: textFormFieldDecoration("Notes"),
                     style: kContainerTextStyle.copyWith(color: Colors.white),
                     controller: notesController,
                     maxLines: null,
@@ -140,13 +140,4 @@ class NewComplaintForm extends StatelessWidget {
       ),
     );
   }
-}
-
-InputDecoration complaintTextFieldStyle({required String hintText}) {
-  return InputDecoration(
-    border: const OutlineInputBorder(),
-    hintText: hintText,
-    hintStyle: kContainerTextStyle,
-    isCollapsed: false,
-  );
 }

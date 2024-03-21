@@ -38,6 +38,18 @@ TextStyle kAppBarTooltipTextStyle = kContainerTextStyle.copyWith(
   fontSize: 14.0,
 );
 
+/// Decoration for all text form fields
+InputDecoration textFormFieldDecoration(String hintText) => InputDecoration(
+      border: const OutlineInputBorder(),
+      hintText: hintText,
+      hintStyle: kContainerTextStyle,
+      isCollapsed: false,
+      errorStyle: kContainerTextStyle.copyWith(
+        color: Colors.red,
+        fontSize: 15,
+      ),
+    );
+
 /// Appbar for non "major" pages
 AppBar genericTaskBar(String title) => AppBar(
       title: Text(

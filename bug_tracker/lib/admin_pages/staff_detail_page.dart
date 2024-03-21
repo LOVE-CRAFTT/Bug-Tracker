@@ -106,8 +106,8 @@ class _StaffDetailPageState extends State<StaffDetailPage> {
                       child: Column(
                         children: [
                           TextFormField(
-                            decoration: formTextFieldDecoration(
-                                hintText: "Updated Email"),
+                            decoration:
+                                textFormFieldDecoration("Updated Email"),
                             style: kContainerTextStyle.copyWith(
                                 color: Colors.white),
                             validator: (lUpdatedEmail) {
@@ -212,8 +212,7 @@ class _StaffDetailPageState extends State<StaffDetailPage> {
                           Padding(
                             padding: const EdgeInsets.only(bottom: 10.0),
                             child: TextFormField(
-                              decoration:
-                                  formTextFieldDecoration(hintText: "Surname"),
+                              decoration: textFormFieldDecoration("Surname"),
                               style: kContainerTextStyle.copyWith(
                                   color: Colors.white),
                               validator: (lUpdatedSurname) {
@@ -229,8 +228,7 @@ class _StaffDetailPageState extends State<StaffDetailPage> {
                           Padding(
                             padding: const EdgeInsets.only(bottom: 10.0),
                             child: TextFormField(
-                              decoration: formTextFieldDecoration(
-                                  hintText: "First Name"),
+                              decoration: textFormFieldDecoration("First Name"),
                               style: kContainerTextStyle.copyWith(
                                   color: Colors.white),
                               validator: (lUpdatedFirstName) {
@@ -246,8 +244,8 @@ class _StaffDetailPageState extends State<StaffDetailPage> {
                           Padding(
                             padding: const EdgeInsets.only(bottom: 10.0),
                             child: TextFormField(
-                              decoration: formTextFieldDecoration(
-                                  hintText: "Middle Name"),
+                              decoration:
+                                  textFormFieldDecoration("Middle Name"),
                               style: kContainerTextStyle.copyWith(
                                   color: Colors.white),
                               validator: (lUpdatedMiddleName) {
@@ -399,16 +397,3 @@ Future showDeletionWarningAlert(BuildContext context) async => await showDialog(
         ],
       ),
     );
-
-InputDecoration formTextFieldDecoration({required String hintText}) {
-  return InputDecoration(
-    border: const OutlineInputBorder(),
-    hintText: hintText,
-    hintStyle: kContainerTextStyle,
-    isCollapsed: false,
-    errorStyle: kContainerTextStyle.copyWith(
-      color: Colors.red,
-      fontSize: 15,
-    ),
-  );
-}

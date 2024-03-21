@@ -51,7 +51,7 @@ class _StaffFeedPageState extends State<StaffFeedPage> {
                       tabs: const [
                         Text("Activities", style: kContainerTextStyle),
                       ],
-                      indicatorColor: secondaryThemeColor,
+                      indicatorColor: secondaryThemeColorGreen,
                       padding: EdgeInsets.only(
                         left: _leftPadding,
                         right: _rightPadding(constraints),

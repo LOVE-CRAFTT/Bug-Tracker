@@ -37,16 +37,7 @@ class _NewConversationState extends State<NewConversation> {
             Padding(
               padding: const EdgeInsets.only(bottom: 20.0),
               child: TextFormField(
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(),
-                  hintText: "Topic",
-                  hintStyle: kContainerTextStyle,
-                  errorStyle: kContainerTextStyle.copyWith(
-                    color: Colors.red,
-                    fontSize: 15,
-                  ),
-                  isCollapsed: false,
-                ),
+                decoration: textFormFieldDecoration("Topic"),
                 style: kContainerTextStyle.copyWith(color: Colors.white),
                 controller: topicController,
                 validator: (lTopic) {

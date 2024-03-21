@@ -60,8 +60,7 @@ class _NewStaffPageState extends State<NewStaffPage> {
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: TextFormField(
-                    decoration: newStaffOrProjectFormTextFieldStyle(
-                        hintText: 'Surname'),
+                    decoration: textFormFieldDecoration('Surname'),
                     style: kContainerTextStyle.copyWith(color: Colors.white),
                     controller: surnameController,
                     validator: (lSurname) {
@@ -76,8 +75,7 @@ class _NewStaffPageState extends State<NewStaffPage> {
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: TextFormField(
-                    decoration: newStaffOrProjectFormTextFieldStyle(
-                        hintText: 'First Name'),
+                    decoration: textFormFieldDecoration('First Name'),
                     style: kContainerTextStyle.copyWith(color: Colors.white),
                     controller: firstNameController,
                     validator: (lFirstName) {
@@ -92,8 +90,7 @@ class _NewStaffPageState extends State<NewStaffPage> {
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: TextFormField(
-                    decoration: newStaffOrProjectFormTextFieldStyle(
-                        hintText: 'Middle Name'),
+                    decoration: textFormFieldDecoration('Middle Name'),
                     style: kContainerTextStyle.copyWith(color: Colors.white),
                     controller: middleNameController,
                     validator: (lMiddleName) {
@@ -108,8 +105,7 @@ class _NewStaffPageState extends State<NewStaffPage> {
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: TextFormField(
-                    decoration:
-                        newStaffOrProjectFormTextFieldStyle(hintText: 'E-mail'),
+                    decoration: textFormFieldDecoration('E-mail'),
                     style: kContainerTextStyle.copyWith(color: Colors.white),
                     controller: staffEmailController,
                     validator: (lEmail) {
@@ -152,20 +148,6 @@ class _NewStaffPageState extends State<NewStaffPage> {
       ),
     );
   }
-}
-
-InputDecoration newStaffOrProjectFormTextFieldStyle(
-    {required String hintText}) {
-  return InputDecoration(
-    border: const OutlineInputBorder(),
-    hintText: hintText,
-    hintStyle: kContainerTextStyle,
-    isCollapsed: false,
-    errorStyle: kContainerTextStyle.copyWith(
-      color: Colors.red,
-      fontSize: 15,
-    ),
-  );
 }
 
 Future buildConfirmationPopup(BuildContext context,
