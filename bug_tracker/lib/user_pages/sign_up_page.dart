@@ -123,7 +123,7 @@ class SignUpPage extends StatelessWidget {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text(
-                            "New User: $surname created successfully",
+                            "New User: $surname $firstName $middleName created successfully",
                             style: kContainerTextStyle.copyWith(
                                 color: Colors.black),
                           ),
