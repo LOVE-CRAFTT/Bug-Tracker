@@ -14,3 +14,59 @@ staff tasks => Just a list of tasks, with the accompanying project.
 
 for admin => When a complaint is opened for the first time, it is automatically marked as acknowledged
              and once team member(s) are given it is marked as in progress
+
+
+=========================================================================================================================
+DATABASE DESIGN
+
+All associated [] should be IDs
+
+STAFF
+-	Email
+-	Password
+-	Is Admin
+-	Surname
+-	First Name
+-	Middle Name
+-	ID
+USER
+-	Email
+-	Password
+-	Surname
+-	First Name
+-	Middle Name
+PROJECT
+-	ID
+-	Name
+-	Details
+-	State
+-	Date Created
+-	Date Closed
+BUG
+-	ID
+-	Name
+-	Notes
+-	Associated Project
+-	Author
+-	Date Created
+-	Status
+-	Tags
+TASK
+-	ID
+-	Associated Bug
+-	Task Name
+-	Task State
+-	Due date
+-	Associated Staff
+-	Is Team Lead
+FILES
+-	File path
+-	Associated bug
+STAFF NOTE
+-	Note
+-	Associated bug
+-	Likely auto increment ID to sort by when retrieving
+CALENDAR EVENTS
+-	Associated staff
+-	Date
+-	Event note
