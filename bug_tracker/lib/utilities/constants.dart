@@ -182,9 +182,9 @@ List<NavigationRailDestination> staffNavigationRailDestinations = [
   ),
   for (var value in [
     //discuss
-    navRailData.entries.elementAt(2),
+    navRailData.entries.elementAt(1),
     //calendar
-    navRailData.entries.elementAt(3),
+    navRailData.entries.elementAt(2),
   ])
     NavigationRailDestination(
       icon: Tooltip(

@@ -20,7 +20,7 @@ class SignUpPage extends StatelessWidget {
       appBar: genericTaskBar("Sign Up"),
       body: Center(
         child: SizedBox(
-          width: 500,
+          width: 400,
           height: 535,
           child: Form(
             key: _formKey,

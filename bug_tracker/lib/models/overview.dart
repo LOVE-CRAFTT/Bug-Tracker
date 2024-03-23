@@ -3,7 +3,7 @@ import 'package:bug_tracker/ui_components/custom_navigation_rail.dart';
 
 class Overview extends ChangeNotifier {
   void switchToBug() {
-    selectedIndex = 5;
+    selectedIndex = 4;
     notifyListeners();
   }
 
