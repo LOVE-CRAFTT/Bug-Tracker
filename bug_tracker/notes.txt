@@ -29,12 +29,14 @@ STAFF
 -	First Name
 -	Middle Name
 -	ID
+
 USER
 -	Email
 -	Password
 -	Surname
 -	First Name
 -	Middle Name
+
 PROJECT
 -	ID
 -	Name
@@ -42,6 +44,7 @@ PROJECT
 -	State
 -	Date Created
 -	Date Closed
+
 BUG
 -	ID
 -	Name
@@ -51,6 +54,7 @@ BUG
 -	Date Created
 -	Status
 -	Tags
+
 TASK
 -	ID
 -	Associated Bug
@@ -59,14 +63,24 @@ TASK
 -	Due date
 -	Associated Staff
 -	Is Team Lead
+
 FILES
+-   auto increment serial
 -	File path
 -	Associated bug
+
 STAFF NOTE
 -	Note
 -	Associated bug
 -	Likely auto increment ID to sort by when retrieving
+
 CALENDAR EVENTS
 -	Associated staff
 -	Date
 -	Event note
+
+FOR EACH NEW CONVERSATION, THE NAME OF THE TABLE WILL BE THE CONVERSATION ID
+-   ID
+-   Message
+-   Time
+-   auto increment serial
