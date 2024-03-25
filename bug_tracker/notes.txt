@@ -66,6 +66,7 @@ TASK
 
 FILES
 -   auto increment serial => PK
+-   File name
 -	File path
 -	Associated bug => FK
 
@@ -77,11 +78,24 @@ STAFF NOTE
 CALENDAR EVENTS
 -	Associated staff => FK
 -	Date
--	Event note
+-	Event title
 -   auto increment serial => PK
 
-FOR EACH NEW CONVERSATION, THE NAME OF THE TABLE WILL BE THE CONVERSATION ID
+CONVERSATIONS :
+-   Conversation ID => PK
+-   Title
+-   Other metadata (if any)
+
+CONVERSATION PARTICIPANTS Table:
+- Participant ID => PK
+- Conversation ID => FK
+- Staff ID => FK
+
+
+MESSAGES:
+-   Message ID => PK (auto-increment)
+-   Conversation ID => FK
 -   Staff ID => FK
 -   Message
 -   Time
--   auto increment serial => PK
+
