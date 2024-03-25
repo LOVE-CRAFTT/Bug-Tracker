@@ -84,7 +84,6 @@ CALENDAR EVENTS
 CONVERSATIONS :
 -   Conversation ID => PK
 -   Title
--   Other metadata (if any)
 
 CONVERSATION PARTICIPANTS Table:
 - Participant ID => PK
