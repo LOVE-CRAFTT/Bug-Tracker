@@ -82,13 +82,13 @@ CALENDAR EVENTS
 -   auto increment serial => PK
 
 CONVERSATIONS :
--   Conversation ID => PK
+-   Conversation ID => PK auto increment serial
 -   Title
 
 CONVERSATION PARTICIPANTS Table:
-- Participant ID => PK
-- Conversation ID => FK
-- Staff ID => FK
+-   id => PK auto increment
+-   Conversation ID => FK
+-   Staff ID => FK
 
 
 MESSAGES:
@@ -96,5 +96,5 @@ MESSAGES:
 -   Conversation ID => FK
 -   Staff ID => FK
 -   Message
--   Time
+-   Time created
 
