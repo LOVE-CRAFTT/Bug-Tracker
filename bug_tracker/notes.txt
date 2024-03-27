@@ -45,7 +45,7 @@ PROJECT
 -	Date Created
 -	Date Closed
 
-BUG
+COMPLAINT
 -	ID => PK
 -	Name
 -	Notes
@@ -57,7 +57,7 @@ BUG
 
 TASK
 -	ID => PK
--	Associated Bug => FK
+-	Associated Complaint => FK
 -	Task Name
 -	Task State
 -	Due date
@@ -65,14 +65,14 @@ TASK
 -	Is Team Lead
 
 FILES
--   auto increment serial => PK
+-   id auto increment serial => PK
 -   File name
 -	File path
--	Associated bug => FK
+-	Associated Complaint => FK
 
 STAFF NOTE
 -	Note
--	Associated bug => FK
+-	Associated Complaint => FK
 -	Likely auto increment ID to sort by when retrieving => PK
 
 CALENDAR EVENTS
