@@ -139,7 +139,7 @@ const Color lightAshyNavyBlue = Color(0xFF3D4042);
 
 Map<String, Icon> navRailData = {
   'Home': const Icon(Icons.home),
-  // 'Feed': const Icon(Icons.feed),
+  'Feed': const Icon(Icons.feed),
   'Discuss': const Icon(Icons.chat_outlined),
   'Calendar': const Icon(Icons.calendar_month),
   'Projects': const Icon(Icons.work_outline),
@@ -181,10 +181,12 @@ List<NavigationRailDestination> staffNavigationRailDestinations = [
     ),
   ),
   for (var value in [
-    //discuss
+    //feed
     navRailData.entries.elementAt(1),
-    //calendar
+    //discuss
     navRailData.entries.elementAt(2),
+    //calendar
+    navRailData.entries.elementAt(3),
   ])
     NavigationRailDestination(
       icon: Tooltip(
