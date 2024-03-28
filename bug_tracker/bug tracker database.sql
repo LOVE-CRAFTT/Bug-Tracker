@@ -1,100 +1,99 @@
 CREATE DATABASE IF NOT EXISTS bug_tracker;
 USE bug_tracker;
 
-CREATE TABLE IF NOT EXISTS STAFF (
-    ID INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    Email VARCHAR(255) NOT NULL,
-    Password VARCHAR(255) NOT NULL,
-    Is_Admin BOOLEAN,
-    Surname VARCHAR(255) NOT NULL,
-    First_Name VARCHAR(255),
-    Middle_Name VARCHAR(255)
+CREATE TABLE IF NOT EXISTS staff (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    is_admin BOOLEAN NOT NULL,
+    surname VARCHAR(255) NOT NULL,
+    first_name VARCHAR(255),
+    middle_name VARCHAR(255)
 ) AUTO_INCREMENT=10000;
 
-CREATE TABLE IF NOT EXISTS USER (
-    Email VARCHAR(255) NOT NULL PRIMARY KEY,
-    Password VARCHAR(255) NOT NULL,
-    Surname VARCHAR(255) NOT NULL,
-    First_Name VARCHAR(255),
-    Middle_Name VARCHAR(255)
+CREATE TABLE IF NOT EXISTS user (
+    email VARCHAR(255) NOT NULL PRIMARY KEY,
+    password VARCHAR(255) NOT NULL,
+    surname VARCHAR(255) NOT NULL,
+    first_name VARCHAR(255),
+    middle_name VARCHAR(255)
 );
 
-CREATE TABLE IF NOT EXISTS PROJECT (
-    ID INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    Name VARCHAR(255) NOT NULL,
-    Details MEDIUMTEXT,
-    Project_State ENUM('Cancelled', 'Closed', 'Open', 'Postponed') NOT NULL,
-    Date_Created DATETIME NOT NULL,
-    Date_Closed DATETIME
+CREATE TABLE IF NOT EXISTS project (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    details MEDIUMTEXT,
+    project_state ENUM('Cancelled', 'Closed', 'Open', 'Postponed') NOT NULL,
+    date_created DATETIME NOT NULL,
+    date_closed DATETIME
 ) AUTO_INCREMENT=10000;
 
-CREATE TABLE IF NOT EXISTS COMPLAINT (
-    ID INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    Name VARCHAR(255) NOT NULL,
-    Notes MEDIUMTEXT,
-    Associated_Project INT UNSIGNED NOT NULL,
-    Author VARCHAR(255) NOT NULL,
-    Date_Created DATETIME NOT NULL,
-    Complaint_State ENUM('Acknowledged', 'Completed', 'In Progress', 'Pending') NOT NULL,
-    Tags ENUM('Database', 'Functionality', 'Network', 'Performance', 'Security', 'UI'),
-    FOREIGN KEY (Associated_Project) REFERENCES PROJECT(ID)
+CREATE TABLE IF NOT EXISTS complaint (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    notes MEDIUMTEXT,
+    associated_project INT UNSIGNED NOT NULL,
+    author VARCHAR(255) NOT NULL,
+    date_created DATETIME NOT NULL,
+    complaint_state ENUM('Acknowledged', 'Completed', 'In Progress', 'Pending') NOT NULL,
+    tags ENUM('Database', 'Functionality', 'Network', 'Performance', 'Security', 'UI'),
+    FOREIGN KEY (associated_project) REFERENCES project(id)
 ) AUTO_INCREMENT=10000;
 
-CREATE TABLE IF NOT EXISTS TASK (
-    ID INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    Associated_Complaint INT UNSIGNED NOT NULL,
-    Task_Name VARCHAR(255) NOT NULL,
-    Task_State ENUM('Completed', 'Due Today', 'In Progress', 'New', 'Overdue', 'Updated') NOT NULL,
-    Due_date DATETIME NOT NULL,
-    Associated_Staff INT UNSIGNED NOT NULL,
-    Is_Team_Lead BOOLEAN NOT NULL,
-    FOREIGN KEY (Associated_Complaint) REFERENCES COMPLAINT(ID),
-    FOREIGN KEY (Associated_Staff) REFERENCES STAFF(ID)
+CREATE TABLE IF NOT EXISTS task (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    associated_complaint INT UNSIGNED NOT NULL,
+    task_name VARCHAR(255) NOT NULL,
+    task_state ENUM('Completed', 'Due Today', 'In Progress', 'New', 'Overdue', 'Updated') NOT NULL,
+    due_date DATETIME NOT NULL,
+    associated_staff INT UNSIGNED NOT NULL,
+    is_team_lead BOOLEAN NOT NULL,
+    FOREIGN KEY (associated_complaint) REFERENCES complaint(id),
+    FOREIGN KEY (associated_staff) REFERENCES staff(id)
 ) AUTO_INCREMENT=10000;
 
-CREATE TABLE IF NOT EXISTS FILES (
+CREATE TABLE IF NOT EXISTS files (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    File_name VARCHAR(255),
-    File_path TEXT NOT NULL,
-    Associated_Complaint INT UNSIGNED NOT NULL,
-    FOREIGN KEY (Associated_Complaint) REFERENCES COMPLAINT(ID)
+    file_name VARCHAR(255),
+    file_path TEXT NOT NULL,
+    associated_complaint INT UNSIGNED NOT NULL,
+    FOREIGN KEY (associated_complaint) REFERENCES complaint(id)
 );
 
-CREATE TABLE IF NOT EXISTS STAFF_NOTE (
+CREATE TABLE IF NOT EXISTS staff_note (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    Note TEXT NOT NULL,
-    Associated_Complaint INT UNSIGNED NOT NULL,
-    FOREIGN KEY (Associated_Complaint) REFERENCES COMPLAINT(ID)
+    note TEXT NOT NULL,
+    associated_complaint INT UNSIGNED NOT NULL,
+    FOREIGN KEY (associated_complaint) REFERENCES complaint(id)
 );
 
-CREATE TABLE IF NOT EXISTS CALENDAR_EVENTS (
+CREATE TABLE IF NOT EXISTS calendar_events (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    Associated_staff INT UNSIGNED NOT NULL,
-    Date DATETIME NOT NULL,
-    Event_title VARCHAR(255) NOT NULL,
-    FOREIGN KEY (Associated_staff) REFERENCES STAFF(ID)
+    associated_staff INT UNSIGNED NOT NULL,
+    date DATETIME NOT NULL,
+    event_title VARCHAR(255) NOT NULL,
+    FOREIGN KEY (associated_staff) REFERENCES staff(id)
 );
 
-CREATE TABLE IF NOT EXISTS CONVERSATIONS (
-    Conversation_ID INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    Title VARCHAR(255) NOT NULL
+CREATE TABLE IF NOT EXISTS conversations (
+    conversation_id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS CONVERSATION_PARTICIPANTS (
+CREATE TABLE IF NOT EXISTS conversation_participants (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    Conversation_ID INT UNSIGNED NOT NULL,
-    Staff_ID INT UNSIGNED NOT NULL,
-    FOREIGN KEY (Conversation_ID) REFERENCES CONVERSATIONS(Conversation_ID),
-    FOREIGN KEY (Staff_ID) REFERENCES STAFF(ID)
+    conversation_id INT UNSIGNED NOT NULL,
+    staff_id INT UNSIGNED NOT NULL,
+    FOREIGN KEY (conversation_id) REFERENCES conversations(conversation_id),
+    FOREIGN KEY (staff_id) REFERENCES staff(id)
 );
 
-CREATE TABLE IF NOT EXISTS MESSAGES (
-    Message_ID INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    Conversation_ID INT UNSIGNED NOT NULL,
-    Staff_ID INT UNSIGNED NOT NULL,
-    Message TEXT NOT NULL,
-    Time_created DATETIME NOT NULL,
-    FOREIGN KEY (Conversation_ID) REFERENCES CONVERSATIONS(Conversation_ID),
-    FOREIGN KEY (Staff_ID) REFERENCES STAFF(ID)
+CREATE TABLE IF NOT EXISTS messages (
+    message_id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    conversation_id INT UNSIGNED NOT NULL,
+    staff_id INT UNSIGNED NOT NULL,
+    message TEXT NOT NULL,
+    time_created DATETIME NOT NULL,
+    FOREIGN KEY (conversation_id) REFERENCES conversations(conversation_id),
+    FOREIGN KEY (staff_id) REFERENCES staff(id)
 );
-
