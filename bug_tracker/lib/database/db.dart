@@ -15,6 +15,10 @@ class DB {
         password: '12345',
       ),
     );
+
+    ///There seems to be an error with await in mysql1 package
+    /// will have to be including minor pauses to wait for data
+    await Future.delayed(const Duration(milliseconds: 1));
   }
 
   Future<void> addAdmin() async {
