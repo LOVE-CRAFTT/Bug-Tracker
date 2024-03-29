@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mysql1/mysql1.dart';
 import 'package:bug_tracker/utilities/tools.dart';
 
+DB db = DB();
+
 class DB {
   MySqlConnection? _conn;
 
