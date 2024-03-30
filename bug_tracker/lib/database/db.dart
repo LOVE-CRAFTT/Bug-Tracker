@@ -27,7 +27,7 @@ class DB {
     var result = await _conn?.query(
       'insert into staff (email, password, is_admin, surname, first_name, middle_name) values (?, ?, ?, ?, ?, ?)',
       [
-        'johnPaul@gmail.com',
+        'johnpaul@gmail.com',
         hashPassword("123456"),
         true,
         "Smith",
