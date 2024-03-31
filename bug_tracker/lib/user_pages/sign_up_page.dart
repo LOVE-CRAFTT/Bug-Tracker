@@ -2,12 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:bug_tracker/user_pages/complaint_page.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
-
-String? email;
-String? password;
-String? surname;
-String firstName = "";
-String middleName = "";
+import 'package:bug_tracker/database/db.dart';
+import 'package:mysql1/mysql1.dart';
 
 class SignUpPage extends StatelessWidget {
   SignUpPage({super.key});
@@ -16,6 +12,12 @@ class SignUpPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Based on which can and cannot be null
+    String email = "";
+    String password = "";
+    String surname = "";
+    String? firstName;
+    String? middleName;
     return Scaffold(
       appBar: genericTaskBar("Sign Up"),
       body: Center(
@@ -51,10 +53,10 @@ class SignUpPage extends StatelessWidget {
                       color: const Color(0xFF979c99),
                     ),
                     validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        value = "";
-                      }
-                      firstName = value;
+                      // if value is null firstName is value
+                      // if value isEmpty its null
+                      // if value is not empty its value
+                      firstName = value?.isEmpty == true ? null : value;
                       return null;
                     },
                   ),
@@ -67,10 +69,7 @@ class SignUpPage extends StatelessWidget {
                       color: const Color(0xFF979c99),
                     ),
                     validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        value = "";
-                      }
-                      middleName = value;
+                      middleName = value?.isEmpty == true ? null : value;
                       return null;
                     },
                   ),
@@ -112,24 +111,82 @@ class SignUpPage extends StatelessWidget {
                 HeaderButton(
                   screenIsWide: true,
                   buttonText: "Sign Up",
-                  onPress: () {
+                  onPress: () async {
                     if (_formKey.currentState!.validate()) {
-                      /// if user already exists let them know
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const ComplaintPage(),
-                        ),
-                      );
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            "New User: $surname $firstName $middleName created successfully",
-                            style: kContainerTextStyle.copyWith(
-                                color: Colors.black),
-                          ),
-                        ),
-                      );
+                      Results? actorData;
+
+                      /// connect to database
+                      /// if user i.e email already exists let them know
+                      /// put information to database
+                      /// set global id
+                      /// move to complaint page
+                      /// close connection
+                      db.connect();
+
+                      // if actor data is null then user doesn't exist so attempt to create
+                      if ((actorData = await db.getDataIfUserExists(email)) ==
+                          null) {
+                        int? newUserID = await db.addNewUser(
+                          surname: surname,
+                          firstName: firstName,
+                          middleName: middleName,
+                          email: email,
+                          password: password,
+                        );
+                        // if adding the new user succeeds
+                        if (newUserID != null) {
+                          // set global id
+                          globalActorID = newUserID;
+                          if (context.mounted) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const ComplaintPage(),
+                              ),
+                            );
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  "New User: $surname ${firstName ?? ""} ${middleName ?? ""} created successfully",
+                                  style: kContainerTextStyle.copyWith(
+                                      color: Colors.black),
+                                ),
+                              ),
+                            );
+                          }
+                        }
+                        // if adding fails notify user to try later
+                        else {
+                          if (context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  "Process Failed! Try again later",
+                                  style: kContainerTextStyle.copyWith(
+                                      color: Colors.black),
+                                ),
+                              ),
+                            );
+                          }
+                        }
+                      }
+                      // user already exists notify actor
+                      else {
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                "User already exists",
+                                style: kContainerTextStyle.copyWith(
+                                    color: Colors.black),
+                              ),
+                            ),
+                          );
+                        }
+                      }
+
+                      // close the database
+                      await db.close();
                     }
                   },
                 ),

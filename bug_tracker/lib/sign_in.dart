@@ -132,7 +132,7 @@ class SignInPage extends StatelessWidget {
                               null) {
                             //authenticate password
                             isCorrectPassword = authenticatePasswordHash(
-                              password: hashPassword(password!),
+                              password: password!,
                               hashedPassword: actorData!.first['password'],
                             );
 

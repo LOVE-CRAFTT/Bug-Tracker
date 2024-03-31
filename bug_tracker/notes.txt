@@ -98,3 +98,12 @@ MESSAGES:
 -   Message
 -   Time created
 
+
+//EMAILS AND PASSWORDS
+
+//=======ADMIN
+// johnpaul@gmail.com, 123456
+
+//=======USER
+// ejohnson@gmail.com, 123456
+
