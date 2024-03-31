@@ -3,6 +3,9 @@ import 'package:bug_tracker/ui_components/fast_access_container.dart';
 import 'package:bug_tracker/ui_components/large_container.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+/// Set at sign in and shouldn't change
+late int globalActorID;
+
 ///Width of a big screen, gotten from testing
 ///If screen goes lower than this, screen layout changes to accommodate
 ///[containerHeight] reduces, [FastAccessContainer]s realigns to have 3 maximum on a row

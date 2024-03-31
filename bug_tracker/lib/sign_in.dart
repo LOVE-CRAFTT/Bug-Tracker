@@ -5,26 +5,9 @@ import 'package:bug_tracker/user_pages/complaint_page.dart';
 import 'package:bug_tracker/staff_pages/staff_main_page.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
-
-String? email;
-String? password;
-Widget? mainScreen;
-
-Map<String, String> users = {
-  'admin': 'a',
-  'user': 'u',
-  'staff': 's',
-};
-
-void setMainScreen() {
-  if (email == 'admin') {
-    mainScreen = const AdminMainPage();
-  } else if (email == 'user') {
-    mainScreen = const ComplaintPage();
-  } else {
-    mainScreen = const StaffMainPage();
-  }
-}
+import 'package:bug_tracker/utilities/tools.dart';
+import 'package:bug_tracker/database/db.dart';
+import 'package:mysql1/mysql1.dart';
 
 class SignInPage extends StatelessWidget {
   SignInPage({super.key});
@@ -33,6 +16,9 @@ class SignInPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String? email;
+    String? password;
+    Widget? mainScreen;
     return Scaffold(
       appBar: genericTaskBar("Sign In"),
       body: Center(
@@ -82,29 +68,117 @@ class SignInPage extends StatelessWidget {
                     HeaderButton(
                       screenIsWide: true,
                       buttonText: "Sign In",
-                      onPress: () {
+                      onPress: () async {
                         if (_formKey.currentState!.validate()) {
-                          if (users[email] == password) {
-                            ///Get entry point for either user, admin or staff
-                            setMainScreen();
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => mainScreen!,
-                              ),
+                          /// ensure email exists
+                          /// if hashedPassword equals corresponding hashed email password
+                          /// then get id and is_admin
+                          /// if is_admin admin page receives id
+
+                          await db.connect();
+                          Results? actorData;
+                          bool? isCorrectPassword;
+
+                          // Is staff
+                          if ((actorData =
+                                  await db.getDataIfStaffExists(email!)) !=
+                              null) {
+                            //authenticate password
+                            isCorrectPassword = authenticatePasswordHash(
+                              password: password!,
+                              hashedPassword: actorData!.first['password'],
                             );
+
+                            // get id and is_admin
+                            if (isCorrectPassword) {
+                              int actorID = actorData.first['id'];
+                              bool isAdmin = actorData.first['is_admin'] == 1
+                                  ? true
+                                  : false;
+
+                              if (isAdmin) {
+                                mainScreen = const AdminMainPage();
+                              } else {
+                                mainScreen = const StaffMainPage();
+                              }
+                              // set global id
+                              globalActorID = actorID;
+                              if (context.mounted) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => mainScreen!,
+                                  ),
+                                );
+                              }
+                            } else {
+                              if (context.mounted) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      'Invalid password',
+                                      style: kContainerTextStyle.copyWith(
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }
+                            }
+                          }
+                          // check if its user
+                          else if ((actorData =
+                                  await db.getDataIfUserExists(email!)) !=
+                              null) {
+                            //authenticate password
+                            isCorrectPassword = authenticatePasswordHash(
+                              password: hashPassword(password!),
+                              hashedPassword: actorData!.first['password'],
+                            );
+
+                            // get id
+                            if (isCorrectPassword) {
+                              globalActorID = actorData.first['id'];
+                              if (context.mounted) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const ComplaintPage(),
+                                  ),
+                                );
+                              }
+                            } else {
+                              if (context.mounted) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      'Invalid password',
+                                      style: kContainerTextStyle.copyWith(
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }
+                            }
                           } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                  'Invalid email or password',
-                                  style: kContainerTextStyle.copyWith(
-                                    color: Colors.black,
+                            // email must be wrong
+                            if (context.mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'Invalid email',
+                                    style: kContainerTextStyle.copyWith(
+                                      color: Colors.black,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            );
+                              );
+                            }
                           }
+
+                          // close connection
+                          await db.close();
                         }
                       },
                     ),

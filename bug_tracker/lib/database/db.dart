@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:mysql1/mysql1.dart';
-import 'package:bug_tracker/utilities/tools.dart';
 
 DB db = DB();
 
@@ -23,19 +21,34 @@ class DB {
     await Future.delayed(const Duration(milliseconds: 1));
   }
 
-  Future<void> addAdmin() async {
-    var result = await _conn?.query(
-      'insert into staff (email, password, is_admin, surname, first_name, middle_name) values (?, ?, ?, ?, ?, ?)',
-      [
-        'johnpaul@gmail.com',
-        hashPassword("123456"),
-        true,
-        "Smith",
-        "John",
-        "Paul",
-      ],
+  Future<Results?> getDataIfStaffExists(String email) async {
+    Results? results = await _conn?.query(
+      'SELECT * FROM staff WHERE email = ?',
+      [email],
     );
-    debugPrint(result.toString());
+    if (results?.isEmpty ?? true) {
+      // the condition evaluates to if null(failed query), is empty or true then
+      // no staff exists
+      return null;
+    } else {
+      // staff exists
+      return results;
+    }
+  }
+
+  Future<Results?> getDataIfUserExists(String email) async {
+    Results? results = await _conn?.query(
+      'SELECT * FROM user WHERE email = ?',
+      [email],
+    );
+    if (results?.isEmpty ?? true) {
+      // the condition evaluates to if null(failed query), is empty or true then
+      // no user exists
+      return null;
+    } else {
+      // user exists
+      return results;
+    }
   }
 
   Future<void> close() async => await _conn?.close();
