@@ -5,6 +5,9 @@ import 'package:table_calendar/table_calendar.dart';
 
 /// Set at sign in and shouldn't change
 late int globalActorID;
+bool actorIsAdmin = false;
+bool actorIsStaff = false;
+bool actorIsUser = false;
 
 ///Width of a big screen, gotten from testing
 ///If screen goes lower than this, screen layout changes to accommodate

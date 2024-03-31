@@ -80,8 +80,8 @@ class SignInPage extends StatelessWidget {
                           bool? isCorrectPassword;
 
                           // Is staff
-                          if ((actorData =
-                                  await db.getDataIfStaffExists(email!)) !=
+                          if ((actorData = await db
+                                  .getDataUsingEmailIfStaffExists(email!)) !=
                               null) {
                             //authenticate password
                             isCorrectPassword = authenticatePasswordHash(
@@ -97,8 +97,16 @@ class SignInPage extends StatelessWidget {
                                   : false;
 
                               if (isAdmin) {
+                                // set actor's designation
+                                actorIsAdmin = true;
+                                actorIsStaff = false;
+                                actorIsUser = false;
                                 mainScreen = const AdminMainPage();
                               } else {
+                                // set actor's designation
+                                actorIsAdmin = false;
+                                actorIsStaff = true;
+                                actorIsUser = false;
                                 mainScreen = const StaffMainPage();
                               }
                               // set global id
@@ -127,8 +135,8 @@ class SignInPage extends StatelessWidget {
                             }
                           }
                           // check if its user
-                          else if ((actorData =
-                                  await db.getDataIfUserExists(email!)) !=
+                          else if ((actorData = await db
+                                  .getDataUsingEmailIfUserExists(email!)) !=
                               null) {
                             //authenticate password
                             isCorrectPassword = authenticatePasswordHash(
@@ -139,6 +147,10 @@ class SignInPage extends StatelessWidget {
                             // get id
                             if (isCorrectPassword) {
                               globalActorID = actorData.first['id'];
+                              // set actor's designation
+                              actorIsAdmin = false;
+                              actorIsStaff = false;
+                              actorIsUser = true;
                               if (context.mounted) {
                                 Navigator.push(
                                   context,

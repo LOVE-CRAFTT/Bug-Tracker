@@ -26,13 +26,28 @@ class DB {
   Future<void> close() async => await _conn?.close();
 
   //==================STAFF  RELATED============================================
-  Future<Results?> getDataIfStaffExists(String email) async {
+  Future<Results?> getDataUsingEmailIfStaffExists(String email) async {
     Results? results = await _conn?.query(
       'SELECT * FROM staff WHERE email = ?',
       [email],
     );
     if (results?.isEmpty ?? true) {
-      // the condition evaluates to if null(failed query), is empty or true then
+      // the condition evaluates to if null(failed query) or is empty then
+      // no staff exists
+      return null;
+    } else {
+      // staff exists
+      return results;
+    }
+  }
+
+  Future<Results?> getDataUsingIDIfStaffExists(int id) async {
+    Results? results = await _conn?.query(
+      'SELECT * FROM staff WHERE id = ?',
+      [id],
+    );
+    if (results?.isEmpty ?? true) {
+      // the condition evaluates to if null(failed query) or is empty then
       // no staff exists
       return null;
     } else {
@@ -55,13 +70,45 @@ class DB {
     );
     return result?.insertId;
   }
+
+  Future<bool> updateStaffPassword({
+    required int id,
+    required String password,
+  }) async {
+    Results? result = await _conn?.query(
+      'update staff set password = ? WHERE id = ?',
+      [hashPassword(password), id],
+    );
+
+    //success
+    if (result?.insertId != null) {
+      return true;
+    } else {
+      return false;
+    }
+  }
   //============================================================================
 
   //===================USER RELATED=============================================
-  Future<Results?> getDataIfUserExists(String email) async {
+  Future<Results?> getDataUsingEmailIfUserExists(String email) async {
     Results? results = await _conn?.query(
       'SELECT * FROM user WHERE email = ?',
       [email],
+    );
+    if (results?.isEmpty ?? true) {
+      // the condition evaluates to if null(failed query) or is empty then
+      // no user exists
+      return null;
+    } else {
+      // user exists
+      return results;
+    }
+  }
+
+  Future<Results?> getDataUsingIDIfUserExists(int id) async {
+    Results? results = await _conn?.query(
+      'SELECT * FROM user WHERE id = ?',
+      [id],
     );
     if (results?.isEmpty ?? true) {
       // the condition evaluates to if null(failed query) or is empty then
@@ -85,6 +132,23 @@ class DB {
       [surname, firstName, middleName, email, hashPassword(password)],
     );
     return result?.insertId;
+  }
+
+  Future<bool> updateUserPassword({
+    required int id,
+    required String password,
+  }) async {
+    Results? result = await _conn?.query(
+      'update user set password = ? WHERE id = ?',
+      [hashPassword(password), id],
+    );
+
+    //success
+    if (result?.insertId != null) {
+      return true;
+    } else {
+      return false;
+    }
   }
   //============================================================================
 

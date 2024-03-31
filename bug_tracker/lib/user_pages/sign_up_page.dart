@@ -122,7 +122,8 @@ class SignUpPage extends StatelessWidget {
                       db.connect();
 
                       // if actor data is null then user doesn't exist so attempt to create
-                      Results? actorData = await db.getDataIfUserExists(email);
+                      Results? actorData =
+                          await db.getDataUsingEmailIfUserExists(email);
                       if (actorData == null) {
                         int? newUserID = await db.addNewUser(
                           surname: surname,
@@ -135,6 +136,10 @@ class SignUpPage extends StatelessWidget {
                         if (newUserID != null) {
                           // set global id
                           globalActorID = newUserID;
+                          // set actor's designation
+                          actorIsAdmin = false;
+                          actorIsStaff = false;
+                          actorIsUser = true;
                           if (context.mounted) {
                             Navigator.push(
                               context,
