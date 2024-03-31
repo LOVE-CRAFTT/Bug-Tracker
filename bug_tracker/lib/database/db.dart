@@ -1,4 +1,5 @@
 import 'package:bug_tracker/utilities/tools.dart';
+import 'package:bug_tracker/utilities/constants.dart';
 import 'package:mysql1/mysql1.dart';
 
 DB db = DB();
@@ -61,14 +62,33 @@ class DB {
     required String email,
     required String password,
     required String surname,
-    String? firstName,
-    String? middleName,
+    required String? firstName,
+    required String? middleName,
   }) async {
-    Results? results = await _conn?.query(
+    Results? result = await _conn?.query(
       'insert into user (surname, first_name, middle_name, email, password) values (?, ?, ?, ?, ?)',
       [surname, firstName, middleName, email, hashPassword(password)],
     );
-    return results?.insertId;
+    return result?.insertId;
+  }
+  //============================================================================
+
+  //=================PROJECT RELATED============================================
+  Future<int?> addNewProject({
+    required String projectName,
+    required String? projectDetails,
+  }) async {
+    Results? result = await _conn?.query(
+      'insert into project (name, details, project_state, date_created, date_closed) values (?, ?, ?, ?, ?)',
+      [
+        projectName,
+        projectDetails,
+        ProjectState.open.title,
+        DateTime.now().toUtc(),
+        null
+      ],
+    );
+    return result?.insertId;
   }
   //============================================================================
 }

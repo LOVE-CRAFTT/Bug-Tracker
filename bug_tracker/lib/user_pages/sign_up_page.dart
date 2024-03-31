@@ -113,8 +113,6 @@ class SignUpPage extends StatelessWidget {
                   buttonText: "Sign Up",
                   onPress: () async {
                     if (_formKey.currentState!.validate()) {
-                      Results? actorData;
-
                       /// connect to database
                       /// if user i.e email already exists let them know
                       /// put information to database
@@ -124,8 +122,8 @@ class SignUpPage extends StatelessWidget {
                       db.connect();
 
                       // if actor data is null then user doesn't exist so attempt to create
-                      if ((actorData = await db.getDataIfUserExists(email)) ==
-                          null) {
+                      Results? actorData = await db.getDataIfUserExists(email);
+                      if (actorData == null) {
                         int? newUserID = await db.addNewUser(
                           surname: surname,
                           firstName: firstName,

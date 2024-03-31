@@ -3,15 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
 
-///Text editing Controllers
-TextEditingController surnameController = TextEditingController();
-TextEditingController middleNameController = TextEditingController();
-TextEditingController firstNameController = TextEditingController();
-TextEditingController staffEmailController = TextEditingController();
-
-///value of isAdmin
-bool isAdmin = false;
-
 /// Separated this way so set-state can be accessed
 class NewStaffPage extends StatefulWidget {
   const NewStaffPage({
@@ -27,6 +18,15 @@ class _NewStaffPageState extends State<NewStaffPage> {
   String middleName = "";
   String firstName = "";
   String email = "";
+
+  ///Text editing Controllers
+  TextEditingController surnameController = TextEditingController();
+  TextEditingController middleNameController = TextEditingController();
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController staffEmailController = TextEditingController();
+
+  ///value of isAdmin
+  bool isAdmin = false;
 
   @override
   Widget build(BuildContext context) {
@@ -134,7 +134,7 @@ class _NewStaffPageState extends State<NewStaffPage> {
                     middleNameController.clear();
                     firstNameController.clear();
                     staffEmailController.clear();
-                    buildConfirmationPopup(
+                    await buildConfirmationPopup(
                       context,
                       newProjectID: null,
                       newStaffID: 1234567,
