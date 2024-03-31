@@ -40,6 +40,21 @@ class DB {
       return results;
     }
   }
+
+  Future<int?> addNewStaff({
+    required bool isAdmin,
+    required String email,
+    required String password,
+    required String surname,
+    required String? firstName,
+    required String? middleName,
+  }) async {
+    Results? result = await _conn?.query(
+      'insert into staff (surname, first_name, middle_name, email, password, is_admin) values (?, ?, ?, ?, ?, ?)',
+      [surname, firstName, middleName, email, hashPassword(password), isAdmin],
+    );
+    return result?.insertId;
+  }
   //============================================================================
 
   //===================USER RELATED=============================================

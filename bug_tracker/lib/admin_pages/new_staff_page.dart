@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
+import 'package:bug_tracker/database/db.dart';
 
 /// Separated this way so set-state can be accessed
 class NewStaffPage extends StatefulWidget {
@@ -15,8 +16,8 @@ class NewStaffPage extends StatefulWidget {
 
 class _NewStaffPageState extends State<NewStaffPage> {
   String surname = "";
-  String middleName = "";
-  String firstName = "";
+  String? middleName;
+  String? firstName;
   String email = "";
 
   ///Text editing Controllers
@@ -79,10 +80,8 @@ class _NewStaffPageState extends State<NewStaffPage> {
                     style: kContainerTextStyle.copyWith(color: Colors.white),
                     controller: firstNameController,
                     validator: (lFirstName) {
-                      if (lFirstName == null || lFirstName.isEmpty) {
-                        lFirstName = "";
-                      }
-                      firstName = lFirstName;
+                      firstName =
+                          lFirstName?.isEmpty == true ? null : lFirstName;
                       return null;
                     },
                   ),
@@ -94,10 +93,8 @@ class _NewStaffPageState extends State<NewStaffPage> {
                     style: kContainerTextStyle.copyWith(color: Colors.white),
                     controller: middleNameController,
                     validator: (lMiddleName) {
-                      if (lMiddleName == null || lMiddleName.isEmpty) {
-                        lMiddleName = "";
-                      }
-                      middleName = lMiddleName;
+                      middleName =
+                          lMiddleName?.isEmpty == true ? null : lMiddleName;
                       return null;
                     },
                   ),
@@ -129,16 +126,51 @@ class _NewStaffPageState extends State<NewStaffPage> {
                 buttonText: "Add",
                 onPress: () async {
                   if (formKey.currentState!.validate()) {
-                    Navigator.pop(context);
-                    surnameController.clear();
-                    middleNameController.clear();
-                    firstNameController.clear();
-                    staffEmailController.clear();
-                    await buildConfirmationPopup(
-                      context,
-                      newProjectID: null,
-                      newStaffID: 1234567,
+                    /// connect to database
+                    /// add staff and retrieve id for confirmation popup
+                    /// close connection
+
+                    await db.connect();
+
+                    // attempt to add new staff to database
+                    int? newStaffID = await db.addNewStaff(
+                      isAdmin: isAdmin,
+                      email: email,
+                      password: '000000',
+                      surname: surname,
+                      firstName: firstName,
+                      middleName: middleName,
                     );
+                    // if staff was added successfully
+                    if (newStaffID != null) {
+                      if (context.mounted) {
+                        Navigator.pop(context);
+                        surnameController.clear();
+                        middleNameController.clear();
+                        firstNameController.clear();
+                        staffEmailController.clear();
+                        await buildConfirmationPopup(
+                          context,
+                          newProjectID: null,
+                          newStaffID: newStaffID,
+                        );
+                      }
+                    }
+                    // if staff addition failed
+                    else {
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              "Process Failed! Try again later",
+                              style: kContainerTextStyle.copyWith(
+                                  color: Colors.black),
+                            ),
+                          ),
+                        );
+                      }
+                    }
+                    await db.close();
                   }
                 },
               ),

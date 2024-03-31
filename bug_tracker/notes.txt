@@ -104,6 +104,9 @@ MESSAGES:
 //=======ADMIN
 // johnpaul@gmail.com, 123456
 
+//=======STAFF
+//kimsoomin@gmail.com, 000000
+
 //=======USER
 // ejohnson@gmail.com, 123456
 
