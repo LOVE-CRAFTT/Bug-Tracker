@@ -5,6 +5,7 @@ import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/select_files.dart';
 import 'package:bug_tracker/ui_components/file_preview_card.dart';
 import 'package:bug_tracker/database/db.dart';
+import 'package:mysql1/mysql1.dart';
 
 class NewComplaintForm extends StatefulWidget {
   const NewComplaintForm({
@@ -189,22 +190,104 @@ class _NewComplaintFormState extends State<NewComplaintForm> {
                     /// if successful then add complaint files to table
                     /// if successful disconnect from database
 
-                    if (context.mounted) {
-                      Navigator.pop(context);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            'Complaint added',
-                            style: kContainerTextStyle.copyWith(
-                              color: Colors.black,
+                    Results? projectData;
+
+                    await db.connect();
+                    // if project actually exists
+                    if ((projectData = await db.getProjectData(projectID)) !=
+                        null) {
+                      // attempt to add complaint
+                      int? newComplaintID = await db.addComplaint(
+                        complaintTitle: bugTitle,
+                        complaintNotes: userNotes,
+                        associatedProject: projectID,
+                        author: globalActorID,
+                      );
+                      // if complaint added successfully
+                      if (newComplaintID != null) {
+                        // attempt to add files if any
+                        if (selectedFiles != null) {
+                          bool? filesAddedSuccessfully =
+                              await db.addComplaintFiles(
+                            files: selectedFiles!,
+                            associatedComplaint: newComplaintID,
+                          );
+                          // if files added successfully
+                          // NOTE: if is null then I treat as false
+                          if (filesAddedSuccessfully ?? false) {
+                            if (context.mounted) {
+                              Navigator.pop(context);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'Complaint and files added successfully',
+                                    style: kContainerTextStyle.copyWith(
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }
+                            projectIdController.clear();
+                            bugTitleController.clear();
+                            notesController.clear();
+                          }
+                          // else file addition error
+                          else {
+                            // still follow standard success procedure
+                            // because files aren't essential
+                            if (context.mounted) {
+                              Navigator.pop(context);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'Complaint added but File addition failure',
+                                    style: kContainerTextStyle.copyWith(
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }
+                            projectIdController.clear();
+                            bugTitleController.clear();
+                            notesController.clear();
+                          }
+                        }
+                      }
+                      // else complaint addition failed
+                      else {
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                "Complaint addition failure, Try again later!",
+                                style: kContainerTextStyle.copyWith(
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          );
+                        }
+                      }
+                    }
+                    // else project doesn't exist
+                    else {
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              "Project doesn't exist!",
+                              style: kContainerTextStyle.copyWith(
+                                color: Colors.black,
+                              ),
                             ),
                           ),
-                        ),
-                      );
+                        );
+                      }
                     }
-                    projectIdController.clear();
-                    bugTitleController.clear();
-                    notesController.clear();
+
+                    await db.close();
                   }
                 },
                 style: TextButton.styleFrom(
