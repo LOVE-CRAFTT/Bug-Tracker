@@ -43,6 +43,7 @@ dependencies:
   mysql1: ^0.20.0
   crypto: ^3.0.3
   file_picker: ^8.0.0+1
+  open_file: ^3.3.2
 
 dev_dependencies:
   flutter_test:

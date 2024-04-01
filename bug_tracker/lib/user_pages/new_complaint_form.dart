@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/select_files.dart';
+import 'package:bug_tracker/ui_components/file_preview card.dart';
 
 class NewComplaintForm extends StatefulWidget {
   const NewComplaintForm({
@@ -29,7 +30,10 @@ class _NewComplaintFormState extends State<NewComplaintForm> {
   TextEditingController notesController = TextEditingController();
 
   /// List of chosen files
-  List<File>? selectedFiles = [];
+  List<File>? selectedFiles;
+
+  /// To dynamically increase size of space allotted to file preview
+  double filePreviewSize = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -114,13 +118,52 @@ class _NewComplaintFormState extends State<NewComplaintForm> {
               ),
               child: IconButton(
                 onPressed: () async {
-                  selectedFiles = await selectFiles();
+                  List<File>? newFiles = await selectFiles();
+
+                  // implemented this way ts space for each can keep up
+                  if (newFiles != null) {
+                    if (selectedFiles == null) {
+                      selectedFiles = newFiles;
+                    } else {
+                      selectedFiles!.addAll(newFiles);
+                    }
+                    // reset file preview sizes
+                    filePreviewSize = 0;
+                  }
+
+                  // add space to display each file below add file icon
+                  if (selectedFiles != null) {
+                    for (var file in selectedFiles!) {
+                      filePreviewSize += 60;
+                    }
+                  }
+                  setState(() {});
                 },
                 icon: const Icon(
                   Icons.attach_file_sharp,
                 ),
               ),
             ),
+
+            if (selectedFiles != null)
+              SizedBox(
+                height: filePreviewSize,
+                child: ListView.builder(
+                  itemCount: selectedFiles!.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return FilePreviewCard(
+                      file: selectedFiles![index],
+                      onDelete: () {
+                        // since the index is "this"
+                        selectedFiles!.removeAt(index);
+                        filePreviewSize -= 60;
+                        setState(() {});
+                      },
+                      isSelectingFiles: true,
+                    );
+                  },
+                ),
+              ),
 
             /// Submit button
             Padding(
