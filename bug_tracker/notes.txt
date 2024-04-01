@@ -105,7 +105,7 @@ MESSAGES:
 // johnpaul@gmail.com, 123456
 
 //=======STAFF
-//kimsoomin@gmail.com, 000000
+//kimsoomin@gmail.com, 123456
 
 //=======USER
 // ejohnson@gmail.com, 123456
