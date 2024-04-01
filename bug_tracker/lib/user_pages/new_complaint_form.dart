@@ -133,7 +133,7 @@ class _NewComplaintFormState extends State<NewComplaintForm> {
 
                   // add space to display each file below add file icon
                   if (selectedFiles != null) {
-                    for (var file in selectedFiles!) {
+                    for (var _ in selectedFiles!) {
                       filePreviewSize += 60;
                     }
                   }
