@@ -80,8 +80,8 @@ class SignInPage extends StatelessWidget {
                           bool? isCorrectPassword;
 
                           // Is staff
-                          if ((actorData = await db
-                                  .getDataUsingEmailIfStaffExists(email!)) !=
+                          if ((actorData =
+                                  await db.getStaffDataUsingEmail(email!)) !=
                               null) {
                             //authenticate password
                             isCorrectPassword = authenticatePasswordHash(
@@ -135,8 +135,8 @@ class SignInPage extends StatelessWidget {
                             }
                           }
                           // check if its user
-                          else if ((actorData = await db
-                                  .getDataUsingEmailIfUserExists(email!)) !=
+                          else if ((actorData =
+                                  await db.getUserDataUsingEmail(email!)) !=
                               null) {
                             //authenticate password
                             isCorrectPassword = authenticatePasswordHash(

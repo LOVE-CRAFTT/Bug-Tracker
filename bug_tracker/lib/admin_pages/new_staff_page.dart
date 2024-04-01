@@ -136,7 +136,6 @@ class _NewStaffPageState extends State<NewStaffPage> {
                     int? newStaffID = await db.addNewStaff(
                       isAdmin: isAdmin,
                       email: email,
-                      password: '000000',
                       surname: surname,
                       firstName: firstName,
                       middleName: middleName,

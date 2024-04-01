@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS project (
 
 CREATE TABLE IF NOT EXISTS complaint (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
+    title VARCHAR(255) NOT NULL,
     notes MEDIUMTEXT,
     associated_project INT UNSIGNED NOT NULL,
     author VARCHAR(255) NOT NULL,
@@ -55,7 +55,6 @@ CREATE TABLE IF NOT EXISTS task (
 
 CREATE TABLE IF NOT EXISTS files (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    file_name VARCHAR(255),
     file_path TEXT NOT NULL,
     associated_complaint INT UNSIGNED NOT NULL,
     FOREIGN KEY (associated_complaint) REFERENCES complaint(id)

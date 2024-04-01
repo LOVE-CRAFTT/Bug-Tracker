@@ -123,7 +123,7 @@ class SignUpPage extends StatelessWidget {
 
                       // if actor data is null then user doesn't exist so attempt to create
                       Results? actorData =
-                          await db.getDataUsingEmailIfUserExists(email);
+                          await db.getUserDataUsingEmail(email);
                       if (actorData == null) {
                         int? newUserID = await db.addNewUser(
                           surname: surname,

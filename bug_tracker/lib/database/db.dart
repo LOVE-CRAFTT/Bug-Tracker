@@ -1,6 +1,7 @@
 import 'package:bug_tracker/utilities/tools.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:mysql1/mysql1.dart';
+import 'dart:io';
 
 DB db = DB();
 
@@ -26,7 +27,7 @@ class DB {
   Future<void> close() async => await _conn?.close();
 
   //==================STAFF  RELATED============================================
-  Future<Results?> getDataUsingEmailIfStaffExists(String email) async {
+  Future<Results?> getStaffDataUsingEmail(String email) async {
     Results? results = await _conn?.query(
       'SELECT * FROM staff WHERE email = ?',
       [email],
@@ -41,7 +42,7 @@ class DB {
     }
   }
 
-  Future<Results?> getDataUsingIDIfStaffExists(int id) async {
+  Future<Results?> getStaffDataUsingID(int id) async {
     Results? results = await _conn?.query(
       'SELECT * FROM staff WHERE id = ?',
       [id],
@@ -59,14 +60,13 @@ class DB {
   Future<int?> addNewStaff({
     required bool isAdmin,
     required String email,
-    required String password,
     required String surname,
     required String? firstName,
     required String? middleName,
   }) async {
     Results? result = await _conn?.query(
       'insert into staff (surname, first_name, middle_name, email, password, is_admin) values (?, ?, ?, ?, ?, ?)',
-      [surname, firstName, middleName, email, hashPassword(password), isAdmin],
+      [surname, firstName, middleName, email, hashPassword("000000"), isAdmin],
     );
     return result?.insertId;
   }
@@ -90,7 +90,7 @@ class DB {
   //============================================================================
 
   //===================USER RELATED=============================================
-  Future<Results?> getDataUsingEmailIfUserExists(String email) async {
+  Future<Results?> getUserDataUsingEmail(String email) async {
     Results? results = await _conn?.query(
       'SELECT * FROM user WHERE email = ?',
       [email],
@@ -105,7 +105,7 @@ class DB {
     }
   }
 
-  Future<Results?> getDataUsingIDIfUserExists(int id) async {
+  Future<Results?> getUserDataUsingID(int id) async {
     Results? results = await _conn?.query(
       'SELECT * FROM user WHERE id = ?',
       [id],
@@ -168,6 +168,58 @@ class DB {
       ],
     );
     return result?.insertId;
+  }
+
+  Future<Results?> getProjectData(int id) async {
+    Results? results = await _conn?.query(
+      'SELECT * FROM project WHERE id = ?',
+      [id],
+    );
+    if (results?.isEmpty ?? true) {
+      // the condition evaluates to if null(failed query) or is empty then
+      // no such project exists
+      return null;
+    } else {
+      // project exists
+      return results;
+    }
+  }
+  //============================================================================
+
+  //=================COMPLAINT RELATED==========================================
+  Future<int?> addComplaint({
+    required String complaintTitle,
+    required String? complaintNotes,
+    required int associatedProject,
+    required int author,
+  }) async {
+    Results? result = await _conn?.query(
+      'insert into complaint (title, notes, associated_project, author, date_created, complaint_state) values (?, ?, ?, ?, ?, ?)',
+      [
+        complaintTitle,
+        complaintNotes,
+        associatedProject,
+        author,
+        DateTime.now().toUtc(),
+        ComplaintState.pending.title,
+      ],
+    );
+    return result?.insertId;
+  }
+
+  Future<bool?> addComplaintFiles({
+    required List<File> files,
+    required int associatedComplaint,
+  }) async {
+    List<Results>? results = await _conn?.queryMulti(
+      'insert into files (file_path, associated_complaint) values (?, ?)',
+      // list of lists
+      files.map((file) => [file.path, associatedComplaint]).toList(),
+    );
+    // return true if every insert id in results.result is not null
+    // if results is empty it returns true which is ok
+    // since it means files might not have been added
+    return results?.every((result) => result.insertId != null);
   }
   //============================================================================
 }

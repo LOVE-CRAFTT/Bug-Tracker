@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/select_files.dart';
-import 'package:bug_tracker/ui_components/file_preview card.dart';
+import 'package:bug_tracker/ui_components/file_preview_card.dart';
+import 'package:bug_tracker/database/db.dart';
 
 class NewComplaintForm extends StatefulWidget {
   const NewComplaintForm({
@@ -22,7 +23,7 @@ class _NewComplaintFormState extends State<NewComplaintForm> {
   late String bugTitle;
 
   /// Nullable in case the user doesn't input any notes
-  String userNotes = "";
+  String? userNotes;
 
   /// controllers
   TextEditingController projectIdController = TextEditingController();
@@ -101,7 +102,7 @@ class _NewComplaintFormState extends State<NewComplaintForm> {
                         expands: true,
                         validator: (notes) {
                           ///Notes can be empty
-                          userNotes = notes ?? "";
+                          userNotes = notes?.isEmpty == true ? null : notes;
                           return null;
                         },
                       ),
@@ -119,6 +120,9 @@ class _NewComplaintFormState extends State<NewComplaintForm> {
               child: Padding(
                 padding: const EdgeInsets.only(left: 10.0),
                 child: IconButton(
+                  icon: const Icon(
+                    Icons.attach_file_sharp,
+                  ),
                   onPressed: () async {
                     List<File>? newFiles = await selectFiles();
 
@@ -140,17 +144,13 @@ class _NewComplaintFormState extends State<NewComplaintForm> {
                         filePreviewSize += 60;
                       }
                     }
-
-                    print(filePreviewSize);
                     setState(() {});
                   },
-                  icon: const Icon(
-                    Icons.attach_file_sharp,
-                  ),
                 ),
               ),
             ),
 
+            /// selected files if any
             if (selectedFiles != null)
               SizedBox(
                 height: filePreviewSize,
@@ -167,6 +167,7 @@ class _NewComplaintFormState extends State<NewComplaintForm> {
                         // self explanatory
                         if (selectedFiles!.isEmpty) {
                           filePreviewSize = 0;
+                          selectedFiles = null;
                         }
                         setState(() {});
                       },
@@ -180,20 +181,27 @@ class _NewComplaintFormState extends State<NewComplaintForm> {
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   if (formKey.currentState!.validate()) {
-                    /// Here I add the data to the database
-                    Navigator.pop(context);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          'Complaint added',
-                          style: kContainerTextStyle.copyWith(
-                            color: Colors.black,
+                    /// connect to database
+                    /// ensure project exists else no project error
+                    /// then add complaint
+                    /// if successful then add complaint files to table
+                    /// if successful disconnect from database
+
+                    if (context.mounted) {
+                      Navigator.pop(context);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'Complaint added',
+                            style: kContainerTextStyle.copyWith(
+                              color: Colors.black,
+                            ),
                           ),
                         ),
-                      ),
-                    );
+                      );
+                    }
                     projectIdController.clear();
                     bugTitleController.clear();
                     notesController.clear();

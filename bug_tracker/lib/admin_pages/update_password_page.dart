@@ -86,8 +86,8 @@ class _UpdatePasswordPageState extends State<UpdatePasswordPage> {
 
                     await db.connect();
                     Results? actorData = actorIsUser
-                        ? await db.getDataUsingIDIfUserExists(globalActorID)
-                        : await db.getDataUsingIDIfStaffExists(globalActorID);
+                        ? await db.getUserDataUsingID(globalActorID)
+                        : await db.getStaffDataUsingID(globalActorID);
 
                     // if there wasn't an error in retrieving data
                     // actor has to already be a valid and authenticated actor
