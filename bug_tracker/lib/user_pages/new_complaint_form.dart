@@ -190,12 +190,10 @@ class _NewComplaintFormState extends State<NewComplaintForm> {
                     /// if successful then add complaint files to table
                     /// if successful disconnect from database
 
-                    Results? projectData;
-
                     await db.connect();
+                    Results? projectData = await db.getProjectData(projectID);
                     // if project actually exists
-                    if ((projectData = await db.getProjectData(projectID)) !=
-                        null) {
+                    if (projectData != null) {
                       // attempt to add complaint
                       int? newComplaintID = await db.addComplaint(
                         complaintTitle: bugTitle,
@@ -253,6 +251,27 @@ class _NewComplaintFormState extends State<NewComplaintForm> {
                             bugTitleController.clear();
                             notesController.clear();
                           }
+                        }
+                        // else no file
+                        else {
+                          // still follow standard success procedure
+                          // because files aren't essential
+                          if (context.mounted) {
+                            Navigator.pop(context);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  'Complaint added successfully',
+                                  style: kContainerTextStyle.copyWith(
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
+                            );
+                          }
+                          projectIdController.clear();
+                          bugTitleController.clear();
+                          notesController.clear();
                         }
                       }
                       // else complaint addition failed
