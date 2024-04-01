@@ -116,31 +116,37 @@ class _NewComplaintFormState extends State<NewComplaintForm> {
                 fontSize: 12.0,
                 color: Colors.black87,
               ),
-              child: IconButton(
-                onPressed: () async {
-                  List<File>? newFiles = await selectFiles();
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10.0),
+                child: IconButton(
+                  onPressed: () async {
+                    List<File>? newFiles = await selectFiles();
 
-                  // implemented this way ts space for each can keep up
-                  if (newFiles != null) {
-                    if (selectedFiles == null) {
-                      selectedFiles = newFiles;
-                    } else {
-                      selectedFiles!.addAll(newFiles);
+                    // implemented this way ts space for each can keep up
+                    if (newFiles != null) {
+                      if (selectedFiles == null) {
+                        selectedFiles = newFiles;
+                      } else {
+                        selectedFiles!.addAll(newFiles);
+                      }
                     }
+
                     // reset file preview sizes
                     filePreviewSize = 0;
-                  }
 
-                  // add space to display each file below add file icon
-                  if (selectedFiles != null) {
-                    for (var _ in selectedFiles!) {
-                      filePreviewSize += 60;
+                    // add space to display each file below add file icon
+                    if (selectedFiles != null) {
+                      for (var _ in selectedFiles!) {
+                        filePreviewSize += 60;
+                      }
                     }
-                  }
-                  setState(() {});
-                },
-                icon: const Icon(
-                  Icons.attach_file_sharp,
+
+                    print(filePreviewSize);
+                    setState(() {});
+                  },
+                  icon: const Icon(
+                    Icons.attach_file_sharp,
+                  ),
                 ),
               ),
             ),
@@ -157,6 +163,11 @@ class _NewComplaintFormState extends State<NewComplaintForm> {
                         // since the index is "this"
                         selectedFiles!.removeAt(index);
                         filePreviewSize -= 60;
+
+                        // self explanatory
+                        if (selectedFiles!.isEmpty) {
+                          filePreviewSize = 0;
+                        }
                         setState(() {});
                       },
                       isSelectingFiles: true,

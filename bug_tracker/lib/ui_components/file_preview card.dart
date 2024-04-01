@@ -44,7 +44,7 @@ class FilePreviewCard extends StatelessWidget {
         }
       },
       child: Container(
-        margin: const EdgeInsets.all(20.0),
+        margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
         padding: const EdgeInsets.only(left: 8.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5.0),
