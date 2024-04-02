@@ -1,27 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:bug_tracker/ui_components/bug_preview_lite.dart';
+import 'package:bug_tracker/ui_components/task_preview_lite.dart';
 import 'package:bug_tracker/utilities/constants.dart';
-import 'package:bug_tracker/utilities/tools.dart';
-import 'package:bug_tracker/staff_pages/task_detail_page.dart';
-import 'package:bug_tracker/utilities/complaint.dart';
-import 'package:bug_tracker/utilities/task.dart';
 import 'package:bug_tracker/utilities/core_data_sources.dart';
-import 'package:bug_tracker/admin_pages/bug_detail_page.dart';
 
 ///Provides access to main work data
 ///Implemented as a container of fixed height and variable width
 ///Each container contains an appbar and Expanded body,
 ///Icons in the appbar adds functionality and the body contains the main data
-class LargeContainer extends StatelessWidget {
+class LargeContainer extends StatefulWidget {
+  const LargeContainer({super.key, required this.type});
   final LargeContainerTypes type;
 
-  const LargeContainer({
-    Key? key,
-    required this.type,
-  }) : super(key: key);
+  @override
+  State<LargeContainer> createState() => _LargeContainerState();
+}
 
+class _LargeContainerState extends State<LargeContainer> {
   //===============VALUES FROM TESTING==========================================
-  static const bigScreenMaxWidthLimit = 850;
-  static const containerHeight = 400.0;
+  var bigScreenMaxWidthLimit = 850;
+  var containerHeight = 400.0;
   //============================================================================
 
   @override
@@ -51,13 +49,13 @@ class LargeContainer extends StatelessWidget {
                   backgroundColor: Colors.transparent,
                   elevation: 0,
                   title: Text(
-                    type.title,
+                    widget.type.title,
                     style: kAppBarTextStyle,
                   ),
                 ),
                 Expanded(
                   child: Center(
-                    child: (type == LargeContainerTypes.allBugs)
+                    child: (widget.type == LargeContainerTypes.allBugs)
                         ? getBugsList(context)
                         : getTasksList(context),
                   ),
@@ -66,6 +64,27 @@ class LargeContainer extends StatelessWidget {
             ),
           ),
         );
+      },
+    );
+  }
+
+  ListView getTasksList(BuildContext context) {
+    return ListView.builder(
+      itemCount: tasksSource.length,
+      itemBuilder: (BuildContext context, int index) {
+        return TaskPreviewLite(
+          task: tasksSource[index],
+          index: index,
+        );
+      },
+    );
+  }
+
+  ListView getBugsList(BuildContext context) {
+    return ListView.builder(
+      itemCount: complaintsSource.length,
+      itemBuilder: (BuildContext context, int index) {
+        return BugPreviewLite(complaint: complaintsSource[index]);
       },
     );
   }
@@ -90,113 +109,3 @@ List<LargeContainer> largeContainers = [
       type: type,
     )
 ];
-
-ListView getTasksList(BuildContext context) {
-  return ListView.builder(
-    itemCount: tasksSource.length,
-    itemBuilder: (BuildContext context, int index) {
-      Task dataSource = tasksSource[index];
-      return Column(
-        children: [
-          ListTile(
-            /// task/bug
-            title: Text(dataSource.task),
-            titleTextStyle: kContainerTextStyle.copyWith(
-              color: Colors.white,
-              fontSize: 20.0,
-            ),
-
-            /// complaint
-            subtitle: Text(dataSource.associatedComplaint.complaint),
-            subtitleTextStyle: kContainerTextStyle.copyWith(
-              fontSize: 12.0,
-            ),
-
-            /// due date
-            trailing: Text(
-              convertToDateString(dataSource.dueDate),
-              style: kContainerTextStyle.copyWith(
-                fontSize: 12.0,
-              ),
-            ),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => TaskDetailPage(
-                    taskId: dataSource.id,
-                    isTeamLead: index == 1 ? true : false,
-                    task: dataSource.task,
-                    complaint: dataSource.associatedComplaint,
-                    dueDate: convertToDateString(dataSource.dueDate),
-                  ),
-                ),
-              );
-            },
-          ),
-          const Divider(
-            color: Color(0xFFb6b8aa),
-            thickness: 0.2,
-          )
-        ],
-      );
-    },
-  );
-}
-
-///
-ListView getBugsList(BuildContext context) {
-  return ListView.builder(
-    itemCount: complaintsSource.length,
-    itemBuilder: (BuildContext context, int index) {
-      Complaint dataSource = complaintsSource[index];
-      return Column(
-        children: [
-          ListTile(
-            /// task/bug
-            title: Text(dataSource.complaint),
-            titleTextStyle: kContainerTextStyle.copyWith(
-              color: Colors.white,
-              fontSize: 20.0,
-            ),
-
-            /// project
-            subtitle: Text(dataSource.associatedProject.name),
-            subtitleTextStyle: kContainerTextStyle.copyWith(
-              fontSize: 12.0,
-            ),
-
-            /// date created
-            trailing: Text(
-              convertToDateString(dataSource.dateCreated),
-              style: kContainerTextStyle.copyWith(
-                fontSize: 12.0,
-              ),
-            ),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => BugDetailPage(
-                    ticketNumber: dataSource.ticketNumber,
-                    projectName: dataSource.associatedProject.name,
-                    bug: dataSource.complaint,
-                    bugNotes: dataSource.complaintNotes,
-                    bugState: dataSource.complaintState,
-                    dateCreated: convertToDateString(dataSource.dateCreated),
-                    author: dataSource.author,
-                    tags: dataSource.tags,
-                  ),
-                ),
-              );
-            },
-          ),
-          const Divider(
-            color: Color(0xFFb6b8aa),
-            thickness: 0.2,
-          )
-        ],
-      );
-    },
-  );
-}
