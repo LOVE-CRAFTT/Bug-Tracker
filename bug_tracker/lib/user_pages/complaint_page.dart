@@ -6,6 +6,7 @@ import 'package:bug_tracker/ui_components/complaint_overview_card.dart';
 import 'package:bug_tracker/user_pages/new_complaint_form.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/tools.dart';
+import 'package:bug_tracker/utilities/core_data_sources.dart';
 import 'package:bug_tracker/admin_pages/update_password_page.dart';
 
 /// Page the user sees when logged in.

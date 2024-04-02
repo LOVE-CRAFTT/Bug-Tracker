@@ -4,8 +4,7 @@ import 'package:bug_tracker/utilities/tools.dart';
 import 'package:bug_tracker/staff_pages/task_detail_page.dart';
 import 'package:bug_tracker/utilities/complaint.dart';
 import 'package:bug_tracker/utilities/task.dart';
-import 'package:bug_tracker/ui_components/complaint_overview_card.dart';
-import 'package:bug_tracker/ui_components/task_overview_card.dart';
+import 'package:bug_tracker/utilities/core_data_sources.dart';
 import 'package:bug_tracker/admin_pages/bug_detail_page.dart';
 
 ///Provides access to main work data
@@ -107,9 +106,8 @@ ListView getTasksList(BuildContext context) {
               fontSize: 20.0,
             ),
 
-            /// project
-            subtitle:
-                Text(dataSource.associatedComplaint.associatedProject.name),
+            /// complaint
+            subtitle: Text(dataSource.associatedComplaint.complaint),
             subtitleTextStyle: kContainerTextStyle.copyWith(
               fontSize: 12.0,
             ),

@@ -3,8 +3,8 @@ import 'package:bug_tracker/ui_components/custom_dropdown.dart';
 import 'package:bug_tracker/ui_components/admin_appbar.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/tools.dart';
+import 'package:bug_tracker/utilities/core_data_sources.dart';
 import 'package:bug_tracker/utilities/build_project_page_table_row.dart';
-import 'package:bug_tracker/utilities/project.dart';
 
 ///Contains interface to all the projects in the database
 class ProjectsPage extends StatefulWidget {
@@ -102,87 +102,3 @@ class _ProjectsPageState extends State<ProjectsPage> {
     );
   }
 }
-
-List<Project> projectSource = [
-  Project(
-    id: 1552634899504,
-    name: "Android Studio",
-    details: projectDetailsPlaceHolder,
-    state: ProjectState.closed,
-    dateCreated: DateTime(
-      2023,
-      DateTime.december,
-      DateTime.thursday,
-    ),
-    dateClosed: DateTime(
-      2024,
-      DateTime.january,
-      DateTime.tuesday,
-    ),
-  ),
-  Project(
-    id: 1552634899505,
-    name: "Flutter App",
-    state: ProjectState.open,
-    dateCreated: DateTime(
-      2023,
-      DateTime.november,
-      DateTime.monday,
-    ),
-  ),
-  Project(
-    id: 1552634899506,
-    name: "Web Development",
-    details: "This is a project about web development.",
-    state: ProjectState.postponed,
-    dateCreated: DateTime(
-      2023,
-      DateTime.october,
-      DateTime.wednesday,
-    ),
-  ),
-  Project(
-    id: 1552634899507,
-    name: "Machine Learning",
-    state: ProjectState.postponed,
-    dateCreated: DateTime(
-      2023,
-      DateTime.september,
-      DateTime.friday,
-    ),
-  ),
-  Project(
-    id: 1552634899508,
-    name: "Data Science",
-    details: "This is a project about data science.",
-    state: ProjectState.cancelled,
-    dateCreated: DateTime(
-      2023,
-      DateTime.august,
-      DateTime.saturday,
-    ),
-    dateClosed: DateTime(
-      2024,
-      DateTime.february,
-      DateTime.sunday,
-    ),
-  ),
-  Project(
-    id: 98098790,
-    name: "Youtube",
-    state: ProjectState.cancelled,
-    dateCreated: DateTime(2023, 2, 13),
-  ),
-  Project(
-    id: 12656564,
-    name: "Github Mobile",
-    state: ProjectState.postponed,
-    dateCreated: DateTime(2022, 12, 3),
-  ),
-  Project(
-    id: 09653097,
-    name: "Whatsapp",
-    state: ProjectState.cancelled,
-    dateCreated: DateTime(2022, 7, 11),
-  ),
-];

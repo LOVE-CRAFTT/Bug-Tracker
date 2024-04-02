@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/task.dart';
 import 'package:bug_tracker/utilities/constants.dart';
-import 'package:bug_tracker/ui_components/complaint_overview_card.dart';
 import 'package:bug_tracker/utilities/tools.dart';
-import 'package:bug_tracker/utilities/build_staff.dart';
 import 'package:bug_tracker/staff_pages/task_detail_page.dart';
 
 /// Naming convention in this project dictates a difference between overview and preview cards
@@ -117,46 +115,3 @@ class TaskOverviewCard extends StatelessWidget {
     );
   }
 }
-
-List tasksSource = [
-  Task(
-    id: 299386366281,
-    associatedComplaint: complaintsSource[0],
-    task: "Run Youtube main branch in sandbox to replicate issue",
-    taskState: TaskState.fresh,
-    dueDate: DateTime(2024, 2, 13),
-    assignedStaff: staffSource[0],
-  ),
-  Task(
-    id: 299386366281,
-    associatedComplaint: complaintsSource[1],
-    task: "Ascertain from user files if user is premium user",
-    taskState: TaskState.inProgress,
-    dueDate: DateTime(2023, 2, 13),
-    assignedStaff: staffSource[1],
-  ),
-  Task(
-    id: 299386366281,
-    associatedComplaint: complaintsSource[1],
-    task: "Replicate issue in main branch",
-    taskState: TaskState.dueToday,
-    dueDate: DateTime(2024, 3, 4),
-    assignedStaff: staffSource[2],
-  ),
-  Task(
-    id: 299386366281,
-    associatedComplaint: complaintsSource[2],
-    task: "Figure out which other types of phone numbers don't work",
-    taskState: TaskState.completed,
-    dueDate: DateTime(2024, 2, 13),
-    assignedStaff: staffSource[3],
-  ),
-  Task(
-    id: 299386366281,
-    associatedComplaint: complaintsSource[4],
-    task: "Try to obtain the device specifications from user files",
-    taskState: TaskState.overdue,
-    dueDate: DateTime(2024, 1, 1),
-    assignedStaff: staffSource[0],
-  ),
-];

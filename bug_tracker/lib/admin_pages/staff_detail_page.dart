@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/staff.dart';
 import 'package:bug_tracker/utilities/constants.dart';
-import 'package:bug_tracker/ui_components/task_overview_card.dart';
+import 'package:bug_tracker/utilities/core_data_sources.dart';
 import 'package:bug_tracker/ui_components/task_preview_card.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
 
