@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:side_sheet/side_sheet.dart';
 import 'package:bug_tracker/utilities/constants.dart';
+import 'package:bug_tracker/utilities/tools.dart';
 import 'package:bug_tracker/admin_pages/update_password_page.dart';
 
 ///AppBar at the top of every page
@@ -67,14 +68,14 @@ AppBar staffReusableAppBar(String pageName, BuildContext context) {
               onTap: () =>
                   controller.isOpen ? controller.close() : controller.open(),
               child: Tooltip(
-                message: "Bill Gates",
+                message: globalActorName,
                 textStyle: kContainerTextStyle.copyWith(
                   color: Colors.black,
                 ),
                 child: CircleAvatar(
                   backgroundColor: Colors.grey,
                   child: Text(
-                    "BG",
+                    getInitialsFromName(fullName: globalActorName),
                     style: kContainerTextStyle.copyWith(
                       color: Colors.black,
                     ),

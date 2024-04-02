@@ -36,3 +36,17 @@ bool authenticatePasswordHash(
     return false;
   }
 }
+
+///
+String getFullNameFromNames({
+  required String surname,
+  required String? firstName,
+  required String? middleName,
+}) {
+  return "$surname ${firstName ?? ""} ${middleName ?? ""}";
+}
+
+///
+String getInitialsFromName({required String fullName}) {
+  return fullName.split(" ").map((name) => name[0].toUpperCase()).join();
+}

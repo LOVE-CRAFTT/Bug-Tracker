@@ -1,4 +1,5 @@
 import 'package:bug_tracker/models/overview.dart';
+import 'package:bug_tracker/utilities/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/ui_components/admin_appbar.dart';
 import 'package:bug_tracker/ui_components/large_container.dart';
@@ -6,19 +7,16 @@ import 'package:provider/provider.dart';
 import 'package:bug_tracker/ui_components/fast_access_container.dart';
 
 /// The homepage contains simple welcome text and quick access information
-/// By default It contains 4 fast access containers to quickly access general information regarding bugs and milestones
-/// It also contains 6 larger containers below that gives more details on the current work context
+/// By default It contains 2 fast access containers to quickly access general information regarding bugs
+/// It also contains 4 larger containers below that gives more details on the current work context
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  String adminName = "John D. Rockefeller";
-  String companyName = "Standard Oil Company, Inc.";
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,16 +30,16 @@ class _HomePageState extends State<HomePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Welcome $adminName",
+                  "Welcome $globalActorName",
                   style: const TextStyle(
                     fontSize: 18,
                     fontFamily: "Nunito",
                     color: Color(0xFFb6b8aa),
                   ),
                 ),
-                Text(
-                  "Company: $companyName",
-                  style: const TextStyle(
+                const Text(
+                  "Company: Meta Platforms, Inc.",
+                  style: TextStyle(
                     fontSize: 15,
                     fontFamily: "Nunito",
                     color: Color(0xFFb6b8aa),

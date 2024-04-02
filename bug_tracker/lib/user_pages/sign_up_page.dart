@@ -1,3 +1,4 @@
+import 'package:bug_tracker/utilities/tools.dart';
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/user_pages/complaint_page.dart';
 import 'package:bug_tracker/utilities/constants.dart';
@@ -136,6 +137,14 @@ class SignUpPage extends StatelessWidget {
                         if (newUserID != null) {
                           // set global id
                           globalActorID = newUserID;
+                          // set global name
+                          globalActorName = getFullNameFromNames(
+                            surname: surname,
+                            firstName: firstName,
+                            middleName: middleName,
+                          );
+                          // set global email
+                          globalActorEmail = email;
                           // set actor's designation
                           actorIsAdmin = false;
                           actorIsStaff = false;

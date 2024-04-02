@@ -17,7 +17,6 @@ class ComplaintPage extends StatefulWidget {
 }
 
 class _ComplaintPageState extends State<ComplaintPage> {
-  String usersName = "Kamala Harris";
   String? dropDownValue = complaintsChoices.first;
 
   @override
@@ -78,14 +77,14 @@ class _ComplaintPageState extends State<ComplaintPage> {
                       ? controller.close()
                       : controller.open(),
                   child: Tooltip(
-                    message: usersName,
+                    message: globalActorName,
                     textStyle: kContainerTextStyle.copyWith(
                       color: Colors.black,
                     ),
                     child: CircleAvatar(
                       backgroundColor: Colors.grey,
                       child: Text(
-                        "KH",
+                        getInitialsFromName(fullName: globalActorName),
                         style: kContainerTextStyle.copyWith(
                           color: Colors.black,
                         ),
@@ -118,7 +117,7 @@ class _ComplaintPageState extends State<ComplaintPage> {
                       bottom: 10.0,
                     ),
                     child: Text(
-                      "Welcome $usersName",
+                      "Welcome $globalActorName",
                       style: const TextStyle(
                         fontSize: 18,
                         fontFamily: "Nunito",

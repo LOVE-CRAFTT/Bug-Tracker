@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:side_sheet/side_sheet.dart';
 import 'package:bug_tracker/utilities/constants.dart';
+import 'package:bug_tracker/utilities/tools.dart';
 import 'package:bug_tracker/admin_pages/new_staff_page.dart';
 import 'package:bug_tracker/admin_pages/new_project_page.dart';
 import 'package:bug_tracker/admin_pages/update_password_page.dart';
@@ -45,8 +46,6 @@ AppBar adminReusableAppBar(String pageName, BuildContext context) {
           ],
           isUpdatePasswordPage: true,
         ),
-        username: "ChukwuemekaChukwudi9",
-        userInitials: "BC",
       ),
     ],
   );
@@ -56,8 +55,6 @@ MenuAnchor buildMenuAnchor({
   required BuildContext context,
   required bool isAddButton,
   required List<Widget> menuChildren,
-  String username = "",
-  String userInitials = "",
 }) {
   return MenuAnchor(
     style: MenuStyle(
@@ -89,11 +86,11 @@ MenuAnchor buildMenuAnchor({
                 onTap: () =>
                     controller.isOpen ? controller.close() : controller.open(),
                 child: Tooltip(
-                  message: username,
+                  message: globalActorName,
                   child: CircleAvatar(
                     backgroundColor: Colors.grey,
                     child: Text(
-                      userInitials,
+                      getInitialsFromName(fullName: globalActorName),
                       style: kContainerTextStyle.copyWith(color: Colors.black),
                     ),
                   ),

@@ -5,6 +5,8 @@ import 'package:table_calendar/table_calendar.dart';
 
 /// Set at sign in and shouldn't change
 late int globalActorID;
+late String globalActorName;
+late String globalActorEmail;
 bool actorIsAdmin = false;
 bool actorIsStaff = false;
 bool actorIsUser = false;

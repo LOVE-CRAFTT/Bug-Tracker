@@ -89,9 +89,15 @@ class SignInPage extends StatelessWidget {
                               hashedPassword: actorData!.first['password'],
                             );
 
-                            // get id and is_admin
+                            // get id, name, email and is_admin
                             if (isCorrectPassword) {
                               int actorID = actorData.first['id'];
+                              String actorName = getFullNameFromNames(
+                                surname: actorData.first['surname'],
+                                firstName: actorData.first['first_name'],
+                                middleName: actorData.first['middle_name'],
+                              );
+                              String actorEmail = actorData.first['email'];
                               bool isAdmin = actorData.first['is_admin'] == 1
                                   ? true
                                   : false;
@@ -111,6 +117,10 @@ class SignInPage extends StatelessWidget {
                               }
                               // set global id
                               globalActorID = actorID;
+                              // set global name
+                              globalActorName = actorName;
+                              // set global email
+                              globalActorEmail = actorEmail;
                               if (context.mounted) {
                                 Navigator.push(
                                   context,
@@ -144,9 +154,16 @@ class SignInPage extends StatelessWidget {
                               hashedPassword: actorData!.first['password'],
                             );
 
-                            // get id
+                            // get id, name and email and set them globally
                             if (isCorrectPassword) {
                               globalActorID = actorData.first['id'];
+                              globalActorName = getFullNameFromNames(
+                                surname: actorData.first['surname'],
+                                firstName: actorData.first['first_name'],
+                                middleName: actorData.first['middle_name'],
+                              );
+                              globalActorEmail = actorData.first['email'];
+
                               // set actor's designation
                               actorIsAdmin = false;
                               actorIsStaff = false;

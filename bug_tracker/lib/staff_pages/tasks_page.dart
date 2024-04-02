@@ -4,6 +4,7 @@ import 'package:bug_tracker/ui_components/staff_appbar.dart';
 import 'package:bug_tracker/ui_components/custom_dropdown.dart';
 import 'package:bug_tracker/ui_components/task_overview_card.dart';
 
+/// Page seen when staff log in
 class TasksPage extends StatefulWidget {
   const TasksPage({super.key});
 
@@ -12,8 +13,6 @@ class TasksPage extends StatefulWidget {
 }
 
 class _TasksPageState extends State<TasksPage> {
-  String staffName = "Bill Gates";
-  String companyName = "Standard Oil Company, Inc.";
   String? dropDownValue = tasksChoices.first;
 
   @override
@@ -35,16 +34,16 @@ class _TasksPageState extends State<TasksPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Welcome, $staffName",
+                    "Welcome, $globalActorName",
                     style: const TextStyle(
                       fontSize: 18,
                       fontFamily: "Nunito",
                       color: Color(0xFFb6b8aa),
                     ),
                   ),
-                  Text(
-                    "Company: $companyName",
-                    style: const TextStyle(
+                  const Text(
+                    "Company: Meta Platforms, Inc.",
+                    style: TextStyle(
                       fontSize: 15,
                       fontFamily: "Nunito",
                       color: Color(0xFFb6b8aa),
