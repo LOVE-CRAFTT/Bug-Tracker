@@ -3,6 +3,7 @@ import 'package:bug_tracker/ui_components/bug_preview_lite.dart';
 import 'package:bug_tracker/ui_components/task_preview_lite.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/core_data_sources.dart';
+import 'package:bug_tracker/utilities/load_complaint_source.dart';
 
 ///Provides access to main work data
 ///Implemented as a container of fixed height and variable width
@@ -21,6 +22,32 @@ class _LargeContainerState extends State<LargeContainer> {
   var bigScreenMaxWidthLimit = 850;
   var containerHeight = 400.0;
   //============================================================================
+
+  // scroll controllers for listview widgets
+  // to maintain position when retrieving data sources of new length
+  ScrollController bugsListController = ScrollController();
+  ScrollController tasksListController = ScrollController();
+
+  // limit for queries
+  int limit = 10;
+
+  // On init state load the complaint and task sources
+  // then attach listeners in order to retrieve again with increased range
+  // when actor has scrolled to the end
+  @override
+  void initState() {
+    super.initState();
+    loadComplaintSource(limit: limit);
+    bugsListController.addListener(() {
+      // if its at end but not the top then its at the end
+      if (bugsListController.position.atEdge) {
+        if (bugsListController.position.pixels != 0) {
+          limit += 5;
+          setState(() {});
+        }
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,6 +97,7 @@ class _LargeContainerState extends State<LargeContainer> {
 
   ListView getTasksList(BuildContext context) {
     return ListView.builder(
+      controller: tasksListController,
       itemCount: tasksSource.length,
       itemBuilder: (BuildContext context, int index) {
         return TaskPreviewLite(
@@ -80,11 +108,21 @@ class _LargeContainerState extends State<LargeContainer> {
     );
   }
 
-  ListView getBugsList(BuildContext context) {
-    return ListView.builder(
-      itemCount: complaintsSource.length,
-      itemBuilder: (BuildContext context, int index) {
-        return BugPreviewLite(complaint: complaintsSource[index]);
+  FutureBuilder<void> getBugsList(BuildContext context) {
+    return FutureBuilder(
+      future: loadComplaintSource(limit: limit),
+      builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const CircularProgressIndicator();
+        } else {
+          return ListView.builder(
+            controller: bugsListController,
+            itemCount: complaintsSource.length,
+            itemBuilder: (BuildContext context, int index) {
+              return BugPreviewLite(complaint: complaintsSource[index]);
+            },
+          );
+        }
       },
     );
   }

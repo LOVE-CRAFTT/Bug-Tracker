@@ -24,6 +24,7 @@ List complaintsSource = [
     associatedProject: projectSource[5],
     dateCreated: DateTime(2022, 12, 3),
     author: "person2@gmail.com",
+    tags: [],
   ),
   Complaint(
     ticketNumber: 11209465,
@@ -33,6 +34,7 @@ List complaintsSource = [
     associatedProject: projectSource[6],
     dateCreated: DateTime(2023, 6, 17),
     author: "person3@gmail.com",
+    tags: [],
   ),
   Complaint(
     ticketNumber: 87453092,
@@ -42,11 +44,13 @@ List complaintsSource = [
     associatedProject: projectSource[0],
     dateCreated: DateTime(2020, 2, 13),
     author: "person@gmail.com",
+    tags: null,
   ),
   Complaint(
     ticketNumber: 450089791,
     author: "Bob Schmidt@yahoo.com",
     complaint: "Constant crashing on windows 7",
+    complaintNotes: null,
     associatedProject: projectSource[0],
     dateCreated: DateTime(
       2023,
@@ -60,6 +64,7 @@ List complaintsSource = [
     ticketNumber: 5774883002,
     author: "Steve Cohen@yahoo.com",
     complaint: "Loud sound before app opens",
+    complaintNotes: complaintNotesPlaceholder,
     associatedProject: projectSource[4],
     dateCreated: DateTime(
       2023,
@@ -142,6 +147,12 @@ List<Project> projectSource = [
       DateTime.november,
       DateTime.monday,
     ),
+    dateClosed: DateTime(
+      2024,
+      DateTime.january,
+      DateTime.tuesday,
+    ),
+    details: projectDetailsPlaceHolder,
   ),
   Project(
     id: 1552634899506,
@@ -153,15 +164,26 @@ List<Project> projectSource = [
       DateTime.october,
       DateTime.wednesday,
     ),
+    dateClosed: DateTime(
+      2024,
+      DateTime.january,
+      DateTime.tuesday,
+    ),
   ),
   Project(
     id: 1552634899507,
     name: "Machine Learning",
+    details: projectDetailsPlaceHolder,
     state: ProjectState.postponed,
     dateCreated: DateTime(
       2023,
       DateTime.september,
       DateTime.friday,
+    ),
+    dateClosed: DateTime(
+      2024,
+      DateTime.january,
+      DateTime.tuesday,
     ),
   ),
   Project(
@@ -183,19 +205,37 @@ List<Project> projectSource = [
   Project(
     id: 98098790,
     name: "Youtube",
+    details: null,
     state: ProjectState.cancelled,
     dateCreated: DateTime(2023, 2, 13),
+    dateClosed: DateTime(
+      2024,
+      DateTime.january,
+      DateTime.tuesday,
+    ),
   ),
   Project(
     id: 12656564,
     name: "Github Mobile",
+    details: projectDetailsPlaceHolder,
     state: ProjectState.postponed,
     dateCreated: DateTime(2022, 12, 3),
+    dateClosed: DateTime(
+      2024,
+      DateTime.january,
+      DateTime.tuesday,
+    ),
   ),
   Project(
     id: 09653097,
     name: "Whatsapp",
+    details: null,
     state: ProjectState.cancelled,
     dateCreated: DateTime(2022, 7, 11),
+    dateClosed: DateTime(
+      2024,
+      DateTime.january,
+      DateTime.tuesday,
+    ),
   ),
 ];

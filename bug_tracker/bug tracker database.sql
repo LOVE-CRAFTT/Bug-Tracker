@@ -37,9 +37,15 @@ CREATE TABLE IF NOT EXISTS complaint (
     author VARCHAR(255) NOT NULL,
     date_created DATETIME NOT NULL,
     complaint_state ENUM('Acknowledged', 'Completed', 'In Progress', 'Pending') NOT NULL,
-    tags ENUM('Database', 'Functionality', 'Network', 'Performance', 'Security', 'UI'),
     FOREIGN KEY (associated_project) REFERENCES project(id)
 ) AUTO_INCREMENT=10000;
+
+CREATE TABLE IF NOT EXISTS tags (
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    associated_complaint INT UNSIGNED NOT NULL,
+    tag ENUM('Database', 'Functionality', 'Network', 'Performance', 'Security', 'UI'),
+    FOREIGN KEY (associated_complaint) REFERENCES complaint(id)
+);
 
 CREATE TABLE IF NOT EXISTS task (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,

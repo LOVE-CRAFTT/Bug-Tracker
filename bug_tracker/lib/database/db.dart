@@ -207,6 +207,24 @@ class DB {
     return result?.insertId;
   }
 
+  Future<bool?> addTags({
+    required int associatedComplaint,
+    required List<Tags> tags,
+  }) async {
+    List<Results>? results = await _conn?.queryMulti(
+      'insert into tags (associated_complaint, tag) values (?, ?)',
+      // list of lists
+      tags.map((tag) => [associatedComplaint, tag.title]).toList(),
+    );
+    // return true if every insert id in results.result is not null
+    // if results is empty it returns true which is ok
+    // since it means tags might not have been added
+    return results?.every((result) => result.insertId != null);
+
+    // when tags first added make sure to check against the list of current tags
+    // so as not to add duplicate tags
+  }
+
   Future<bool?> addComplaintFiles({
     required List<File> files,
     required int associatedComplaint,
@@ -221,5 +239,32 @@ class DB {
     // since it means files might not have been added
     return results?.every((result) => result.insertId != null);
   }
+
+  Future<Results?> getAllComplaints({required int limit}) async {
+    Results? results = await _conn?.query(
+      'SELECT * FROM complaint ORDER BY date_created DESC LIMIT $limit',
+    );
+    if (results?.isEmpty ?? true) {
+      // No complaints
+      return null;
+    } else {
+      // complaint exists
+      return results;
+    }
+  }
+
+  Future<Results?> getTags({required int complaintID}) async {
+    Results? results = await _conn?.query(
+      'SELECT * FROM tags WHERE associated_complaint = $complaintID',
+    );
+    if (results?.isEmpty ?? true) {
+      // No tags
+      return null;
+    } else {
+      // tags exists
+      return results;
+    }
+  }
+
   //============================================================================
 }

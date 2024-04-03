@@ -52,6 +52,7 @@ class BugPreviewCard extends StatelessWidget {
                 bugState: complaint.complaintState,
                 dateCreated: convertToDateString(complaint.dateCreated),
                 author: complaint.author,
+                tags: complaint.tags,
               ),
             ),
           );

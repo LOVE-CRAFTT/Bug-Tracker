@@ -1,3 +1,4 @@
+import 'package:mysql1/mysql1.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/project.dart';
 
@@ -6,13 +7,31 @@ class Complaint {
   const Complaint({
     required this.ticketNumber,
     required this.complaint,
-    this.complaintNotes,
+    required this.complaintNotes,
     required this.complaintState,
     required this.associatedProject,
     required this.dateCreated,
     required this.author,
-    this.tags,
+    required this.tags,
   });
+
+  Complaint.fromResultRow({
+    required ResultRow complaintRow,
+    required Project project,
+    required String author,
+    required List<Tags>? tags,
+  }) : this(
+          ticketNumber: complaintRow['id'],
+          complaint: complaintRow['title'],
+          complaintNotes: complaintRow['notes']?.toString(),
+          complaintState: ComplaintState.values.firstWhere(
+            (state) => state.title == complaintRow['complaint_state'],
+          ),
+          associatedProject: project,
+          dateCreated: complaintRow['date_created'],
+          author: author,
+          tags: tags,
+        );
 
   final int ticketNumber;
   final String complaint;

@@ -18,7 +18,7 @@ class BugDetailPage extends StatefulWidget {
     required this.bugState,
     required this.dateCreated,
     required this.author,
-    this.tags,
+    required this.tags,
   });
 
   final int ticketNumber;
