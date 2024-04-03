@@ -3,6 +3,7 @@ import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/build_complaint_notes.dart';
 import 'package:bug_tracker/utilities/tools.dart';
 import 'package:bug_tracker/utilities/core_data_sources.dart';
+import 'package:bug_tracker/utilities/file_retrieval_functions.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
 import 'package:bug_tracker/ui_components/task_preview_card.dart';
 import 'package:bug_tracker/admin_pages/bug_detail_update_page.dart';
@@ -35,6 +36,13 @@ class BugDetailPage extends StatefulWidget {
 }
 
 class _BugDetailPageState extends State<BugDetailPage> {
+  // automatically set status to acknowledged if it is currently pending
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -168,13 +176,7 @@ class _BugDetailPageState extends State<BugDetailPage> {
                     ),
                     child: Text("Files: ", style: kContainerTextStyle),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: SizedBox(
-                      height: 100,
-                      child: buildFilesPlaceHolders(),
-                    ),
-                  ),
+                  buildComplaintFiles(complaintID: widget.ticketNumber),
 
                   /// All states of the complaints are available as chips and they are each grayed out or colored
                   /// based on the state of the complaint
@@ -378,27 +380,6 @@ class _BugDetailPageState extends State<BugDetailPage> {
       ),
     );
   }
-}
-
-/// Will replace with real files later
-ListView buildFilesPlaceHolders() {
-  return ListView.builder(
-    scrollDirection: Axis.horizontal,
-    itemCount: 4,
-    itemBuilder: (BuildContext context, int index) {
-      return Padding(
-        padding: const EdgeInsets.only(right: 8.0),
-        child: Container(
-          width: 100,
-          height: 100.0,
-          decoration: BoxDecoration(
-            color: Colors.greenAccent,
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-        ),
-      );
-    },
-  );
 }
 
 ListView buildOtherTaskPreviewCards() {

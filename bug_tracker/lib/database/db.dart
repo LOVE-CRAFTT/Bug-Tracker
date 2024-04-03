@@ -266,5 +266,18 @@ class DB {
     }
   }
 
+  Future<Results?> getComplaintFiles({required int complaintID}) async {
+    Results? results = await _conn?.query(
+      'SELECT * FROM files WHERE associated_complaint = $complaintID',
+    );
+    if (results?.isEmpty ?? true) {
+      // No files
+      return null;
+    } else {
+      // there are some files
+      return results;
+    }
+  }
+
   //============================================================================
 }

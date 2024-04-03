@@ -37,7 +37,7 @@ Future<void> loadComplaintSource({
       String author = authorResults?.first['email'];
 
       processedComplaints.add(
-        // and returns complaint, project, staff and task classes
+        // and returns staff and task classes
         Complaint.fromResultRow(
           complaintRow: complaintRow,
           project: Project.fromResultRow(projectRow: projectRow!),

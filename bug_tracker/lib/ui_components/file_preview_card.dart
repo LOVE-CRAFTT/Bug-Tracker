@@ -12,7 +12,7 @@ class FilePreviewCard extends StatelessWidget {
   });
 
   final File file;
-  final void Function() onDelete;
+  final void Function()? onDelete;
 
   /// so the user can only delete file when selecting and not when viewing
   final bool isSelectingFiles;
