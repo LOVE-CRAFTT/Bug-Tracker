@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS staff (
 ) AUTO_INCREMENT=10000;
 
 CREATE TABLE IF NOT EXISTS user (
-	id INT AUTO_INCREMENT PRIMARY KEY,
+	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     surname VARCHAR(255) NOT NULL,
@@ -34,10 +34,11 @@ CREATE TABLE IF NOT EXISTS complaint (
     title VARCHAR(255) NOT NULL,
     notes MEDIUMTEXT,
     associated_project INT UNSIGNED NOT NULL,
-    author VARCHAR(255) NOT NULL,
+    author INT UNSIGNED NOT NULL,
     date_created DATETIME NOT NULL,
     complaint_state ENUM('Acknowledged', 'Completed', 'In Progress', 'Pending') NOT NULL,
-    FOREIGN KEY (associated_project) REFERENCES project(id)
+    FOREIGN KEY (associated_project) REFERENCES project(id),
+    FOREIGN KEY (author) REFERENCES user(id)
 ) AUTO_INCREMENT=10000;
 
 CREATE TABLE IF NOT EXISTS tags (

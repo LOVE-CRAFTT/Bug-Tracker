@@ -33,7 +33,7 @@ Future<void> loadComplaintSource({
 
       // get user email here since can't wait in complaints constructor
       Results? authorResults =
-          await db.getUserDataUsingID(int.parse(complaintRow['author']));
+          await db.getUserDataUsingID(complaintRow['author']);
       String author = authorResults?.first['email'];
 
       processedComplaints.add(
