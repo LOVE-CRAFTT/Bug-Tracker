@@ -85,6 +85,7 @@ List tasksSource = [
     taskState: TaskState.fresh,
     dueDate: DateTime(2024, 2, 13),
     assignedStaff: staffSource[0],
+    isTeamLead: true,
   ),
   Task(
     id: 299386366281,
@@ -93,6 +94,7 @@ List tasksSource = [
     taskState: TaskState.inProgress,
     dueDate: DateTime(2023, 2, 13),
     assignedStaff: staffSource[1],
+    isTeamLead: false,
   ),
   Task(
     id: 299386366281,
@@ -101,6 +103,7 @@ List tasksSource = [
     taskState: TaskState.dueToday,
     dueDate: DateTime(2024, 3, 4),
     assignedStaff: staffSource[2],
+    isTeamLead: false,
   ),
   Task(
     id: 299386366281,
@@ -109,6 +112,7 @@ List tasksSource = [
     taskState: TaskState.completed,
     dueDate: DateTime(2024, 2, 13),
     assignedStaff: staffSource[3],
+    isTeamLead: false,
   ),
   Task(
     id: 299386366281,
@@ -117,6 +121,7 @@ List tasksSource = [
     taskState: TaskState.overdue,
     dueDate: DateTime(2024, 1, 1),
     assignedStaff: staffSource[0],
+    isTeamLead: false,
   ),
 ];
 

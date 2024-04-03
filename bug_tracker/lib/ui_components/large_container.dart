@@ -37,7 +37,6 @@ class _LargeContainerState extends State<LargeContainer> {
   @override
   void initState() {
     super.initState();
-    loadComplaintSource(limit: limit);
     bugsListController.addListener(() {
       // if its at end but not the top then its at the end
       if (bugsListController.position.atEdge) {
@@ -102,7 +101,6 @@ class _LargeContainerState extends State<LargeContainer> {
       itemBuilder: (BuildContext context, int index) {
         return TaskPreviewLite(
           task: tasksSource[index],
-          index: index,
         );
       },
     );

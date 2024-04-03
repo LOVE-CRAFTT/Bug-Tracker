@@ -11,6 +11,7 @@ class Task {
     required this.associatedComplaint,
     required this.dueDate,
     required this.assignedStaff,
+    required this.isTeamLead,
   });
 
   final int id;
@@ -19,4 +20,5 @@ class Task {
   final TaskState taskState;
   final DateTime dueDate;
   final Staff assignedStaff;
+  final bool isTeamLead;
 }

@@ -9,13 +9,9 @@ class TaskPreviewLite extends StatelessWidget {
   const TaskPreviewLite({
     super.key,
     required this.task,
-    required this.index,
   });
 
   final Task task;
-
-  /// TODO: clean later
-  final int index;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +44,7 @@ class TaskPreviewLite extends StatelessWidget {
               MaterialPageRoute(
                 builder: (context) => TaskDetailPage(
                   taskId: task.id,
-                  isTeamLead: index == 1 ? true : false,
+                  isTeamLead: task.isTeamLead,
                   task: task.task,
                   complaint: task.associatedComplaint,
                   dueDate: convertToDateString(task.dueDate),
