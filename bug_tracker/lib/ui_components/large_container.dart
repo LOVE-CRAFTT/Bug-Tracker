@@ -72,6 +72,7 @@ class _LargeContainerState extends State<LargeContainer> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AppBar(
+                  automaticallyImplyLeading: false,
                   backgroundColor: Colors.transparent,
                   elevation: 0,
                   title: Text(
