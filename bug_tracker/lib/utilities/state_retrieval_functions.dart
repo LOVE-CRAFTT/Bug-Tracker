@@ -6,6 +6,7 @@ import 'package:bug_tracker/utilities/constants.dart';
 
 Future<ComplaintState> getCurrentComplaintState(
     {required int complaintID}) async {
+  // to be returned
   ComplaintState complaintState;
 
   await db.connect();
@@ -14,7 +15,9 @@ Future<ComplaintState> getCurrentComplaintState(
 
   // if there is such a complaint
   if (result != null) {
-    complaintState = result.first['complaint_state'];
+    complaintState = ComplaintState.values.firstWhere(
+      (state) => state.title == result.first['complaint_state'],
+    );
   }
   // error retrieving the state return pending and debugPrint error
   else {
