@@ -3,20 +3,6 @@ import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/ui_components/task_assignment_form.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
 
-/// List of tasks and drop down values (for team members)
-List<TextEditingController> teamMembersTaskControllers = [];
-List<String> teamMemberValues = [];
-
-/// Task and drop down value for team lead
-TextEditingController teamLeadTaskController = TextEditingController();
-String teamLeadValue = teamMembers.first;
-
-/// selected tags
-List<bool> selectedTags = List.filled(Tags.values.length, false);
-
-///
-bool showTeamSection = false;
-
 class BugDetailUpdatePage extends StatefulWidget {
   const BugDetailUpdatePage({
     super.key,
@@ -30,6 +16,23 @@ class BugDetailUpdatePage extends StatefulWidget {
 }
 
 class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
+  // This should receive the tags from the bug detail page so
+  // that it can check against the list for drawing
+
+  /// List of tasks and drop down values (for team members)
+  List<TextEditingController> teamMembersTaskControllers = [];
+  List<String> teamMemberValues = [];
+
+  /// Task and drop down value for team lead
+  TextEditingController teamLeadTaskController = TextEditingController();
+  String teamLeadValue = teamMembers.first;
+
+  /// selected tags
+  List<bool> selectedTags = List.filled(Tags.values.length, false);
+
+  ///
+  bool showTeamSection = false;
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(

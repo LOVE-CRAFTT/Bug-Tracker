@@ -24,7 +24,7 @@ Future<void> loadComplaintSource({
     // process them into a complaints class
     for (ResultRow complaintRow in results) {
       // get tags here since can't await in complaint constructor
-      var tags = await retrieveTags(complaintID: complaintRow['id'], db: db);
+      var tags = await retrieveTags(complaintID: complaintRow['id']);
 
       // get associated project here since can't await in complaint constructor
       Results? projectResult =
@@ -37,7 +37,6 @@ Future<void> loadComplaintSource({
       String author = authorResults?.first['email'];
 
       processedComplaints.add(
-        // and returns staff and task classes
         Complaint.fromResultRow(
           complaintRow: complaintRow,
           project: Project.fromResultRow(projectRow: projectRow!),
@@ -57,13 +56,14 @@ Future<void> loadComplaintSource({
 }
 
 // Helper function to get tags
-// Not using the main db class in order not to cause interference with existing connection
-// since this is mainly called in the load complaints source function
 Future<List<Tags>?> retrieveTags({
   required int complaintID,
-  required DB db,
 }) async {
+  db.connect();
   Results? results = await db.getTags(complaintID: complaintID);
+  db.close();
+
+  // will contain the processed tags
   List<Tags> processedTags = [];
 
   // if there are tags
@@ -98,3 +98,5 @@ Future<List<Tags>?> retrieveTags({
 // Get all Projects
 // NOTE: make get by status be an operation on the already filled projectsSource
 // list in order to reduce query complexity
+
+// STATUS NOTE IS REGARDING THE DROPDOWN FILTERING

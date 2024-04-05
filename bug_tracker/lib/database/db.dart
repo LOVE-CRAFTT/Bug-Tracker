@@ -208,21 +208,38 @@ class DB {
   }
 
   Future<bool?> addTags({
-    required int associatedComplaint,
+    required int complaintID,
     required List<Tags> tags,
   }) async {
-    List<Results>? results = await _conn?.queryMulti(
-      'insert into tags (associated_complaint, tag) values (?, ?)',
-      // list of lists
-      tags.map((tag) => [associatedComplaint, tag.title]).toList(),
+    // Delete all existing tags first
+    Results? result = await _conn?.query(
+      'DELETE FROM tags WHERE associated_complaint = ?',
+      [complaintID],
     );
-    // return true if every insert id in results.result is not null
-    // if results is empty it returns true which is ok
-    // since it means tags might not have been added
-    return results?.every((result) => result.insertId != null);
+    bool successfullyDeleted = (result != null &&
+        result.affectedRows != null &&
+        result.affectedRows! >= 0);
 
-    // when tags first added make sure to check against the list of current tags
-    // so as not to add duplicate tags
+    // if deletion successful then proceed
+    if (successfullyDeleted) {
+      // after deletion check if tags list is empty meaning request for
+      // removal of all tags
+      // if so return true
+      if (tags.isEmpty) return true;
+
+      // Then add all tags
+      List<Results>? results = await _conn?.queryMulti(
+        'insert into tags (associated_complaint, tag) values (?, ?)',
+        // list of lists
+        tags.map((tag) => [complaintID, tag.title]).toList(),
+      );
+      // return true if every insert id in results.result is not null
+      return results?.every((result) => result.insertId != null);
+    }
+    // else process failure return null
+    else {
+      return null;
+    }
   }
 
   Future<bool?> addComplaintFiles({
@@ -250,6 +267,57 @@ class DB {
     } else {
       // complaint exists
       return results;
+    }
+  }
+
+  //NOTE: This shouldn't be necessary as I should filter on the complaint source list
+  // though a potential error is not knowing what exactly has populated the complaints Source
+  Future<Results?> getComplaintsFilteredByState({
+    required int limit,
+    required ComplaintState state,
+  }) async {
+    Results? results = await _conn?.query(
+      'SELECT * FROM complaint WHERE complaint_state = ? ORDER BY date_created DESC LIMIT ?',
+      [state.title, limit],
+    );
+    if (results?.isEmpty ?? true) {
+      // No complaints
+      return null;
+    } else {
+      // complaint exists
+      return results;
+    }
+  }
+
+  Future<Results?> getComplaintData(int id) async {
+    Results? result = await _conn?.query(
+      'SELECT * FROM complaint WHERE id = ?',
+      [id],
+    );
+    if (result?.isEmpty ?? true) {
+      // the condition evaluates to if null(failed query) or is empty then
+      // no such complaint exists
+      return null;
+    } else {
+      // complaint exists
+      return result;
+    }
+  }
+
+  Future<bool> updateComplaintState({
+    required int id,
+    required ComplaintState newState,
+  }) async {
+    Results? result = await _conn?.query(
+      'update complaint set complaint_state = ? WHERE id = ?',
+      [newState.title, id],
+    );
+
+    //success
+    if (result?.insertId != null) {
+      return true;
+    } else {
+      return false;
     }
   }
 

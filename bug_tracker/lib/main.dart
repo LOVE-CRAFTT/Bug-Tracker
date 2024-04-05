@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bug_tracker/models/overview.dart';
+import 'package:bug_tracker/models/component_state.dart';
 import 'package:bug_tracker/sign_in.dart';
 
 void main() {
@@ -9,6 +10,7 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => Overview()),
+        ChangeNotifierProvider(create: (_) => ComponentStateComplaint())
       ],
       child: const MyApp(),
     ),

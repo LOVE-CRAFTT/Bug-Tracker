@@ -25,10 +25,8 @@ TableRow buildTableRow({
                 projectName: complaint.associatedProject.name,
                 bug: complaint.complaint,
                 bugNotes: complaint.complaintNotes,
-                bugState: complaint.complaintState,
                 dateCreated: convertToDateString(complaint.dateCreated),
                 author: complaint.author,
-                tags: complaint.tags,
               ),
             ),
           );

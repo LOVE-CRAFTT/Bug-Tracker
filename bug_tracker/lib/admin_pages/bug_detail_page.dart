@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:bug_tracker/models/component_state.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/build_complaint_notes.dart';
 import 'package:bug_tracker/utilities/tools.dart';
 import 'package:bug_tracker/utilities/core_data_sources.dart';
+import 'package:bug_tracker/utilities/load_complaint_source.dart';
 import 'package:bug_tracker/utilities/file_retrieval_functions.dart';
+import 'package:bug_tracker/utilities/state_retrieval_functions.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
 import 'package:bug_tracker/ui_components/task_preview_card.dart';
 import 'package:bug_tracker/admin_pages/bug_detail_update_page.dart';
+import 'package:provider/provider.dart';
 import 'package:side_sheet/side_sheet.dart';
 
 class BugDetailPage extends StatefulWidget {
@@ -16,10 +20,8 @@ class BugDetailPage extends StatefulWidget {
     required this.projectName,
     required this.bug,
     required this.bugNotes,
-    required this.bugState,
     required this.dateCreated,
     required this.author,
-    required this.tags,
   });
 
   final int ticketNumber;
@@ -28,8 +30,6 @@ class BugDetailPage extends StatefulWidget {
   final String? bugNotes;
   final String author;
   final String dateCreated;
-  final ComplaintState bugState;
-  final List<Tags>? tags;
 
   @override
   State<BugDetailPage> createState() => _BugDetailPageState();
@@ -45,6 +45,9 @@ class _BugDetailPageState extends State<BugDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    // watch ComponentStateComplaint for updates to complaint state and rebuild
+    context.watch<ComponentStateComplaint>();
+
     return Scaffold(
       appBar: genericTaskBar("Bug Detail"),
       body: LayoutBuilder(
@@ -178,116 +181,148 @@ class _BugDetailPageState extends State<BugDetailPage> {
                   ),
                   buildComplaintFiles(complaintID: widget.ticketNumber),
 
-                  /// All states of the complaints are available as chips and they are each grayed out or colored
-                  /// based on the state of the complaint
-                  /// Enums are compared with names because the hashCodes change as new objects are created
-                  /// Since hashCodes are used in the equality comparison, the changing hashCodes can break it
-                  Row(
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.all(20.0),
-                        child: Text("Status: ", style: kContainerTextStyle),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Chip(
-                          label: Text(
-                            "Pending",
-                            style: kContainerTextStyle.copyWith(
-                              color: Colors.black,
+                  // Gets the actual state of the complaint when it is updated
+                  FutureBuilder(
+                    future: getCurrentComplaintState(
+                      complaintID: widget.ticketNumber,
+                    ),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<ComplaintState> snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const CircularProgressIndicator();
+                      } else {
+                        ComplaintState bugState = snapshot.data!;
+
+                        /// All states of the complaints are available as chips and they are each grayed out or colored
+                        /// based on the state of the complaint
+                        /// Enums are compared with names because the hashCodes change as new objects are created
+                        /// Since hashCodes are used in the equality comparison, the changing hashCodes can break it
+                        return Row(
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.all(20.0),
+                              child:
+                                  Text("Status: ", style: kContainerTextStyle),
                             ),
-                          ),
-                          backgroundColor: widget.bugState.name ==
-                                  ComplaintState.pending.name
-                              ? widget.bugState.associatedColor
-                              : Colors.grey.withAlpha(25),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Chip(
-                          label: Text(
-                            "Acknowledged",
-                            style: kContainerTextStyle.copyWith(
-                              color: Colors.black,
+                            Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Chip(
+                                label: Text(
+                                  "Pending",
+                                  style: kContainerTextStyle.copyWith(
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                backgroundColor:
+                                    bugState.name == ComplaintState.pending.name
+                                        ? bugState.associatedColor
+                                        : Colors.grey.withAlpha(25),
+                              ),
                             ),
-                          ),
-                          backgroundColor: widget.bugState.name ==
-                                  ComplaintState.acknowledged.name
-                              ? widget.bugState.associatedColor
-                              : Colors.grey.withAlpha(25),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Chip(
-                          label: Text(
-                            "In Progress",
-                            style: kContainerTextStyle.copyWith(
-                              color: Colors.black,
+                            Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Chip(
+                                label: Text(
+                                  "Acknowledged",
+                                  style: kContainerTextStyle.copyWith(
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                backgroundColor: bugState.name ==
+                                        ComplaintState.acknowledged.name
+                                    ? bugState.associatedColor
+                                    : Colors.grey.withAlpha(25),
+                              ),
                             ),
-                          ),
-                          backgroundColor: widget.bugState.name ==
-                                  ComplaintState.inProgress.name
-                              ? widget.bugState.associatedColor
-                              : Colors.grey.withAlpha(25),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                        child: Chip(
-                          label: Text(
-                            "Completed",
-                            style: kContainerTextStyle.copyWith(
-                              color: Colors.black,
+                            Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Chip(
+                                label: Text(
+                                  "In Progress",
+                                  style: kContainerTextStyle.copyWith(
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                backgroundColor: bugState.name ==
+                                        ComplaintState.inProgress.name
+                                    ? bugState.associatedColor
+                                    : Colors.grey.withAlpha(25),
+                              ),
                             ),
-                          ),
-                          backgroundColor: widget.bugState.name ==
-                                  ComplaintState.completed.name
-                              ? widget.bugState.associatedColor
-                              : Colors.grey.withAlpha(25),
-                        ),
-                      ),
-                    ],
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20.0),
+                              child: Chip(
+                                label: Text(
+                                  "Completed",
+                                  style: kContainerTextStyle.copyWith(
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                backgroundColor: bugState.name ==
+                                        ComplaintState.completed.name
+                                    ? bugState.associatedColor
+                                    : Colors.grey.withAlpha(25),
+                              ),
+                            ),
+                          ],
+                        );
+                      }
+                    },
                   ),
 
-                  /// Tags associated with the bug if available
-                  Row(
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.only(left: 20.0),
-                        child: Text("Tags: ", style: kContainerTextStyle),
-                      ),
-                      if (widget.tags != null)
-                        SizedBox(
-                          width: determineContainerDimensionFromConstraint(
-                            constraintValue: constraints.maxWidth,
-                            subtractValue: 300,
-                          ),
-                          height: 70,
-                          child: ListView.builder(
-                            itemCount: widget.tags!.length,
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 20.0,
+                  // Gets the actual tags of the complaint when it is updated
+                  FutureBuilder(
+                    future: retrieveTags(complaintID: widget.ticketNumber),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<List<Tags>?> snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const CircularProgressIndicator();
+                      } else {
+                        List<Tags>? tags = snapshot.data;
+
+                        /// Tags associated with the bug if available
+                        return Row(
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.only(left: 20.0),
+                              child: Text("Tags: ", style: kContainerTextStyle),
+                            ),
+                            if (tags != null)
+                              SizedBox(
+                                width:
+                                    determineContainerDimensionFromConstraint(
+                                  constraintValue: constraints.maxWidth,
+                                  subtractValue: 300,
                                 ),
-                                child: Chip(
-                                  label: Text(
-                                    widget.tags![index].title,
-                                    style: kContainerTextStyle.copyWith(
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                  backgroundColor:
-                                      widget.tags![index].associatedColor,
+                                height: 70,
+                                child: ListView.builder(
+                                  itemCount: tags.length,
+                                  scrollDirection: Axis.horizontal,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 20.0,
+                                      ),
+                                      child: Chip(
+                                        label: Text(
+                                          tags[index].title,
+                                          style: kContainerTextStyle.copyWith(
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                        backgroundColor:
+                                            tags[index].associatedColor,
+                                      ),
+                                    );
+                                  },
                                 ),
-                              );
-                            },
-                          ),
-                        ),
-                    ],
+                              ),
+                          ],
+                        );
+                      }
+                    },
                   ),
 
                   /// Assigned Team i.e team lead and other staff

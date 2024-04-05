@@ -99,6 +99,29 @@ MESSAGES:
 -   Time created
 
 
+ for the homepage, when the page is stepped into and rebuilt
+ i.e not showing as a result of a navigator.pop
+ the load complaint source function is called which populated the complaints source
+ used for building all bugs.
+ This is ok because any new complaint will show at that time and we do not desire real time updates
+ and no mutable value is shown on the bug preview lite card
+ when the bug detail page is shown,
+ The same concept applies to related files but as a function
+ that is built everytime the page is rebuilt
+
+ //===========
+ As for the status, it is mutable since it is updated automatically
+ after viewing and after assigning tasks and staff.
+ Therefore the status should be update in a format that raises a notification
+ best done in a changeNotifier that has the function to update the complaint status and notify.
+ listeners to rebuild themselves.
+ The status itself should be a future builder that depends on a Future returning status
+ //============
+
+
+
+
+
 //EMAILS AND PASSWORDS
 
 //=======ADMIN

@@ -51,10 +51,8 @@ class BugReports extends StatelessWidget {
                     projectName: bugReport.associatedProject.name,
                     bug: bugReport.complaint,
                     bugNotes: bugReport.complaintNotes,
-                    bugState: bugReport.complaintState,
                     dateCreated: convertToDateString(bugReport.dateCreated),
                     author: bugReport.author,
-                    tags: bugReport.tags,
                   ),
                 ),
               );
