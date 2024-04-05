@@ -80,8 +80,6 @@ class _BugDetailPageState extends State<BugDetailPage> {
     // watch ComponentStateComplaint for updates to complaint state and rebuild
     context.watch<ComponentStateComplaint>();
 
-    debugPrint("Here");
-
     return Scaffold(
       appBar: genericTaskBar("Bug Detail"),
       body: LayoutBuilder(
@@ -103,17 +101,23 @@ class _BugDetailPageState extends State<BugDetailPage> {
                       child: HeaderButton(
                         screenIsWide: true,
                         buttonText: "Update",
-                        onPress: () {
-                          SideSheet.right(
-                            context: context,
-                            width: constraints.maxWidth * 0.9,
-                            sheetColor: lightAshyNavyBlue,
-                            sheetBorderRadius: 10.0,
-                            body: BugDetailUpdatePage(
-                              constraints: constraints,
-                              redrawParent: () => setState(() {}),
-                            ),
+                        onPress: () async {
+                          List<Tags>? currentTags = await retrieveTags(
+                            complaintID: widget.ticketNumber,
                           );
+                          if (context.mounted) {
+                            SideSheet.right(
+                              context: context,
+                              width: constraints.maxWidth * 0.9,
+                              sheetColor: lightAshyNavyBlue,
+                              sheetBorderRadius: 10.0,
+                              body: BugDetailUpdatePage(
+                                constraints: constraints,
+                                complaintID: widget.ticketNumber,
+                                currentTags: currentTags,
+                              ),
+                            );
+                          }
                         },
                       ),
                     ),

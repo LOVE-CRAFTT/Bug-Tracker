@@ -66,6 +66,12 @@ class _BugsPageState extends State<BugsPage> {
                               percentCompleted: normalize0to1(40),
                               complaint: complaintsSource[0],
                             ),
+                            buildTableRow(
+                              context: context,
+                              assignee: "chukwuemekachukwudi9@gmail.com",
+                              percentCompleted: normalize0to1(40),
+                              complaint: complaintsSource[1],
+                            ),
                           ],
                         ),
                       ),
