@@ -7,9 +7,11 @@ class BugDetailUpdatePage extends StatefulWidget {
   const BugDetailUpdatePage({
     super.key,
     required this.constraints,
+    required this.redrawParent,
   });
 
   final BoxConstraints constraints;
+  final VoidCallback redrawParent;
 
   @override
   State<BugDetailUpdatePage> createState() => _BugDetailUpdatePageState();

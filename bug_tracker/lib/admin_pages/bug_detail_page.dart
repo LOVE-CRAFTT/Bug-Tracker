@@ -40,14 +40,47 @@ class _BugDetailPageState extends State<BugDetailPage> {
   // automatically set status to acknowledged if it is currently pending
   @override
   void initState() {
-    // TODO: implement initState
+    // This ensures that acknowledge complaint is called after
+    // initState and build i.e the frame is completed
+    // and context has been created
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      acknowledgeComplaint();
+    });
     super.initState();
+  }
+
+  void acknowledgeComplaint() async {
+    // if complaint state is pending meaning its a new complaint
+    // the state should be automatically set as acknowledged.
+    if (await getCurrentComplaintState(
+          complaintID: widget.ticketNumber,
+        ) ==
+        ComplaintState.pending) {
+      //State's mounted property
+      if (mounted) {
+        // this then notifies listeners
+        context.read<ComponentStateComplaint>().updateComplaintState(
+              complaintID: widget.ticketNumber,
+              newState: ComplaintState.acknowledged,
+            );
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              "Complaint acknowledged!",
+              style: kContainerTextStyle.copyWith(color: Colors.black),
+            ),
+          ),
+        );
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     // watch ComponentStateComplaint for updates to complaint state and rebuild
     context.watch<ComponentStateComplaint>();
+
+    debugPrint("Here");
 
     return Scaffold(
       appBar: genericTaskBar("Bug Detail"),
@@ -78,6 +111,7 @@ class _BugDetailPageState extends State<BugDetailPage> {
                             sheetBorderRadius: 10.0,
                             body: BugDetailUpdatePage(
                               constraints: constraints,
+                              redrawParent: () => setState(() {}),
                             ),
                           );
                         },
