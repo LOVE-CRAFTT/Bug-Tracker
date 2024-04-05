@@ -24,6 +24,10 @@ class DB {
     await Future.delayed(const Duration(milliseconds: 100));
   }
 
+  bool isConnected() {
+    return _conn != null;
+  }
+
   Future<void> close() async => await _conn?.close();
 
   //==================STAFF  RELATED============================================
