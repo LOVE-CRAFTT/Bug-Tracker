@@ -1,3 +1,5 @@
+import 'package:mysql1/mysql1.dart';
+import 'package:window_manager/window_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/admin_pages/admin_main_page.dart';
 import 'package:bug_tracker/user_pages/sign_up_page.dart';
@@ -7,12 +9,25 @@ import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
 import 'package:bug_tracker/utilities/tools.dart';
 import 'package:bug_tracker/database/db.dart';
-import 'package:mysql1/mysql1.dart';
 
-class SignInPage extends StatelessWidget {
-  SignInPage({super.key});
+/// SignInPage has been stateful so as to be able to access initState
+class SignInPage extends StatefulWidget {
+  const SignInPage({super.key});
 
+  @override
+  State<SignInPage> createState() => _SignInPageState();
+}
+
+class _SignInPageState extends State<SignInPage> with WindowListener {
   final _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    // listen to the window events
+    // added in sign in page because it is the top level stateful widget
+    windowManager.addListener(this);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -231,5 +246,13 @@ class SignInPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  // When the window closes then close the database
+  @override
+  void onWindowClose() async {
+    await db.close();
+    windowManager.removeListener(this);
+    await windowManager.destroy();
   }
 }
