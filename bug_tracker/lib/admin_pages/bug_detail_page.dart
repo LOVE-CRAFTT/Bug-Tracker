@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:bug_tracker/models/state_updates.dart';
+import 'package:bug_tracker/models/component_state_updates.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/build_complaint_notes.dart';
 import 'package:bug_tracker/utilities/tools.dart';
@@ -59,7 +59,7 @@ class _BugDetailPageState extends State<BugDetailPage> {
       //State's mounted property
       if (mounted) {
         // this then notifies listeners
-        context.read<StateUpdates>().updateComplaintState(
+        context.read<ComponentStateUpdates>().updateComplaintState(
               complaintID: widget.ticketNumber,
               newState: ComplaintState.acknowledged,
             );
@@ -78,7 +78,7 @@ class _BugDetailPageState extends State<BugDetailPage> {
   @override
   Widget build(BuildContext context) {
     // watch ComponentStateComplaint for updates to complaint state and rebuild
-    context.watch<StateUpdates>();
+    context.watch<ComponentStateUpdates>();
 
     return Scaffold(
       appBar: genericTaskBar("Bug Detail"),
