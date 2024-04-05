@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:bug_tracker/models/component_state.dart';
+import 'package:bug_tracker/models/state_updates.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/build_complaint_notes.dart';
 import 'package:bug_tracker/utilities/tools.dart';
@@ -59,7 +59,7 @@ class _BugDetailPageState extends State<BugDetailPage> {
       //State's mounted property
       if (mounted) {
         // this then notifies listeners
-        context.read<ComponentStateComplaint>().updateComplaintState(
+        context.read<StateUpdates>().updateComplaintState(
               complaintID: widget.ticketNumber,
               newState: ComplaintState.acknowledged,
             );
@@ -78,7 +78,7 @@ class _BugDetailPageState extends State<BugDetailPage> {
   @override
   Widget build(BuildContext context) {
     // watch ComponentStateComplaint for updates to complaint state and rebuild
-    context.watch<ComponentStateComplaint>();
+    context.watch<StateUpdates>();
 
     return Scaffold(
       appBar: genericTaskBar("Bug Detail"),
@@ -380,40 +380,52 @@ class _BugDetailPageState extends State<BugDetailPage> {
                     ),
                   ),
 
-                  ///Team Lead
-                  const Padding(
-                    padding: EdgeInsets.only(
-                      left: 20.0,
-                      right: 20.0,
-                      top: 20.0,
-                    ),
-                    child: Text("Team Lead", style: kContainerTextStyle),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: TaskPreviewCard(task: tasksSource[0]),
-                  ),
-
-                  ///Team Members
-                  const Padding(
-                    padding: EdgeInsets.only(
-                      left: 20.0,
-                      right: 20.0,
-                      top: 20.0,
-                    ),
-                    child: Text("Team Members", style: kContainerTextStyle),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Container(
-                      height: 400,
-                      decoration: BoxDecoration(
-                        color: lightAshyNavyBlue,
-                        borderRadius: BorderRadius.circular(10.0),
+                  // This will be wrapped in a future builder that depends on
+                  // a function that returns Future<void> and loads tasksSource
+                  // the function will create Task and corresponding Staff classes
+                  // just like the load complaints one.
+                  // after bug detail update page updates or adds tasks it should
+                  // be able to notify listeners that this page will depend on
+                  // that will be a change notifier in a task updates file in models folder
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ///Team Lead
+                      const Padding(
+                        padding: EdgeInsets.only(
+                          left: 20.0,
+                          right: 20.0,
+                          top: 20.0,
+                        ),
+                        child: Text("Team Lead", style: kContainerTextStyle),
                       ),
-                      padding: const EdgeInsets.all(10.0),
-                      child: buildOtherTaskPreviewCards(),
-                    ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        child: TaskPreviewCard(task: tasksSource[0]),
+                      ),
+
+                      ///Team Members
+                      const Padding(
+                        padding: EdgeInsets.only(
+                          left: 20.0,
+                          right: 20.0,
+                          top: 20.0,
+                        ),
+                        child: Text("Team Members", style: kContainerTextStyle),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        child: Container(
+                          height: 400,
+                          decoration: BoxDecoration(
+                            color: lightAshyNavyBlue,
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          padding: const EdgeInsets.all(10.0),
+                          child: buildOtherTaskPreviewCards(),
+                        ),
+                      ),
+                    ],
                   ),
 
                   /// Below is an expanded uneditable text field title "Staff Notes and Work Plan" showing the notes from the staff

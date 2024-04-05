@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
-import 'package:bug_tracker/models/component_state.dart';
+import 'package:bug_tracker/models/state_updates.dart';
 import 'package:bug_tracker/ui_components/task_assignment_form.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
 import 'package:provider/provider.dart';
@@ -193,7 +193,7 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
                 onPress: () {
                   // update the tags using the function that notifies listeners
                   // Bug detail page in this case
-                  context.read<ComponentStateComplaint>().updateComplaintTags(
+                  context.read<StateUpdates>().updateComplaintTags(
                         complaintID: widget.complaintID,
                         newTags: selectedTags,
                       );

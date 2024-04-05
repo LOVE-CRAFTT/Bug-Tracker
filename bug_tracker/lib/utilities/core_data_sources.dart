@@ -4,8 +4,6 @@ import 'package:bug_tracker/utilities/build_staff.dart';
 import 'package:bug_tracker/utilities/complaint.dart';
 import 'package:bug_tracker/utilities/project.dart';
 
-/// TODO: create default/error classes for when db call fails
-
 /// Main complaint source.
 List complaintsSource = [
   Complaint(

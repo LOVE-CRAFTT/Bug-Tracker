@@ -19,6 +19,9 @@ class _BugsPageState extends State<BugsPage> {
 
   @override
   Widget build(BuildContext context) {
+    // based on whatever the dropdown is, either load complaint source
+    // is called or load complaint source is called and filtered.
+    // This should probably be a function
     return Scaffold(
       appBar: adminReusableAppBar("Bugs", context),
       body: LayoutBuilder(

@@ -2,7 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bug_tracker/models/overview.dart';
-import 'package:bug_tracker/models/component_state.dart';
+import 'package:bug_tracker/models/state_updates.dart';
 import 'package:bug_tracker/database/db.dart';
 import 'package:bug_tracker/sign_in.dart';
 
@@ -23,7 +23,7 @@ void main() async {
       MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (_) => Overview()),
-          ChangeNotifierProvider(create: (_) => ComponentStateComplaint())
+          ChangeNotifierProvider(create: (_) => StateUpdates())
         ],
         child: const MyApp(),
       ),

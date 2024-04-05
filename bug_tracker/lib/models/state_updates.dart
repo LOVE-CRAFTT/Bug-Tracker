@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:bug_tracker/database/db.dart';
 
 // notifies on complaint state update
-class ComponentStateComplaint extends ChangeNotifier {
+class StateUpdates extends ChangeNotifier {
   Future<void> updateComplaintState({
     required int complaintID,
     required ComplaintState newState,
