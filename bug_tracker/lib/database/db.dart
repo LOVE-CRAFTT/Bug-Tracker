@@ -32,12 +32,11 @@ class DB {
 
   //==================STAFF  RELATED============================================
   Future<Results?> getStaffDataUsingEmail(String email) async {
-    Results? results = await _conn?.query(
+    Results results = await _conn!.query(
       'SELECT * FROM staff WHERE email = ?',
       [email],
     );
-    if (results?.isEmpty ?? true) {
-      // the condition evaluates to if null(failed query) or is empty then
+    if (results.isEmpty) {
       // no staff exists
       return null;
     } else {
@@ -47,12 +46,11 @@ class DB {
   }
 
   Future<Results?> getStaffDataUsingID(int id) async {
-    Results? results = await _conn?.query(
+    Results results = await _conn!.query(
       'SELECT * FROM staff WHERE id = ?',
       [id],
     );
-    if (results?.isEmpty ?? true) {
-      // the condition evaluates to if null(failed query) or is empty then
+    if (results.isEmpty) {
       // no staff exists
       return null;
     } else {
@@ -68,24 +66,24 @@ class DB {
     required String? firstName,
     required String? middleName,
   }) async {
-    Results? result = await _conn?.query(
+    Results result = await _conn!.query(
       'insert into staff (surname, first_name, middle_name, email, password, is_admin) values (?, ?, ?, ?, ?, ?)',
       [surname, firstName, middleName, email, hashPassword("000000"), isAdmin],
     );
-    return result?.insertId;
+    return result.insertId;
   }
 
   Future<bool> updateStaffPassword({
     required int id,
     required String password,
   }) async {
-    Results? result = await _conn?.query(
+    Results result = await _conn!.query(
       'update staff set password = ? WHERE id = ?',
       [hashPassword(password), id],
     );
 
     //success
-    if (result?.insertId != null) {
+    if (result.insertId != null) {
       return true;
     } else {
       return false;
@@ -95,12 +93,11 @@ class DB {
 
   //===================USER RELATED=============================================
   Future<Results?> getUserDataUsingEmail(String email) async {
-    Results? results = await _conn?.query(
+    Results results = await _conn!.query(
       'SELECT * FROM user WHERE email = ?',
       [email],
     );
-    if (results?.isEmpty ?? true) {
-      // the condition evaluates to if null(failed query) or is empty then
+    if (results.isEmpty) {
       // no user exists
       return null;
     } else {
@@ -110,12 +107,11 @@ class DB {
   }
 
   Future<Results?> getUserDataUsingID(int id) async {
-    Results? results = await _conn?.query(
+    Results results = await _conn!.query(
       'SELECT * FROM user WHERE id = ?',
       [id],
     );
-    if (results?.isEmpty ?? true) {
-      // the condition evaluates to if null(failed query) or is empty then
+    if (results.isEmpty) {
       // no user exists
       return null;
     } else {
@@ -131,24 +127,24 @@ class DB {
     required String? firstName,
     required String? middleName,
   }) async {
-    Results? result = await _conn?.query(
+    Results result = await _conn!.query(
       'insert into user (surname, first_name, middle_name, email, password) values (?, ?, ?, ?, ?)',
       [surname, firstName, middleName, email, hashPassword(password)],
     );
-    return result?.insertId;
+    return result.insertId;
   }
 
   Future<bool> updateUserPassword({
     required int id,
     required String password,
   }) async {
-    Results? result = await _conn?.query(
+    Results result = await _conn!.query(
       'update user set password = ? WHERE id = ?',
       [hashPassword(password), id],
     );
 
     //success
-    if (result?.insertId != null) {
+    if (result.insertId != null) {
       return true;
     } else {
       return false;
@@ -161,7 +157,7 @@ class DB {
     required String projectName,
     required String? projectDetails,
   }) async {
-    Results? result = await _conn?.query(
+    Results result = await _conn!.query(
       'insert into project (name, details, project_state, date_created, date_closed) values (?, ?, ?, ?, ?)',
       [
         projectName,
@@ -171,16 +167,15 @@ class DB {
         null
       ],
     );
-    return result?.insertId;
+    return result.insertId;
   }
 
   Future<Results?> getProjectData(int id) async {
-    Results? results = await _conn?.query(
+    Results results = await _conn!.query(
       'SELECT * FROM project WHERE id = ?',
       [id],
     );
-    if (results?.isEmpty ?? true) {
-      // the condition evaluates to if null(failed query) or is empty then
+    if (results.isEmpty) {
       // no such project exists
       return null;
     } else {
@@ -197,7 +192,7 @@ class DB {
     required int associatedProject,
     required int author,
   }) async {
-    Results? result = await _conn?.query(
+    Results result = await _conn!.query(
       'insert into complaint (title, notes, associated_project, author, date_created, complaint_state) values (?, ?, ?, ?, ?, ?)',
       [
         complaintTitle,
@@ -208,21 +203,20 @@ class DB {
         ComplaintState.pending.title,
       ],
     );
-    return result?.insertId;
+    return result.insertId;
   }
 
-  Future<bool?> addTags({
+  Future<bool> addTags({
     required int complaintID,
     required List<Tags> tags,
   }) async {
     // Delete all existing tags first
-    Results? result = await _conn?.query(
+    Results result = await _conn!.query(
       'DELETE FROM tags WHERE associated_complaint = ?',
       [complaintID],
     );
-    bool successfullyDeleted = (result != null &&
-        result.affectedRows != null &&
-        result.affectedRows! >= 0);
+    bool successfullyDeleted =
+        (result.affectedRows != null && result.affectedRows! >= 0);
 
     // if deletion successful then proceed
     if (successfullyDeleted) {
@@ -232,25 +226,25 @@ class DB {
       if (tags.isEmpty) return true;
 
       // Then add all tags
-      List<Results>? results = await _conn?.queryMulti(
+      List<Results> results = await _conn!.queryMulti(
         'insert into tags (associated_complaint, tag) values (?, ?)',
         // list of lists
         tags.map((tag) => [complaintID, tag.title]).toList(),
       );
       // return true if every insert id in results.result is not null
-      return results?.every((result) => result.insertId != null);
+      return results.every((result) => result.insertId != null);
     }
-    // else process failure return null
+    // else process failure return false
     else {
-      return null;
+      return false;
     }
   }
 
-  Future<bool?> addComplaintFiles({
+  Future<bool> addComplaintFiles({
     required List<File> files,
     required int associatedComplaint,
   }) async {
-    List<Results>? results = await _conn?.queryMulti(
+    List<Results> results = await _conn!.queryMulti(
       'insert into files (file_path, associated_complaint) values (?, ?)',
       // list of lists
       files.map((file) => [file.path, associatedComplaint]).toList(),
@@ -258,14 +252,14 @@ class DB {
     // return true if every insert id in results.result is not null
     // if results is empty it returns true which is ok
     // since it means files might not have been added
-    return results?.every((result) => result.insertId != null);
+    return results.every((result) => result.insertId != null);
   }
 
   Future<Results?> getAllComplaints({required int limit}) async {
-    Results? results = await _conn?.query(
+    Results results = await _conn!.query(
       'SELECT * FROM complaint ORDER BY date_created DESC LIMIT $limit',
     );
-    if (results?.isEmpty ?? true) {
+    if (results.isEmpty) {
       // No complaints
       return null;
     } else {
@@ -280,26 +274,25 @@ class DB {
     required int limit,
     required ComplaintState state,
   }) async {
-    Results? results = await _conn?.query(
+    Results results = await _conn!.query(
       'SELECT * FROM complaint WHERE complaint_state = ? ORDER BY date_created DESC LIMIT ?',
       [state.title, limit],
     );
-    if (results?.isEmpty ?? true) {
-      // No complaints
+    if (results.isEmpty) {
+      // No such complaints
       return null;
     } else {
-      // complaint exists
+      // complaints exists
       return results;
     }
   }
 
   Future<Results?> getComplaintData(int id) async {
-    Results? result = await _conn?.query(
+    Results result = await _conn!.query(
       'SELECT * FROM complaint WHERE id = ?',
       [id],
     );
-    if (result?.isEmpty ?? true) {
-      // the condition evaluates to if null(failed query) or is empty then
+    if (result.isEmpty) {
       // no such complaint exists
       return null;
     } else {
@@ -312,13 +305,13 @@ class DB {
     required int id,
     required ComplaintState newState,
   }) async {
-    Results? result = await _conn?.query(
+    Results result = await _conn!.query(
       'update complaint set complaint_state = ? WHERE id = ?',
       [newState.title, id],
     );
 
     //success
-    if (result?.insertId != null) {
+    if (result.insertId != null) {
       return true;
     } else {
       return false;
@@ -326,10 +319,10 @@ class DB {
   }
 
   Future<Results?> getTags({required int complaintID}) async {
-    Results? results = await _conn?.query(
+    Results results = await _conn!.query(
       'SELECT * FROM tags WHERE associated_complaint = $complaintID',
     );
-    if (results?.isEmpty ?? true) {
+    if (results.isEmpty) {
       // No tags
       return null;
     } else {
@@ -339,10 +332,10 @@ class DB {
   }
 
   Future<Results?> getComplaintFiles({required int complaintID}) async {
-    Results? results = await _conn?.query(
+    Results results = await _conn!.query(
       'SELECT * FROM files WHERE associated_complaint = $complaintID',
     );
-    if (results?.isEmpty ?? true) {
+    if (results.isEmpty) {
       // No files
       return null;
     } else {

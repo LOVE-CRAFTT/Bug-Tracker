@@ -184,11 +184,9 @@ class _NewComplaintFormState extends State<NewComplaintForm> {
               child: ElevatedButton(
                 onPressed: () async {
                   if (formKey.currentState!.validate()) {
-                    /// connect to database
                     /// ensure project exists else no project error
                     /// then add complaint
                     /// if successful then add complaint files to table
-                    /// if successful disconnect from database
 
                     Results? projectData = await db.getProjectData(projectID);
                     // if project actually exists
@@ -204,14 +202,13 @@ class _NewComplaintFormState extends State<NewComplaintForm> {
                       if (newComplaintID != null) {
                         // attempt to add files if any
                         if (selectedFiles != null) {
-                          bool? filesAddedSuccessfully =
+                          bool filesAddedSuccessfully =
                               await db.addComplaintFiles(
                             files: selectedFiles!,
                             associatedComplaint: newComplaintID,
                           );
                           // if files added successfully
-                          // NOTE: if is null then I treat as false
-                          if (filesAddedSuccessfully ?? false) {
+                          if (filesAddedSuccessfully) {
                             if (context.mounted) {
                               Navigator.pop(context);
                               ScaffoldMessenger.of(context).showSnackBar(

@@ -126,9 +126,7 @@ class _NewStaffPageState extends State<NewStaffPage> {
                 buttonText: "Add",
                 onPress: () async {
                   if (formKey.currentState!.validate()) {
-                    /// connect to database
                     /// add staff and retrieve id for confirmation popup
-                    /// close connection
 
                     // attempt to add new staff to database
                     int? newStaffID = await db.addNewStaff(

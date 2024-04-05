@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:bug_tracker/database/db.dart';
 import 'package:mysql1/mysql1.dart';
 import 'package:bug_tracker/ui_components/file_preview_card.dart';
+import 'package:bug_tracker/ui_components/custom_circular_progress_indicator.dart';
 
 /// Get files related to a complaint
 Future<List<File>> getFiles({required int complaintID}) async {
@@ -39,7 +40,7 @@ FutureBuilder<List<File>> buildComplaintFiles({required int complaintID}) {
     future: getFiles(complaintID: complaintID),
     builder: (BuildContext context, AsyncSnapshot<List<File>> snapshot) {
       if (snapshot.connectionState == ConnectionState.waiting) {
-        return const CircularProgressIndicator();
+        return const CustomCircularProgressIndicator();
       } else {
         int fileCount = snapshot.data!.length;
         return SizedBox(

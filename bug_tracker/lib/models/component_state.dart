@@ -30,12 +30,12 @@ class ComponentStateComplaint extends ChangeNotifier {
     required int complaintID,
     required List<Tags> newTags,
   }) async {
-    bool? success = await db.addTags(
+    bool success = await db.addTags(
       complaintID: complaintID,
       tags: newTags,
     );
 
-    if (success ?? false) {
+    if (success) {
       notifyListeners();
     } else {
       debugPrint(

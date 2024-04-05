@@ -9,6 +9,7 @@ import 'package:bug_tracker/utilities/file_retrieval_functions.dart';
 import 'package:bug_tracker/utilities/state_retrieval_functions.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
 import 'package:bug_tracker/ui_components/task_preview_card.dart';
+import 'package:bug_tracker/ui_components/custom_circular_progress_indicator.dart';
 import 'package:bug_tracker/admin_pages/bug_detail_update_page.dart';
 import 'package:provider/provider.dart';
 import 'package:side_sheet/side_sheet.dart';
@@ -189,7 +190,7 @@ class _BugDetailPageState extends State<BugDetailPage> {
                     builder: (BuildContext context,
                         AsyncSnapshot<ComplaintState> snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const CircularProgressIndicator();
+                        return const CustomCircularProgressIndicator();
                       } else {
                         ComplaintState bugState = snapshot.data!;
 
@@ -277,7 +278,7 @@ class _BugDetailPageState extends State<BugDetailPage> {
                     builder: (BuildContext context,
                         AsyncSnapshot<List<Tags>?> snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const CircularProgressIndicator();
+                        return const CustomCircularProgressIndicator();
                       } else {
                         List<Tags>? tags = snapshot.data;
 
