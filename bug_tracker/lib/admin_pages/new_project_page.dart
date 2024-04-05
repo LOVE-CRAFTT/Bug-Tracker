@@ -86,7 +86,6 @@ class _NewProjectPageState extends State<NewProjectPage> {
                     /// add project retrieve id for confirmation popup
                     /// close connection
 
-                    await db.connect();
                     // attempt to add new project to database returning either the project id or null
                     // if the process is successful
                     int? newProjectID = await db.addNewProject(
@@ -120,7 +119,6 @@ class _NewProjectPageState extends State<NewProjectPage> {
                         );
                       }
                     }
-                    await db.close();
                   }
                 },
               ),

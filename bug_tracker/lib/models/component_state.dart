@@ -8,14 +8,10 @@ class ComponentStateComplaint extends ChangeNotifier {
     required int complaintID,
     required ComplaintState newState,
   }) async {
-    await db.connect();
-
     bool success = await db.updateComplaintState(
       id: complaintID,
       newState: newState,
     );
-
-    await db.close();
 
     // if the process was successful notify listeners
     if (success) {
@@ -34,14 +30,10 @@ class ComponentStateComplaint extends ChangeNotifier {
     required int complaintID,
     required List<Tags> newTags,
   }) async {
-    await db.connect();
-
     bool? success = await db.addTags(
       complaintID: complaintID,
       tags: newTags,
     );
-
-    await db.close();
 
     if (success ?? false) {
       notifyListeners();

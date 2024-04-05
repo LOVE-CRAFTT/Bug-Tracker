@@ -90,7 +90,6 @@ class _SignInPageState extends State<SignInPage> with WindowListener {
                           /// then get id and is_admin
                           /// if is_admin admin page receives id
 
-                          await db.connect();
                           Results? actorData;
                           bool? isCorrectPassword;
 
@@ -220,9 +219,6 @@ class _SignInPageState extends State<SignInPage> with WindowListener {
                               );
                             }
                           }
-
-                          // close connection
-                          await db.close();
                         }
                       },
                     ),

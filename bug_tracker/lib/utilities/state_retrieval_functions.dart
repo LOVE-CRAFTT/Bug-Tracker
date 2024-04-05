@@ -9,8 +9,6 @@ Future<ComplaintState> getCurrentComplaintState(
   // to be returned
   ComplaintState complaintState;
 
-  await db.connect();
-
   Results? result = await db.getComplaintData(complaintID);
 
   // if there is such a complaint
@@ -25,6 +23,5 @@ Future<ComplaintState> getCurrentComplaintState(
     complaintState = ComplaintState.pending;
   }
 
-  await db.close();
   return complaintState;
 }

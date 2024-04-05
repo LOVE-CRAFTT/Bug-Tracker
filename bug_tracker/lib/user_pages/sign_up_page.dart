@@ -120,7 +120,6 @@ class SignUpPage extends StatelessWidget {
                       /// set global id
                       /// move to complaint page
                       /// close connection
-                      db.connect();
 
                       // if actor data is null then user doesn't exist so attempt to create
                       Results? actorData =
@@ -196,9 +195,6 @@ class SignUpPage extends StatelessWidget {
                           );
                         }
                       }
-
-                      // close the database
-                      await db.close();
                     }
                   },
                 ),

@@ -9,8 +9,6 @@ import 'package:bug_tracker/ui_components/file_preview_card.dart';
 Future<List<File>> getFiles({required int complaintID}) async {
   List<File> complaintFiles;
 
-  await db.connect();
-
   Results? results = await db.getComplaintFiles(complaintID: complaintID);
 
   // if there are any files
@@ -27,8 +25,6 @@ Future<List<File>> getFiles({required int complaintID}) async {
   else {
     complaintFiles = [];
   }
-
-  await db.close();
 
   return complaintFiles;
 }

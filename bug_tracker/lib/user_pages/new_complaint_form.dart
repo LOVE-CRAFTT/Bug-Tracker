@@ -190,7 +190,6 @@ class _NewComplaintFormState extends State<NewComplaintForm> {
                     /// if successful then add complaint files to table
                     /// if successful disconnect from database
 
-                    await db.connect();
                     Results? projectData = await db.getProjectData(projectID);
                     // if project actually exists
                     if (projectData != null) {
@@ -305,8 +304,6 @@ class _NewComplaintFormState extends State<NewComplaintForm> {
                         );
                       }
                     }
-
-                    await db.close();
                   }
                 },
                 style: TextButton.styleFrom(

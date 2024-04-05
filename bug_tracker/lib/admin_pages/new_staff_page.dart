@@ -130,8 +130,6 @@ class _NewStaffPageState extends State<NewStaffPage> {
                     /// add staff and retrieve id for confirmation popup
                     /// close connection
 
-                    await db.connect();
-
                     // attempt to add new staff to database
                     int? newStaffID = await db.addNewStaff(
                       isAdmin: isAdmin,
@@ -169,7 +167,6 @@ class _NewStaffPageState extends State<NewStaffPage> {
                         );
                       }
                     }
-                    await db.close();
                   }
                 },
               ),

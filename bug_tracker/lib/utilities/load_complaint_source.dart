@@ -14,8 +14,6 @@ Future<void> loadComplaintSource({
 }) async {
   List<Complaint> processedComplaints = [];
 
-  await db.connect();
-
   // get all the complaints
   Results? results = await db.getAllComplaints(limit: limit);
 
@@ -51,17 +49,13 @@ Future<void> loadComplaintSource({
   else {
     complaintsSource = [];
   }
-
-  await db.close();
 }
 
 // Helper function to get tags
 Future<List<Tags>?> retrieveTags({
   required int complaintID,
 }) async {
-  db.connect();
   Results? results = await db.getTags(complaintID: complaintID);
-  db.close();
 
   // will contain the processed tags
   List<Tags> processedTags = [];

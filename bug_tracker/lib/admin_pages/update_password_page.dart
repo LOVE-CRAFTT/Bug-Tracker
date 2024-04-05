@@ -84,7 +84,6 @@ class _UpdatePasswordPageState extends State<UpdatePasswordPage> {
                     /// if true set new password hash else wrong password
                     /// disconnect from database
 
-                    await db.connect();
                     Results? actorData = actorIsUser
                         ? await db.getUserDataUsingID(globalActorID)
                         : await db.getStaffDataUsingID(globalActorID);
@@ -181,8 +180,6 @@ class _UpdatePasswordPageState extends State<UpdatePasswordPage> {
                         );
                       }
                     }
-
-                    await db.close();
                   }
                 },
               ),
