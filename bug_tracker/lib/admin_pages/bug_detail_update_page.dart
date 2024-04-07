@@ -326,11 +326,9 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
                       associatedComplaint: widget.complaint,
 
                       // always three weeks from now
-                      dueDate: DateTime.now()
-                          .add(
-                            const Duration(days: 21),
-                          )
-                          .toUtc(),
+                      dueDate: DateTime.now().add(
+                        const Duration(days: 21),
+                      ),
                       assignedStaff: newTeamLeadValue!,
                       isTeamLead: true,
                     ),
@@ -387,11 +385,9 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
                         associatedComplaint: widget.complaint,
 
                         // 3 weeks from now always
-                        dueDate: DateTime.now()
-                            .add(
-                              const Duration(days: 21),
-                            )
-                            .toUtc(),
+                        dueDate: DateTime.now().add(
+                          const Duration(days: 21),
+                        ),
                         assignedStaff: newTeamMemberValues[i],
                         isTeamLead: false,
                       ),
