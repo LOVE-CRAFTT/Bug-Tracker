@@ -30,12 +30,12 @@ class BugDetailUpdatePage extends StatefulWidget {
 
 class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
   /// Task and drop down value for team lead
-  TextEditingController teamLeadTaskController = TextEditingController();
-  Staff? teamLeadValue;
+  TextEditingController newTeamLeadTaskTextController = TextEditingController();
+  Staff? newTeamLeadValue;
 
   /// List of tasks and drop down values (for team members)
-  List<TextEditingController> teamMembersTaskControllers = [];
-  List<Staff?> teamMemberValues = [];
+  List<TextEditingController> newTeamMembersTaskTextControllers = [];
+  List<Staff> newTeamMemberValues = [];
 
   /// selected tags
   List<Tags> selectedTags = [];
@@ -44,43 +44,45 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
   late bool showTeamSection;
 
   //
-  late Task? teamLeadTask;
-  late List<Task> teamMemberTasks;
+  late Task? originalTeamLeadTask;
+  late List<Task> originalTeamMemberTasks;
 
   // on initState selectedTags should be currentTags
   // on initState teamMember values should be the corresponding values from
   // current tasks, and task controllers should contain the corresponding task strings
   @override
   void initState() {
-    teamLeadTask = widget.currentTasks.isEmpty
+    selectedTags = widget.currentTags ?? [];
+    originalTeamLeadTask = widget.currentTasks.isEmpty
         ? null
         : widget.currentTasks.firstWhere(
             (task) => task.isTeamLead,
           );
-    teamMemberTasks = widget.currentTasks.length > 1
+    originalTeamMemberTasks = widget.currentTasks.length > 1
         ? widget.currentTasks
             .where(
               (task) => !task.isTeamLead,
             )
             .toList()
         : [];
-    selectedTags = widget.currentTags ?? [];
     // default value for team Lead
-    teamLeadValue = teamLeadTask?.assignedStaff ?? staffSource.first;
-    teamLeadTaskController.text = teamLeadTask?.task ?? "";
-    teamMemberValues = teamMemberTasks
+    newTeamLeadValue = originalTeamLeadTask?.assignedStaff ?? staffSource.first;
+    newTeamLeadTaskTextController.text = originalTeamLeadTask?.task ?? "";
+    newTeamMemberValues = originalTeamMemberTasks
         .map(
           (task) => task.assignedStaff,
         )
         .toList();
-    teamMembersTaskControllers = teamMemberTasks
+    newTeamMembersTaskTextControllers = originalTeamMemberTasks
         .map(
           (task) => TextEditingController(text: task.task),
         )
         .toList();
 
     // so the team section is enabled for drawing
-    teamMemberValues.isEmpty ? showTeamSection = false : showTeamSection = true;
+    newTeamMemberValues.isEmpty
+        ? showTeamSection = false
+        : showTeamSection = true;
     super.initState();
   }
 
@@ -177,11 +179,11 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
               // if no team lead ensure placeholder for team lead so that done button
               // is not clicked accidentally and an erroneous value is added to the database
               // essentially so actual staff(team lead) is added
-              dropDownValue: teamLeadValue,
-              taskController: teamLeadTaskController,
+              dropDownValue: newTeamLeadValue,
+              taskController: newTeamLeadTaskTextController,
               onChange: (value) {
                 setState(() {
-                  teamLeadValue = value;
+                  newTeamLeadValue = value;
                 });
               },
             ),
@@ -198,13 +200,17 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
                 style: kContainerTextStyle,
               ),
             ),
-            for (int i = 0; i < teamMembersTaskControllers.length; i++)
+            for (int i = 0; i < newTeamMembersTaskTextControllers.length; i++)
               TaskAssignmentForm(
-                  dropDownValue: teamMemberValues[i],
-                  taskController: teamMembersTaskControllers[i],
+                  dropDownValue: newTeamMemberValues[i],
+                  taskController: newTeamMembersTaskTextControllers[i],
                   onChange: (value) {
                     setState(() {
-                      teamMemberValues[i] = value;
+                      // value will always exist since
+                      // when adding new task assignment form we add staffSource.first
+                      // and when drawing, it only draws if values for staff is available
+                      // i.e for statement length check
+                      newTeamMemberValues[i] = value!;
                     });
                   }),
 
@@ -221,10 +227,10 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
                     onPressed: () {
                       setState(
                         () {
-                          teamMembersTaskControllers.add(
+                          newTeamMembersTaskTextControllers.add(
                             TextEditingController(),
                           );
-                          teamMemberValues.add(
+                          newTeamMemberValues.add(
                             staffSource.first,
                           );
                         },
@@ -235,7 +241,7 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
                 ),
 
                 // only show if there is a team member to be removed
-                if (teamMemberValues.isNotEmpty)
+                if (newTeamMemberValues.isNotEmpty)
                   Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: ElevatedButton(
@@ -245,8 +251,8 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
                       onPressed: () {
                         setState(
                           () {
-                            teamMembersTaskControllers.removeLast();
-                            teamMemberValues.removeLast();
+                            newTeamMembersTaskTextControllers.removeLast();
+                            newTeamMemberValues.removeLast();
                           },
                         );
                       },
@@ -271,8 +277,8 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
                   List<Task> taskUpdates = [];
 
                   //if there isn't text(task) in any field then notify that the task is necessary
-                  if (teamLeadTaskController.text.isEmpty ||
-                      teamMembersTaskControllers
+                  if (newTeamLeadTaskTextController.text.isEmpty ||
+                      newTeamMembersTaskTextControllers
                           .any((controller) => controller.text.isEmpty)) {
                     showDialog(
                       context: context,
@@ -295,20 +301,23 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
                     Task(
                       // id is to be replaces so placeholder
                       id: 0,
-                      task: teamLeadTaskController.text,
+                      task: newTeamLeadTaskTextController.text,
 
                       // if the text in teamLeadTaskController has changed
                       // from the original then its updated else its new
                       // Also if the original is not empty then its updated
-                      // The taskState has to not be completed, overdue or due today
+                      // The original taskState has to not be completed, overdue or due today
                       // before changing to updated since those are more important
-                      taskState: teamLeadTask?.taskState !=
+                      taskState: originalTeamLeadTask?.taskState !=
                                   TaskState.completed &&
-                              teamLeadTask?.taskState != TaskState.overdue &&
-                              teamLeadTask?.taskState != TaskState.dueToday &&
-                              (teamLeadTask != null &&
-                                  teamLeadTask!.task.isNotEmpty) &&
-                              teamLeadTaskController.text != teamLeadTask?.task
+                              originalTeamLeadTask?.taskState !=
+                                  TaskState.overdue &&
+                              originalTeamLeadTask?.taskState !=
+                                  TaskState.dueToday &&
+                              (originalTeamLeadTask != null &&
+                                  originalTeamLeadTask!.task.isNotEmpty) &&
+                              newTeamLeadTaskTextController.text !=
+                                  originalTeamLeadTask?.task
                           ? TaskState.updated
                           : TaskState.fresh,
                       associatedComplaint: widget.complaint,
@@ -319,41 +328,50 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
                             const Duration(days: 21),
                           )
                           .toUtc(),
-                      assignedStaff: teamLeadValue!,
+                      assignedStaff: newTeamLeadValue!,
                       isTeamLead: true,
                     ),
                   );
 
                   // add team members if any
                   // if this runs values and controllers won't be null because then
-                  // teamMemberValues will be empty
-                  for (var i = 0; i < teamMembersTaskControllers.length; i++) {
+                  // newTeamMembersTaskTextControllers will be empty
+                  for (var i = 0;
+                      i < newTeamMembersTaskTextControllers.length;
+                      i++) {
                     taskUpdates.add(
                       Task(
                         // id is unnecessary since will be replaced in db addition
                         // replacing all with placeholder 0
                         id: 0,
-                        task: teamMembersTaskControllers[i].text,
+                        task: newTeamMembersTaskTextControllers[i].text,
 
-                        // if teamMemberTasks is large enough to prevent value access error
-                        // and if teamMembersTaskControllers list is large enough for the same reasons
+                        // if originalTeamMemberTasks is large enough to prevent value access error
+                        // and if newTeamMembersTaskTextControllers list is large enough for the same reasons
                         // the isNotEmpty check is just part of the check for adequate size
                         // and the teamMemberTask.TaskState at current index is not
                         // completed, overdue or due today as those are more important
                         // and finally the teamMember task controller at current index
                         // which contains the updated task is different from the original
                         // contained in teamMemberTasks list at current index, set as updated else set as new
-                        taskState: (teamMemberTasks.isNotEmpty &&
-                                    teamMemberTasks.length >= i &&
-                                    teamMembersTaskControllers.length >= i) &&
-                                teamMemberTasks.elementAt(i).taskState !=
+                        taskState: (originalTeamMemberTasks.isNotEmpty &&
+                                    originalTeamMemberTasks.length >= i) &&
+                                originalTeamMemberTasks
+                                        .elementAt(i)
+                                        .taskState !=
                                     TaskState.completed &&
-                                teamMemberTasks.elementAt(i).taskState !=
+                                originalTeamMemberTasks
+                                        .elementAt(i)
+                                        .taskState !=
                                     TaskState.overdue &&
-                                teamMemberTasks.elementAt(i).taskState !=
+                                originalTeamMemberTasks
+                                        .elementAt(i)
+                                        .taskState !=
                                     TaskState.dueToday &&
-                                (teamMembersTaskControllers.elementAt(i).text !=
-                                    teamMemberTasks.elementAt(i).task)
+                                (newTeamMembersTaskTextControllers
+                                        .elementAt(i)
+                                        .text !=
+                                    originalTeamMemberTasks.elementAt(i).task)
                             ? TaskState.updated
                             : TaskState.fresh,
                         associatedComplaint: widget.complaint,
@@ -364,7 +382,7 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
                               const Duration(days: 21),
                             )
                             .toUtc(),
-                        assignedStaff: teamMemberValues[i]!,
+                        assignedStaff: newTeamMemberValues[i],
                         isTeamLead: false,
                       ),
                     );
@@ -383,8 +401,8 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
                       .updateTasks(taskUpdates: taskUpdates);
 
                   Navigator.pop(context);
-                  teamLeadTaskController.clear();
-                  for (var controller in teamMembersTaskControllers) {
+                  newTeamLeadTaskTextController.clear();
+                  for (var controller in newTeamMembersTaskTextControllers) {
                     controller.clear();
                   }
                   showTeamSection = false;
