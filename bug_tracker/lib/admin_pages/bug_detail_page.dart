@@ -1,36 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:side_sheet/side_sheet.dart';
 import 'package:bug_tracker/models/component_state_updates.dart';
+import 'package:bug_tracker/models/task_update.dart';
 import 'package:bug_tracker/utilities/constants.dart';
+import 'package:bug_tracker/utilities/task.dart';
+import 'package:bug_tracker/utilities/complaint.dart';
 import 'package:bug_tracker/utilities/build_complaint_notes.dart';
 import 'package:bug_tracker/utilities/tools.dart';
 import 'package:bug_tracker/utilities/core_data_sources.dart';
-import 'package:bug_tracker/utilities/load_complaint_source.dart';
+import 'package:bug_tracker/utilities/load_complaints_source.dart';
+import 'package:bug_tracker/utilities/load_tasks_source.dart';
+import 'package:bug_tracker/utilities/load_staff_source.dart';
 import 'package:bug_tracker/utilities/file_retrieval_functions.dart';
 import 'package:bug_tracker/utilities/state_retrieval_functions.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
 import 'package:bug_tracker/ui_components/task_preview_card.dart';
 import 'package:bug_tracker/ui_components/custom_circular_progress_indicator.dart';
 import 'package:bug_tracker/admin_pages/bug_detail_update_page.dart';
-import 'package:provider/provider.dart';
-import 'package:side_sheet/side_sheet.dart';
 
 class BugDetailPage extends StatefulWidget {
   const BugDetailPage({
     super.key,
-    required this.ticketNumber,
-    required this.projectName,
-    required this.bug,
-    required this.bugNotes,
-    required this.dateCreated,
-    required this.author,
+    required this.complaint,
   });
 
-  final int ticketNumber;
-  final String projectName;
-  final String bug;
-  final String? bugNotes;
-  final String author;
-  final String dateCreated;
+  final Complaint complaint;
 
   @override
   State<BugDetailPage> createState() => _BugDetailPageState();
@@ -53,14 +48,14 @@ class _BugDetailPageState extends State<BugDetailPage> {
     // if complaint state is pending meaning its a new complaint
     // the state should be automatically set as acknowledged.
     if (await getCurrentComplaintState(
-          complaintID: widget.ticketNumber,
+          complaintID: widget.complaint.ticketNumber,
         ) ==
         ComplaintState.pending) {
       //State's mounted property
       if (mounted) {
         // this then notifies listeners
         context.read<ComponentStateUpdates>().updateComplaintState(
-              complaintID: widget.ticketNumber,
+              complaintID: widget.complaint.ticketNumber,
               newState: ComplaintState.acknowledged,
             );
         ScaffoldMessenger.of(context).showSnackBar(
@@ -77,8 +72,12 @@ class _BugDetailPageState extends State<BugDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    // watch ComponentStateComplaint for updates to complaint state and rebuild
+    // watch ComponentStateUpdates for updates to complaint and task states
+    // and rebuild
     context.watch<ComponentStateUpdates>();
+
+    //watch TaskUpdate for updates to tasks and rebuild
+    context.watch<TaskUpdate>();
 
     return Scaffold(
       appBar: genericTaskBar("Bug Detail"),
@@ -103,8 +102,15 @@ class _BugDetailPageState extends State<BugDetailPage> {
                         buttonText: "Update",
                         onPress: () async {
                           List<Tags>? currentTags = await retrieveTags(
-                            complaintID: widget.ticketNumber,
+                            complaintID: widget.complaint.ticketNumber,
                           );
+                          List<Task> currentTasks =
+                              await retrieveTasksByComplaint(
+                            complaintID: widget.complaint.ticketNumber,
+                          );
+
+                          //loading staff source for the dropdown in task assignment form
+                          await loadStaffSource();
                           if (context.mounted) {
                             SideSheet.right(
                               context: context,
@@ -113,8 +119,9 @@ class _BugDetailPageState extends State<BugDetailPage> {
                               sheetBorderRadius: 10.0,
                               body: BugDetailUpdatePage(
                                 constraints: constraints,
-                                complaintID: widget.ticketNumber,
+                                complaint: widget.complaint,
                                 currentTags: currentTags,
+                                currentTasks: currentTasks,
                               ),
                             );
                           }
@@ -128,13 +135,13 @@ class _BugDetailPageState extends State<BugDetailPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Bug ID: ${widget.ticketNumber}",
+                          "Bug ID: ${widget.complaint.ticketNumber}",
                           style: kContainerTextStyle.copyWith(
                             fontSize: 14.0,
                           ),
                         ),
                         Text(
-                          "Date Created: ${widget.dateCreated}",
+                          convertToDateString(widget.complaint.dateCreated),
                           style: kContainerTextStyle.copyWith(
                             fontSize: 14.0,
                           ),
@@ -145,7 +152,7 @@ class _BugDetailPageState extends State<BugDetailPage> {
                   Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Text(
-                      "Author: ${widget.author}",
+                      "Author: ${widget.complaint.author}",
                       style: kContainerTextStyle.copyWith(
                         fontSize: 15.0,
                       ),
@@ -154,7 +161,7 @@ class _BugDetailPageState extends State<BugDetailPage> {
                   Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Text(
-                      "Project: ${widget.projectName}",
+                      "Project: ${widget.complaint.associatedProject.name}",
                       style: kContainerTextStyle.copyWith(
                         fontSize: 15.0,
                       ),
@@ -163,7 +170,7 @@ class _BugDetailPageState extends State<BugDetailPage> {
                   Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Text(
-                      "Bug: ${widget.bug}",
+                      "Bug: ${widget.complaint.complaint}",
                       style: kContainerTextStyle.copyWith(
                         fontSize: 30.0,
                         color: Colors.white,
@@ -180,11 +187,11 @@ class _BugDetailPageState extends State<BugDetailPage> {
                       top: 20.0,
                     ),
                     child: Text(
-                      "Complaint Notes From Author${(widget.bugNotes != null ? "" : ": None")}",
+                      "Complaint Notes From Author${(widget.complaint.complaintNotes != null ? "" : ": None")}",
                       style: kContainerTextStyle,
                     ),
                   ),
-                  if (widget.bugNotes != null)
+                  if (widget.complaint.complaintNotes != null)
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20.0),
                       child: Container(
@@ -199,7 +206,7 @@ class _BugDetailPageState extends State<BugDetailPage> {
                           padding: const EdgeInsets.all(10.0),
                           child: SingleChildScrollView(
                             child: Text(
-                              widget.bugNotes!,
+                              widget.complaint.complaintNotes!,
                               style: kContainerTextStyle.copyWith(
                                 fontSize: 15.0,
                               ),
@@ -218,12 +225,13 @@ class _BugDetailPageState extends State<BugDetailPage> {
                     ),
                     child: Text("Files: ", style: kContainerTextStyle),
                   ),
-                  buildComplaintFiles(complaintID: widget.ticketNumber),
+                  buildComplaintFiles(
+                      complaintID: widget.complaint.ticketNumber),
 
                   // Gets the actual state of the complaint when it is updated
                   FutureBuilder(
                     future: getCurrentComplaintState(
-                      complaintID: widget.ticketNumber,
+                      complaintID: widget.complaint.ticketNumber,
                     ),
                     builder: (BuildContext context,
                         AsyncSnapshot<ComplaintState> snapshot) {
@@ -312,7 +320,8 @@ class _BugDetailPageState extends State<BugDetailPage> {
 
                   // Gets the actual tags of the complaint when it is updated
                   FutureBuilder(
-                    future: retrieveTags(complaintID: widget.ticketNumber),
+                    future: retrieveTags(
+                        complaintID: widget.complaint.ticketNumber),
                     builder: (BuildContext context,
                         AsyncSnapshot<List<Tags>?> snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
@@ -387,45 +396,84 @@ class _BugDetailPageState extends State<BugDetailPage> {
                   // after bug detail update page updates or adds tasks it should
                   // be able to notify listeners that this page will depend on
                   // that will be a change notifier in a task updates file in models folder
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ///Team Lead
-                      const Padding(
-                        padding: EdgeInsets.only(
-                          left: 20.0,
-                          right: 20.0,
-                          top: 20.0,
-                        ),
-                        child: Text("Team Lead", style: kContainerTextStyle),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                        child: TaskPreviewCard(task: tasksSource[0]),
-                      ),
+                  FutureBuilder(
+                    future: loadTasksSourceByComplaint(
+                        complaintID: widget.complaint.ticketNumber),
+                    builder:
+                        (BuildContext context, AsyncSnapshot<void> snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const CustomCircularProgressIndicator();
+                      } else {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // team lead's task is then assured
+                            if (tasksSource.isNotEmpty) ...[
+                              ///Team Lead
+                              const Padding(
+                                padding: EdgeInsets.only(
+                                  left: 20.0,
+                                  right: 20.0,
+                                  top: 20.0,
+                                ),
+                                child: Text("Team Lead",
+                                    style: kContainerTextStyle),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20.0),
+                                child: TaskPreviewCard(
+                                    task: tasksSource
+                                        .firstWhere((task) => task.isTeamLead)),
+                              ),
+                            ],
 
-                      ///Team Members
-                      const Padding(
-                        padding: EdgeInsets.only(
-                          left: 20.0,
-                          right: 20.0,
-                          top: 20.0,
-                        ),
-                        child: Text("Team Members", style: kContainerTextStyle),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                        child: Container(
-                          height: 400,
-                          decoration: BoxDecoration(
-                            color: lightAshyNavyBlue,
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          padding: const EdgeInsets.all(10.0),
-                          child: buildOtherTaskPreviewCards(),
-                        ),
-                      ),
-                    ],
+                            // taskSource length can be empty or 1 meaning no assigned staff
+                            // or just team lead respectively
+                            // this check ensures taskSource length is greater that 1 i.e team lead
+                            if (tasksSource.length > 1) ...[
+                              ///Team Members
+                              const Padding(
+                                padding: EdgeInsets.only(
+                                  left: 20.0,
+                                  right: 20.0,
+                                  top: 20.0,
+                                ),
+                                child: Text("Team Members",
+                                    style: kContainerTextStyle),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20.0),
+                                child: Container(
+                                  height: 400,
+                                  decoration: BoxDecoration(
+                                    color: lightAshyNavyBlue,
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: ListView.builder(
+                                    itemCount: tasksSource.length - 1,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      // taskSource without teamLead's task
+                                      List<Task> nonTeamLeadTasks = tasksSource
+                                          .where(
+                                            (task) => task.isTeamLead == false,
+                                          )
+                                          .toList();
+                                      return TaskPreviewCard(
+                                        task: nonTeamLeadTasks[index],
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ]
+                          ],
+                        );
+                      }
+                    },
                   ),
 
                   /// Below is an expanded uneditable text field title "Staff Notes and Work Plan" showing the notes from the staff
@@ -466,13 +514,4 @@ class _BugDetailPageState extends State<BugDetailPage> {
       ),
     );
   }
-}
-
-ListView buildOtherTaskPreviewCards() {
-  return ListView.builder(
-    itemCount: tasksSource.length,
-    itemBuilder: (BuildContext context, int index) {
-      return TaskPreviewCard(task: tasksSource[index]);
-    },
-  );
 }

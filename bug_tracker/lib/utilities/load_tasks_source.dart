@@ -1,0 +1,53 @@
+import 'package:mysql1/mysql1.dart';
+import 'package:bug_tracker/database/db.dart';
+import 'package:bug_tracker/utilities/task.dart';
+import 'package:bug_tracker/utilities/staff.dart';
+import 'package:bug_tracker/utilities/core_data_sources.dart';
+
+Future<void> loadTasksSourceByComplaint({required int complaintID}) async {
+  List<Task> processedTasks = [];
+
+  // get tasks by associated complaint from database
+  Results? results = await db.getTasksByComplaint(complaintID: complaintID);
+
+  //if there are associated tasks
+  if (results != null) {
+    // process them into task classes
+    for (ResultRow taskRow in results) {
+      // get assigned staff here since can't await in constructor
+      Results? staffResult =
+          await db.getStaffDataUsingID(taskRow['associated_staff']);
+      ResultRow? staffRow = staffResult?.first;
+
+      processedTasks.add(
+        Task.fromResultRow(
+          taskRow: taskRow,
+          // if tasks are being viewed as a result of this function then
+          // the complaintsSource has already been loaded even if it is sorted
+          // since all complaints/bugs are retrieved from the complaintsSource list
+          associatedComplaint: complaintsSource.firstWhere(
+            (complaint) =>
+                complaint.ticketNumber == taskRow['associated_complaint'],
+          ),
+          assignedStaff: Staff.fromResultRow(staffRow: staffRow!),
+        ),
+      );
+    }
+    tasksSource = processedTasks;
+  }
+  // if no tasks
+  else {
+    tasksSource = [];
+  }
+}
+
+// work around to retrieve tasks by complaint
+Future<List<Task>> retrieveTasksByComplaint({required int complaintID}) async {
+  await loadTasksSourceByComplaint(complaintID: complaintID);
+  return tasksSource;
+}
+
+// Get task by staff
+// Get by associated Complaint
+// NOTE: make get by status be an operation on the already filled tasksSource
+// list in order to reduce query complexity

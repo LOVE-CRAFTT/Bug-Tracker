@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
 import 'package:bug_tracker/database/db.dart';
+import 'package:mysql1/mysql1.dart';
 
 /// Separated this way so set-state can be accessed
 class NewStaffPage extends StatefulWidget {
@@ -127,37 +128,55 @@ class _NewStaffPageState extends State<NewStaffPage> {
                 onPress: () async {
                   if (formKey.currentState!.validate()) {
                     /// add staff and retrieve id for confirmation popup
-
-                    // attempt to add new staff to database
-                    int? newStaffID = await db.addNewStaff(
-                      isAdmin: isAdmin,
-                      email: email,
-                      surname: surname,
-                      firstName: firstName,
-                      middleName: middleName,
-                    );
-                    // if staff was added successfully
-                    if (newStaffID != null) {
-                      if (context.mounted) {
-                        Navigator.pop(context);
-                        surnameController.clear();
-                        middleNameController.clear();
-                        firstNameController.clear();
-                        staffEmailController.clear();
-                        await buildConfirmationPopup(
-                          context,
-                          newProjectID: null,
-                          newStaffID: newStaffID,
-                        );
+                    /// if staff doesn't already exist
+                    // ensure staff doesn't already exist
+                    Results? staffData = await db.getUserDataUsingEmail(email);
+                    if (staffData == null) {
+                      // attempt to add new staff to database
+                      int? newStaffID = await db.addNewStaff(
+                        isAdmin: isAdmin,
+                        email: email,
+                        surname: surname,
+                        firstName: firstName,
+                        middleName: middleName,
+                      );
+                      // if staff was added successfully
+                      if (newStaffID != null) {
+                        if (context.mounted) {
+                          Navigator.pop(context);
+                          surnameController.clear();
+                          middleNameController.clear();
+                          firstNameController.clear();
+                          staffEmailController.clear();
+                          await buildConfirmationPopup(
+                            context,
+                            newProjectID: null,
+                            newStaffID: newStaffID,
+                          );
+                        }
+                      }
+                      // if staff addition failed
+                      else {
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                "Process Failed! Try again later",
+                                style: kContainerTextStyle.copyWith(
+                                    color: Colors.black),
+                              ),
+                            ),
+                          );
+                        }
                       }
                     }
-                    // if staff addition failed
-                    else {
+                    // else staff exists already notify user
+                    {
                       if (context.mounted) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text(
-                              "Process Failed! Try again later",
+                              "Staff already exists",
                               style: kContainerTextStyle.copyWith(
                                   color: Colors.black),
                             ),

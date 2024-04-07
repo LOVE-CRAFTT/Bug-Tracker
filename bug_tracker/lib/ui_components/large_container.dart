@@ -4,7 +4,7 @@ import 'package:bug_tracker/ui_components/task_preview_lite.dart';
 import 'package:bug_tracker/ui_components/custom_circular_progress_indicator.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/core_data_sources.dart';
-import 'package:bug_tracker/utilities/load_complaint_source.dart';
+import 'package:bug_tracker/utilities/load_complaints_source.dart';
 
 ///Provides access to main work data
 ///Implemented as a container of fixed height and variable width
@@ -110,7 +110,7 @@ class _LargeContainerState extends State<LargeContainer> {
 
   FutureBuilder<void> getBugsList(BuildContext context) {
     return FutureBuilder(
-      future: loadComplaintSource(limit: limit),
+      future: loadComplaintsSource(limit: limit),
       builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const CustomCircularProgressIndicator();

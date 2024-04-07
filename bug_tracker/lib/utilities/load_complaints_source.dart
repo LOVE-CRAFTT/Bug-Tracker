@@ -9,7 +9,7 @@ import 'package:mysql1/mysql1.dart';
 // complaints are processed here and loaded into complaints classes
 // classes are then loaded into a list for any further processing
 // and put in complaintsSource list
-Future<void> loadComplaintSource({
+Future<void> loadComplaintsSource({
   required int limit,
 }) async {
   List<Complaint> processedComplaints = [];
@@ -81,12 +81,6 @@ Future<List<Tags>?> retrieveTags({
 // Get by user
 // Get by project
 // NOTE: make get by status be an operation on the already filled complaintsSource
-// list in order to reduce query complexity
-//
-// Get all tasks
-// Get by staff
-// Get by associated Complaint
-// NOTE: make get by status be an operation on the already filled tasksSource
 // list in order to reduce query complexity
 //
 // Get all Projects

@@ -21,12 +21,7 @@ TableRow buildTableRow({
             context,
             MaterialPageRoute(
               builder: (context) => BugDetailPage(
-                ticketNumber: complaint.ticketNumber,
-                projectName: complaint.associatedProject.name,
-                bug: complaint.complaint,
-                bugNotes: complaint.complaintNotes,
-                dateCreated: convertToDateString(complaint.dateCreated),
-                author: complaint.author,
+                complaint: complaint,
               ),
             ),
           );

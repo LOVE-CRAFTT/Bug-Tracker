@@ -3,7 +3,7 @@ import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/tools.dart';
 import 'package:bug_tracker/ui_components/admin_appbar.dart';
 import 'package:bug_tracker/ui_components/staff_overview_card.dart';
-import 'package:bug_tracker/utilities/build_staff.dart';
+import 'package:bug_tracker/utilities/core_data_sources.dart';
 
 class StaffPage extends StatefulWidget {
   const StaffPage({super.key});

@@ -19,7 +19,26 @@ class ComponentStateUpdates extends ChangeNotifier {
     }
     // else debug print failed to update to acknowledged
     else {
-      printStateUpdateError(attemptedState: newState);
+      printStateUpdateError(attemptedState: newState.title);
+    }
+  }
+
+  Future<void> updateTaskState({
+    required int taskID,
+    required TaskState newState,
+  }) async {
+    bool success = await db.updateTaskState(
+      id: taskID,
+      newState: newState,
+    );
+
+    // if the process was successful notify listeners
+    if (success) {
+      notifyListeners();
+    }
+    // else debug print failed to update to acknowledged
+    else {
+      printStateUpdateError(attemptedState: newState.title);
     }
   }
 
@@ -45,7 +64,6 @@ class ComponentStateUpdates extends ChangeNotifier {
   }
 }
 
-void printStateUpdateError({required ComplaintState attemptedState}) =>
-    debugPrint(
-      "Failed to update state to ${attemptedState.title}",
+void printStateUpdateError({required String attemptedState}) => debugPrint(
+      "Failed to update state to $attemptedState",
     );

@@ -47,12 +47,7 @@ class BugReports extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => BugDetailPage(
-                    ticketNumber: bugReport.ticketNumber,
-                    projectName: bugReport.associatedProject.name,
-                    bug: bugReport.complaint,
-                    bugNotes: bugReport.complaintNotes,
-                    dateCreated: convertToDateString(bugReport.dateCreated),
-                    author: bugReport.author,
+                    complaint: bugReport,
                   ),
                 ),
               );

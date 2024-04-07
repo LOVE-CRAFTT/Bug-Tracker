@@ -1,7 +1,8 @@
-import 'package:bug_tracker/utilities/tools.dart';
-import 'package:bug_tracker/utilities/constants.dart';
-import 'package:mysql1/mysql1.dart';
 import 'dart:io';
+import 'package:mysql1/mysql1.dart';
+import 'package:bug_tracker/utilities/tools.dart';
+import 'package:bug_tracker/utilities/task.dart';
+import 'package:bug_tracker/utilities/constants.dart';
 
 DB db = DB();
 
@@ -87,6 +88,19 @@ class DB {
       return true;
     } else {
       return false;
+    }
+  }
+
+  Future<Results?> getAllStaff() async {
+    Results results = await _conn!.query(
+      'SELECT * FROM staff',
+    );
+    if (results.isEmpty) {
+      // No staff
+      return null;
+    } else {
+      // staff exists
+      return results;
     }
   }
   //============================================================================
@@ -344,5 +358,95 @@ class DB {
     }
   }
 
+  //============================================================================
+
+  //=================TASK RELATED===============================================
+  Future<Results?> getTasksByComplaint({
+    required int complaintID,
+  }) async {
+    Results results = await _conn!.query(
+      'SELECT * FROM task WHERE associated_complaint = ?',
+      [complaintID],
+    );
+    if (results.isEmpty) {
+      // No associated tasks
+      return null;
+    } else {
+      // tasks exist
+      return results;
+    }
+  }
+
+  Future<Results?> getTasksByStaff({
+    required int staffID,
+  }) async {
+    Results results = await _conn!.query(
+      'SELECT * FROM task WHERE associated_staff = ?',
+      [staffID],
+    );
+    if (results.isEmpty) {
+      // no associated tasks
+      return null;
+    } else {
+      // tasks exist
+      return results;
+    }
+  }
+
+  Future<bool> addTasks({
+    required List<Task> tasks,
+  }) async {
+    // Delete all existing tasks first
+    Results result = await _conn!.query(
+      'DELETE FROM task WHERE associated_complaint = ?',
+      [tasks.first.associatedComplaint.ticketNumber],
+    );
+    bool successfullyDeleted =
+        (result.affectedRows != null && result.affectedRows! >= 0);
+
+    // if deletion successful then proceed
+    if (successfullyDeleted) {
+      // Then add all tasks
+      List<Results> results = await _conn!.queryMulti(
+        'insert into task (associated_complaint, task_name, task_state, due_date, associated_staff, is_team_lead) values (?, ?, ?, ?, ?, ?)',
+        // list of lists
+        tasks
+            .map(
+              (task) => [
+                task.associatedComplaint.ticketNumber,
+                task.task,
+                task.taskState.title,
+                task.dueDate.toUtc(),
+                task.assignedStaff.id,
+                task.isTeamLead,
+              ],
+            )
+            .toList(),
+      );
+      // return true if every insert id in results.result is not null
+      return results.every((result) => result.insertId != null);
+    }
+    // else process failure return false
+    else {
+      return false;
+    }
+  }
+
+  Future<bool> updateTaskState({
+    required int id,
+    required TaskState newState,
+  }) async {
+    Results result = await _conn!.query(
+      'update task set task_state = ? WHERE id = ?',
+      [newState.title, id],
+    );
+
+    //success
+    if (result.insertId != null) {
+      return true;
+    } else {
+      return false;
+    }
+  }
   //============================================================================
 }

@@ -1,11 +1,11 @@
 import 'package:bug_tracker/utilities/task.dart';
 import 'package:bug_tracker/utilities/constants.dart';
-import 'package:bug_tracker/utilities/build_staff.dart';
 import 'package:bug_tracker/utilities/complaint.dart';
 import 'package:bug_tracker/utilities/project.dart';
+import 'package:bug_tracker/utilities/staff.dart';
 
 /// Main complaint source.
-List complaintsSource = [
+List<Complaint> complaintsSource = [
   Complaint(
     ticketNumber: 34923099,
     complaint: "App doesn't play in background",
@@ -77,7 +77,7 @@ List complaintsSource = [
 ];
 
 /// Main task source
-List tasksSource = [
+List<Task> tasksSource = [
   Task(
     id: 299386366281,
     associatedComplaint: complaintsSource[0],
@@ -242,5 +242,44 @@ List<Project> projectSource = [
       DateTime.january,
       DateTime.tuesday,
     ),
+  ),
+];
+
+// Main staff Source
+List<Staff> staffSource = [
+  Staff(
+    id: 34566728,
+    surname: "assigned",
+    middleName: "staff",
+    firstName: "0",
+    email: "assignedStaff@gmail.com",
+  ),
+  Staff(
+    id: 27364746,
+    surname: "assigned",
+    middleName: "staff",
+    firstName: null,
+    email: "assignedStaff1@gmail.com",
+  ),
+  Staff(
+    id: 09898762,
+    surname: "assigned",
+    middleName: "staff",
+    firstName: "2",
+    email: "assignedStaff2@gmail.com",
+  ),
+  Staff(
+    id: 12341288,
+    surname: "assigned",
+    middleName: "staff",
+    firstName: null,
+    email: "assignedStaff3@gmail.com",
+  ),
+  Staff(
+    id: 65654354,
+    surname: "assigned",
+    middleName: "staff",
+    firstName: "4",
+    email: "assignedStaff4@gmail.com",
   ),
 ];
