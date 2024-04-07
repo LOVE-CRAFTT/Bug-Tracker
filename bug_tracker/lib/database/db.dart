@@ -254,6 +254,24 @@ class DB {
     }
   }
 
+  Future<bool> addStaffNote({
+    required int complaintID,
+    required String note,
+  }) async {
+    Results result = await _conn!.query(
+      'insert into staff_note (note, associated_complaint) values (?, ?)',
+      [note, complaintID],
+    );
+
+    if (result.insertId != null) {
+      // note successfully added
+      return true;
+    } else {
+      // failure
+      return false;
+    }
+  }
+
   Future<bool> addComplaintFiles({
     required List<File> files,
     required int associatedComplaint,
@@ -312,6 +330,20 @@ class DB {
     } else {
       // complaint exists
       return result;
+    }
+  }
+
+  Future<Results?> getStaffNotes(int complaintID) async {
+    Results results = await _conn!.query(
+      'SELECT * FROM staff_note WHERE id = ?',
+      [complaintID],
+    );
+    if (results.isEmpty) {
+      // no complaint notes associated with this complaint
+      return null;
+    } else {
+      // return the notes
+      return results;
     }
   }
 

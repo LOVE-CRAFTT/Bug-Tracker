@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bug_tracker/models/overview.dart';
 import 'package:bug_tracker/models/component_state_updates.dart';
+import 'package:bug_tracker/models/staff_notes_updates.dart';
 import 'package:bug_tracker/models/task_update.dart';
 import 'package:bug_tracker/database/db.dart';
 import 'package:bug_tracker/sign_in.dart';
@@ -26,6 +27,7 @@ void main() async {
           ChangeNotifierProvider(create: (_) => Overview()),
           ChangeNotifierProvider(create: (_) => ComponentStateUpdates()),
           ChangeNotifierProvider(create: (_) => TaskUpdate()),
+          ChangeNotifierProvider(create: (_) => StaffNotesUpdates()),
         ],
         child: const MyApp(),
       ),

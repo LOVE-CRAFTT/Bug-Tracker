@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:side_sheet/side_sheet.dart';
-import 'package:bug_tracker/models/component_state_updates.dart';
 import 'package:bug_tracker/models/task_update.dart';
+import 'package:bug_tracker/models/component_state_updates.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/task.dart';
 import 'package:bug_tracker/utilities/complaint.dart';
-import 'package:bug_tracker/utilities/build_complaint_notes.dart';
+import 'package:bug_tracker/utilities/build_staff_notes.dart';
 import 'package:bug_tracker/utilities/tools.dart';
 import 'package:bug_tracker/utilities/core_data_sources.dart';
 import 'package:bug_tracker/utilities/load_complaints_source.dart';
@@ -495,7 +495,9 @@ class _BugDetailPageState extends State<BugDetailPage> {
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),
-                        child: buildNotes(),
+                        child: buildStaffNotes(
+                          complaintID: widget.complaint.ticketNumber,
+                        ),
                       ),
                     ),
                   ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
-import 'package:bug_tracker/utilities/build_complaint_notes.dart';
+import 'package:bug_tracker/utilities/build_staff_notes.dart';
 import 'package:bug_tracker/utilities/file_retrieval_functions.dart';
 
 class ComplaintDetailPage extends StatelessWidget {
@@ -218,7 +218,7 @@ class ComplaintDetailPage extends StatelessWidget {
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
-                      child: buildNotes(),
+                      child: buildStaffNotes(complaintID: ticketNumber),
                     ),
                   ),
                 ],
