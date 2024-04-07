@@ -305,6 +305,7 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
 
                       // if the text in teamLeadTaskController has changed
                       // from the original then its updated else its new
+                      // or if the assigned staff is different
                       // Also if the original is not empty then its updated
                       // The original taskState has to not be completed, overdue or due today
                       // before changing to updated since those are more important
@@ -316,8 +317,10 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
                                   TaskState.dueToday &&
                               (originalTeamLeadTask != null &&
                                   originalTeamLeadTask!.task.isNotEmpty) &&
-                              newTeamLeadTaskTextController.text !=
-                                  originalTeamLeadTask?.task
+                              (newTeamLeadTaskTextController.text !=
+                                      originalTeamLeadTask?.task ||
+                                  newTeamLeadValue!.id !=
+                                      originalTeamLeadTask!.assignedStaff.id)
                           ? TaskState.updated
                           : TaskState.fresh,
                       associatedComplaint: widget.complaint,
@@ -369,9 +372,16 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
                                         .taskState !=
                                     TaskState.dueToday &&
                                 (newTeamMembersTaskTextControllers
-                                        .elementAt(i)
-                                        .text !=
-                                    originalTeamMemberTasks.elementAt(i).task)
+                                            .elementAt(i)
+                                            .text !=
+                                        originalTeamMemberTasks
+                                            .elementAt(i)
+                                            .task ||
+                                    newTeamMemberValues.elementAt(i).id !=
+                                        originalTeamMemberTasks
+                                            .elementAt(i)
+                                            .assignedStaff
+                                            .id)
                             ? TaskState.updated
                             : TaskState.fresh,
                         associatedComplaint: widget.complaint,
