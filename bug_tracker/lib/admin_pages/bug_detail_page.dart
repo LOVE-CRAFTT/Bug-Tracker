@@ -389,13 +389,6 @@ class _BugDetailPageState extends State<BugDetailPage> {
                     ),
                   ),
 
-                  // This will be wrapped in a future builder that depends on
-                  // a function that returns Future<void> and loads tasksSource
-                  // the function will create Task and corresponding Staff classes
-                  // just like the load complaints one.
-                  // after bug detail update page updates or adds tasks it should
-                  // be able to notify listeners that this page will depend on
-                  // that will be a change notifier in a task updates file in models folder
                   FutureBuilder(
                     future: loadTasksSourceByComplaint(
                         complaintID: widget.complaint.ticketNumber),
