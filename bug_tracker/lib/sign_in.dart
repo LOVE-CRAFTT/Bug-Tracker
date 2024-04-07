@@ -111,7 +111,6 @@ class _SignInPageState extends State<SignInPage> with WindowListener {
                                 firstName: actorData.first['first_name'],
                                 middleName: actorData.first['middle_name'],
                               );
-                              String actorEmail = actorData.first['email'];
                               bool isAdmin = actorData.first['is_admin'] == 1
                                   ? true
                                   : false;
@@ -133,8 +132,6 @@ class _SignInPageState extends State<SignInPage> with WindowListener {
                               globalActorID = actorID;
                               // set global name
                               globalActorName = actorName;
-                              // set global email
-                              globalActorEmail = actorEmail;
                               if (context.mounted) {
                                 Navigator.push(
                                   context,
@@ -176,7 +173,6 @@ class _SignInPageState extends State<SignInPage> with WindowListener {
                                 firstName: actorData.first['first_name'],
                                 middleName: actorData.first['middle_name'],
                               );
-                              globalActorEmail = actorData.first['email'];
 
                               // set actor's designation
                               actorIsAdmin = false;

@@ -142,8 +142,6 @@ class SignUpPage extends StatelessWidget {
                             firstName: firstName,
                             middleName: middleName,
                           );
-                          // set global email
-                          globalActorEmail = email;
                           // set actor's designation
                           actorIsAdmin = false;
                           actorIsStaff = false;
