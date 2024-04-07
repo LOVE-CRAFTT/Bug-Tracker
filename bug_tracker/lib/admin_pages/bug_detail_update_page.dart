@@ -1,4 +1,3 @@
-import 'package:bug_tracker/utilities/core_data_sources.dart';
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/task.dart';
@@ -6,6 +5,7 @@ import 'package:bug_tracker/utilities/complaint.dart';
 import 'package:bug_tracker/utilities/staff.dart';
 import 'package:bug_tracker/models/component_state_updates.dart';
 import 'package:bug_tracker/models/task_update.dart';
+import 'package:bug_tracker/utilities/core_data_sources.dart';
 import 'package:bug_tracker/ui_components/task_assignment_form.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
 import 'package:provider/provider.dart';
