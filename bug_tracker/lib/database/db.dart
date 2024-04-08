@@ -411,10 +411,11 @@ class DB {
 
   Future<Results?> getTasksByStaff({
     required int staffID,
+    required int limit,
   }) async {
     Results results = await _conn!.query(
-      'SELECT * FROM task WHERE associated_staff = ?',
-      [staffID],
+      'SELECT * FROM task WHERE associated_staff = ? LIMIT ?',
+      [staffID, limit],
     );
     if (results.isEmpty) {
       // no associated tasks

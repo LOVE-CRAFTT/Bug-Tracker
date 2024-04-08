@@ -4,6 +4,7 @@ import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/models/overview.dart';
 import 'package:bug_tracker/utilities/load_complaints_source.dart';
 import 'package:bug_tracker/utilities/core_data_sources.dart';
+import 'package:bug_tracker/ui_components/custom_circular_progress_indicator.dart';
 
 ///Provides a quick overview of open bugs, closed bugs,
 ///open milestones or closed milestones.
@@ -47,12 +48,8 @@ class FastAccessContainer extends StatelessWidget {
               builder:
                   (BuildContext context, AsyncSnapshot<List<int>> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(
-                    child: Text(
-                      "Loading...",
-                      style: kContainerTextStyle.copyWith(
-                          color: secondaryThemeColorBlue),
-                    ),
+                  return const Center(
+                    child: CustomCircularProgressIndicator(),
                   );
                 } else {
                   return Column(

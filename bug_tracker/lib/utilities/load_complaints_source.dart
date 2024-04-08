@@ -77,7 +77,6 @@ Future<List<Tags>?> retrieveTags({
 }
 
 // GOALS
-// Get all Complaints
 // Get by user
 // Get by project
 // NOTE: make get by status be an operation on the already filled complaintsSource

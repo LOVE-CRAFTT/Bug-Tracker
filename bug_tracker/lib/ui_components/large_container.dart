@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/ui_components/bug_preview_lite.dart';
 import 'package:bug_tracker/ui_components/task_preview_lite.dart';
-import 'package:bug_tracker/ui_components/custom_circular_progress_indicator.dart';
+import 'package:bug_tracker/ui_components/empty_screen_placeholder.dart';
 import 'package:bug_tracker/utilities/constants.dart';
+import 'package:bug_tracker/utilities/task.dart';
 import 'package:bug_tracker/utilities/core_data_sources.dart';
 import 'package:bug_tracker/utilities/load_complaints_source.dart';
+import 'package:bug_tracker/utilities/load_tasks_source.dart';
+import 'package:bug_tracker/ui_components/custom_circular_progress_indicator.dart';
 
 ///Provides access to main work data
 ///Implemented as a container of fixed height and variable width
@@ -95,14 +98,47 @@ class _LargeContainerState extends State<LargeContainer> {
     );
   }
 
-  ListView getTasksList(BuildContext context) {
-    return ListView.builder(
-      controller: scrollController,
-      itemCount: tasksSource.length,
-      itemBuilder: (BuildContext context, int index) {
-        return TaskPreviewLite(
-          task: tasksSource[index],
-        );
+  FutureBuilder getTasksList(BuildContext context) {
+    return FutureBuilder(
+      future: loadTasksSourceByStaff(staffID: globalActorID, limit: limit),
+      builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const CustomCircularProgressIndicator();
+        } else {
+          // will sort by status and put here
+          List<Task> localTaskSource = [];
+
+          if (widget.type == LargeContainerTypes.myTasks) {
+            localTaskSource = tasksSource;
+          }
+          if (widget.type == LargeContainerTypes.overdueTasks) {
+            localTaskSource = tasksSource
+                .where(
+                  (task) => task.taskState == TaskState.overdue,
+                )
+                .toList();
+          }
+          if (widget.type == LargeContainerTypes.tasksDueToday) {
+            tasksSource
+                .where(
+                  (task) => task.taskState == TaskState.dueToday,
+                )
+                .toList();
+          }
+
+          // if there isn't any corresponding task show empty screen placeholder
+          return localTaskSource.isNotEmpty
+              ? ListView.builder(
+                  controller: scrollController,
+                  itemCount: localTaskSource.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return TaskPreviewLite(
+                      task: localTaskSource[index],
+                    );
+                  },
+                )
+              : const EmptyScreenPlaceholder();
+        }
       },
     );
   }
@@ -114,13 +150,16 @@ class _LargeContainerState extends State<LargeContainer> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const CustomCircularProgressIndicator();
         } else {
-          return ListView.builder(
-            controller: scrollController,
-            itemCount: complaintsSource.length,
-            itemBuilder: (BuildContext context, int index) {
-              return BugPreviewLite(complaint: complaintsSource[index]);
-            },
-          );
+          // if there aren't corresponding bugs show empty screen placeholder
+          return complaintsSource.isNotEmpty
+              ? ListView.builder(
+                  controller: scrollController,
+                  itemCount: complaintsSource.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return BugPreviewLite(complaint: complaintsSource[index]);
+                  },
+                )
+              : const EmptyScreenPlaceholder();
         }
       },
     );
