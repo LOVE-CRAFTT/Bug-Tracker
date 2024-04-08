@@ -1,23 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
+import 'package:bug_tracker/utilities/tools.dart';
+import 'package:bug_tracker/utilities/complaint.dart';
 import 'package:bug_tracker/utilities/build_staff_notes.dart';
 import 'package:bug_tracker/utilities/file_retrieval_functions.dart';
 
 class ComplaintDetailPage extends StatelessWidget {
   const ComplaintDetailPage({
     super.key,
-    required this.ticketNumber,
-    required this.project,
     required this.complaint,
-    required this.complaintState,
-    required this.dateCreated,
   });
 
-  final int ticketNumber;
-  final String project;
-  final String complaint;
-  final String dateCreated;
-  final ComplaintState complaintState;
+  final Complaint complaint;
 
   @override
   Widget build(BuildContext context) {
@@ -38,13 +32,13 @@ class ComplaintDetailPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Complaint ID: $ticketNumber",
+                          "Complaint ID: ${complaint.ticketNumber}",
                           style: kContainerTextStyle.copyWith(
                             fontSize: 14.0,
                           ),
                         ),
                         Text(
-                          "Date Created: $dateCreated",
+                          "Date Created: ${convertToDateString(complaint.dateCreated)}",
                           style: kContainerTextStyle.copyWith(
                             fontSize: 14.0,
                           ),
@@ -55,7 +49,7 @@ class ComplaintDetailPage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Text(
-                      "Project: $project",
+                      "Project: ${complaint.associatedProject.name}",
                       style: kContainerTextStyle.copyWith(
                         fontSize: 15.0,
                       ),
@@ -64,7 +58,7 @@ class ComplaintDetailPage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Text(
-                      "Complaint: $complaint",
+                      "Complaint: ${complaint.complaint}",
                       style: kContainerTextStyle.copyWith(
                         fontSize: 20.0,
                       ),
@@ -123,7 +117,7 @@ class ComplaintDetailPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  buildComplaintFiles(complaintID: ticketNumber),
+                  buildComplaintFiles(complaintID: complaint.ticketNumber),
 
                   /// All states of the complaints are available as chips and they are each grayed out or colored
                   /// based on the state of the complaint
@@ -140,10 +134,10 @@ class ComplaintDetailPage extends StatelessWidget {
                               color: Colors.black,
                             ),
                           ),
-                          backgroundColor:
-                              complaintState.name == ComplaintState.pending.name
-                                  ? complaintState.associatedColor
-                                  : Colors.grey.withAlpha(25),
+                          backgroundColor: complaint.complaintState.name ==
+                                  ComplaintState.pending.name
+                              ? complaint.complaintState.associatedColor
+                              : Colors.grey.withAlpha(25),
                         ),
                       ),
                       Padding(
@@ -155,9 +149,9 @@ class ComplaintDetailPage extends StatelessWidget {
                               color: Colors.black,
                             ),
                           ),
-                          backgroundColor: complaintState.name ==
+                          backgroundColor: complaint.complaintState.name ==
                                   ComplaintState.acknowledged.name
-                              ? complaintState.associatedColor
+                              ? complaint.complaintState.associatedColor
                               : Colors.grey.withAlpha(25),
                         ),
                       ),
@@ -170,9 +164,9 @@ class ComplaintDetailPage extends StatelessWidget {
                               color: Colors.black,
                             ),
                           ),
-                          backgroundColor: complaintState.name ==
+                          backgroundColor: complaint.complaintState.name ==
                                   ComplaintState.inProgress.name
-                              ? complaintState.associatedColor
+                              ? complaint.complaintState.associatedColor
                               : Colors.grey.withAlpha(25),
                         ),
                       ),
@@ -185,9 +179,9 @@ class ComplaintDetailPage extends StatelessWidget {
                               color: Colors.black,
                             ),
                           ),
-                          backgroundColor: complaintState.name ==
+                          backgroundColor: complaint.complaintState.name ==
                                   ComplaintState.completed.name
-                              ? complaintState.associatedColor
+                              ? complaint.complaintState.associatedColor
                               : Colors.grey.withAlpha(25),
                         ),
                       ),
@@ -218,7 +212,8 @@ class ComplaintDetailPage extends StatelessWidget {
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
-                      child: buildStaffNotes(complaintID: ticketNumber),
+                      child:
+                          buildStaffNotes(complaintID: complaint.ticketNumber),
                     ),
                   ),
                 ],

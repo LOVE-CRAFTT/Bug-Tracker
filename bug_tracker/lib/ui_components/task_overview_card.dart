@@ -32,11 +32,8 @@ class TaskOverviewCard extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) => TaskDetailPage(
-                isTeamLead: task.isTeamLead,
-                task: task.task,
-                taskId: task.id,
-                complaint: task.associatedComplaint,
-                dueDate: convertToDateString(task.dueDate),
+                viewingFromBug: false,
+                task: task,
               ),
             ),
           );

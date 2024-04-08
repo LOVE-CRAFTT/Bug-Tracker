@@ -61,8 +61,6 @@ class _BugsPageState extends State<BugsPage> {
                             TableRow(
                               children: [...buildTableHeaders()],
                             ),
-
-                            ///TODO: build from complaintsSource List
                             buildTableRow(
                               context: context,
                               assignee: "chukwuemekachukwudi9@gmail.com",

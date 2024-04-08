@@ -43,11 +43,8 @@ class TaskPreviewLite extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) => TaskDetailPage(
-                  taskId: task.id,
-                  isTeamLead: task.isTeamLead,
-                  task: task.task,
-                  complaint: task.associatedComplaint,
-                  dueDate: convertToDateString(task.dueDate),
+                  task: task,
+                  viewingFromBug: false,
                 ),
               ),
             );

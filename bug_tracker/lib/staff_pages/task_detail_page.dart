@@ -3,26 +3,18 @@ import 'package:side_sheet/side_sheet.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/tools.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
-import 'package:bug_tracker/utilities/complaint.dart';
+import 'package:bug_tracker/utilities/task.dart';
 import 'package:bug_tracker/staff_pages/tasks_update_page.dart';
 
 class TaskDetailPage extends StatefulWidget {
   const TaskDetailPage({
     super.key,
-    required this.isTeamLead,
     required this.task,
-    required this.taskId,
-    required this.complaint,
-    required this.dueDate,
-    this.viewingFromBug,
+    required this.viewingFromBug,
   });
 
-  final bool isTeamLead;
-  final Complaint complaint;
-  final String task;
-  final int taskId;
-  final String dueDate;
-  final bool? viewingFromBug;
+  final Task task;
+  final bool viewingFromBug;
 
   @override
   State<TaskDetailPage> createState() => _TaskDetailPageState();
@@ -50,16 +42,14 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Project: ${widget.complaint.associatedProject.name}",
+                          "Project: ${widget.task.associatedComplaint.associatedProject.name}",
                           style: kContainerTextStyle.copyWith(
                             fontSize: 15.0,
                           ),
                         ),
 
-                        ///TODO: IF viewing from bug then check if its their task before viewing
                         //update complaint state
-                        if (widget.viewingFromBug == false ||
-                            widget.viewingFromBug == null)
+                        if (widget.viewingFromBug == false)
                           HeaderButton(
                             screenIsWide: screenIsWide,
                             buttonText: "Update",
@@ -72,7 +62,7 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                                 body: TasksUpdatePage(
                                   maxHeight: constraints.maxHeight,
                                   maxWidth: constraints.maxWidth,
-                                  isTeamLead: widget.isTeamLead,
+                                  isTeamLead: widget.task.isTeamLead,
                                 ),
                               );
                             },
@@ -86,13 +76,13 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Task ID: ${widget.taskId}",
+                          "Task ID: ${widget.task.id}",
                           style: kContainerTextStyle.copyWith(
                             fontSize: 14.0,
                           ),
                         ),
                         Text(
-                          "Complaint ID: ${widget.complaint.ticketNumber}",
+                          "Complaint ID: ${widget.task.associatedComplaint.ticketNumber}",
                           style: kContainerTextStyle.copyWith(
                             fontSize: 14.0,
                           ),
@@ -106,13 +96,13 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Complaint: ${widget.complaint.complaint}",
+                          "Complaint: ${widget.task.associatedComplaint.complaint}",
                           style: kContainerTextStyle.copyWith(
                             fontSize: 16.0,
                           ),
                         ),
                         Text(
-                          "Due date: ${widget.dueDate}",
+                          "Due date: ${convertToDateString(widget.task.dueDate)}",
                           style: kContainerTextStyle.copyWith(
                             fontSize: 16.0,
                           ),

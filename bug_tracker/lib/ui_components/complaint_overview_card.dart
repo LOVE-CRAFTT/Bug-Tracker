@@ -1,8 +1,8 @@
-import 'package:bug_tracker/ui_components/task_preview_card.dart';
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/complaint.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/tools.dart';
+import 'package:bug_tracker/ui_components/task_preview_card.dart';
 import 'package:bug_tracker/user_pages/complaint_detail_page.dart';
 
 /// Naming convention in this project dictates a difference between overview and preview cards
@@ -31,11 +31,7 @@ class ComplaintOverviewCard extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) => ComplaintDetailPage(
-                ticketNumber: complaint.ticketNumber,
-                project: complaint.associatedProject.name,
-                complaint: complaint.complaint,
-                complaintState: complaint.complaintState,
-                dateCreated: convertToDateString(complaint.dateCreated),
+                complaint: complaint,
               ),
             ),
           );

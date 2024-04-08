@@ -141,7 +141,7 @@ class _BugDetailPageState extends State<BugDetailPage> {
                           ),
                         ),
                         Text(
-                          convertToDateString(widget.complaint.dateCreated),
+                          "Date Created: ${convertToDateString(widget.complaint.dateCreated)}",
                           style: kContainerTextStyle.copyWith(
                             fontSize: 14.0,
                           ),
