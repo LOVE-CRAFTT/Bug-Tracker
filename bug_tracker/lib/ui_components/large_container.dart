@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:bug_tracker/ui_components/bug_preview_lite.dart';
 import 'package:bug_tracker/ui_components/task_preview_lite.dart';
 import 'package:bug_tracker/ui_components/empty_screen_placeholder.dart';
@@ -7,6 +8,8 @@ import 'package:bug_tracker/utilities/task.dart';
 import 'package:bug_tracker/utilities/core_data_sources.dart';
 import 'package:bug_tracker/utilities/load_complaints_source.dart';
 import 'package:bug_tracker/utilities/load_tasks_source.dart';
+import 'package:bug_tracker/models/tasks_update.dart';
+import 'package:bug_tracker/models/component_state_updates.dart';
 import 'package:bug_tracker/ui_components/custom_circular_progress_indicator.dart';
 
 ///Provides access to main work data
@@ -53,6 +56,12 @@ class _LargeContainerState extends State<LargeContainer> {
 
   @override
   Widget build(BuildContext context) {
+    // watch TaskStateUpdates for updates to task states
+    // and rebuild
+    context.watch<TaskStateUpdates>();
+
+    //watch TaskUpdate for updates to tasks and rebuild
+    context.watch<TasksUpdate>();
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         ///Encompassing Wrap widget spaces them by 10 horizontally

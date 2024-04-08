@@ -4,7 +4,7 @@ import 'package:bug_tracker/database/db.dart';
 // updates when new note is sent to user
 // only the user should listen for immediate updates
 class StaffNotesUpdates extends ChangeNotifier {
-  Future<void> addComplaintNote({
+  Future<void> addStaffNoteToComplaint({
     required complaintID,
     required String note,
   }) async {
@@ -16,7 +16,7 @@ class StaffNotesUpdates extends ChangeNotifier {
       notifyListeners();
     }
     // else
-    {
+    else {
       debugPrint('Failed to add note');
     }
   }

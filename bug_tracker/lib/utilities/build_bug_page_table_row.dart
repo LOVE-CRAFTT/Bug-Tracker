@@ -1,4 +1,3 @@
-import 'package:bug_tracker/ui_components/custom_circular_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/complaint.dart';
@@ -7,6 +6,7 @@ import 'package:bug_tracker/utilities/tools.dart';
 import 'package:bug_tracker/utilities/load_tasks_source.dart';
 import 'package:bug_tracker/ui_components/custom_linear_percent_indicator.dart';
 import 'package:bug_tracker/admin_pages/bug_detail_page.dart';
+import 'package:bug_tracker/ui_components/custom_circular_progress_indicator.dart';
 
 TableRow buildTableRow({
   required BuildContext context,
@@ -51,7 +51,7 @@ TableRow buildTableRow({
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CustomCircularProgressIndicator());
             } else {
-              return percentIndicator(snapshot.data!);
+              return percentIndicator(normalize0to1(snapshot.data!));
             }
           },
         ),

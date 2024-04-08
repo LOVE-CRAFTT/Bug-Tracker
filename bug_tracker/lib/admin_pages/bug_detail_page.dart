@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:side_sheet/side_sheet.dart';
 import 'package:bug_tracker/models/tasks_update.dart';
+import 'package:bug_tracker/models/staff_notes_updates.dart';
 import 'package:bug_tracker/models/component_state_updates.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/task.dart';
@@ -82,6 +83,9 @@ class _BugDetailPageState extends State<BugDetailPage> {
 
     //watch TaskUpdate for updates to tasks and rebuild
     context.watch<TasksUpdate>();
+
+    // watch StaffNotesUpdates for updates to staff notes and rebuild
+    context.watch<StaffNotesUpdates>();
 
     return Scaffold(
       appBar: genericTaskBar("Bug Detail"),

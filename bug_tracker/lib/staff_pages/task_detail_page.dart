@@ -11,6 +11,7 @@ import 'package:bug_tracker/utilities/file_retrieval_functions.dart';
 import 'package:bug_tracker/utilities/state_retrieval_functions.dart';
 import 'package:bug_tracker/models/component_state_updates.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
+import 'package:bug_tracker/ui_components/empty_screen_placeholder.dart';
 import 'package:bug_tracker/staff_pages/task_detail_update_page.dart';
 import 'package:bug_tracker/ui_components/custom_circular_progress_indicator.dart';
 
@@ -103,18 +104,25 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                           HeaderButton(
                             screenIsWide: screenIsWide,
                             buttonText: "Update",
-                            onPress: () {
-                              SideSheet.right(
-                                context: context,
-                                width: constraints.maxWidth * 0.9,
-                                sheetColor: lightAshyNavyBlue,
-                                sheetBorderRadius: 10.0,
-                                body: TasksUpdatePage(
-                                  maxHeight: constraints.maxHeight,
-                                  maxWidth: constraints.maxWidth,
-                                  isTeamLead: widget.task.isTeamLead,
-                                ),
+                            onPress: () async {
+                              // for populating the dropdown for transfer task process
+                              await loadTasksSourceByComplaint(
+                                complaintID: widget
+                                    .task.associatedComplaint.ticketNumber,
                               );
+                              if (context.mounted) {
+                                SideSheet.right(
+                                  context: context,
+                                  width: constraints.maxWidth * 0.9,
+                                  sheetColor: lightAshyNavyBlue,
+                                  sheetBorderRadius: 10.0,
+                                  body: TaskDetailUpdatePage(
+                                    maxHeight: constraints.maxHeight,
+                                    maxWidth: constraints.maxWidth,
+                                    task: widget.task,
+                                  ),
+                                );
+                              }
                             },
                           )
                       ],
@@ -176,29 +184,32 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                       ),
                     ),
                   ),
-                  if (widget.task.associatedComplaint.complaintNotes != null)
-                    Container(
-                      height: determineContainerDimensionFromConstraint(
-                        constraintValue: constraints.maxHeight,
-                        subtractValue: 450,
-                      ),
-                      decoration: BoxDecoration(
-                        color: lightAshyNavyBlue,
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      padding: const EdgeInsets.all(20.0),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: SingleChildScrollView(
-                          child: Text(
-                            widget.task.associatedComplaint.complaintNotes!,
-                            style: kContainerTextStyle.copyWith(
-                              fontSize: 15.0,
-                            ),
-                          ),
-                        ),
-                      ),
+
+                  Container(
+                    height: determineContainerDimensionFromConstraint(
+                      constraintValue: constraints.maxHeight,
+                      subtractValue: 450,
                     ),
+                    decoration: BoxDecoration(
+                      color: lightAshyNavyBlue,
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    padding: const EdgeInsets.all(20.0),
+                    child: widget.task.associatedComplaint.complaintNotes !=
+                            null
+                        ? Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: SingleChildScrollView(
+                              child: Text(
+                                widget.task.associatedComplaint.complaintNotes!,
+                                style: kContainerTextStyle.copyWith(
+                                  fontSize: 15.0,
+                                ),
+                              ),
+                            ),
+                          )
+                        : const EmptyScreenPlaceholder(),
+                  ),
 
                   ///Files from user
                   Padding(
@@ -261,14 +272,17 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                           return const CustomCircularProgressIndicator();
                         } else {
                           // staff data for each task
+                          // check for duplicates
                           List<Staff> team = tasksSource
                               .map(
                                 (task) => task.assignedStaff,
                               )
+                              .toSet()
                               .toList();
+
                           return ListView.builder(
                             scrollDirection: Axis.horizontal,
-                            itemCount: tasksSource.length,
+                            itemCount: team.length,
                             itemBuilder: (BuildContext context, int index) {
                               return Padding(
                                 padding:

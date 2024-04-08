@@ -336,7 +336,7 @@ class DB {
 
   Future<Results?> getStaffNotes(int complaintID) async {
     Results results = await _conn!.query(
-      'SELECT * FROM staff_note WHERE id = ?',
+      'SELECT * FROM staff_note WHERE associated_complaint = ?',
       [complaintID],
     );
     if (results.isEmpty) {
