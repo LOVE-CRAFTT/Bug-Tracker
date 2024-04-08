@@ -4,7 +4,7 @@ import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/tools.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
 import 'package:bug_tracker/utilities/task.dart';
-import 'package:bug_tracker/staff_pages/tasks_update_page.dart';
+import 'package:bug_tracker/staff_pages/task_detail_update_page.dart';
 
 class TaskDetailPage extends StatefulWidget {
   const TaskDetailPage({
