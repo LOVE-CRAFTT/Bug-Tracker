@@ -401,7 +401,31 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
                         newTags: selectedTags,
                       );
 
-                  //also update tasks that notifies Bug Detail Page
+                  // update complaint state to in progress
+                  // if a teamLead or teamMember has been assigned
+                  // and complaint is not already completed
+                  if (newTeamLeadValue != null ||
+                      newTeamMemberValues.isNotEmpty &&
+                          widget.complaint.complaintState !=
+                              ComplaintState.completed) {
+                    context.read<ComponentStateUpdates>().updateComplaintState(
+                          complaintID: widget.complaint.ticketNumber,
+                          newState: ComplaintState.inProgress,
+                        );
+
+                    // notify
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          "Complaint in progress!",
+                          style:
+                              kContainerTextStyle.copyWith(color: Colors.black),
+                        ),
+                      ),
+                    );
+                  }
+
+                  //also update tasks which notifies Bug Detail Page
                   context
                       .read<TaskUpdate>()
                       .updateTasks(taskUpdates: taskUpdates);
