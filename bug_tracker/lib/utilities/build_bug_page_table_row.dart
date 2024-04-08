@@ -1,15 +1,16 @@
+import 'package:bug_tracker/ui_components/custom_circular_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/complaint.dart';
+import 'package:bug_tracker/utilities/task.dart';
 import 'package:bug_tracker/utilities/tools.dart';
+import 'package:bug_tracker/utilities/load_tasks_source.dart';
 import 'package:bug_tracker/ui_components/custom_linear_percent_indicator.dart';
 import 'package:bug_tracker/admin_pages/bug_detail_page.dart';
 
 TableRow buildTableRow({
   required BuildContext context,
   required Complaint complaint,
-  required double percentCompleted,
-  String? assignee,
 }) {
   return TableRow(
     children: [
@@ -44,7 +45,16 @@ TableRow buildTableRow({
         titleTextStyle: cellTextStyle,
       ),
       ListTile(
-        title: percentIndicator(percentCompleted),
+        title: FutureBuilder(
+          future: getPercentageOfComplaintCompleted(complaint: complaint),
+          builder: (BuildContext context, AsyncSnapshot<double> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CustomCircularProgressIndicator());
+            } else {
+              return percentIndicator(snapshot.data!);
+            }
+          },
+        ),
         titleTextStyle: cellTextStyle,
       ),
       ListTile(
@@ -58,10 +68,6 @@ TableRow buildTableRow({
             backgroundColor: complaint.complaintState.associatedColor,
           ),
         ),
-        titleTextStyle: cellTextStyle,
-      ),
-      ListTile(
-        title: assignee != null ? Text(assignee) : null,
         titleTextStyle: cellTextStyle,
       ),
       ListTile(
@@ -108,7 +114,6 @@ List<ListTile> buildTableHeaders() {
     "CREATED",
     "PROGRESS",
     "STATUS",
-    "ASSIGNEE",
     "TAGS",
   ];
 
@@ -118,4 +123,23 @@ List<ListTile> buildTableHeaders() {
             titleTextStyle: cellTextStyle,
           ))
       .toList();
+}
+
+Future<double> getPercentageOfComplaintCompleted(
+    {required Complaint complaint}) async {
+  List<Task> relatedTasks =
+      await retrieveTasksByComplaint(complaintID: complaint.ticketNumber);
+  if (relatedTasks.isEmpty) return 0.0;
+
+  int tasksCompletedLength = relatedTasks
+      .where(
+        (task) => task.taskState == TaskState.completed,
+      )
+      .length;
+
+  // finally
+  return getPercentage(
+    number: tasksCompletedLength,
+    total: relatedTasks.length,
+  );
 }

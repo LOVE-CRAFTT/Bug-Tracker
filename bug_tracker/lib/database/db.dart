@@ -4,6 +4,7 @@ import 'package:bug_tracker/utilities/tools.dart';
 import 'package:bug_tracker/utilities/task.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 
+// database instance to be used throughout the project
 DB db = DB();
 
 class DB {

@@ -9,6 +9,11 @@ double normalize0to1(double value) {
 }
 
 ///
+double getPercentage({required int number, required int total}) {
+  return (number / total) * 100;
+}
+
+///
 double determineContainerDimensionFromConstraint(
     {required double constraintValue, required int subtractValue}) {
   return constraintValue - subtractValue > 0

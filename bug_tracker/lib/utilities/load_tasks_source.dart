@@ -1,3 +1,4 @@
+import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/load_complaints_source.dart';
 import 'package:mysql1/mysql1.dart';
 import 'package:bug_tracker/database/db.dart';
@@ -50,7 +51,7 @@ Future<void> loadTasksSourceByStaff({
 
   // load all complaints for Task object creation
   // no limit so all complaints can be searched
-  await loadComplaintsSource(limit: 9223372036854775807);
+  await loadComplaintsSource(limit: impossiblyLargeNumber);
 
   // get tasks by associated staff from database
   Results? results = await db.getTasksByStaff(staffID: staffID, limit: limit);
@@ -85,6 +86,12 @@ Future<void> loadTasksSourceByStaff({
 // work around to retrieve tasks by complaint
 Future<List<Task>> retrieveTasksByComplaint({required int complaintID}) async {
   await loadTasksSourceByComplaint(complaintID: complaintID);
+  return tasksSource;
+}
+
+// work around to retrieve tasks by staff
+Future<List<Task>> retrieveTasksByStaff({required int staffID}) async {
+  await loadTasksSourceByStaff(staffID: staffID, limit: impossiblyLargeNumber);
   return tasksSource;
 }
 
