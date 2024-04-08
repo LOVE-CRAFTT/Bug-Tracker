@@ -25,3 +25,24 @@ Future<ComplaintState> getCurrentComplaintState(
 
   return complaintState;
 }
+
+Future<TaskState> getCurrentTaskState({required int taskID}) async {
+  // to be returned
+  TaskState taskState;
+
+  Results? result = await db.getTaskData(taskID);
+
+  // if there is such a complaint
+  if (result != null) {
+    taskState = TaskState.values.firstWhere(
+      (state) => state.title == result.first['task_state'],
+    );
+  }
+  // error retrieving the state return pending and debugPrint error
+  else {
+    debugPrint("Error getting state");
+    taskState = TaskState.inProgress;
+  }
+
+  return taskState;
+}

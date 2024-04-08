@@ -31,12 +31,26 @@ class TaskPreviewLite extends StatelessWidget {
             fontSize: 12.0,
           ),
 
-          /// due date
-          trailing: Text(
-            convertToDateString(task.dueDate),
-            style: kContainerTextStyle.copyWith(
-              fontSize: 12.0,
-            ),
+          /// due date and state
+          trailing: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                convertToDateString(task.dueDate),
+                style: kContainerTextStyle.copyWith(
+                  fontSize: 12.0,
+                ),
+              ),
+              Chip(
+                label: Text(
+                  task.taskState.title,
+                  style: kContainerTextStyle.copyWith(
+                    color: Colors.black,
+                  ),
+                ),
+                backgroundColor: task.taskState.associatedColor,
+              ),
+            ],
           ),
           onTap: () {
             Navigator.push(

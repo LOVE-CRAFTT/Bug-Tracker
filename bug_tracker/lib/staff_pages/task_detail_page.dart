@@ -1,15 +1,18 @@
-import 'package:bug_tracker/ui_components/custom_circular_progress_indicator.dart';
-import 'package:bug_tracker/utilities/core_data_sources.dart';
-import 'package:bug_tracker/utilities/load_tasks_source.dart';
-import 'package:bug_tracker/utilities/staff.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:side_sheet/side_sheet.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/tools.dart';
-import 'package:bug_tracker/ui_components/header_button.dart';
 import 'package:bug_tracker/utilities/task.dart';
-import 'package:bug_tracker/staff_pages/task_detail_update_page.dart';
+import 'package:bug_tracker/utilities/staff.dart';
+import 'package:bug_tracker/utilities/core_data_sources.dart';
+import 'package:bug_tracker/utilities/load_tasks_source.dart';
 import 'package:bug_tracker/utilities/file_retrieval_functions.dart';
+import 'package:bug_tracker/utilities/state_retrieval_functions.dart';
+import 'package:bug_tracker/models/component_state_updates.dart';
+import 'package:bug_tracker/ui_components/header_button.dart';
+import 'package:bug_tracker/staff_pages/task_detail_update_page.dart';
+import 'package:bug_tracker/ui_components/custom_circular_progress_indicator.dart';
 
 class TaskDetailPage extends StatefulWidget {
   const TaskDetailPage({
@@ -26,6 +29,48 @@ class TaskDetailPage extends StatefulWidget {
 }
 
 class _TaskDetailPageState extends State<TaskDetailPage> {
+  @override
+  void initState() {
+    // This ensures that set task as inProgress is called after
+    // initState and build i.e the frame is completed
+    // and context has been created
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      setTaskStateAsInProgress();
+    });
+    super.initState();
+  }
+
+  void setTaskStateAsInProgress() async {
+    TaskState currentTaskState = await getCurrentTaskState(
+      taskID: widget.task.id,
+    );
+
+    // if task state is not due today, completed or over due
+    // and also if the state is not already in progress
+    // then automatically set as in progress
+    if (currentTaskState != TaskState.inProgress &&
+        currentTaskState != TaskState.dueToday &&
+        currentTaskState != TaskState.completed &&
+        currentTaskState != TaskState.overdue) {
+      //State's mounted property
+      if (mounted) {
+        // this then notifies listeners
+        context.read<TaskStateUpdates>().updateTaskState(
+              taskID: widget.task.id,
+              newState: TaskState.inProgress,
+            );
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              "Task in Progress!",
+              style: kContainerTextStyle.copyWith(color: Colors.black),
+            ),
+          ),
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

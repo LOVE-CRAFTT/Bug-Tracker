@@ -427,6 +427,20 @@ class DB {
     }
   }
 
+  Future<Results?> getTaskData(int id) async {
+    Results result = await _conn!.query(
+      'SELECT * FROM task WHERE id = ?',
+      [id],
+    );
+    if (result.isEmpty) {
+      // no such complaint exists
+      return null;
+    } else {
+      // complaint exists
+      return result;
+    }
+  }
+
   Future<bool> addTasks({
     required List<Task> tasks,
   }) async {
