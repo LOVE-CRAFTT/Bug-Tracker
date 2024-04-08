@@ -4,18 +4,18 @@ import 'package:bug_tracker/utilities/build_discuss_page_table_row.dart';
 import 'package:bug_tracker/ui_components/staff_appbar.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
 import 'package:side_sheet/side_sheet.dart';
-import 'package:bug_tracker/admin_pages/new_conversation_page.dart';
+import 'package:bug_tracker/staff_pages/new_conversation_page.dart';
 
 /// The discuss page is for starting conversations with individuals say for switching tasks between teams/individuals
 /// Contains a button for starting new conversations and a search button
-class StaffDiscussPage extends StatefulWidget {
-  const StaffDiscussPage({super.key});
+class DiscussPage extends StatefulWidget {
+  const DiscussPage({super.key});
 
   @override
-  State<StaffDiscussPage> createState() => _StaffDiscussPageState();
+  State<DiscussPage> createState() => _DiscussPageState();
 }
 
-class _StaffDiscussPageState extends State<StaffDiscussPage> {
+class _DiscussPageState extends State<DiscussPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

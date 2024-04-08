@@ -1,4 +1,4 @@
-import 'package:bug_tracker/admin_pages/conversation_page.dart';
+import 'package:bug_tracker/staff_pages/conversation_page.dart';
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 

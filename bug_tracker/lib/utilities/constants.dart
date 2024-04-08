@@ -154,6 +154,7 @@ Map<String, Icon> navRailData = {
   'Calendar': const Icon(Icons.calendar_month),
   'Projects': const Icon(Icons.work_outline),
   'Bugs': const Icon(Icons.bug_report),
+  'Tasks': const Icon(Icons.task_outlined),
   'Staff': const Icon(Icons.people_outlined),
 };
 
@@ -176,21 +177,9 @@ List<NavigationRailDestination> kMainNavigationRailDestinations = [
 ];
 
 List<NavigationRailDestination> staffNavigationRailDestinations = [
-  NavigationRailDestination(
-    icon: Tooltip(
-      message: "Tasks",
-      textStyle: kContainerTextStyle.copyWith(
-        fontSize: 14.0,
-        color: Colors.black,
-      ),
-      child: const Icon(Icons.task_outlined),
-    ),
-    label: const Text(
-      "Tasks",
-      style: TextStyle(fontFamily: "Nunito"),
-    ),
-  ),
   for (var value in [
+    //task
+    navRailData.entries.elementAt(6),
     //feed
     navRailData.entries.elementAt(1),
     //discuss
