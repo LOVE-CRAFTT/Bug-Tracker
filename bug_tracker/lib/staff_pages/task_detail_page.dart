@@ -1,3 +1,7 @@
+import 'package:bug_tracker/ui_components/custom_circular_progress_indicator.dart';
+import 'package:bug_tracker/utilities/core_data_sources.dart';
+import 'package:bug_tracker/utilities/load_tasks_source.dart';
+import 'package:bug_tracker/utilities/staff.dart';
 import 'package:flutter/material.dart';
 import 'package:side_sheet/side_sheet.dart';
 import 'package:bug_tracker/utilities/constants.dart';
@@ -5,6 +9,7 @@ import 'package:bug_tracker/utilities/tools.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
 import 'package:bug_tracker/utilities/task.dart';
 import 'package:bug_tracker/staff_pages/task_detail_update_page.dart';
+import 'package:bug_tracker/utilities/file_retrieval_functions.dart';
 
 class TaskDetailPage extends StatefulWidget {
   const TaskDetailPage({
@@ -111,7 +116,8 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                     ),
                   ),
 
-                  /// Below is an expanded uneditable text field title "Complaint Notes" showing any additional notes from the user if any
+                  /// Below is an expanded uneditable text field title "Complaint Notes"
+                  /// showing any additional notes from the user if any
                   Padding(
                     padding: const EdgeInsets.only(
                       left: 10.0,
@@ -125,28 +131,29 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                       ),
                     ),
                   ),
-                  Container(
-                    height: determineContainerDimensionFromConstraint(
-                      constraintValue: constraints.maxHeight,
-                      subtractValue: 450,
-                    ),
-                    decoration: BoxDecoration(
-                      color: lightAshyNavyBlue,
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    padding: const EdgeInsets.all(20.0),
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: SingleChildScrollView(
-                        child: Text(
-                          complaintNotesPlaceholder,
-                          style: kContainerTextStyle.copyWith(
-                            fontSize: 15.0,
+                  if (widget.task.associatedComplaint.complaintNotes != null)
+                    Container(
+                      height: determineContainerDimensionFromConstraint(
+                        constraintValue: constraints.maxHeight,
+                        subtractValue: 450,
+                      ),
+                      decoration: BoxDecoration(
+                        color: lightAshyNavyBlue,
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      padding: const EdgeInsets.all(20.0),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: SingleChildScrollView(
+                          child: Text(
+                            widget.task.associatedComplaint.complaintNotes!,
+                            style: kContainerTextStyle.copyWith(
+                              fontSize: 15.0,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
 
                   ///Files from user
                   Padding(
@@ -162,9 +169,8 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: 100,
-                    child: buildFilesPlaceHolders(),
+                  buildComplaintFiles(
+                    complaintID: widget.task.associatedComplaint.ticketNumber,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
@@ -198,7 +204,57 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                   ),
                   SizedBox(
                     height: 50,
-                    child: buildTeamMembers(),
+                    child: FutureBuilder(
+                      future: loadTasksSourceByComplaint(
+                        complaintID:
+                            widget.task.associatedComplaint.ticketNumber,
+                      ),
+                      builder:
+                          (BuildContext context, AsyncSnapshot<void> snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const CustomCircularProgressIndicator();
+                        } else {
+                          // staff data for each task
+                          List<Staff> team = tasksSource
+                              .map(
+                                (task) => task.assignedStaff,
+                              )
+                              .toList();
+                          return ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: tasksSource.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 3.0),
+                                child: Tooltip(
+                                  message: getFullNameFromNames(
+                                    surname: team[index].surname,
+                                    firstName: team[index].firstName,
+                                    middleName: team[index].middleName,
+                                  ),
+                                  textStyle: kContainerTextStyle.copyWith(
+                                    color: Colors.black,
+                                    fontSize: 14,
+                                  ),
+                                  child: CircleAvatar(
+                                    backgroundColor: Colors.grey,
+                                    radius: 30,
+                                    child: Text(
+                                      team[index].initials,
+                                      style: kContainerTextStyle.copyWith(
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        }
+                      },
+                    ),
                   )
                 ],
               ),
@@ -208,61 +264,4 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
       ),
     );
   }
-}
-
-/// Will replace with real files later
-ListView buildFilesPlaceHolders() {
-  return ListView.builder(
-    scrollDirection: Axis.horizontal,
-    itemCount: 4,
-    itemBuilder: (BuildContext context, int index) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: Container(
-          width: 100,
-          height: 100.0,
-          decoration: BoxDecoration(
-            color: Colors.greenAccent,
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-        ),
-      );
-    },
-  );
-}
-
-/// Will also replace with real team members
-ListView buildTeamMembers() {
-  return ListView.builder(
-    scrollDirection: Axis.horizontal,
-    itemCount: 3,
-    itemBuilder: (BuildContext context, int index) {
-      List teamMembers = [
-        "Alan Broker",
-        "Windsor Elizabeth",
-        "Winston Churchill",
-      ];
-      List teamMembersInitials = ["AB", "WE", "WC"];
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 3.0),
-        child: Tooltip(
-          message: teamMembers[index],
-          textStyle: kContainerTextStyle.copyWith(
-            color: Colors.black,
-            fontSize: 14,
-          ),
-          child: CircleAvatar(
-            backgroundColor: Colors.grey,
-            radius: 30,
-            child: Text(
-              teamMembersInitials[index],
-              style: kContainerTextStyle.copyWith(
-                color: Colors.black,
-              ),
-            ),
-          ),
-        ),
-      );
-    },
-  );
 }

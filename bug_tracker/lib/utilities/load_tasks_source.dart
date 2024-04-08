@@ -94,6 +94,3 @@ Future<List<Task>> retrieveTasksByStaff({required int staffID}) async {
   await loadTasksSourceByStaff(staffID: staffID, limit: impossiblyLargeNumber);
   return tasksSource;
 }
-
-// NOTE: make get by status be an operation on the already filled tasksSource
-// list in order to reduce query complexity

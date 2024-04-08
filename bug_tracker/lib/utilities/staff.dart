@@ -7,7 +7,9 @@ class Staff {
     required this.firstName,
     required this.middleName,
     required this.email,
-  }) : initials = ((firstName != null ? firstName[0] : '') + (surname[0]))
+  }) : initials = ((surname[0]) +
+                (firstName != null ? firstName[0] : '') +
+                (middleName != null ? middleName[0] : ''))
             .toUpperCase();
 
   Staff.fromResultRow({
