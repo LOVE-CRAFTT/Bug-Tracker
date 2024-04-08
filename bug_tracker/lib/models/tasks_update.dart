@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:bug_tracker/database/db.dart';
 
 // notifies on task update
-class TaskUpdate extends ChangeNotifier {
+class TasksUpdate extends ChangeNotifier {
   Future<void> updateTasks({required List<Task> taskUpdates}) async {
     bool success = await db.addTasks(tasks: taskUpdates);
 

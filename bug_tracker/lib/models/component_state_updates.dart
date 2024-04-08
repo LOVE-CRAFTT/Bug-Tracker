@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:bug_tracker/database/db.dart';
 
 // notifies on complaint state update
-class ComponentStateUpdates extends ChangeNotifier {
+class ComplaintStateUpdates extends ChangeNotifier {
   Future<void> updateComplaintState({
     required int complaintID,
     required ComplaintState newState,
@@ -23,26 +23,7 @@ class ComponentStateUpdates extends ChangeNotifier {
     }
   }
 
-  Future<void> updateTaskState({
-    required int taskID,
-    required TaskState newState,
-  }) async {
-    bool success = await db.updateTaskState(
-      id: taskID,
-      newState: newState,
-    );
-
-    // if the process was successful notify listeners
-    if (success) {
-      notifyListeners();
-    }
-    // else debug print failed to update to acknowledged
-    else {
-      printStateUpdateError(attemptedState: newState.title);
-    }
-  }
-
-  // one for project and task states too
+  // one for project
 
   // notifies on complaint tag update
   Future<void> updateComplaintTags({
@@ -60,6 +41,27 @@ class ComponentStateUpdates extends ChangeNotifier {
       debugPrint(
         "Failed to update tags",
       );
+    }
+  }
+}
+
+class TaskStateUpdates extends ChangeNotifier {
+  Future<void> updateTaskState({
+    required int taskID,
+    required TaskState newState,
+  }) async {
+    bool success = await db.updateTaskState(
+      id: taskID,
+      newState: newState,
+    );
+
+    // if the process was successful notify listeners
+    if (success) {
+      notifyListeners();
+    }
+    // else debug print failed to update to acknowledged
+    else {
+      printStateUpdateError(attemptedState: newState.title);
     }
   }
 }

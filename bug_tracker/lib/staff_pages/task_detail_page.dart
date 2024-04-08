@@ -174,7 +174,7 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
 
                     /// Actual task
                     child: Text(
-                      "TASK: ${widget.task}",
+                      "TASK: ${widget.task.task}",
                       style: kContainerTextStyle.copyWith(
                         fontSize: 25.0,
                         color: Colors.white,

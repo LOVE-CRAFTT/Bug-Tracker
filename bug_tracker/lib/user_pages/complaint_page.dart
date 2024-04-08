@@ -18,7 +18,7 @@ class ComplaintPage extends StatefulWidget {
 }
 
 class _ComplaintPageState extends State<ComplaintPage> {
-  String? dropDownValue = complaintsChoices.first;
+  String dropDownValue = complaintsChoices.first;
 
   @override
   Widget build(BuildContext context) {

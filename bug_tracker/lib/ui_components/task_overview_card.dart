@@ -13,11 +13,9 @@ class TaskOverviewCard extends StatelessWidget {
   const TaskOverviewCard({
     super.key,
     required this.task,
-    required this.isTeamLead,
   });
 
   final Task task;
-  final bool isTeamLead;
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +30,8 @@ class TaskOverviewCard extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) => TaskDetailPage(
-                viewingFromBug: false,
                 task: task,
+                viewingFromBug: false,
               ),
             ),
           );

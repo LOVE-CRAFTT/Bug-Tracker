@@ -15,7 +15,7 @@ class ProjectsPage extends StatefulWidget {
 }
 
 class _ProjectsPageState extends State<ProjectsPage> {
-  String? dropDownValue = projectChoices.first;
+  String dropDownValue = projectChoices.first;
 
   @override
   Widget build(BuildContext context) {

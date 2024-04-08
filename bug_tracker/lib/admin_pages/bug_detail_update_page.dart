@@ -4,7 +4,7 @@ import 'package:bug_tracker/utilities/task.dart';
 import 'package:bug_tracker/utilities/complaint.dart';
 import 'package:bug_tracker/utilities/staff.dart';
 import 'package:bug_tracker/models/component_state_updates.dart';
-import 'package:bug_tracker/models/task_update.dart';
+import 'package:bug_tracker/models/tasks_update.dart';
 import 'package:bug_tracker/utilities/core_data_sources.dart';
 import 'package:bug_tracker/ui_components/task_assignment_form.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
@@ -396,7 +396,7 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
 
                   // update the tags using the function that notifies
                   // Bug detail page
-                  context.read<ComponentStateUpdates>().updateComplaintTags(
+                  context.read<ComplaintStateUpdates>().updateComplaintTags(
                         complaintID: widget.complaint.ticketNumber,
                         newTags: selectedTags,
                       );
@@ -408,7 +408,7 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
                       newTeamMemberValues.isNotEmpty &&
                           widget.complaint.complaintState !=
                               ComplaintState.completed) {
-                    context.read<ComponentStateUpdates>().updateComplaintState(
+                    context.read<ComplaintStateUpdates>().updateComplaintState(
                           complaintID: widget.complaint.ticketNumber,
                           newState: ComplaintState.inProgress,
                         );
@@ -427,7 +427,7 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
 
                   //also update tasks which notifies Bug Detail Page
                   context
-                      .read<TaskUpdate>()
+                      .read<TasksUpdate>()
                       .updateTasks(taskUpdates: taskUpdates);
 
                   Navigator.pop(context);

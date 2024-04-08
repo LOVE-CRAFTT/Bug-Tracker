@@ -49,7 +49,7 @@ class _BugsPageState extends State<BugsPage> {
   Widget build(BuildContext context) {
     // watch ComponentStateUpdates for updates to complaint and task states
     // and rebuild
-    context.watch<ComponentStateUpdates>();
+    context.watch<ComplaintStateUpdates>();
 
     return Scaffold(
       appBar: adminReusableAppBar("Bugs", context),
@@ -139,31 +139,13 @@ class _BugsPageState extends State<BugsPage> {
 }
 
 List<Complaint> filterComplaintsSource({required String filter}) {
-  if (filter == 'Pending') {
-    return complaintsSource
-        .where(
-          (complaint) => complaint.complaintState.title == filter,
-        )
-        .toList();
-  } else if (filter == 'Acknowledged') {
-    return complaintsSource
-        .where(
-          (complaint) => complaint.complaintState.title == filter,
-        )
-        .toList();
-  } else if (filter == 'In Progress') {
-    return complaintsSource
-        .where(
-          (complaint) => complaint.complaintState.title == filter,
-        )
-        .toList();
-  } else if (filter == 'Completed') {
-    return complaintsSource
-        .where(
-          (complaint) => complaint.complaintState.title == filter,
-        )
-        .toList();
-  } else {
+  if (filter == 'All Bugs') {
     return complaintsSource;
+  } else {
+    return complaintsSource
+        .where(
+          (complaint) => complaint.complaintState.title == filter,
+        )
+        .toList();
   }
 }
