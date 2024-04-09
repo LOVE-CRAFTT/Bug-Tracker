@@ -46,13 +46,18 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
       taskID: widget.task.id,
     );
 
-    // if task state is not due today, completed or over due
-    // and also if the state is not already in progress
+    // if task state is not due today, completed, over due,
+    // transferred or received
+    // and if the state is not already in progress
+    // and also if this is the current viewer's task
     // then automatically set as in progress
     if (currentTaskState != TaskState.inProgress &&
         currentTaskState != TaskState.dueToday &&
         currentTaskState != TaskState.completed &&
-        currentTaskState != TaskState.overdue) {
+        currentTaskState != TaskState.overdue &&
+        currentTaskState != TaskState.transferred &&
+        currentTaskState != TaskState.received &&
+        widget.task.assignedStaff.id == globalActorID) {
       //State's mounted property
       if (mounted) {
         // this then notifies listeners

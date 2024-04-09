@@ -356,7 +356,15 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
                                         originalTeamMemberTasks
                                             .elementAt(i)
                                             .assignedStaff
-                                            .id)
+                                            .id) &&
+                                (originalTeamMemberTasks
+                                            .elementAt(i)
+                                            .taskState !=
+                                        TaskState.transferred ||
+                                    originalTeamMemberTasks
+                                            .elementAt(i)
+                                            .taskState !=
+                                        TaskState.received)
                             ? TaskState.updated
                             : TaskState.fresh,
                         associatedComplaint: widget.complaint,
@@ -378,13 +386,9 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
                         newTags: selectedTags,
                       );
 
-                  // update complaint state to in progress
-                  // if a teamLead or teamMember has been assigned
-                  // and complaint is not already completed
-                  if (newTeamLeadValue != null ||
-                      newTeamMemberValues.isNotEmpty &&
-                          widget.complaint.complaintState !=
-                              ComplaintState.completed) {
+                  // make complaint in progress since admin task has
+                  // definitely been added
+                  {
                     context.read<ComplaintStateUpdates>().updateComplaintState(
                           complaintID: widget.complaint.ticketNumber,
                           newState: ComplaintState.inProgress,

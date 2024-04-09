@@ -48,10 +48,7 @@ class _BugDetailPageState extends State<BugDetailPage> {
   void acknowledgeComplaint() async {
     // if complaint state is pending meaning its a new complaint
     // the state should be automatically set as acknowledged.
-    if (await getCurrentComplaintState(
-          complaintID: widget.complaint.ticketNumber,
-        ) ==
-        ComplaintState.pending) {
+    if (widget.complaint.complaintState == ComplaintState.pending) {
       //State's mounted property
       if (mounted) {
         // this then notifies listeners
