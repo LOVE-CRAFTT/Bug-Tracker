@@ -228,6 +228,8 @@ enum ComplaintState {
 enum TaskState {
   fresh(title: "New", associatedColor: Colors.orange),
   inProgress(title: "In Progress", associatedColor: Colors.blue),
+  transferred(title: "Transferred", associatedColor: Colors.deepPurple),
+  received(title: "Received", associatedColor: Colors.pink),
   updated(title: "Updated", associatedColor: Colors.deepOrange),
   dueToday(title: "Due Today", associatedColor: Colors.yellow),
   completed(title: "Completed", associatedColor: Colors.green),

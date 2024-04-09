@@ -202,41 +202,43 @@ class _TaskDetailUpdatePageState extends State<TaskDetailUpdatePage> {
                   }
 
                   // if staff wants to transfer task
-                  // known if the transfer task droopDownValue has been changed
+                  // known if the transfer task dropDownValue has been changed
                   // to a different staff
-                  if (widget.task.isTeamLead &&
-                      dropDownValue != widget.task.assignedStaff) {
-                    // tasksSource without current task
-                    // using id and not assignedStaff because
-                    // staff could have 2 or more tasks
-                    List<Task> otherTasks = tasksSource
-                        .where(
-                          (task) => task.id != widget.task.id,
-                        )
-                        .toList();
+                  if (dropDownValue != widget.task.assignedStaff) {
+                    // add new task with newly assigned staff
+                    context.read<TasksUpdate>().addNewTransferredTask(
+                          task: Task(
+                            // will change so just a placeholder value
+                            id: 0,
 
-                    // add new transferred task
-                    // based on current task but with
-                    otherTasks.add(
-                      Task(
-                        id: widget.task.id,
-                        task: widget.task.task,
+                            // set task string
+                            task: widget.task.task,
 
-                        // new since its transferred to someone else
-                        taskState: TaskState.fresh,
-                        associatedComplaint: widget.task.associatedComplaint,
-                        dueDate: widget.task.dueDate,
+                            // new task state will received
+                            taskState: TaskState.received,
 
-                        // new assignee
-                        assignedStaff: dropDownValue,
-                        isTeamLead: widget.task.isTeamLead,
-                      ),
-                    );
+                            // same complaint
+                            associatedComplaint:
+                                widget.task.associatedComplaint,
 
-                    // update the database and notify listeners
-                    context
-                        .read<TasksUpdate>()
-                        .updateTasks(taskUpdates: otherTasks);
+                            // same due date to account for deadlines
+                            dueDate: widget.task.dueDate,
+
+                            // newly assigned staff
+                            assignedStaff: dropDownValue,
+
+                            // always just one team lead
+                            isTeamLead: false,
+                          ),
+                        );
+
+                    // set state as transferred
+                    context.read<TaskStateUpdates>().updateTaskState(
+                          taskID: widget.task.id,
+
+                          // transferred
+                          newState: TaskState.transferred,
+                        );
                   }
 
                   // update task to completed if is team lead and there's intent

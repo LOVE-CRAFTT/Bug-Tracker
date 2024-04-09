@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS task (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     associated_complaint INT UNSIGNED NOT NULL,
     task_name VARCHAR(255) NOT NULL,
-    task_state ENUM('Completed', 'Due Today', 'In Progress', 'New', 'Overdue', 'Updated') NOT NULL,
+    task_state ENUM('Completed', 'Due Today', 'In Progress', 'New', 'Overdue', 'Updated', 'Transferred', 'Received') NOT NULL,
     due_date DATETIME NOT NULL,
     associated_staff INT UNSIGNED NOT NULL,
     is_team_lead BOOLEAN NOT NULL,

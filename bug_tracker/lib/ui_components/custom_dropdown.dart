@@ -36,6 +36,8 @@ List<String> tasksChoices = [
   "All tasks",
   "New (2 days)",
   "In Progress",
+  "Transferred",
+  "Received",
   "Updated",
   "Due Today",
   "Completed",

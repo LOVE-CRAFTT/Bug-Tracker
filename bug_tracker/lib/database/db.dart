@@ -496,5 +496,28 @@ class DB {
       return false;
     }
   }
+
+  Future<bool> addSingleTask({
+    required Task task,
+  }) async {
+    Results result = await _conn!.query(
+        'insert into task (associated_complaint, task_name, task_state, due_date, associated_staff, is_team_lead) values (?, ?, ?, ?, ?, ?)',
+        [
+          task.associatedComplaint.ticketNumber,
+          task.task,
+          task.taskState.title,
+          task.dueDate.toUtc(),
+          task.assignedStaff.id,
+          task.isTeamLead,
+        ]);
+
+    if (result.insertId != null) {
+      // task successfully added
+      return true;
+    } else {
+      // failure
+      return false;
+    }
+  }
   //============================================================================
 }

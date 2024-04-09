@@ -307,15 +307,7 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
                       // from the original then its updated else its new
                       // or if the assigned staff is different
                       // Also if the original is not empty then its updated
-                      // The original taskState has to not be completed, overdue or due today
-                      // before changing to updated since those are more important
-                      taskState: originalTeamLeadTask?.taskState !=
-                                  TaskState.completed &&
-                              originalTeamLeadTask?.taskState !=
-                                  TaskState.overdue &&
-                              originalTeamLeadTask?.taskState !=
-                                  TaskState.dueToday &&
-                              (originalTeamLeadTask != null &&
+                      taskState: (originalTeamLeadTask != null &&
                                   originalTeamLeadTask!.task.isNotEmpty) &&
                               (newTeamLeadTaskTextController.text !=
                                       originalTeamLeadTask?.task ||
@@ -348,27 +340,12 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
                         task: newTeamMembersTaskTextControllers[i].text,
 
                         // if originalTeamMemberTasks is large enough to prevent value access error
-                        // and if newTeamMembersTaskTextControllers list is large enough for the same reasons
                         // the isNotEmpty check is just part of the check for adequate size
-                        // and the teamMemberTask.TaskState at current index is not
-                        // completed, overdue or due today as those are more important
                         // and finally the teamMember task controller at current index
                         // which contains the updated task is different from the original
                         // contained in teamMemberTasks list at current index, set as updated else set as new
                         taskState: (originalTeamMemberTasks.isNotEmpty &&
                                     originalTeamMemberTasks.length >= i) &&
-                                originalTeamMemberTasks
-                                        .elementAt(i)
-                                        .taskState !=
-                                    TaskState.completed &&
-                                originalTeamMemberTasks
-                                        .elementAt(i)
-                                        .taskState !=
-                                    TaskState.overdue &&
-                                originalTeamMemberTasks
-                                        .elementAt(i)
-                                        .taskState !=
-                                    TaskState.dueToday &&
                                 (newTeamMembersTaskTextControllers
                                             .elementAt(i)
                                             .text !=
@@ -428,7 +405,7 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
                   //also update tasks which notifies Bug Detail Page
                   context
                       .read<TasksUpdate>()
-                      .updateTasks(taskUpdates: taskUpdates);
+                      .wipeAndUpdateTasks(taskUpdates: taskUpdates);
 
                   Navigator.pop(context);
                   newTeamLeadTaskTextController.clear();
