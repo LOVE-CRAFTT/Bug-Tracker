@@ -56,7 +56,6 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
         currentTaskState != TaskState.completed &&
         currentTaskState != TaskState.overdue &&
         currentTaskState != TaskState.transferred &&
-        currentTaskState != TaskState.received &&
         widget.task.assignedStaff.id == globalActorID) {
       //State's mounted property
       if (mounted) {
