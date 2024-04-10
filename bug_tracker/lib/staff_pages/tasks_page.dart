@@ -149,7 +149,9 @@ class _TasksPageState extends State<TasksPage> {
                       ),
                       child: FutureBuilder(
                         future: loadTasksSourceByStaff(
-                            staffID: globalActorID, limit: limit),
+                          staffID: globalActorID,
+                          limit: limit,
+                        ),
                         builder: (BuildContext context,
                             AsyncSnapshot<void> snapshot) {
                           if (snapshot.connectionState ==

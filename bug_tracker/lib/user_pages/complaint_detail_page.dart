@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/tools.dart';
 import 'package:bug_tracker/utilities/complaint.dart';
 import 'package:bug_tracker/utilities/build_staff_notes.dart';
 import 'package:bug_tracker/utilities/file_retrieval_functions.dart';
+import 'package:bug_tracker/models/component_state_updates.dart';
+import 'package:bug_tracker/ui_components/empty_screen_placeholder.dart';
 
 class ComplaintDetailPage extends StatelessWidget {
   const ComplaintDetailPage({
@@ -15,6 +18,9 @@ class ComplaintDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // watch ComplaintStateUpdates for updates to complaint
+    // and rebuild
+    context.watch<ComplaintStateUpdates>();
     return Scaffold(
       appBar: genericTaskBar("Complaint Detail"),
       body: LayoutBuilder(
@@ -89,17 +95,19 @@ class ComplaintDetailPage extends StatelessWidget {
                         color: lightAshyNavyBlue,
                         borderRadius: BorderRadius.circular(10.0),
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: SingleChildScrollView(
-                          child: Text(
-                            complaintNotesPlaceholder,
-                            style: kContainerTextStyle.copyWith(
-                              fontSize: 15.0,
-                            ),
-                          ),
-                        ),
-                      ),
+                      child: complaint.complaintNotes != null
+                          ? Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: SingleChildScrollView(
+                                child: Text(
+                                  complaint.complaintNotes!,
+                                  style: kContainerTextStyle.copyWith(
+                                    fontSize: 15.0,
+                                  ),
+                                ),
+                              ),
+                            )
+                          : const EmptyScreenPlaceholder(),
                     ),
                   ),
 

@@ -47,7 +47,7 @@ class _BugsPageState extends State<BugsPage> {
 
   @override
   Widget build(BuildContext context) {
-    // watch ComponentStateUpdates for updates to complaint and task states
+    // watch ComplaintStateUpdates for updates to complaint state
     // and rebuild
     context.watch<ComplaintStateUpdates>();
 

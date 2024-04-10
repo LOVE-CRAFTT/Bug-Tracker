@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:side_sheet/side_sheet.dart';
 import 'package:bug_tracker/ui_components/custom_dropdown.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
@@ -6,8 +7,13 @@ import 'package:bug_tracker/ui_components/complaint_overview_card.dart';
 import 'package:bug_tracker/user_pages/new_complaint_form.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/tools.dart';
+import 'package:bug_tracker/utilities/complaint.dart';
 import 'package:bug_tracker/utilities/core_data_sources.dart';
+import 'package:bug_tracker/utilities/load_complaints_source.dart';
+import 'package:bug_tracker/models/component_state_updates.dart';
 import 'package:bug_tracker/admin_pages/update_password_page.dart';
+import 'package:bug_tracker/ui_components/empty_screen_placeholder.dart';
+import 'package:bug_tracker/ui_components/custom_circular_progress_indicator.dart';
 
 /// Page the user sees when logged in.
 class ComplaintPage extends StatefulWidget {
@@ -19,9 +25,33 @@ class ComplaintPage extends StatefulWidget {
 
 class _ComplaintPageState extends State<ComplaintPage> {
   String dropDownValue = complaintsChoices.first;
+  String searchBarString = "";
+
+  // for managing retrieved complaints length
+  ScrollController scrollController = ScrollController();
+
+  // will be increased if scroll to end
+  int limit = 30;
+
+  // listens for if user has scrolled to end and generates more
+  @override
+  void initState() {
+    scrollController.addListener(() {
+      if (scrollController.position.atEdge) {
+        if (scrollController.position.pixels != 0) {
+          limit += 10;
+          setState(() {});
+        }
+      }
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    // watch ComplaintStateUpdates for updates to complaint
+    // and rebuild
+    context.watch<ComplaintStateUpdates>();
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -163,7 +193,8 @@ class _ComplaintPageState extends State<ComplaintPage> {
                           kContainerTextStyle.copyWith(fontSize: 14.0),
                         ),
                         onChanged: (input) {
-                          ///set state here to rebuild complaints
+                          searchBarString = input;
+                          setState(() {});
                         },
                       ),
                       HeaderButton(
@@ -196,15 +227,45 @@ class _ComplaintPageState extends State<ComplaintPage> {
                       color: const Color(0xFF363739),
                       borderRadius: BorderRadius.circular(10.0),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: ListView.builder(
-                        itemCount: complaintsSource.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return ComplaintOverviewCard(
-                              complaint: complaintsSource[index]);
-                        },
+                    child: FutureBuilder(
+                      future: loadComplaintsSourceByUser(
+                        userID: globalActorID,
+                        limit: limit,
                       ),
+                      builder:
+                          (BuildContext context, AsyncSnapshot<void> snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                            child: CustomCircularProgressIndicator(),
+                          );
+                        } else {
+                          List<Complaint> localComplaintsSource =
+                              filterComplaintsSource(
+                            filter: dropDownValue,
+                            searchBarString: searchBarString,
+                          );
+
+                          return Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: filterComplaintsSource(
+                              filter: dropDownValue,
+                              searchBarString: searchBarString,
+                            ).isNotEmpty
+                                ? ListView.builder(
+                                    controller: scrollController,
+                                    itemCount: localComplaintsSource.length,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return ComplaintOverviewCard(
+                                        complaint: localComplaintsSource[index],
+                                      );
+                                    },
+                                  )
+                                : const EmptyScreenPlaceholder(),
+                          );
+                        }
+                      },
                     ),
                   ),
                 ],
@@ -215,4 +276,41 @@ class _ComplaintPageState extends State<ComplaintPage> {
       ),
     );
   }
+}
+
+List<Complaint> filterComplaintsSource({
+  required String filter,
+  required String searchBarString,
+}) {
+  // will contain final filtered list
+  List<Complaint> filteredList = [];
+
+  // filter first by dropDownValue
+  if (filter == 'All complaints') {
+    filteredList = complaintsSource;
+  } else {
+    filteredList = complaintsSource
+        .where(
+          (complaint) => complaint.complaintState.title == filter,
+        )
+        .toList();
+  }
+
+  // if there isn't a searchBarString then
+  // return the list filtered by dropdown
+  // if the string is just whitespace, it should be detected as empty
+  if (searchBarString.trim().isEmpty) return filteredList;
+
+  // filter by task containing
+  // search bar value
+  // to upper case to prevent mismatch in mixed case scenarios
+  filteredList = filteredList
+      .where(
+        (complaint) => complaint.complaint.toUpperCase().contains(
+              searchBarString.toUpperCase(),
+            ),
+      )
+      .toList();
+
+  return filteredList;
 }

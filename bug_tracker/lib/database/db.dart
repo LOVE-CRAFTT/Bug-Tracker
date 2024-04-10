@@ -301,21 +301,33 @@ class DB {
     }
   }
 
-  //NOTE: This shouldn't be necessary as I should filter on the complaint source list
-  // though a potential error is not knowing what exactly has populated the complaints Source
-  Future<Results?> getComplaintsFilteredByState({
+  Future<Results?> getComplaintsByUser({
+    required int userID,
     required int limit,
-    required ComplaintState state,
   }) async {
     Results results = await _conn!.query(
-      'SELECT * FROM complaint WHERE complaint_state = ? ORDER BY date_created DESC LIMIT ?',
-      [state.title, limit],
+      'SELECT * FROM complaint WHERE author = ? ORDER BY date_created DESC LIMIT ?',
+      [userID, limit],
     );
+
     if (results.isEmpty) {
-      // No such complaints
       return null;
     } else {
-      // complaints exists
+      return results;
+    }
+  }
+
+  Future<Results?> getComplaintsByProject({
+    required int projectID,
+  }) async {
+    Results results = await _conn!.query(
+      'SELECT * FROM complaint WHERE associated_project = ? ORDER BY date_created DESC LIMIT ?',
+      [projectID],
+    );
+
+    if (results.isEmpty) {
+      return null;
+    } else {
       return results;
     }
   }

@@ -76,8 +76,50 @@ Future<List<Tags>?> retrieveTags({
   }
 }
 
+Future<void> loadComplaintsSourceByUser({
+  required int userID,
+  required int limit,
+}) async {
+  List<Complaint> processedComplaints = [];
+
+  // get all the complaints
+  Results? results = await db.getComplaintsByUser(userID: userID, limit: limit);
+
+  // if there are any complaints
+  if (results != null) {
+    // process them into a complaints class
+    for (ResultRow complaintRow in results) {
+      // get tags here since can't await in complaint constructor
+      var tags = await retrieveTags(complaintID: complaintRow['id']);
+
+      // get associated project here since can't await in complaint constructor
+      Results? projectResult =
+          await db.getProjectData(complaintRow['associated_project']);
+      ResultRow? projectRow = projectResult?.first;
+
+      // get user email here since can't wait in complaints constructor
+      Results? authorResults =
+          await db.getUserDataUsingID(complaintRow['author']);
+      String author = authorResults?.first['email'];
+
+      processedComplaints.add(
+        Complaint.fromResultRow(
+          complaintRow: complaintRow,
+          project: Project.fromResultRow(projectRow: projectRow!),
+          author: author,
+          tags: tags,
+        ),
+      );
+    }
+    complaintsSource = processedComplaints;
+  }
+  // else no complaints make complaintsSource empty
+  else {
+    complaintsSource = [];
+  }
+}
+
 // GOALS
-// Get by user
 // Get by project
 // NOTE: make get by status be an operation on the already filled complaintsSource
 // list in order to reduce query complexity
