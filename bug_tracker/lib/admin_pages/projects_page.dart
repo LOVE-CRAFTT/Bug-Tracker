@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:bug_tracker/ui_components/custom_dropdown.dart';
 import 'package:bug_tracker/ui_components/admin_appbar.dart';
 import 'package:bug_tracker/utilities/constants.dart';
-import 'package:bug_tracker/utilities/tools.dart';
-import 'package:bug_tracker/utilities/core_data_sources.dart';
+// import 'package:bug_tracker/utilities/tools.dart';
+// import 'package:bug_tracker/utilities/core_data_sources.dart';
 import 'package:bug_tracker/utilities/build_project_page_table_row.dart';
 
 ///Contains interface to all the projects in the database
@@ -57,36 +57,6 @@ class _ProjectsPageState extends State<ProjectsPage> {
                           children: [
                             TableRow(
                               children: [...buildTableHeaders()],
-                            ),
-                            buildTableRow(
-                              context: context,
-                              project: projectSource[0],
-                              // normalize percentage completed from 0 - 1
-                              percentBugsCompleted: normalize0to1(6),
-                            ),
-                            buildTableRow(
-                              context: context,
-                              project: projectSource[1],
-                              // normalize percentage completed from 0 - 1
-                              percentBugsCompleted: normalize0to1(60),
-                            ),
-                            buildTableRow(
-                              context: context,
-                              project: projectSource[2],
-                              // normalize percentage completed from 0 - 1
-                              percentBugsCompleted: normalize0to1(12),
-                            ),
-                            buildTableRow(
-                              context: context,
-                              project: projectSource[3],
-                              // normalize percentage completed from 0 - 1
-                              percentBugsCompleted: normalize0to1(33),
-                            ),
-                            buildTableRow(
-                              context: context,
-                              project: projectSource[4],
-                              // normalize percentage completed from 0 - 1
-                              percentBugsCompleted: normalize0to1(98),
                             ),
                           ],
                         ),
