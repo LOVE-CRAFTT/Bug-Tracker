@@ -306,11 +306,12 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
                       // if the text in teamLeadTaskController has changed
                       // from the original then its updated else its new
                       // or if the assigned staff is different
-                      // Also if the original is not empty then its updated
+                      // Also if the original is not empty then its updated since
+                      // text is required before reaching this section
                       taskState: (originalTeamLeadTask != null &&
                                   originalTeamLeadTask!.task.isNotEmpty) &&
                               (newTeamLeadTaskTextController.text !=
-                                      originalTeamLeadTask?.task ||
+                                      originalTeamLeadTask!.task ||
                                   newTeamLeadValue!.id !=
                                       originalTeamLeadTask!.assignedStaff.id)
                           ? TaskState.updated

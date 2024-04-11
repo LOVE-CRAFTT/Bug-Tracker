@@ -22,7 +22,7 @@ class TaskAssignmentForm extends StatelessWidget {
       padding: const EdgeInsets.all(20.0),
       child: Row(
         children: [
-          /// Team Lead
+          /// Staff
           Padding(
             padding: const EdgeInsets.only(right: 20.0),
             child: DropdownButton(
@@ -44,7 +44,7 @@ class TaskAssignmentForm extends StatelessWidget {
             ),
           ),
 
-          /// Team Lead Task
+          /// Task
           Expanded(
             child: TextField(
               controller: taskController,

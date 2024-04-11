@@ -49,6 +49,7 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
     // if task state is not due today, completed, over due,
     // transferred or received
     // and if the state is not already in progress
+    // and if the admin is not viewing it i.e not viewing from bug detail page
     // and also if this is the current viewer's task
     // then automatically set as in progress
     if (currentTaskState != TaskState.inProgress &&

@@ -6,6 +6,7 @@ import 'package:bug_tracker/utilities/complaint.dart';
 import 'package:bug_tracker/utilities/build_staff_notes.dart';
 import 'package:bug_tracker/utilities/file_retrieval_functions.dart';
 import 'package:bug_tracker/models/component_state_updates.dart';
+import 'package:bug_tracker/models/staff_notes_updates.dart';
 import 'package:bug_tracker/ui_components/empty_screen_placeholder.dart';
 
 class ComplaintDetailPage extends StatelessWidget {
@@ -21,6 +22,9 @@ class ComplaintDetailPage extends StatelessWidget {
     // watch ComplaintStateUpdates for updates to complaint
     // and rebuild
     context.watch<ComplaintStateUpdates>();
+
+    // watch StaffNotesUpdates for updates to staff notes and rebuild
+    context.watch<StaffNotesUpdates>();
     return Scaffold(
       appBar: genericTaskBar("Complaint Detail"),
       body: LayoutBuilder(

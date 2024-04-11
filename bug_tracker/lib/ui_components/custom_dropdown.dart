@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
-import 'package:bug_tracker/utilities/core_data_sources.dart';
 
 List<String> feedChoices = [
   "All Projects",
-  ...List.generate(projectSource.length, (index) => projectSource[index].name),
+  "Open",
+  "Postponed",
+  "Cancelled",
+  "Closed",
 ];
 List<String?> milestoneChoices = [
   "All Milestones",
