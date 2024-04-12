@@ -1,5 +1,8 @@
+import 'package:bug_tracker/ui_components/empty_screen_placeholder.dart';
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
+import 'package:bug_tracker/utilities/project.dart';
+import 'package:bug_tracker/utilities/tools.dart';
 import 'package:bug_tracker/utilities/core_data_sources.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
 import 'package:bug_tracker/ui_components/bug_preview_card.dart';
@@ -7,20 +10,10 @@ import 'package:bug_tracker/ui_components/bug_preview_card.dart';
 class ProjectDetailPage extends StatefulWidget {
   const ProjectDetailPage({
     super.key,
-    required this.projectID,
-    required this.projectName,
-    required this.projectDetails,
-    required this.projectState,
-    required this.dateCreated,
-    required this.dateClosed,
+    required this.project,
   });
 
-  final int projectID;
-  final String projectName;
-  final String? projectDetails;
-  final String dateCreated;
-  final ProjectState projectState;
-  final String? dateClosed;
+  final Project project;
 
   @override
   State<ProjectDetailPage> createState() => _ProjectDetailPageState();
@@ -50,13 +43,13 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Project ID: ${widget.projectID}",
+                          "Project ID: ${widget.project.id}",
                           style: kContainerTextStyle.copyWith(
                             fontSize: 14.0,
                           ),
                         ),
                         Text(
-                          "Date Created: ${widget.dateCreated}",
+                          "Date Created: ${convertToDateString(widget.project.dateCreated)}",
                           style: kContainerTextStyle.copyWith(
                             fontSize: 14.0,
                           ),
@@ -70,13 +63,13 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Project: ${widget.projectName}",
+                          "Project: ${widget.project.name}",
                           style: kContainerTextStyle.copyWith(
                               fontSize: 25.0, color: Colors.white),
                         ),
-                        if (widget.dateClosed != null)
+                        if (widget.project.dateClosed != null)
                           Text(
-                            "Date Closed: ${widget.dateClosed}",
+                            "Date Closed: ${convertToDateString(widget.project.dateClosed!)}",
                             style: kContainerTextStyle.copyWith(
                               fontSize: 14.0,
                             ),
@@ -94,36 +87,38 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                       top: 20.0,
                     ),
                     child: Text(
-                      "Project Details${(widget.projectDetails != null ? "" : ": None")}",
+                      "Project Details: ",
                       style: kContainerTextStyle.copyWith(
                         fontSize: 16.0,
                       ),
                     ),
                   ),
-                  if (widget.projectDetails != null)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: Container(
-                        height: constraints.maxHeight - 450 > 0
-                            ? constraints.maxHeight - 450
-                            : 0,
-                        decoration: BoxDecoration(
-                          color: lightAshyNavyBlue,
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: SingleChildScrollView(
-                            child: Text(
-                              widget.projectDetails!,
-                              style: kContainerTextStyle.copyWith(
-                                fontSize: 15.0,
-                              ),
-                            ),
-                          ),
+
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Container(
+                      height: constraints.maxHeight - 450 > 0
+                          ? constraints.maxHeight - 450
+                          : 0,
+                      decoration: BoxDecoration(
+                        color: lightAshyNavyBlue,
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: SingleChildScrollView(
+                          child: (widget.project.details != null)
+                              ? Text(
+                                  widget.project.details!,
+                                  style: kContainerTextStyle.copyWith(
+                                    fontSize: 15.0,
+                                  ),
+                                )
+                              : const EmptyScreenPlaceholder(),
                         ),
                       ),
                     ),
+                  ),
 
                   /// All states of the projects are available as chips and they are each grayed out or colored
                   /// based on the state of the project
@@ -144,10 +139,10 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                               color: Colors.black,
                             ),
                           ),
-                          backgroundColor:
-                              widget.projectState.name == ProjectState.open.name
-                                  ? widget.projectState.associatedColor
-                                  : Colors.grey.withAlpha(25),
+                          backgroundColor: widget.project.state.name ==
+                                  ProjectState.open.name
+                              ? widget.project.state.associatedColor
+                              : Colors.grey.withAlpha(25),
                         ),
                       ),
                       Padding(
@@ -159,9 +154,9 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                               color: Colors.black,
                             ),
                           ),
-                          backgroundColor: widget.projectState.name ==
+                          backgroundColor: widget.project.state.name ==
                                   ProjectState.postponed.name
-                              ? widget.projectState.associatedColor
+                              ? widget.project.state.associatedColor
                               : Colors.grey.withAlpha(25),
                         ),
                       ),
@@ -174,9 +169,9 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                               color: Colors.black,
                             ),
                           ),
-                          backgroundColor: widget.projectState.name ==
+                          backgroundColor: widget.project.state.name ==
                                   ProjectState.closed.name
-                              ? widget.projectState.associatedColor
+                              ? widget.project.state.associatedColor
                               : Colors.grey.withAlpha(25),
                         ),
                       ),
@@ -189,9 +184,9 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                               color: Colors.black,
                             ),
                           ),
-                          backgroundColor: widget.projectState.name ==
+                          backgroundColor: widget.project.state.name ==
                                   ProjectState.cancelled.name
-                              ? widget.projectState.associatedColor
+                              ? widget.project.state.associatedColor
                               : Colors.grey.withAlpha(25),
                         ),
                       ),

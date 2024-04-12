@@ -24,14 +24,7 @@ TableRow buildTableRow({
             context,
             MaterialPageRoute(
               builder: (context) => ProjectDetailPage(
-                projectID: project.id,
-                projectName: project.name,
-                projectDetails: project.details,
-                projectState: project.state,
-                dateCreated: convertToDateString(project.dateCreated),
-                dateClosed: (project.dateClosed != null)
-                    ? convertToDateString(project.dateClosed!)
-                    : null,
+                project: project,
               ),
             ),
           );
