@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:bug_tracker/ui_components/custom_dropdown.dart';
 import 'package:bug_tracker/ui_components/admin_appbar.dart';
 import 'package:bug_tracker/utilities/constants.dart';
@@ -6,6 +7,7 @@ import 'package:bug_tracker/utilities/core_data_sources.dart';
 import 'package:bug_tracker/utilities/project.dart';
 import 'package:bug_tracker/utilities/load_projects_source.dart';
 import 'package:bug_tracker/utilities/build_project_page_table_row.dart';
+import 'package:bug_tracker/models/component_state_updates.dart';
 import 'package:bug_tracker/ui_components/empty_screen_placeholder.dart';
 import 'package:bug_tracker/ui_components/custom_circular_progress_indicator.dart';
 
@@ -45,6 +47,13 @@ class _ProjectsPageState extends State<ProjectsPage> {
 
   @override
   Widget build(BuildContext context) {
+    // watch ComponentStateUpdates for updates to complaint states
+    // and rebuild
+    context.watch<ComplaintStateUpdates>();
+
+    // watch ProjectStateUpdates for updates to project states
+    // and rebuild
+    context.watch<ProjectStateUpdates>();
     return Scaffold(
       appBar: adminReusableAppBar("Projects", context),
       body: LayoutBuilder(

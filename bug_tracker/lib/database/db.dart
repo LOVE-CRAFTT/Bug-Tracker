@@ -211,6 +211,23 @@ class DB {
       return results;
     }
   }
+
+  Future<bool> updateProjectState({
+    required int id,
+    required ProjectState newState,
+  }) async {
+    Results result = await _conn!.query(
+      'update project set project_state = ? WHERE id = ?',
+      [newState.title, id],
+    );
+
+    //success
+    if (result.insertId != null) {
+      return true;
+    } else {
+      return false;
+    }
+  }
   //============================================================================
 
   //=================COMPLAINT RELATED==========================================

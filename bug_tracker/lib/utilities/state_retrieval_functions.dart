@@ -19,7 +19,7 @@ Future<ComplaintState> getCurrentComplaintState(
   }
   // error retrieving the state return pending and debugPrint error
   else {
-    debugPrint("Error getting state");
+    debugPrint("Error getting complaint state");
     complaintState = ComplaintState.pending;
   }
 
@@ -32,7 +32,7 @@ Future<TaskState> getCurrentTaskState({required int taskID}) async {
 
   Results? result = await db.getTaskData(taskID);
 
-  // if there is such a complaint
+  // if there is such a task
   if (result != null) {
     taskState = TaskState.values.firstWhere(
       (state) => state.title == result.first['task_state'],
@@ -40,9 +40,30 @@ Future<TaskState> getCurrentTaskState({required int taskID}) async {
   }
   // error retrieving the state return pending and debugPrint error
   else {
-    debugPrint("Error getting state");
+    debugPrint("Error getting task state");
     taskState = TaskState.inProgress;
   }
 
   return taskState;
+}
+
+Future<ProjectState> getCurrentProjectState({required int projectID}) async {
+  // to be returned
+  ProjectState projectState;
+
+  Results? result = await db.getProjectData(projectID);
+
+  // if there is such a project
+  if (result != null) {
+    projectState = ProjectState.values.firstWhere(
+      (state) => state.title == result.first['project_state'],
+    );
+  }
+  // error retrieving the state return pending and debugPrint error
+  else {
+    debugPrint("Error getting project state");
+    projectState = ProjectState.cancelled;
+  }
+
+  return projectState;
 }

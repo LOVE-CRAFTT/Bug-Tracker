@@ -1,11 +1,16 @@
-import 'package:bug_tracker/ui_components/empty_screen_placeholder.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/project.dart';
 import 'package:bug_tracker/utilities/tools.dart';
 import 'package:bug_tracker/utilities/core_data_sources.dart';
+import 'package:bug_tracker/utilities/load_complaints_source.dart';
+import 'package:bug_tracker/utilities/state_retrieval_functions.dart';
+import 'package:bug_tracker/models/component_state_updates.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
 import 'package:bug_tracker/ui_components/bug_preview_card.dart';
+import 'package:bug_tracker/ui_components/empty_screen_placeholder.dart';
+import 'package:bug_tracker/ui_components/custom_circular_progress_indicator.dart';
 
 class ProjectDetailPage extends StatefulWidget {
   const ProjectDetailPage({
@@ -20,11 +25,42 @@ class ProjectDetailPage extends StatefulWidget {
 }
 
 class _ProjectDetailPageState extends State<ProjectDetailPage> {
-  ProjectState? updatedProjectState = ProjectState.open;
-  bool updateProjectIntent = false;
+  ProjectState updatedProjectState = ProjectState.open;
+  bool updateStatusIntent = false;
+
+  // limit for queries
+  int limit = 10;
+
+  // scroll controller for ListView widget
+  // to maintain position when retrieving data sources of new length
+  ScrollController scrollController = ScrollController();
+
+  // add 10 more if reached end of list
+  @override
+  void initState() {
+    scrollController.addListener(
+      () {
+        if (scrollController.position.atEdge) {
+          if (scrollController.position.pixels != 0) {
+            limit += 5;
+            setState(() {});
+          }
+        }
+      },
+    );
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    // watch ComponentStateUpdates for updates to complaint states
+    // and rebuild
+    context.watch<ComplaintStateUpdates>();
+
+    // watch ProjectStateUpdates for updates to project states
+    // and rebuild
+    context.watch<ProjectStateUpdates>();
+
     return Scaffold(
       appBar: genericTaskBar("Project Detail"),
       body: LayoutBuilder(
@@ -120,81 +156,97 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                     ),
                   ),
 
-                  /// All states of the projects are available as chips and they are each grayed out or colored
-                  /// based on the state of the project
-                  /// Enums are compared with names because the hashCodes change as new objects are created
-                  /// Since hashCodes are used in the equality comparison, the changing hashCodes can break it
-                  Row(
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.all(20.0),
-                        child: Text("Status: ", style: kContainerTextStyle),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Chip(
-                          label: Text(
-                            "Open",
-                            style: kContainerTextStyle.copyWith(
-                              color: Colors.black,
+                  // Gets the actual state of the project when it is updated
+                  FutureBuilder(
+                    future:
+                        getCurrentProjectState(projectID: widget.project.id),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<ProjectState> snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const CustomCircularProgressIndicator();
+                      } else {
+                        ProjectState projectState = snapshot.data!;
+
+                        /// All states of the projects are available as chips and they are each grayed out or colored
+                        /// based on the state of the project
+                        /// Enums are compared with names because the hashCodes change as new objects are created
+                        /// Since hashCodes are used in the equality comparison, the changing hashCodes can break it
+                        return Row(
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.all(20.0),
+                              child:
+                                  Text("Status: ", style: kContainerTextStyle),
                             ),
-                          ),
-                          backgroundColor: widget.project.state.name ==
-                                  ProjectState.open.name
-                              ? widget.project.state.associatedColor
-                              : Colors.grey.withAlpha(25),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Chip(
-                          label: Text(
-                            "Postponed",
-                            style: kContainerTextStyle.copyWith(
-                              color: Colors.black,
+                            Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Chip(
+                                label: Text(
+                                  "Open",
+                                  style: kContainerTextStyle.copyWith(
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                backgroundColor:
+                                    projectState.name == ProjectState.open.name
+                                        ? projectState.associatedColor
+                                        : Colors.grey.withAlpha(25),
+                              ),
                             ),
-                          ),
-                          backgroundColor: widget.project.state.name ==
-                                  ProjectState.postponed.name
-                              ? widget.project.state.associatedColor
-                              : Colors.grey.withAlpha(25),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Chip(
-                          label: Text(
-                            "Closed",
-                            style: kContainerTextStyle.copyWith(
-                              color: Colors.black,
+                            Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Chip(
+                                label: Text(
+                                  "Postponed",
+                                  style: kContainerTextStyle.copyWith(
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                backgroundColor: projectState.name ==
+                                        ProjectState.postponed.name
+                                    ? projectState.associatedColor
+                                    : Colors.grey.withAlpha(25),
+                              ),
                             ),
-                          ),
-                          backgroundColor: widget.project.state.name ==
-                                  ProjectState.closed.name
-                              ? widget.project.state.associatedColor
-                              : Colors.grey.withAlpha(25),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                        child: Chip(
-                          label: Text(
-                            "Cancelled",
-                            style: kContainerTextStyle.copyWith(
-                              color: Colors.black,
+                            Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Chip(
+                                label: Text(
+                                  "Closed",
+                                  style: kContainerTextStyle.copyWith(
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                backgroundColor: projectState.name ==
+                                        ProjectState.closed.name
+                                    ? projectState.associatedColor
+                                    : Colors.grey.withAlpha(25),
+                              ),
                             ),
-                          ),
-                          backgroundColor: widget.project.state.name ==
-                                  ProjectState.cancelled.name
-                              ? widget.project.state.associatedColor
-                              : Colors.grey.withAlpha(25),
-                        ),
-                      ),
-                    ],
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20.0),
+                              child: Chip(
+                                label: Text(
+                                  "Cancelled",
+                                  style: kContainerTextStyle.copyWith(
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                backgroundColor: projectState.name ==
+                                        ProjectState.cancelled.name
+                                    ? projectState.associatedColor
+                                    : Colors.grey.withAlpha(25),
+                              ),
+                            ),
+                          ],
+                        );
+                      }
+                    },
                   ),
 
                   /// Update project state to either cancel, postpone or close
-                  if (updateProjectIntent) ...[
+                  if (updateStatusIntent) ...[
                     const Padding(
                       padding: EdgeInsets.only(
                         left: 20.0,
@@ -212,7 +264,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                       groupValue: updatedProjectState,
                       onChanged: (value) {
                         setState(() {
-                          updatedProjectState = value;
+                          updatedProjectState = value!;
                         });
                       },
                     ),
@@ -225,7 +277,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                       groupValue: updatedProjectState,
                       onChanged: (value) {
                         setState(() {
-                          updatedProjectState = value;
+                          updatedProjectState = value!;
                         });
                       },
                     ),
@@ -238,7 +290,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                       groupValue: updatedProjectState,
                       onChanged: (value) {
                         setState(() {
-                          updatedProjectState = value;
+                          updatedProjectState = value!;
                         });
                       },
                     ),
@@ -247,21 +299,28 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                     padding: const EdgeInsets.only(left: 20.0),
                     child: HeaderButton(
                       screenIsWide: true,
-                      buttonText:
-                          updateProjectIntent ? "Done" : "Update Status",
+                      buttonText: updateStatusIntent ? "Done" : "Update Status",
                       onPress: () {
+                        // save to database if intent is there
+                        if (updateStatusIntent) {
+                          context
+                              .read<ProjectStateUpdates>()
+                              .updateProjectState(
+                                projectID: widget.project.id,
+                                newState: updatedProjectState,
+                              );
+                        }
+
                         // user sees update status or done corresponding to if the choices are shown or not
-                        updateProjectIntent = !updateProjectIntent;
+                        updateStatusIntent = !updateStatusIntent;
                         // redraw to show action first
                         setState(() {
                           // reset state for when next the choices are open
                           updatedProjectState = ProjectState.open;
-
-                          ///save to database
                         });
                         // if this resolves to true now then it currently shows update status after done was previously clicked
                         // meaning the status has been updated
-                        if (!updateProjectIntent) {
+                        if (!updateStatusIntent) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(
@@ -295,7 +354,30 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                       padding: const EdgeInsets.all(10.0),
-                      child: buildBugPreviewCards(),
+                      child: FutureBuilder(
+                        future: loadComplaintsSourceByProject(
+                          projectID: widget.project.id,
+                          limit: limit,
+                        ),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<void> snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                              child: CustomCircularProgressIndicator(),
+                            );
+                          } else {
+                            return ListView.builder(
+                              controller: scrollController,
+                              itemCount: complaintsSource.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return BugPreviewCard(
+                                    complaint: complaintsSource[index]);
+                              },
+                            );
+                          }
+                        },
+                      ),
                     ),
                   ),
                 ],
@@ -306,13 +388,4 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
       ),
     );
   }
-}
-
-ListView buildBugPreviewCards() {
-  return ListView.builder(
-    itemCount: complaintsSource.length,
-    itemBuilder: (BuildContext context, int index) {
-      return BugPreviewCard(complaint: complaintsSource[index]);
-    },
-  );
 }

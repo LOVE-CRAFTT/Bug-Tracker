@@ -66,6 +66,27 @@ class TaskStateUpdates extends ChangeNotifier {
   }
 }
 
+class ProjectStateUpdates extends ChangeNotifier {
+  Future<void> updateProjectState({
+    required int projectID,
+    required ProjectState newState,
+  }) async {
+    bool success = await db.updateProjectState(
+      id: projectID,
+      newState: newState,
+    );
+
+    // if the process was successful notify listeners
+    if (success) {
+      notifyListeners();
+    }
+    // else debug print failed to update to acknowledged
+    else {
+      printStateUpdateError(attemptedState: newState.title);
+    }
+  }
+}
+
 void printStateUpdateError({required String attemptedState}) => debugPrint(
       "Failed to update state to $attemptedState",
     );
