@@ -119,13 +119,59 @@ Future<void> loadComplaintsSourceByUser({
   }
 }
 
-// GOALS
-// Get by project
-// NOTE: make get by status be an operation on the already filled complaintsSource
-// list in order to reduce query complexity
-//
-// Get all Projects
-// NOTE: make get by status be an operation on the already filled projectsSource
-// list in order to reduce query complexity
+Future<void> loadComplaintsSourceByProject({
+  required int projectID,
+  required int limit,
+}) async {
+  List<Complaint> processedComplaints = [];
 
-// STATUS NOTE IS REGARDING THE DROPDOWN FILTERING
+  // get all the complaints
+  Results? results = await db.getComplaintsByProject(
+    projectID: projectID,
+    limit: limit,
+  );
+
+  // if there are any complaints
+  if (results != null) {
+    // process them into a complaints class
+    for (ResultRow complaintRow in results) {
+      // get tags here since can't await in complaint constructor
+      var tags = await retrieveTags(complaintID: complaintRow['id']);
+
+      // get associated project here since can't await in complaint constructor
+      Results? projectResult =
+          await db.getProjectData(complaintRow['associated_project']);
+      ResultRow? projectRow = projectResult?.first;
+
+      // get user email here since can't wait in complaints constructor
+      Results? authorResults =
+          await db.getUserDataUsingID(complaintRow['author']);
+      String author = authorResults?.first['email'];
+
+      processedComplaints.add(
+        Complaint.fromResultRow(
+          complaintRow: complaintRow,
+          project: Project.fromResultRow(projectRow: projectRow!),
+          author: author,
+          tags: tags,
+        ),
+      );
+    }
+    complaintsSource = processedComplaints;
+  }
+  // else no complaints make complaintsSource empty
+  else {
+    complaintsSource = [];
+  }
+}
+
+// work around to retrieve complaint by project
+Future<List<Complaint>> retrieveComplaintsByProject({
+  required int projectID,
+}) async {
+  await loadComplaintsSourceByProject(
+    projectID: projectID,
+    limit: impossiblyLargeNumber,
+  );
+  return complaintsSource;
+}

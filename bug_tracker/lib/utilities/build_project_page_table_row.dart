@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/project.dart';
+import 'package:bug_tracker/utilities/complaint.dart';
 import 'package:bug_tracker/utilities/tools.dart';
+import 'package:bug_tracker/utilities/load_complaints_source.dart';
 import 'package:bug_tracker/admin_pages/project_detail_page.dart';
 import 'package:bug_tracker/ui_components/custom_linear_percent_indicator.dart';
+import 'package:bug_tracker/ui_components/custom_circular_progress_indicator.dart';
 
 TableRow buildTableRow({
   required BuildContext context,
   required Project project,
-  required double percentBugsCompleted,
 }) {
   /// Draw percent indicator
 
@@ -53,7 +55,16 @@ TableRow buildTableRow({
         titleTextStyle: cellTextStyle,
       ),
       ListTile(
-        title: percentIndicator(percentBugsCompleted),
+        title: FutureBuilder(
+          future: getPercentageOfProjectCompleted(project: project),
+          builder: (BuildContext context, AsyncSnapshot<double> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CustomCircularProgressIndicator());
+            } else {
+              return percentIndicator(normalize0to1(snapshot.data!));
+            }
+          },
+        ),
         titleTextStyle: cellTextStyle,
       ),
       ListTile(
@@ -90,4 +101,23 @@ List<ListTile> buildTableHeaders() {
             titleTextStyle: cellTextStyle,
           ))
       .toList();
+}
+
+Future<double> getPercentageOfProjectCompleted(
+    {required Project project}) async {
+  List<Complaint> relatedComplaints =
+      await retrieveComplaintsByProject(projectID: project.id);
+  if (relatedComplaints.isEmpty) return 0.0;
+
+  int complaintsCompletedLength = relatedComplaints
+      .where(
+        (complaint) => complaint.complaintState == ComplaintState.completed,
+      )
+      .length;
+
+  // finally
+  return getPercentage(
+    number: complaintsCompletedLength,
+    total: relatedComplaints.length,
+  );
 }

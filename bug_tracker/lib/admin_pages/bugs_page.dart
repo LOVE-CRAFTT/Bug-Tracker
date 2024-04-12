@@ -80,7 +80,9 @@ class _BugsPageState extends State<BugsPage> {
                     } else {
                       // will contain the filtered complaints
                       List<Complaint> localComplaintsSource =
-                          filterComplaintsSource(filter: dropDownValue);
+                          filterComplaintsSource(
+                        filter: dropDownValue,
+                      );
 
                       // if the actual value that will be shown i.e the sorted value
                       // is not empty then show them else show the placeholder

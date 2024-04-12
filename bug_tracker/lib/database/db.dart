@@ -198,6 +198,19 @@ class DB {
       return results;
     }
   }
+
+  Future<Results?> getAllProjects({required int limit}) async {
+    Results results = await _conn!.query(
+      'SELECT * FROM project LIMIT $limit',
+    );
+    if (results.isEmpty) {
+      // No projects
+      return null;
+    } else {
+      // projects exist
+      return results;
+    }
+  }
   //============================================================================
 
   //=================COMPLAINT RELATED==========================================
@@ -319,10 +332,11 @@ class DB {
 
   Future<Results?> getComplaintsByProject({
     required int projectID,
+    required int limit,
   }) async {
     Results results = await _conn!.query(
       'SELECT * FROM complaint WHERE associated_project = ? ORDER BY date_created DESC LIMIT ?',
-      [projectID],
+      [projectID, limit],
     );
 
     if (results.isEmpty) {
