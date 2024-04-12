@@ -133,3 +133,14 @@ MESSAGES:
 //=======USER
 // ejohnson@gmail.com, 123456
 
+
+if I don't change your task your task is left as is
+if I change your task your task is updated
+if I add a new task then the task is new
+If I delete your task then the task is deleted from the database
+Transferred tasks are not to be affected
+
+
+If there are newly added tasks the complaint is inProgress
+If there are changed tasks the complaint is inProgress
+If there are only deleted or unchanged tasks then the complaint is left as is

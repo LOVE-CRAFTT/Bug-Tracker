@@ -10,7 +10,7 @@ double normalize0to1(double value) {
 
 ///
 double getPercentage({required int number, required int total}) {
-  return (number / total) * 100;
+  return ((number / total) * 100).ceilToDouble();
 }
 
 ///

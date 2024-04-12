@@ -296,88 +296,102 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
                     return;
                   }
 
+                  bool hasNewTasks = false;
+                  bool hasUpdatedTasks = false;
+
                   // add team lead
-                  taskUpdates.add(
-                    Task(
-                      // id is to be replaces so placeholder
-                      id: 0,
-                      task: newTeamLeadTaskTextController.text,
+                  {
+                    TaskState taskState;
 
-                      // if the text in teamLeadTaskController has changed
-                      // from the original then its updated else its new
-                      // or if the assigned staff is different
-                      // Also if the original is not empty then its updated since
-                      // text is required before reaching this section
-                      taskState: (originalTeamLeadTask != null &&
-                                  originalTeamLeadTask!.task.isNotEmpty) &&
-                              (newTeamLeadTaskTextController.text !=
-                                      originalTeamLeadTask!.task ||
-                                  newTeamLeadValue!.id !=
-                                      originalTeamLeadTask!.assignedStaff.id)
-                          ? TaskState.updated
-                          : TaskState.fresh,
-                      associatedComplaint: widget.complaint,
+                    // if the text in teamLeadTaskController has changed
+                    // from the original then its updated else its new
+                    // or if the assigned staff is different
+                    // Also if the original is not empty then its updated since
+                    // text is required before reaching this section
+                    if ((originalTeamLeadTask != null) &&
+                        (newTeamLeadTaskTextController.text !=
+                                originalTeamLeadTask!.task ||
+                            newTeamLeadValue!.id !=
+                                originalTeamLeadTask!.assignedStaff.id) &&
+                        (originalTeamLeadTask!.taskState !=
+                            TaskState.transferred)) {
+                      taskState = TaskState.updated;
+                      hasUpdatedTasks = true;
+                    } else {
+                      taskState = TaskState.fresh;
+                      hasNewTasks = true;
+                    }
 
-                      // always three weeks from now
-                      dueDate: DateTime.now().add(
-                        const Duration(days: 21),
-                      ),
-                      assignedStaff: newTeamLeadValue!,
-                      isTeamLead: true,
-                    ),
-                  );
-
-                  // add team members if any
-                  // if this runs values and controllers won't be null because then
-                  // newTeamMembersTaskTextControllers will be empty
-                  for (var i = 0;
-                      i < newTeamMembersTaskTextControllers.length;
-                      i++) {
                     taskUpdates.add(
                       Task(
-                        // id is unnecessary since will be replaced in db addition
-                        // replacing all with placeholder 0
+                        // id is to be replaces so placeholder
                         id: 0,
-                        task: newTeamMembersTaskTextControllers[i].text,
+                        task: newTeamLeadTaskTextController.text,
 
-                        // if originalTeamMemberTasks is large enough to prevent value access error
-                        // the isNotEmpty check is just part of the check for adequate size
-                        // and finally the teamMember task controller at current index
-                        // which contains the updated task is different from the original
-                        // contained in teamMemberTasks list at current index, set as updated else set as new
-                        taskState: (originalTeamMemberTasks.isNotEmpty &&
-                                    originalTeamMemberTasks.length >= i) &&
-                                (newTeamMembersTaskTextControllers
-                                            .elementAt(i)
-                                            .text !=
-                                        originalTeamMemberTasks
-                                            .elementAt(i)
-                                            .task ||
-                                    newTeamMemberValues.elementAt(i).id !=
-                                        originalTeamMemberTasks
-                                            .elementAt(i)
-                                            .assignedStaff
-                                            .id) &&
-                                (originalTeamMemberTasks
-                                            .elementAt(i)
-                                            .taskState !=
-                                        TaskState.transferred ||
-                                    originalTeamMemberTasks
-                                            .elementAt(i)
-                                            .taskState !=
-                                        TaskState.received)
-                            ? TaskState.updated
-                            : TaskState.fresh,
+                        taskState: taskState,
                         associatedComplaint: widget.complaint,
 
-                        // 3 weeks from now always
+                        // always three weeks from now
                         dueDate: DateTime.now().add(
                           const Duration(days: 21),
                         ),
-                        assignedStaff: newTeamMemberValues[i],
-                        isTeamLead: false,
+                        assignedStaff: newTeamLeadValue!,
+                        isTeamLead: true,
                       ),
                     );
+                  }
+
+                  // add team members if any
+                  {
+                    TaskState taskState;
+
+                    for (var i = 0;
+                        i < newTeamMembersTaskTextControllers.length;
+                        i++) {
+                      // if originalTeamMemberTasks is large enough to prevent value access error
+                      // the isNotEmpty check is just part of the check for adequate size check i.e for 0
+                      // and finally the teamMember task controller at current index
+                      // which contains the updated task is different from the original
+                      // contained in teamMemberTasks list at current index, set as updated else set as new
+
+                      if ((originalTeamMemberTasks.length > i) &&
+                          (newTeamMembersTaskTextControllers
+                                      .elementAt(i)
+                                      .text !=
+                                  originalTeamMemberTasks.elementAt(i).task ||
+                              newTeamMemberValues.elementAt(i).id !=
+                                  originalTeamMemberTasks
+                                      .elementAt(i)
+                                      .assignedStaff
+                                      .id) &&
+                          (originalTeamMemberTasks.elementAt(i).taskState !=
+                              TaskState.transferred)) {
+                        taskState = TaskState.updated;
+                        hasUpdatedTasks = true;
+                      } else {
+                        taskState = TaskState.fresh;
+                        hasNewTasks = true;
+                      }
+
+                      taskUpdates.add(
+                        Task(
+                          // id is unnecessary since will be replaced in db addition
+                          // replacing all with placeholder 0
+                          id: 0,
+                          task: newTeamMembersTaskTextControllers[i].text,
+
+                          taskState: taskState,
+                          associatedComplaint: widget.complaint,
+
+                          // 3 weeks from now always
+                          dueDate: DateTime.now().add(
+                            const Duration(days: 21),
+                          ),
+                          assignedStaff: newTeamMemberValues[i],
+                          isTeamLead: false,
+                        ),
+                      );
+                    }
                   }
 
                   // update the tags using the function that notifies
@@ -387,9 +401,9 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
                         newTags: selectedTags,
                       );
 
-                  // make complaint in progress since admin task has
-                  // definitely been added
-                  {
+                  // make complaint in progress
+                  // if there are new or updated tasks
+                  if (hasNewTasks || hasUpdatedTasks) {
                     context.read<ComplaintStateUpdates>().updateComplaintState(
                           complaintID: widget.complaint.ticketNumber,
                           newState: ComplaintState.inProgress,
