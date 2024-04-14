@@ -104,6 +104,20 @@ class DB {
       return results;
     }
   }
+
+  Future<Results?> getAllStaffInBatches({required int limit}) async {
+    Results results = await _conn!.query(
+      'SELECT * FROM staff LIMIT $limit',
+    );
+    if (results.isEmpty) {
+      // No staff
+      return null;
+    } else {
+      // staff exists
+      return results;
+    }
+  }
+
   //============================================================================
 
   //===================USER RELATED=============================================

@@ -94,7 +94,7 @@ class _DiscussPageState extends State<DiscussPage> {
                           TableCellVerticalAlignment.middle,
                       children: [
                         buildTableRow(
-                          firstHeader: "CONVERSATION",
+                          firstHeader: "DISCUSSION",
                           secondHeader: "PARTICIPANTS",
                           context: context,
                         ),
