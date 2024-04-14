@@ -118,6 +118,42 @@ class DB {
     }
   }
 
+  Future<bool> updateStaffEmail({
+    required int staffID,
+    required String newEmail,
+  }) async {
+    Results result = await _conn!.query(
+      'update staff set email = ? WHERE id = ?',
+      [newEmail, staffID],
+    );
+
+    //success
+    if (result.insertId != null) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<bool> updateStaffName({
+    required int staffID,
+    required String surname,
+    required String? firstName,
+    required String? middleName,
+  }) async {
+    Results result = await _conn!.query(
+      'update staff set surname = ?, first_name = ?, middle_name = ? WHERE id = ?',
+      [surname, firstName, middleName, staffID],
+    );
+
+    //success
+    if (result.insertId != null) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   //============================================================================
 
   //===================USER RELATED=============================================

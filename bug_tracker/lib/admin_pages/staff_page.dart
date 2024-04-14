@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:bug_tracker/utilities/tools.dart';
 import 'package:bug_tracker/utilities/staff.dart';
 import 'package:bug_tracker/utilities/constants.dart';
@@ -6,6 +7,7 @@ import 'package:bug_tracker/ui_components/admin_appbar.dart';
 import 'package:bug_tracker/ui_components/staff_overview_card.dart';
 import 'package:bug_tracker/utilities/core_data_sources.dart';
 import 'package:bug_tracker/utilities/load_staff_source.dart';
+import 'package:bug_tracker/models/staff_updates.dart';
 import 'package:bug_tracker/ui_components/empty_screen_placeholder.dart';
 import 'package:bug_tracker/ui_components/custom_circular_progress_indicator.dart';
 
@@ -41,6 +43,9 @@ class _StaffPageState extends State<StaffPage> {
 
   @override
   Widget build(BuildContext context) {
+    // watch in case the staff details are updated or
+    // staff is deleted
+    context.watch<StaffUpdates>();
     return Scaffold(
       appBar: adminReusableAppBar("Staff", context),
       body: LayoutBuilder(

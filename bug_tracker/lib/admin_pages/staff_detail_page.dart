@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:bug_tracker/utilities/staff.dart';
 import 'package:bug_tracker/utilities/constants.dart';
+import 'package:bug_tracker/models/tasks_update.dart';
+import 'package:bug_tracker/models/staff_updates.dart';
+import 'package:bug_tracker/utilities/load_tasks_source.dart';
 import 'package:bug_tracker/utilities/core_data_sources.dart';
+import 'package:bug_tracker/models/component_state_updates.dart';
 import 'package:bug_tracker/ui_components/task_preview_card.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
+import 'package:bug_tracker/ui_components/empty_screen_placeholder.dart';
+import 'package:bug_tracker/ui_components/custom_circular_progress_indicator.dart';
 
 class StaffDetailPage extends StatefulWidget {
   const StaffDetailPage({super.key, required this.staff});
@@ -29,8 +36,37 @@ class _StaffDetailPageState extends State<StaffDetailPage> {
     GlobalKey<FormState>()
   ];
 
+  // for managing retrieved tasks length
+  ScrollController scrollController = ScrollController();
+
+  // will be increased if scroll to end
+  int limit = 10;
+
+  // listens for if staff has scrolled to end and generates more
+  @override
+  void initState() {
+    scrollController.addListener(() {
+      if (scrollController.position.atEdge) {
+        if (scrollController.position.pixels != 0) {
+          limit += 5;
+          setState(() {});
+        }
+      }
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    // watch in case the task is removed or just updated
+    context.watch<TasksUpdate>();
+
+    // watch to rebuild as the task State progresses
+    context.watch<TaskStateUpdates>();
+
+    // watch in case the staff details are updated or
+    // staff is deleted
+    context.watch<StaffUpdates>();
     return Scaffold(
       appBar: genericTaskBar("Staff Details"),
       body: Padding(
@@ -330,12 +366,30 @@ class _StaffDetailPageState extends State<StaffDetailPage> {
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                   padding: const EdgeInsets.all(10.0),
-                  child: ListView.builder(
-                    itemCount: tasksSource.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return TaskPreviewCard(
-                        task: tasksSource[index],
-                      );
+                  child: FutureBuilder(
+                    future: loadTasksSourceByStaff(
+                      staffID: widget.staff.id,
+                      limit: limit,
+                    ),
+                    builder:
+                        (BuildContext context, AsyncSnapshot<void> snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                          child: CustomCircularProgressIndicator(),
+                        );
+                      } else {
+                        return tasksSource.isNotEmpty
+                            ? ListView.builder(
+                                controller: scrollController,
+                                itemCount: tasksSource.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return TaskPreviewCard(
+                                    task: tasksSource[index],
+                                  );
+                                },
+                              )
+                            : const EmptyScreenPlaceholder();
+                      }
                     },
                   ),
                 ),
@@ -371,7 +425,7 @@ Future showDeletionWarningAlert(BuildContext context) async => await showDialog(
                   fontSize: 14.0, color: Colors.blue),
             ),
             onPressed: () {
-              /// Remove from database / mark as disabled
+              ///TODO: Remove from database / mark as disabled
               Navigator.of(context).pop();
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
