@@ -25,7 +25,7 @@ class StaffUpdates extends ChangeNotifier {
   }
 
   Future<void> updateStaffName({
-    required staffID,
+    required int staffID,
     required String surname,
     required String? firstName,
     required String? middleName,

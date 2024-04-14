@@ -167,9 +167,15 @@ class _StaffDetailPageState extends State<StaffDetailPage> {
                                     if (formKeys.first.currentState!
                                         .validate()) {
                                       updateEmailIntent = false;
-                                      setState(() {});
 
-                                      ///TODO: Update db here
+                                      context
+                                          .read<StaffUpdates>()
+                                          .updateStaffEmail(
+                                            staffID: widget.staff.id,
+                                            newEmail: updatedEmail,
+                                          );
+
+                                      setState(() {});
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
                                         SnackBar(
@@ -306,9 +312,17 @@ class _StaffDetailPageState extends State<StaffDetailPage> {
                                     if (formKeys.last.currentState!
                                         .validate()) {
                                       updateNameIntent = false;
+
+                                      context
+                                          .read<StaffUpdates>()
+                                          .updateStaffName(
+                                            staffID: widget.staff.id,
+                                            surname: updatedSurname,
+                                            firstName: updatedFirstName,
+                                            middleName: updatedMiddleName,
+                                          );
                                       setState(() {});
 
-                                      ///TODO: Update db here
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
                                         SnackBar(
