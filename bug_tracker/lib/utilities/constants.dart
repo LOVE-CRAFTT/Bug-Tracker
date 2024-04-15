@@ -253,35 +253,3 @@ enum Tags {
   static const Color customMaroon = Color(0xFF800000);
   static const Color customOlive = Color(0xFF808000);
 }
-
-String complaintNotesPlaceholder =
-    "Lorem ipsum dolor sit amet, consecrate disciplining elite. "
-    "Sed non rises. Suspense lectures tortor, dissimilar sit amet, adipiscing nec, sultriness sed, dolor. "
-    "Crash elementum ult-rices diam. Nascence gulag mass, various a, sempre tongue, modernism non, mi. "
-    "Pron portion, orc nec nonhuman molest, enum est effendi mi, non ferment diam nil sit amet erat. "
-    "Dis sempre. Dis arc mass, squelchier vitae, consequent in, premium a, enum. Interpellates tongue. "
-    "Ut in rises volute libero pharaoh temper. Crash vestibule biennium argue. Present gestates leo in peed. "
-    "Present bandit Podio eu enum. Interpellates sed dui ut argue bandit sodales. "
-    "Vestibule ante ipsum primes in faucets orc quits et ult-rices exposure cub ilia Curae; Aliquot nib. "
-    "Maris ac Lauris sed peed interpellates ferment. Nascence adipiscing ante non diam sodales ditherer.\n"
-    "\nUt veldt Lauris, gestates sed, gravid nec, ornate ut, mi. Aeneas ut orc vel mass suspicious pulmonary. "
-    "Null sollicitudin. Fuse various, gulag non tempus aliquam, nun turps ullamcorper nib, in tempus sapiens eros vitae gulag. "
-    "Interpellates rhonchus nun et argue. Integer id fells. "
-    "Curability aliquot interpellates diam. "
-    "Integer quits metes vitae elite lobotomist gestates. "
-    "Lorem ipsum dolor sit amet, consecrate adipiscing elite. "
-    "Morbid vel erat non Lauris collision vehicular. Null et sapiens. "
-    "Integer tortor tells, aliquot faucets, collision id, tongue eu, qualm. "
-    "Maris ullamcorper fells vitae erat. "
-    "Pron fugitive, argue non elementum exposure, metes purus oculist lectures, et critique gulag justo vitae magna.";
-
-String projectDetailsPlaceHolder =
-    "But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, "
-    "and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. "
-    "No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, "
-    "but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. "
-    "Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, "
-    "but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. "
-    "To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? "
-    "But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, "
-    "or one who avoids a pain that produces no resultant pleasure?";
