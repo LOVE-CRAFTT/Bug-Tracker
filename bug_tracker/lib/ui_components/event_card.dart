@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:bug_tracker/database/db.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/calendar_utils.dart';
 
@@ -7,9 +8,11 @@ class EventCard extends StatefulWidget {
   const EventCard({
     super.key,
     required this.event,
+    required this.redrawParent,
   });
 
   final Event event;
+  final VoidCallback redrawParent;
 
   @override
   State<EventCard> createState() => _EventCardState();
@@ -37,8 +40,44 @@ class _EventCardState extends State<EventCard> {
           onTap: () => debugPrint(widget.event.toString()),
           leading: _hover
               ? IconButton(
-                  onPressed: () {
-                    /// Remove
+                  onPressed: () async {
+                    // attempt to delete event
+                    bool success = await db.deleteCalendarActivity(
+                      id: widget.event.id,
+                    );
+
+                    // if successful then redraw parent
+                    // and notify user
+                    if (success) {
+                      widget.redrawParent();
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              "Activity deleted successfully",
+                              style: kContainerTextStyle.copyWith(
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        );
+                      }
+                    }
+                    // else notify user of failure
+                    else {
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              "Couldn't delete activity! Try again Later",
+                              style: kContainerTextStyle.copyWith(
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        );
+                      }
+                    }
                   },
                   splashRadius: 20.0,
                   icon: const Icon(Icons.close),
