@@ -108,9 +108,13 @@ class _CalendarPageState extends State<CalendarPage> {
                         width: constraints.maxWidth * 0.7,
                         sheetColor: lightAshyNavyBlue,
                         sheetBorderRadius: 10.0,
-                        body: const Padding(
-                          padding: EdgeInsets.all(20.0),
-                          child: AddCalendarActivityPage(),
+                        body: Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: AddCalendarActivityPage(
+                            redrawParent: () {
+                              setState(() {});
+                            },
+                          ),
                         ),
                       );
                     },

@@ -1,11 +1,17 @@
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:bug_tracker/database/db.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/calendar_utils.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
-import 'package:intl/intl.dart';
 
 class AddCalendarActivityPage extends StatefulWidget {
-  const AddCalendarActivityPage({super.key});
+  const AddCalendarActivityPage({
+    super.key,
+    required this.redrawParent,
+  });
+
+  final VoidCallback redrawParent;
 
   @override
   State<AddCalendarActivityPage> createState() =>
@@ -115,21 +121,54 @@ class _AddCalendarActivityPageState extends State<AddCalendarActivityPage> {
                 child: HeaderButton(
                   screenIsWide: true,
                   buttonText: "Add activity",
-                  onPress: () {
+                  onPress: () async {
                     if (formKey.currentState!.validate() &&
                         selectedDate != null) {
                       formKey.currentState!.save();
-                      Navigator.pop(context);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            'Activity added successfully',
-                            style: kContainerTextStyle.copyWith(
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
+
+                      // attempt to add activity
+                      bool success = await db.addCalendarActivity(
+                        staffID: globalActorID,
+                        date: selectedDate!,
+                        title: activity!,
                       );
+
+                      // if successful, redraw parent to show new activity
+                      // if necessary then notify user
+                      if (success) {
+                        widget.redrawParent();
+                        if (context.mounted) {
+                          activityTextController.clear();
+                          Navigator.pop(context);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                'Activity added successfully',
+                                style: kContainerTextStyle.copyWith(
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          );
+                        }
+                      }
+                      // else failure, notify user
+                      else {
+                        if (context.mounted) {
+                          activityTextController.clear();
+                          Navigator.pop(context);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                'Activity addition failed! Try again Later',
+                                style: kContainerTextStyle.copyWith(
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          );
+                        }
+                      }
                     } else if (selectedDate == null) {
                       noDateError = true;
                       setState(() {});

@@ -628,5 +628,42 @@ class DB {
       return result;
     }
   }
-  //============================================================================
+
+  Future<bool> addCalendarActivity({
+    required int staffID,
+    required DateTime date,
+    required String title,
+  }) async {
+    Results results = await _conn!.query(
+      'insert into calendar_events (associated_staff, date, event_title) values (?, ?, ?)',
+      [
+        staffID,
+        date.toUtc(),
+        title,
+      ],
+    );
+
+    // if successful return true
+    if (results.insertId != null) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<bool> deleteCalendarActivity({required int id}) async {
+    Results results = await _conn!.query(
+      'DELETE FROM calendar_events WHERE id = ?',
+      [id],
+    );
+
+    // If affectedRows is not null and greater than 0, the deletion was successful
+    if (results.affectedRows != null && results.affectedRows! > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+//============================================================================
 }
