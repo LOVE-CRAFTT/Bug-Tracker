@@ -3,27 +3,27 @@ import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/core_data_sources.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
 
-/// Topic text controller
-TextEditingController topicController = TextEditingController();
-
-///
-String? topic;
-
-// If a participant is selected
-bool drawError = false;
-
-///
-List<bool> selectedStaff = List.filled(staffSource.length, false);
-
-class NewConversation extends StatefulWidget {
-  const NewConversation({super.key, required this.constraints});
+class NewDiscussion extends StatefulWidget {
+  const NewDiscussion({super.key, required this.constraints});
   final BoxConstraints constraints;
 
   @override
-  State<NewConversation> createState() => _NewConversationState();
+  State<NewDiscussion> createState() => _NewDiscussionState();
 }
 
-class _NewConversationState extends State<NewConversation> {
+class _NewDiscussionState extends State<NewDiscussion> {
+  /// Topic text controller
+  TextEditingController topicController = TextEditingController();
+
+  ///
+  String? topic;
+
+// If a participant is selected
+  bool noParticipantError = false;
+
+  ///
+  List<bool> selectedStaff = List.filled(staffSource.length, false);
+
   @override
   Widget build(BuildContext context) {
     final formKey = GlobalKey<FormState>();
@@ -41,7 +41,7 @@ class _NewConversationState extends State<NewConversation> {
                 style: kContainerTextStyle.copyWith(color: Colors.white),
                 controller: topicController,
                 validator: (lTopic) {
-                  if (lTopic == null || lTopic.isEmpty) {
+                  if (lTopic == null || lTopic.trim().isEmpty) {
                     return "Topic can't be empty";
                   }
                   topic = lTopic;
@@ -87,7 +87,7 @@ class _NewConversationState extends State<NewConversation> {
                 },
               ),
             ),
-            if (drawError) ...[
+            if (noParticipantError) ...[
               Padding(
                 padding: const EdgeInsets.only(top: 10.0),
                 child: Text(
@@ -110,7 +110,7 @@ class _NewConversationState extends State<NewConversation> {
                     if (formKey.currentState!.validate()) {
                       if (selectedStaff.every((element) => element == false)) {
                         // no staff selected
-                        drawError = true;
+                        noParticipantError = true;
                         setState(() {});
                       } else {
                         topicController.clear();

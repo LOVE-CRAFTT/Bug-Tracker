@@ -1,12 +1,12 @@
-import 'package:bug_tracker/staff_pages/conversation_page.dart';
 import 'package:flutter/material.dart';
+import 'package:bug_tracker/utilities/discuss.dart';
 import 'package:bug_tracker/utilities/constants.dart';
+import 'package:bug_tracker/utilities/tools.dart';
+import 'package:bug_tracker/staff_pages/messages_page.dart';
 
 /// Build Table Rows in the discuss page
 TableRow buildTableRow({
-  required String conversationTitle,
-  required List<String> avatarText,
-  required List<String> tooltipMessage,
+  required Discuss discussion,
   required BuildContext context,
 }) {
   TextStyle cellTextStyle = kContainerTextStyle.copyWith(fontSize: 14.0);
@@ -14,13 +14,13 @@ TableRow buildTableRow({
   return TableRow(
     children: [
       ListTile(
-        title: Text(conversationTitle),
+        title: Text(discussion.title),
         titleTextStyle: cellTextStyle,
         onTap: () {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const ConversationPage(),
+              builder: (context) => MessagesPage(discussionID: discussion.id),
             ),
           );
         },
@@ -29,11 +29,17 @@ TableRow buildTableRow({
         title: SizedBox(
           height: 50.0,
           child: ListView.builder(
-            itemCount: avatarText.length,
+            itemCount: discussion.participants.length,
             scrollDirection: Axis.horizontal,
             itemBuilder: (BuildContext context, int index) {
-              final String lAvatarMessage = avatarText[index];
-              final String lTooltipMessage = tooltipMessage[index];
+              final String lAvatarMessage =
+                  discussion.participants[index].initials;
+              final String lTooltipMessage = getFullNameFromNames(
+                surname: discussion.participants[index].surname,
+                firstName: discussion.participants[index].firstName,
+                middleName: discussion.participants[index].middleName,
+              );
+
               return Padding(
                 padding: const EdgeInsets.only(right: 4.0),
                 child: Tooltip(
@@ -55,7 +61,7 @@ TableRow buildTableRow({
 
 List<ListTile> buildTableHeaders() {
   List<String> headerNames = [
-    "DISCUSSION",
+    "TOPIC",
     "PARTICIPANTS",
   ];
 

@@ -1,7 +1,7 @@
+import 'package:mysql1/mysql1.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/complaint.dart';
 import 'package:bug_tracker/utilities/staff.dart';
-import 'package:mysql1/mysql1.dart';
 
 /// Task Class
 class Task {

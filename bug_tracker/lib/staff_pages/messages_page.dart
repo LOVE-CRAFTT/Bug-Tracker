@@ -3,14 +3,15 @@ import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
 import 'package:bug_tracker/ui_components/message_bubble.dart';
 
-class ConversationPage extends StatefulWidget {
-  const ConversationPage({super.key});
+class MessagesPage extends StatefulWidget {
+  const MessagesPage({super.key, required this.discussionID});
+  final int discussionID;
 
   @override
-  State<ConversationPage> createState() => _ConversationPageState();
+  State<MessagesPage> createState() => _MessagesPageState();
 }
 
-class _ConversationPageState extends State<ConversationPage> {
+class _MessagesPageState extends State<MessagesPage> {
   final messageTextController = TextEditingController();
   final scrollController = ScrollController();
 
@@ -29,7 +30,7 @@ class _ConversationPageState extends State<ConversationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: genericTaskBar("Conversation"),
+      appBar: genericTaskBar("Messages"),
       body: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
           return Padding(
