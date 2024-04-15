@@ -1,13 +1,13 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:bug_tracker/sign_in.dart';
+import 'package:bug_tracker/database/db.dart';
 import 'package:bug_tracker/models/overview.dart';
 import 'package:bug_tracker/models/tasks_update.dart';
 import 'package:bug_tracker/models/staff_updates.dart';
 import 'package:bug_tracker/models/staff_notes_updates.dart';
 import 'package:bug_tracker/models/component_state_updates.dart';
-import 'package:bug_tracker/database/db.dart';
-import 'package:bug_tracker/sign_in.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

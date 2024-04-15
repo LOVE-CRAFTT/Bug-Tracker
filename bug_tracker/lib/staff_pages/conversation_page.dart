@@ -11,9 +11,20 @@ class ConversationPage extends StatefulWidget {
 }
 
 class _ConversationPageState extends State<ConversationPage> {
-  ///TODO: add Leave conversation
   final messageTextController = TextEditingController();
   final scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    // scroll to end at first
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (scrollController.hasClients) {
+        scrollController.jumpTo(scrollController.position.maxScrollExtent);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

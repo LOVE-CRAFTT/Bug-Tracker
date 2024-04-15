@@ -74,7 +74,6 @@ class _DiscussPageState extends State<DiscussPage> {
                         textStyle: MaterialStatePropertyAll<TextStyle>(
                           kContainerTextStyle.copyWith(color: Colors.white),
                         ),
-                        onSubmitted: (target) {},
                         onChanged: (input) {},
                       ),
                     ),
@@ -93,10 +92,8 @@ class _DiscussPageState extends State<DiscussPage> {
                       defaultVerticalAlignment:
                           TableCellVerticalAlignment.middle,
                       children: [
-                        buildTableRow(
-                          firstHeader: "DISCUSSION",
-                          secondHeader: "PARTICIPANTS",
-                          context: context,
+                        TableRow(
+                          children: [...buildTableHeaders()],
                         ),
                         buildTableRow(
                           conversationTitle: "New Sales Data",
@@ -105,12 +102,6 @@ class _DiscussPageState extends State<DiscussPage> {
                             'ChukwuemekaChukwudi9',
                             'Alan Broker'
                           ],
-                          context: context,
-                        ),
-                        buildTableRow(
-                          conversationTitle: "Review Bug",
-                          avatarText: ['WE'],
-                          tooltipMessage: ['WindsorElizabeth'],
                           context: context,
                         ),
                       ],
