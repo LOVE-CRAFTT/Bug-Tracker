@@ -15,12 +15,6 @@ AppBar adminReusableAppBar(String pageName, BuildContext context) {
     ),
     backgroundColor: Colors.black,
     actions: [
-      IconButton(
-        onPressed: () {},
-        tooltip: "Notifications",
-        icon: const Icon(Icons.notifications_none),
-      ),
-
       /// Add new project or staff
       buildMenuAnchor(
         context: context,

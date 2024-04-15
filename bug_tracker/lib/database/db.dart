@@ -613,4 +613,20 @@ class DB {
     }
   }
   //============================================================================
+
+  //=================CALENDAR RELATED===========================================
+  Future<Results?> getCalendarEvents({required int staffID}) async {
+    Results result = await _conn!.query(
+      'SELECT * FROM calendar_events WHERE associated_staff = ?',
+      [staffID],
+    );
+    if (result.isEmpty) {
+      // no related events
+      return null;
+    } else {
+      // return events
+      return result;
+    }
+  }
+  //============================================================================
 }

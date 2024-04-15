@@ -13,14 +13,6 @@ AppBar staffReusableAppBar(String pageName, BuildContext context) {
     ),
     backgroundColor: Colors.black,
     actions: [
-      Tooltip(
-        message: "Notifications",
-        textStyle: kAppBarTooltipTextStyle,
-        child: IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.notifications_none),
-        ),
-      ),
       MenuAnchor(
         style: MenuStyle(
           backgroundColor: const MaterialStatePropertyAll(
