@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:side_sheet/side_sheet.dart';
+import 'package:table_calendar/table_calendar.dart';
 import 'package:bug_tracker/ui_components/staff_appbar.dart';
 import 'package:bug_tracker/ui_components/event_card.dart';
 import 'package:bug_tracker/utilities/constants.dart';
-import 'package:table_calendar/table_calendar.dart';
 import 'package:bug_tracker/utilities/calendar_utils.dart';
+import 'package:bug_tracker/utilities/load_calendar_events.dart';
 import 'package:bug_tracker/staff_pages/add_calendar_activity_page.dart';
+import 'package:bug_tracker/ui_components/custom_circular_progress_indicator.dart';
 
 /// Contains a calendar with tags showing events if available
 /// User can select multiple days at once and set events for any day
@@ -19,7 +21,7 @@ class CalendarPage extends StatefulWidget {
 }
 
 class _CalendarPageState extends State<CalendarPage> {
-  late final ValueNotifier<List<Event>> _selectedEvents;
+  final ValueNotifier<List<Event>> _selectedEvents = ValueNotifier([]);
   CalendarFormat _calendarFormat = CalendarFormat.month;
   RangeSelectionMode _rangeSelectionMode = RangeSelectionMode.toggledOff;
   DateTime _focusedDay = DateTime.now();
@@ -31,7 +33,6 @@ class _CalendarPageState extends State<CalendarPage> {
   void initState() {
     super.initState();
     _selectedDay = _focusedDay;
-    _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
   }
 
   @override
@@ -41,7 +42,7 @@ class _CalendarPageState extends State<CalendarPage> {
   }
 
   List<Event> _getEventsForDay(DateTime day) {
-    return kEvents[day] ?? [];
+    return calendarEvents[day] ?? [];
   }
 
   List<Event> _getEventsForRange(DateTime start, DateTime end) {
@@ -126,31 +127,42 @@ class _CalendarPageState extends State<CalendarPage> {
                   ),
                 ),
               ),
-              TableCalendar<Event>(
-                firstDay: kFirstDay,
-                lastDay: kLastDay,
-                focusedDay: _focusedDay,
-                selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
-                rangeStartDay: _rangeStart,
-                rangeEndDay: _rangeEnd,
-                calendarFormat: _calendarFormat,
-                rangeSelectionMode: _rangeSelectionMode,
-                eventLoader: _getEventsForDay,
-                startingDayOfWeek: StartingDayOfWeek.sunday,
-                calendarStyle: kCalendarStyle,
-                headerStyle: kCalendarHeaderStyle,
-                daysOfWeekStyle: kCalendarDOWStyle,
-                onDaySelected: _onDaySelected,
-                onRangeSelected: _onRangeSelected,
-                onFormatChanged: (format) {
-                  if (_calendarFormat != format) {
-                    setState(() {
-                      _calendarFormat = format;
-                    });
+              FutureBuilder(
+                future: loadCalendarEvents(staffID: globalActorID),
+                builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CustomCircularProgressIndicator(),
+                    );
+                  } else {
+                    return TableCalendar<Event>(
+                        firstDay: kFirstDay,
+                        lastDay: kLastDay,
+                        focusedDay: _focusedDay,
+                        selectedDayPredicate: (day) =>
+                            isSameDay(_selectedDay, day),
+                        rangeStartDay: _rangeStart,
+                        rangeEndDay: _rangeEnd,
+                        calendarFormat: _calendarFormat,
+                        rangeSelectionMode: _rangeSelectionMode,
+                        eventLoader: _getEventsForDay,
+                        startingDayOfWeek: StartingDayOfWeek.sunday,
+                        calendarStyle: kCalendarStyle,
+                        headerStyle: kCalendarHeaderStyle,
+                        daysOfWeekStyle: kCalendarDOWStyle,
+                        onDaySelected: _onDaySelected,
+                        onRangeSelected: _onRangeSelected,
+                        onFormatChanged: (format) {
+                          if (_calendarFormat != format) {
+                            setState(() {
+                              _calendarFormat = format;
+                            });
+                          }
+                        },
+                        onPageChanged: (focusedDay) {
+                          _focusedDay = focusedDay;
+                        });
                   }
-                },
-                onPageChanged: (focusedDay) {
-                  _focusedDay = focusedDay;
                 },
               ),
               const SizedBox(height: 8.0),
@@ -163,9 +175,6 @@ class _CalendarPageState extends State<CalendarPage> {
                       itemBuilder: (context, index) {
                         return EventCard(
                           event: value[index],
-                          redrawParent: () {
-                            setState(() {});
-                          },
                         );
                       },
                     );

@@ -8,11 +8,9 @@ class EventCard extends StatefulWidget {
   const EventCard({
     super.key,
     required this.event,
-    required this.redrawParent,
   });
 
   final Event event;
-  final VoidCallback redrawParent;
 
   @override
   State<EventCard> createState() => _EventCardState();
@@ -46,10 +44,8 @@ class _EventCardState extends State<EventCard> {
                       id: widget.event.id,
                     );
 
-                    // if successful then redraw parent
-                    // and notify user
+                    // if successful then notify user
                     if (success) {
-                      widget.redrawParent();
                       if (context.mounted) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
