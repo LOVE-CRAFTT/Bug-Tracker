@@ -1,13 +1,13 @@
-import 'package:bug_tracker/models/discussion_updates.dart';
 import 'package:flutter/material.dart';
-import 'package:bug_tracker/utilities/constants.dart';
+import 'package:provider/provider.dart';
 import 'package:bug_tracker/utilities/staff.dart';
 import 'package:bug_tracker/utilities/tools.dart';
+import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/core_data_sources.dart';
 import 'package:bug_tracker/utilities/load_staff_source.dart';
+import 'package:bug_tracker/models/discussion_updates.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
 import 'package:bug_tracker/ui_components/custom_circular_progress_indicator.dart';
-import 'package:provider/provider.dart';
 
 class NewDiscussion extends StatefulWidget {
   const NewDiscussion({super.key, required this.constraints});
@@ -27,7 +27,7 @@ class _NewDiscussionState extends State<NewDiscussion> {
   String? topic;
 
   // If a participant is selected
-  bool noParticipantError = false;
+  bool participantChoiceError = false;
 
   ///
   final formKey = GlobalKey<FormState>();
@@ -132,11 +132,11 @@ class _NewDiscussionState extends State<NewDiscussion> {
                 },
               ),
             ),
-            if (noParticipantError) ...[
+            if (participantChoiceError) ...[
               Padding(
                 padding: const EdgeInsets.only(top: 10.0),
                 child: Text(
-                  "Select at least one participant !",
+                  "Select at least two participants yourself included!",
                   style: kContainerTextStyle.copyWith(
                     color: Colors.red,
                     fontSize: 15.0,
@@ -153,9 +153,14 @@ class _NewDiscussionState extends State<NewDiscussion> {
                   buttonText: "Start",
                   onPress: () async {
                     if (formKey.currentState!.validate()) {
-                      if (selectedStaff.isEmpty) {
+                      // if less than 2 staff is chosen
+                      // or current staff is not chosen, error
+                      if (selectedStaff.length < 2 ||
+                          selectedStaff.every(
+                            (staff) => staff.id != globalActorID,
+                          )) {
                         // no staff selected
-                        noParticipantError = true;
+                        participantChoiceError = true;
                         setState(() {});
                       } else {
                         // attempt to start the new discussion

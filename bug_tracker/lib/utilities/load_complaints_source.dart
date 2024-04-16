@@ -1,9 +1,9 @@
+import 'package:mysql1/mysql1.dart';
 import 'package:bug_tracker/database/db.dart';
 import 'package:bug_tracker/utilities/complaint.dart';
 import 'package:bug_tracker/utilities/project.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/core_data_sources.dart';
-import 'package:mysql1/mysql1.dart';
 
 // call specific db function that returns complaints from db newest first
 // complaints are processed here and loaded into complaints classes

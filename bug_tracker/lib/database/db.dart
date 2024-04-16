@@ -703,5 +703,57 @@ class DB {
     }
   }
 
+  Future<Results?> getStaffDiscussions({
+    required int staffID,
+    required int limit,
+  }) async {
+    Results results = await _conn!.query(
+      'SELECT conversation_id FROM conversation_participants WHERE staff_id = ? LIMIT ?',
+      [staffID, limit],
+    );
+
+    if (results.isNotEmpty) {
+      // staff is a participant in at least one discussion
+      return results;
+    } else {
+      // staff is not a participant in any discussions
+      return null;
+    }
+  }
+
+  Future<Results?> getDiscussionTitle({required int discussionID}) async {
+    Results result = await _conn!.query(
+      'SELECT title FROM conversations WHERE conversation_id = ?',
+      [discussionID],
+    );
+
+    // title exists
+    if (result.isNotEmpty) {
+      return result;
+    }
+    // no title
+    else {
+      return null;
+    }
+  }
+
+  Future<Results?> getAllParticipantsInDiscussion({
+    required int discussionID,
+  }) async {
+    Results results = await _conn!.query(
+      'SELECT staff_id FROM conversation_participants WHERE conversation_id = ?',
+      [discussionID],
+    );
+
+    // participants exists
+    if (results.isNotEmpty) {
+      return results;
+    }
+    // no participants
+    else {
+      return null;
+    }
+  }
+
   //============================================================================
 }
