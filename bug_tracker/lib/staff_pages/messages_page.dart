@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:bug_tracker/utilities/constants.dart';
+import 'package:bug_tracker/utilities/retrieve_messages.dart';
+import 'package:bug_tracker/models/discussion_updates.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
 import 'package:bug_tracker/ui_components/message_bubble.dart';
+import 'package:bug_tracker/ui_components/custom_circular_progress_indicator.dart';
 
 class MessagesPage extends StatefulWidget {
   const MessagesPage({super.key, required this.discussionID});
@@ -15,9 +19,19 @@ class _MessagesPageState extends State<MessagesPage> {
   final messageTextController = TextEditingController();
   final scrollController = ScrollController();
 
+  int limit = 40;
+
   @override
   void initState() {
     super.initState();
+
+    scrollController.addListener(() {
+      // if user has scrolled to the top load more
+      if (scrollController.position.pixels == 0) {
+        limit += 20;
+        setState(() {});
+      }
+    });
 
     // scroll to end at first
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -29,6 +43,8 @@ class _MessagesPageState extends State<MessagesPage> {
 
   @override
   Widget build(BuildContext context) {
+    // watch for when new messages are added
+    context.watch<MessageUpdates>();
     return Scaffold(
       appBar: genericTaskBar("Messages"),
       body: LayoutBuilder(
@@ -40,14 +56,25 @@ class _MessagesPageState extends State<MessagesPage> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Expanded(
-                  child: ListView.builder(
-                    itemCount: 50,
-                    controller: scrollController,
-                    itemBuilder: (BuildContext context, int index) {
-                      return MessageBubble(
-                          sender: "me",
-                          text: "mini me==========\nrre testing",
-                          isMe: (index % 2 == 0) ? true : false);
+                  child: FutureBuilder(
+                    future: retrieveMessages(
+                        discussionID: widget.discussionID, limit: limit),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<List<MessageBubble>> snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                          child: CustomCircularProgressIndicator(),
+                        );
+                      } else {
+                        return ListView.builder(
+                          reverse: true,
+                          itemCount: snapshot.data!.length,
+                          controller: scrollController,
+                          itemBuilder: (BuildContext context, int index) {
+                            return snapshot.data![index];
+                          },
+                        );
+                      }
                     },
                   ),
                 ),
@@ -65,7 +92,6 @@ class _MessagesPageState extends State<MessagesPage> {
                       Expanded(
                         child: TextField(
                           controller: messageTextController,
-                          onChanged: (value) {},
                           decoration: const InputDecoration(
                             contentPadding: EdgeInsets.symmetric(
                               vertical: 10.0,
@@ -81,8 +107,16 @@ class _MessagesPageState extends State<MessagesPage> {
                         screenIsWide: true,
                         buttonText: "Send",
                         onPress: () {
-                          /// add to db
-                          messageTextController.clear();
+                          if (messageTextController.text.trim().isEmpty) {
+                            messageTextController.clear();
+                          } else {
+                            context.read<MessageUpdates>().addMessage(
+                                  senderID: globalActorID,
+                                  discussionID: widget.discussionID,
+                                  message: messageTextController.text,
+                                );
+                            messageTextController.clear();
+                          }
                         },
                       ),
                     ],

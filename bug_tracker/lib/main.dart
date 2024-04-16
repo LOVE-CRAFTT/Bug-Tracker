@@ -29,6 +29,7 @@ void main() async {
           ChangeNotifierProvider(create: (_) => Overview()),
           ChangeNotifierProvider(create: (_) => TasksUpdate()),
           ChangeNotifierProvider(create: (_) => StaffUpdates()),
+          ChangeNotifierProvider(create: (_) => MessageUpdates()),
           ChangeNotifierProvider(create: (_) => TaskStateUpdates()),
           ChangeNotifierProvider(create: (_) => DiscussionUpdates()),
           ChangeNotifierProvider(create: (_) => StaffNotesUpdates()),

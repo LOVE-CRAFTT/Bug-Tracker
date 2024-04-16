@@ -755,5 +755,46 @@ class DB {
     }
   }
 
+  Future<bool> addMessage({
+    required int senderID,
+    required int discussionID,
+    required String message,
+  }) async {
+    Results result = await _conn!.query(
+      'insert into messages (conversation_id, staff_id, message, time_created) values (?, ?, ?, ?)',
+      [
+        discussionID,
+        senderID,
+        message,
+        DateTime.now().toUtc(),
+      ],
+    );
+
+    // if insert successfully
+    if (result.insertId != null) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<Results?> getMessagesInBatches({
+    required int discussionID,
+    required int limit,
+  }) async {
+    Results results = await _conn!.query(
+      'SELECT staff_id, message FROM messages WHERE conversation_id = ? ORDER BY time_created DESC LIMIT ?',
+      [discussionID, limit],
+    );
+
+    // there are some messages
+    if (results.isNotEmpty) {
+      return results;
+    }
+    // no messages
+    else {
+      return null;
+    }
+  }
   //============================================================================
 }

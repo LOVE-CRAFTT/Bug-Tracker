@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 
 class MessageBubble extends StatelessWidget {
-  const MessageBubble(
-      {Key? key, required this.sender, required this.text, required this.isMe})
-      : super(key: key);
+  MessageBubble({
+    super.key,
+    required this.sender,
+    required this.senderID,
+    required this.text,
+  }) : isMe = senderID == globalActorID;
 
   final String sender;
+  final int senderID;
   final String text;
   final bool isMe;
 
