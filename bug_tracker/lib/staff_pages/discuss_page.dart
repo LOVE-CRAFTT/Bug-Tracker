@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:side_sheet/side_sheet.dart';
+import 'package:provider/provider.dart';
+import 'package:bug_tracker/models/discussion_updates.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/discuss.dart';
 import 'package:bug_tracker/utilities/build_discuss_page_table_row.dart';
@@ -19,6 +21,8 @@ class DiscussPage extends StatefulWidget {
 class _DiscussPageState extends State<DiscussPage> {
   @override
   Widget build(BuildContext context) {
+    // watch for when new discussions are added
+    context.watch<DiscussionUpdates>();
     return Scaffold(
       appBar: staffReusableAppBar("Discuss", context),
       body: LayoutBuilder(

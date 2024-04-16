@@ -1,7 +1,13 @@
+import 'package:bug_tracker/models/discussion_updates.dart';
 import 'package:flutter/material.dart';
 import 'package:bug_tracker/utilities/constants.dart';
+import 'package:bug_tracker/utilities/staff.dart';
+import 'package:bug_tracker/utilities/tools.dart';
 import 'package:bug_tracker/utilities/core_data_sources.dart';
+import 'package:bug_tracker/utilities/load_staff_source.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
+import 'package:bug_tracker/ui_components/custom_circular_progress_indicator.dart';
+import 'package:provider/provider.dart';
 
 class NewDiscussion extends StatefulWidget {
   const NewDiscussion({super.key, required this.constraints});
@@ -14,19 +20,39 @@ class NewDiscussion extends StatefulWidget {
 class _NewDiscussionState extends State<NewDiscussion> {
   /// Topic text controller
   TextEditingController topicController = TextEditingController();
+  // controller to manage list of staff
+  ScrollController scrollController = ScrollController();
 
   ///
   String? topic;
 
-// If a participant is selected
+  // If a participant is selected
   bool noParticipantError = false;
 
   ///
-  List<bool> selectedStaff = List.filled(staffSource.length, false);
+  final formKey = GlobalKey<FormState>();
+
+  ///
+  List<Staff> selectedStaff = [];
+
+  int limit = 20;
+
+  @override
+  void initState() {
+    scrollController.addListener(() {
+      if (scrollController.position.atEdge) {
+        if (scrollController.position.pixels != 0) {
+          limit += 5;
+          setState(() {});
+        }
+      }
+    });
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final formKey = GlobalKey<FormState>();
     return SingleChildScrollView(
       child: Form(
         key: formKey,
@@ -69,21 +95,40 @@ class _NewDiscussionState extends State<NewDiscussion> {
                 ),
                 borderRadius: BorderRadius.circular(12.0),
               ),
-              child: ListView.builder(
-                itemCount: staffSource.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return CheckboxListTile(
-                    value: selectedStaff[index],
-                    onChanged: (bool? value) {
-                      selectedStaff[index] = value!;
-                      setState(() {});
-                    },
-                    hoverColor: Colors.green,
-                    title: Text(
-                      "${staffSource[index].surname} ${staffSource[index].firstName ?? ""} ${staffSource[index].middleName ?? ""}",
-                      style: checkboxTextStyle,
-                    ),
-                  );
+              child: FutureBuilder(
+                future: loadStaffSource(limit),
+                builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CustomCircularProgressIndicator(),
+                    );
+                  } else {
+                    return ListView.builder(
+                      itemCount: staffSource.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return CheckboxListTile(
+                          value: selectedStaff.contains(staffSource[index]),
+                          onChanged: (value) {
+                            if (value == true) {
+                              selectedStaff.add(staffSource[index]);
+                            } else {
+                              selectedStaff.remove(staffSource[index]);
+                            }
+                            setState(() {});
+                          },
+                          hoverColor: Colors.green.withAlpha(40),
+                          title: Text(
+                            getFullNameFromNames(
+                              surname: staffSource[index].surname,
+                              firstName: staffSource[index].firstName,
+                              middleName: staffSource[index].middleName,
+                            ),
+                            style: checkboxTextStyle,
+                          ),
+                        );
+                      },
+                    );
+                  }
                 },
               ),
             ),
@@ -106,28 +151,36 @@ class _NewDiscussionState extends State<NewDiscussion> {
                 child: HeaderButton(
                   screenIsWide: true,
                   buttonText: "Start",
-                  onPress: () {
+                  onPress: () async {
                     if (formKey.currentState!.validate()) {
-                      if (selectedStaff.every((element) => element == false)) {
+                      if (selectedStaff.isEmpty) {
                         // no staff selected
                         noParticipantError = true;
                         setState(() {});
                       } else {
-                        topicController.clear();
-                        Navigator.pop(context);
-                        //reset values
-                        selectedStaff = List.filled(staffSource.length, false);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              "Conversation started",
-                              style: kContainerTextStyle.copyWith(
-                                color: Colors.black,
+                        // attempt to start the new discussion
+                        await context.read<DiscussionUpdates>().startDiscussion(
+                              topic: topic!,
+                              participants: selectedStaff,
+                            );
+
+                        //reset values and notify user
+                        if (context.mounted) {
+                          topicController.clear();
+                          selectedStaff = [];
+                          topic = null;
+                          Navigator.pop(context);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                "Conversation started",
+                                style: kContainerTextStyle.copyWith(
+                                  color: Colors.black,
+                                ),
                               ),
                             ),
-                          ),
-                        );
-                        topic = null;
+                          );
+                        }
                       }
                     }
                   },

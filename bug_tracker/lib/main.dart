@@ -6,6 +6,7 @@ import 'package:bug_tracker/database/db.dart';
 import 'package:bug_tracker/models/overview.dart';
 import 'package:bug_tracker/models/tasks_update.dart';
 import 'package:bug_tracker/models/staff_updates.dart';
+import 'package:bug_tracker/models/discussion_updates.dart';
 import 'package:bug_tracker/models/staff_notes_updates.dart';
 import 'package:bug_tracker/models/component_state_updates.dart';
 
@@ -26,12 +27,13 @@ void main() async {
       MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (_) => Overview()),
-          ChangeNotifierProvider(create: (_) => ComplaintStateUpdates()),
-          ChangeNotifierProvider(create: (_) => TaskStateUpdates()),
-          ChangeNotifierProvider(create: (_) => ProjectStateUpdates()),
           ChangeNotifierProvider(create: (_) => TasksUpdate()),
-          ChangeNotifierProvider(create: (_) => StaffNotesUpdates()),
           ChangeNotifierProvider(create: (_) => StaffUpdates()),
+          ChangeNotifierProvider(create: (_) => TaskStateUpdates()),
+          ChangeNotifierProvider(create: (_) => DiscussionUpdates()),
+          ChangeNotifierProvider(create: (_) => StaffNotesUpdates()),
+          ChangeNotifierProvider(create: (_) => ProjectStateUpdates()),
+          ChangeNotifierProvider(create: (_) => ComplaintStateUpdates()),
         ],
         child: const MyApp(),
       ),

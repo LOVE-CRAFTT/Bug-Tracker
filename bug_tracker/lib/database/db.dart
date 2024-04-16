@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:mysql1/mysql1.dart';
 import 'package:bug_tracker/utilities/tools.dart';
 import 'package:bug_tracker/utilities/task.dart';
+import 'package:bug_tracker/utilities/staff.dart';
 import 'package:bug_tracker/utilities/constants.dart';
 
 // database instance to be used throughout the project
@@ -665,5 +666,42 @@ class DB {
     }
   }
 
-//============================================================================
+  //============================================================================
+
+  //=================DISCUSSION RELATED=========================================
+  Future<bool> addDiscussion({
+    required String title,
+    required List<Staff> participants,
+  }) async {
+    // first insert title to get an id
+    Results result = await _conn!.query(
+      'insert into conversations (title) values (?)',
+      [title],
+    );
+
+    // if successful then add participants
+    if (result.insertId != null) {
+      int conversationID = result.insertId!;
+
+      List<Results> results = await _conn!.queryMulti(
+        'insert into conversation_participants (conversation_id, staff_id) values (?, ?)',
+        participants.map((staff) => [conversationID, staff.id]).toList(),
+      );
+
+      // if insertion was successful then return true
+      if (results.every((result) => result.insertId != null)) {
+        return true;
+      }
+      // else on participant addition failure
+      else {
+        return false;
+      }
+    }
+    // else on title addition failure
+    else {
+      return false;
+    }
+  }
+
+  //============================================================================
 }
