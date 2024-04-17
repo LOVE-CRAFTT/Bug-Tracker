@@ -23,8 +23,6 @@ class ComplaintStateUpdates extends ChangeNotifier {
     }
   }
 
-  // one for project
-
   // notifies on complaint tag update
   Future<void> updateComplaintTags({
     required int complaintID,

@@ -53,6 +53,8 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
   @override
   void initState() {
     selectedTags = widget.currentTags ?? [];
+
+    // divide the tasks into team lead and team member tasks
     originalTeamLeadTask = widget.currentTasks.isEmpty
         ? null
         : widget.currentTasks.firstWhere(
@@ -65,6 +67,7 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
             )
             .toList()
         : [];
+
     // default value for team Lead
     newTeamLeadValue = originalTeamLeadTask?.assignedStaff ?? staffSource.first;
     newTeamLeadTaskTextController.text = originalTeamLeadTask?.task ?? "";
@@ -80,7 +83,7 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
         .toList();
 
     // so the team section is enabled for drawing
-    newTeamMemberValues.isEmpty
+    widget.currentTasks.isEmpty
         ? showTeamSection = false
         : showTeamSection = true;
     super.initState();
@@ -277,9 +280,9 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
                   List<Task> taskUpdates = [];
 
                   //if there isn't text(task) in any field then notify that the task is necessary
-                  if (newTeamLeadTaskTextController.text.isEmpty ||
-                      newTeamMembersTaskTextControllers
-                          .any((controller) => controller.text.isEmpty)) {
+                  if (newTeamLeadTaskTextController.text.trim().isEmpty ||
+                      newTeamMembersTaskTextControllers.any(
+                          (controller) => controller.text.trim().isEmpty)) {
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
@@ -303,21 +306,46 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
                   {
                     TaskState taskState;
 
-                    // if the text in teamLeadTaskController has changed
-                    // from the original then its updated else its new
-                    // or if the assigned staff is different
-                    // Also if the original is not empty then its updated since
-                    // text is required before reaching this section
+                    // if there is an original team lead task and
+                    // if the newly assigned staff is different from the original
+                    // and if the task is not one that has been transferred
+                    // then it is marked as new
                     if ((originalTeamLeadTask != null) &&
+                        (newTeamLeadValue!.id !=
+                            originalTeamLeadTask!.assignedStaff.id) &&
+                        (originalTeamLeadTask!.taskState !=
+                            TaskState.transferred)) {
+                      taskState = TaskState.fresh;
+                      hasNewTasks = true;
+                    }
+                    // if there is an original team lead task and
+                    // if the text in newTeamLeadTaskTextController has changed
+                    // from the original
+                    // and if the task is not one that has been transferred
+                    // then it is marked as updated
+
+                    else if ((originalTeamLeadTask != null) &&
                         (newTeamLeadTaskTextController.text !=
-                                originalTeamLeadTask!.task ||
-                            newTeamLeadValue!.id !=
-                                originalTeamLeadTask!.assignedStaff.id) &&
+                            originalTeamLeadTask!.task) &&
                         (originalTeamLeadTask!.taskState !=
                             TaskState.transferred)) {
                       taskState = TaskState.updated;
                       hasUpdatedTasks = true;
-                    } else {
+                    }
+
+                    // else if there is an original team lead task but
+                    // none of the task and assigned staff is changed
+                    // the state is whatever it was before
+                    else if ((originalTeamLeadTask != null) &&
+                        (newTeamLeadTaskTextController.text ==
+                                originalTeamLeadTask!.task &&
+                            newTeamLeadValue!.id ==
+                                originalTeamLeadTask!.assignedStaff.id)) {
+                      taskState = originalTeamLeadTask!.taskState;
+                    }
+
+                    // at this point there no original task meaning it is new
+                    else {
                       taskState = TaskState.fresh;
                       hasNewTasks = true;
                     }
@@ -331,9 +359,9 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
                         taskState: taskState,
                         associatedComplaint: widget.complaint,
 
-                        // always three weeks from now
+                        // always 4 weeks from now i.e 1 month
                         dueDate: DateTime.now().add(
-                          const Duration(days: 21),
+                          const Duration(days: 28),
                         ),
                         assignedStaff: newTeamLeadValue!,
                         isTeamLead: true,
@@ -349,26 +377,56 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
                         i < newTeamMembersTaskTextControllers.length;
                         i++) {
                       // if originalTeamMemberTasks is large enough to prevent value access error
-                      // the isNotEmpty check is just part of the check for adequate size check i.e for 0
-                      // and finally the teamMember task controller at current index
-                      // which contains the updated task is different from the original
-                      // contained in teamMemberTasks list at current index, set as updated else set as new
-
+                      // and if the staff has changed
+                      // and if the task is not one that has been transferred
+                      // then it is new
                       if ((originalTeamMemberTasks.length > i) &&
+                          (newTeamMemberValues.elementAt(i).id !=
+                              originalTeamMemberTasks
+                                  .elementAt(i)
+                                  .assignedStaff
+                                  .id) &&
+                          (originalTeamMemberTasks.elementAt(i).taskState !=
+                              TaskState.transferred)) {
+                        taskState = TaskState.fresh;
+                        hasNewTasks = true;
+                      }
+
+                      // if originalTeamMemberTasks is large enough to prevent value access error
+                      // and if the text corresponding task has changed
+                      // and if the task is not one that has been transferred
+                      // then it is updated
+                      else if ((originalTeamMemberTasks.length > i) &&
                           (newTeamMembersTaskTextControllers
-                                      .elementAt(i)
-                                      .text !=
-                                  originalTeamMemberTasks.elementAt(i).task ||
-                              newTeamMemberValues.elementAt(i).id !=
-                                  originalTeamMemberTasks
-                                      .elementAt(i)
-                                      .assignedStaff
-                                      .id) &&
+                                  .elementAt(i)
+                                  .text !=
+                              originalTeamMemberTasks.elementAt(i).task) &&
                           (originalTeamMemberTasks.elementAt(i).taskState !=
                               TaskState.transferred)) {
                         taskState = TaskState.updated;
                         hasUpdatedTasks = true;
-                      } else {
+                      }
+
+                      // if originalTeamMemberTasks is large enough to prevent value access error
+                      // and if the staff and text of the corresponding task have not changed
+                      // then the state is left as is
+                      else if ((originalTeamMemberTasks.length > i) &&
+                          (newTeamMembersTaskTextControllers
+                                      .elementAt(i)
+                                      .text ==
+                                  originalTeamMemberTasks.elementAt(i).task &&
+                              newTeamMemberValues.elementAt(i).id ==
+                                  originalTeamMemberTasks
+                                      .elementAt(i)
+                                      .assignedStaff
+                                      .id)) {
+                        taskState =
+                            originalTeamMemberTasks.elementAt(i).taskState;
+                      }
+
+                      // at this point the originalTeamMemberTasks does not contain a value
+                      // at this position, meaning it is a new task
+                      else {
                         taskState = TaskState.fresh;
                         hasNewTasks = true;
                       }
@@ -383,9 +441,9 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
                           taskState: taskState,
                           associatedComplaint: widget.complaint,
 
-                          // 3 weeks from now always
+                          // 4 weeks from now always i.e 1 month
                           dueDate: DateTime.now().add(
-                            const Duration(days: 21),
+                            const Duration(days: 28),
                           ),
                           assignedStaff: newTeamMemberValues[i],
                           isTeamLead: false,
@@ -396,7 +454,9 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
 
                   // update the tags using the function that notifies
                   // Bug detail page
-                  context.read<ComplaintStateUpdates>().updateComplaintTags(
+                  await context
+                      .read<ComplaintStateUpdates>()
+                      .updateComplaintTags(
                         complaintID: widget.complaint.ticketNumber,
                         newTags: selectedTags,
                       );
@@ -404,43 +464,53 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
                   // make complaint in progress
                   // if there are new or updated tasks
                   if (hasNewTasks || hasUpdatedTasks) {
-                    context.read<ComplaintStateUpdates>().updateComplaintState(
-                          complaintID: widget.complaint.ticketNumber,
-                          newState: ComplaintState.inProgress,
-                        );
+                    if (context.mounted) {
+                      await context
+                          .read<ComplaintStateUpdates>()
+                          .updateComplaintState(
+                            complaintID: widget.complaint.ticketNumber,
+                            newState: ComplaintState.inProgress,
+                          );
+                    }
 
                     // notify
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            "Complaint in progress!",
+                            style: kContainerTextStyle.copyWith(
+                                color: Colors.black),
+                          ),
+                        ),
+                      );
+                    }
+                  }
+
+                  //also update tasks which notifies Bug Detail Page
+                  if (context.mounted) {
+                    await context
+                        .read<TasksUpdate>()
+                        .wipeAndUpdateTasks(taskUpdates: taskUpdates);
+                  }
+
+                  if (context.mounted) {
+                    Navigator.pop(context);
+                    newTeamLeadTaskTextController.clear();
+                    for (var controller in newTeamMembersTaskTextControllers) {
+                      controller.clear();
+                    }
+                    showTeamSection = false;
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(
-                          "Complaint in progress!",
+                          "Updated successfully",
                           style:
                               kContainerTextStyle.copyWith(color: Colors.black),
                         ),
                       ),
                     );
                   }
-
-                  //also update tasks which notifies Bug Detail Page
-                  context
-                      .read<TasksUpdate>()
-                      .wipeAndUpdateTasks(taskUpdates: taskUpdates);
-
-                  Navigator.pop(context);
-                  newTeamLeadTaskTextController.clear();
-                  for (var controller in newTeamMembersTaskTextControllers) {
-                    controller.clear();
-                  }
-                  showTeamSection = false;
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        "Updated successfully",
-                        style:
-                            kContainerTextStyle.copyWith(color: Colors.black),
-                      ),
-                    ),
-                  );
                 },
               ),
             ),
