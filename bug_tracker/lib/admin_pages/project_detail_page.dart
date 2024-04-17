@@ -25,7 +25,7 @@ class ProjectDetailPage extends StatefulWidget {
 }
 
 class _ProjectDetailPageState extends State<ProjectDetailPage> {
-  ProjectState updatedProjectState = ProjectState.open;
+  ProjectState? updatedProjectState;
   bool updateStatusIntent = false;
 
   // limit for queries
@@ -257,6 +257,19 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                     ),
                     RadioListTile(
                       title: Text(
+                        "Set project as open",
+                        style: checkboxTextStyle,
+                      ),
+                      value: ProjectState.open,
+                      groupValue: updatedProjectState,
+                      onChanged: (value) {
+                        setState(() {
+                          updatedProjectState = value;
+                        });
+                      },
+                    ),
+                    RadioListTile(
+                      title: Text(
                         "Set project as postponed",
                         style: checkboxTextStyle,
                       ),
@@ -264,7 +277,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                       groupValue: updatedProjectState,
                       onChanged: (value) {
                         setState(() {
-                          updatedProjectState = value!;
+                          updatedProjectState = value;
                         });
                       },
                     ),
@@ -277,7 +290,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                       groupValue: updatedProjectState,
                       onChanged: (value) {
                         setState(() {
-                          updatedProjectState = value!;
+                          updatedProjectState = value;
                         });
                       },
                     ),
@@ -290,7 +303,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                       groupValue: updatedProjectState,
                       onChanged: (value) {
                         setState(() {
-                          updatedProjectState = value!;
+                          updatedProjectState = value;
                         });
                       },
                     ),
@@ -303,12 +316,14 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                       onPress: () {
                         // save to database if intent is there
                         if (updateStatusIntent) {
-                          context
-                              .read<ProjectStateUpdates>()
-                              .updateProjectState(
-                                projectID: widget.project.id,
-                                newState: updatedProjectState,
-                              );
+                          if (updatedProjectState != null) {
+                            context
+                                .read<ProjectStateUpdates>()
+                                .updateProjectState(
+                                  projectID: widget.project.id,
+                                  newState: updatedProjectState!,
+                                );
+                          }
                         }
 
                         // user sees update status or done corresponding to if the choices are shown or not
@@ -316,7 +331,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                         // redraw to show action first
                         setState(() {
                           // reset state for when next the choices are open
-                          updatedProjectState = ProjectState.open;
+                          updatedProjectState = null;
                         });
                         // if this resolves to true now then it currently shows update status after done was previously clicked
                         // meaning the status has been updated

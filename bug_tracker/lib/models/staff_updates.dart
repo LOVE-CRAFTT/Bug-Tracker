@@ -47,4 +47,6 @@ class StaffUpdates extends ChangeNotifier {
       debugPrint('Failed to update email');
     }
   }
+
+  Future<void> deleteStaff({required int staffID}) async {}
 }

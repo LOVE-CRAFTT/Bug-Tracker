@@ -425,7 +425,6 @@ Future showDeletionWarningAlert(BuildContext context) async => await showDialog(
           color: Colors.white,
           fontSize: 20.0,
         ),
-        // project doesn't have password so not necessary to show default password
         content: const Text('WARNING! This action is irreversible'),
         contentTextStyle: kContainerTextStyle.copyWith(
           color: Colors.white,

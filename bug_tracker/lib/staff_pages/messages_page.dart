@@ -19,7 +19,7 @@ class _MessagesPageState extends State<MessagesPage> {
   final messageTextController = TextEditingController();
   final scrollController = ScrollController();
 
-  int limit = 40;
+  int limit = 20;
 
   @override
   void initState() {
@@ -27,9 +27,12 @@ class _MessagesPageState extends State<MessagesPage> {
 
     scrollController.addListener(() {
       // if user has scrolled to the top load more
-      if (scrollController.position.pixels == 0) {
-        limit += 20;
-        setState(() {});
+      // still checking if is not at the top because listview is reversed
+      if (scrollController.position.atEdge) {
+        if (scrollController.position.pixels != 0) {
+          limit += 40;
+          setState(() {});
+        }
       }
     });
 
@@ -39,6 +42,20 @@ class _MessagesPageState extends State<MessagesPage> {
         scrollController.jumpTo(scrollController.position.maxScrollExtent);
       }
     });
+  }
+
+  // if enter key or send button is pressed
+  void sendMessage(BuildContext context) {
+    if (messageTextController.text.trim().isEmpty) {
+      messageTextController.clear();
+    } else {
+      context.read<MessageUpdates>().addMessage(
+            senderID: globalActorID,
+            discussionID: widget.discussionID,
+            message: messageTextController.text,
+          );
+      messageTextController.clear();
+    }
   }
 
   @override
@@ -101,22 +118,16 @@ class _MessagesPageState extends State<MessagesPage> {
                             hintStyle: kContainerTextStyle,
                             border: InputBorder.none,
                           ),
+                          onSubmitted: (_) {
+                            sendMessage(context);
+                          },
                         ),
                       ),
                       HeaderButton(
                         screenIsWide: true,
                         buttonText: "Send",
                         onPress: () {
-                          if (messageTextController.text.trim().isEmpty) {
-                            messageTextController.clear();
-                          } else {
-                            context.read<MessageUpdates>().addMessage(
-                                  senderID: globalActorID,
-                                  discussionID: widget.discussionID,
-                                  message: messageTextController.text,
-                                );
-                            messageTextController.clear();
-                          }
+                          sendMessage(context);
                         },
                       ),
                     ],

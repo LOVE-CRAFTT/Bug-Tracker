@@ -267,10 +267,15 @@ class DB {
     required int id,
     required ProjectState newState,
   }) async {
-    Results result = await _conn!.query(
-      'update project set project_state = ? WHERE id = ?',
-      [newState.title, id],
-    );
+    Results result = newState == ProjectState.closed
+        ? await _conn!.query(
+            'update project set project_state = ?, date_closed = ? WHERE id = ?',
+            [newState.title, DateTime.now().toUtc(), id],
+          )
+        : await _conn!.query(
+            'update project set project_state = ?, date_closed = ? WHERE id = ?',
+            [newState.title, null, id],
+          );
 
     //success
     if (result.insertId != null) {
