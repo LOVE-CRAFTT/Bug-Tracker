@@ -19,8 +19,10 @@ class Project {
           state: ProjectState.values.firstWhere(
             (state) => state.title == projectRow['project_state'],
           ),
-          dateCreated: projectRow['date_created'],
-          dateClosed: projectRow['date_closed'],
+          dateCreated:
+              DateTime.parse(projectRow['date_created'].toString()).toLocal(),
+          dateClosed:
+              DateTime.parse(projectRow['date_closed'].toString()).toLocal(),
         );
 
   final int id;

@@ -28,7 +28,8 @@ class Complaint {
             (state) => state.title == complaintRow['complaint_state'],
           ),
           associatedProject: project,
-          dateCreated: complaintRow['date_created'],
+          dateCreated:
+              DateTime.parse(complaintRow['date_created'].toString()).toLocal(),
           author: author,
           tags: tags,
         );

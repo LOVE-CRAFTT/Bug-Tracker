@@ -20,7 +20,7 @@ Future<void> loadCalendarEvents({required int staffID}) async {
 
   // helper function to get the date
   DateTime getDate({required DateTime dateTime}) {
-    return DateTime.parse(DateFormat('yyyy-MM-dd').format(dateTime));
+    return DateTime.parse(DateFormat('yyyy-MM-dd').format(dateTime.toLocal()));
   }
 
   // if there are associated events

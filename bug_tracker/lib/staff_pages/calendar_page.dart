@@ -175,6 +175,7 @@ class _CalendarPageState extends State<CalendarPage> {
                       itemBuilder: (context, index) {
                         return EventCard(
                           event: value[index],
+                          redraw: () => setState(() {}),
                         );
                       },
                     );

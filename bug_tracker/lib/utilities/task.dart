@@ -26,7 +26,7 @@ class Task {
             (state) => state.title == taskRow['task_state'],
           ),
           associatedComplaint: associatedComplaint,
-          dueDate: taskRow['due_date'],
+          dueDate: DateTime.parse(taskRow['due_date'].toString()).toLocal(),
           assignedStaff: assignedStaff,
           isTeamLead: taskRow['is_team_lead'] == 1 ? true : false,
         );
