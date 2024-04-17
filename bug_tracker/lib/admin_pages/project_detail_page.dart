@@ -313,11 +313,11 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                     child: HeaderButton(
                       screenIsWide: true,
                       buttonText: updateStatusIntent ? "Done" : "Update Status",
-                      onPress: () {
+                      onPress: () async {
                         // save to database if intent is there
                         if (updateStatusIntent) {
                           if (updatedProjectState != null) {
-                            context
+                            await context
                                 .read<ProjectStateUpdates>()
                                 .updateProjectState(
                                   projectID: widget.project.id,
@@ -336,16 +336,18 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                         // if this resolves to true now then it currently shows update status after done was previously clicked
                         // meaning the status has been updated
                         if (!updateStatusIntent) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(
-                                "Update successful",
-                                style: kContainerTextStyle.copyWith(
-                                  color: Colors.black,
+                          if (context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  "Update successful",
+                                  style: kContainerTextStyle.copyWith(
+                                    color: Colors.black,
+                                  ),
                                 ),
                               ),
-                            ),
-                          );
+                            );
+                          }
                         }
                       },
                     ),

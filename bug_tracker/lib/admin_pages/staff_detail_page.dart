@@ -166,12 +166,12 @@ class _StaffDetailPageState extends State<StaffDetailPage> {
                                 HeaderButton(
                                   screenIsWide: true,
                                   buttonText: "Done",
-                                  onPress: () {
+                                  onPress: () async {
                                     if (formKeys.first.currentState!
                                         .validate()) {
                                       updateEmailIntent = false;
 
-                                      context
+                                      await context
                                           .read<StaffUpdates>()
                                           .updateStaffEmail(
                                             staffID: widget.staff.id,
@@ -179,17 +179,20 @@ class _StaffDetailPageState extends State<StaffDetailPage> {
                                           );
 
                                       setState(() {});
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                          content: Text(
-                                            'Email Updated Successfully!',
-                                            style: kContainerTextStyle.copyWith(
-                                              color: Colors.black,
+                                      if (context.mounted) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                              'Email Updated Successfully!',
+                                              style:
+                                                  kContainerTextStyle.copyWith(
+                                                color: Colors.black,
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      );
+                                        );
+                                      }
                                     }
                                   },
                                 ),
@@ -311,12 +314,12 @@ class _StaffDetailPageState extends State<StaffDetailPage> {
                                 HeaderButton(
                                   screenIsWide: true,
                                   buttonText: "Done",
-                                  onPress: () {
+                                  onPress: () async {
                                     if (formKeys.last.currentState!
                                         .validate()) {
                                       updateNameIntent = false;
 
-                                      context
+                                      await context
                                           .read<StaffUpdates>()
                                           .updateStaffName(
                                             staffID: widget.staff.id,
@@ -326,17 +329,20 @@ class _StaffDetailPageState extends State<StaffDetailPage> {
                                           );
                                       setState(() {});
 
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                          content: Text(
-                                            'Name Updated Successfully!',
-                                            style: kContainerTextStyle.copyWith(
-                                              color: Colors.black,
+                                      if (context.mounted) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                              'Name Updated Successfully!',
+                                              style:
+                                                  kContainerTextStyle.copyWith(
+                                                color: Colors.black,
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      );
+                                        );
+                                      }
                                     }
                                   },
                                 ),

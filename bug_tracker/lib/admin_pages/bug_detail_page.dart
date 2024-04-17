@@ -50,20 +50,22 @@ class _BugDetailPageState extends State<BugDetailPage> {
     // the state should be automatically set as acknowledged.
     if (widget.complaint.complaintState == ComplaintState.pending) {
       //State's mounted property
-      if (mounted) {
+      if (context.mounted) {
         // this then notifies listeners
-        context.read<ComplaintStateUpdates>().updateComplaintState(
+        await context.read<ComplaintStateUpdates>().updateComplaintState(
               complaintID: widget.complaint.ticketNumber,
               newState: ComplaintState.acknowledged,
             );
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              "Complaint acknowledged!",
-              style: kContainerTextStyle.copyWith(color: Colors.black),
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                "Complaint acknowledged!",
+                style: kContainerTextStyle.copyWith(color: Colors.black),
+              ),
             ),
-          ),
-        );
+          );
+        }
       }
     }
   }

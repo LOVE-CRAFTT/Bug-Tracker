@@ -62,18 +62,20 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
       //State's mounted property
       if (mounted) {
         // this then notifies listeners
-        context.read<TaskStateUpdates>().updateTaskState(
+        await context.read<TaskStateUpdates>().updateTaskState(
               taskID: widget.task.id,
               newState: TaskState.inProgress,
             );
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              "Task in Progress!",
-              style: kContainerTextStyle.copyWith(color: Colors.black),
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                "Task in Progress!",
+                style: kContainerTextStyle.copyWith(color: Colors.black),
+              ),
             ),
-          ),
-        );
+          );
+        }
       }
     }
   }

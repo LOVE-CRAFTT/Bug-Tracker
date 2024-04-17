@@ -195,7 +195,7 @@ class _TaskDetailUpdatePageState extends State<TaskDetailUpdatePage> {
                 onPress: () async {
                   // update task state to completed
                   if (taskCompleted) {
-                    context.read<TaskStateUpdates>().updateTaskState(
+                    await context.read<TaskStateUpdates>().updateTaskState(
                           taskID: widget.task.id,
                           newState: TaskState.completed,
                         );
@@ -206,73 +206,87 @@ class _TaskDetailUpdatePageState extends State<TaskDetailUpdatePage> {
                   // to a different staff
                   if (dropDownValue != widget.task.assignedStaff) {
                     // add new task with newly assigned staff
-                    context.read<TasksUpdate>().addNewTransferredTask(
-                          task: Task(
-                            // will change so just a placeholder value
-                            id: 0,
+                    if (context.mounted) {
+                      await context.read<TasksUpdate>().addNewTransferredTask(
+                            task: Task(
+                              // will change so just a placeholder value
+                              id: 0,
 
-                            // set task string
-                            task: widget.task.task,
+                              // set task string
+                              task: widget.task.task,
 
-                            // new task state will received
-                            taskState: TaskState.received,
+                              // new task state will received
+                              taskState: TaskState.received,
 
-                            // same complaint
-                            associatedComplaint:
-                                widget.task.associatedComplaint,
+                              // same complaint
+                              associatedComplaint:
+                                  widget.task.associatedComplaint,
 
-                            // same due date to account for deadlines
-                            dueDate: widget.task.dueDate,
+                              // same due date to account for deadlines
+                              dueDate: widget.task.dueDate,
 
-                            // newly assigned staff
-                            assignedStaff: dropDownValue,
+                              // newly assigned staff
+                              assignedStaff: dropDownValue,
 
-                            // always just one team lead
-                            isTeamLead: false,
-                          ),
-                        );
+                              // always just one team lead
+                              isTeamLead: false,
+                            ),
+                          );
+                    }
 
                     // set state as transferred
-                    context.read<TaskStateUpdates>().updateTaskState(
-                          taskID: widget.task.id,
+                    if (context.mounted) {
+                      await context.read<TaskStateUpdates>().updateTaskState(
+                            taskID: widget.task.id,
 
-                          // transferred
-                          newState: TaskState.transferred,
-                        );
+                            // transferred
+                            newState: TaskState.transferred,
+                          );
+                    }
                   }
 
                   // update task to completed if is team lead and there's intent
                   if (widget.task.isTeamLead && complaintCompleted) {
-                    context.read<ComplaintStateUpdates>().updateComplaintState(
-                          complaintID:
-                              widget.task.associatedComplaint.ticketNumber,
-                          newState: ComplaintState.completed,
-                        );
+                    if (context.mounted) {
+                      await context
+                          .read<ComplaintStateUpdates>()
+                          .updateComplaintState(
+                            complaintID:
+                                widget.task.associatedComplaint.ticketNumber,
+                            newState: ComplaintState.completed,
+                          );
+                    }
                   }
 
                   // add staff note if is team lead and there's intent
                   if (widget.task.isTeamLead &&
                       userNoteController.text.trim().isNotEmpty) {
-                    context.read<StaffNotesUpdates>().addStaffNoteToComplaint(
-                          complaintID:
-                              widget.task.associatedComplaint.ticketNumber,
-                          note: userNoteController.text,
-                        );
+                    if (context.mounted) {
+                      await context
+                          .read<StaffNotesUpdates>()
+                          .addStaffNoteToComplaint(
+                            complaintID:
+                                widget.task.associatedComplaint.ticketNumber,
+                            note: userNoteController.text,
+                          );
+                    }
                   }
 
-                  Navigator.pop(context);
-                  userNoteController.clear();
+                  if (context.mounted) {
+                    Navigator.pop(context);
+                    userNoteController.clear();
 
-                  // notify
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        "Updated successfully",
-                        style:
-                            kContainerTextStyle.copyWith(color: Colors.black),
+                    // notify
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          "Updated successfully",
+                          style:
+                              kContainerTextStyle.copyWith(color: Colors.black),
+                        ),
                       ),
-                    ),
-                  );
+                    );
+                  }
                 },
               ),
             ),

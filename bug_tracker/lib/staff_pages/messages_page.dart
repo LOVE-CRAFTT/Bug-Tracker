@@ -45,11 +45,11 @@ class _MessagesPageState extends State<MessagesPage> {
   }
 
   // if enter key or send button is pressed
-  void sendMessage(BuildContext context) {
+  void sendMessage(BuildContext context) async {
     if (messageTextController.text.trim().isEmpty) {
       messageTextController.clear();
     } else {
-      context.read<MessageUpdates>().addMessage(
+      await context.read<MessageUpdates>().addMessage(
             senderID: globalActorID,
             discussionID: widget.discussionID,
             message: messageTextController.text,
