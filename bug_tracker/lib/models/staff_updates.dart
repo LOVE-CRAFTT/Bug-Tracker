@@ -48,5 +48,15 @@ class StaffUpdates extends ChangeNotifier {
     }
   }
 
-  Future<void> deleteStaff({required int staffID}) async {}
+  Future<void> deleteStaff({required int staffID}) async {
+    // attempt to delete staff from database
+    bool success = await db.wipeStaffDataFromDatabase(staffId: staffID);
+
+    // if successful
+    if (success == true) {
+      notifyListeners();
+    } else {
+      debugPrint('Could not completely wipe staff from database!');
+    }
+  }
 }

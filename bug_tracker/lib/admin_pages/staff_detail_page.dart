@@ -92,7 +92,10 @@ class _StaffDetailPageState extends State<StaffDetailPage> {
                       screenIsWide: true,
                       buttonText: "Delete",
                       onPress: () {
-                        showDeletionWarningAlert(context);
+                        showDeletionWarningAlert(
+                          context: context,
+                          staffID: widget.staff.id,
+                        );
                       },
                     ),
                   ],
@@ -416,7 +419,11 @@ class _StaffDetailPageState extends State<StaffDetailPage> {
   }
 }
 
-Future showDeletionWarningAlert(BuildContext context) async => await showDialog(
+Future showDeletionWarningAlert({
+  required BuildContext context,
+  required int staffID,
+}) async =>
+    await showDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) => AlertDialog(
@@ -437,18 +444,24 @@ Future showDeletionWarningAlert(BuildContext context) async => await showDialog(
               style: kContainerTextStyle.copyWith(
                   fontSize: 14.0, color: Colors.blue),
             ),
-            onPressed: () {
-              ///TODO: Remove from database / mark as disabled
-              Navigator.of(context).pop();
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(
-                    "Staff deleted successfully!",
-                    style: kContainerTextStyle.copyWith(color: Colors.black),
+            onPressed: () async {
+              await context.read<StaffUpdates>().deleteStaff(staffID: staffID);
+
+              if (context.mounted) {
+                // pop the alert
+                Navigator.of(context).pop();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      "Staff deleted successfully!",
+                      style: kContainerTextStyle.copyWith(color: Colors.black),
+                    ),
                   ),
-                ),
-              );
-              Navigator.of(context).pop();
+                );
+
+                // pop the detail page
+                Navigator.of(context).pop();
+              }
             },
           ),
           TextButton(

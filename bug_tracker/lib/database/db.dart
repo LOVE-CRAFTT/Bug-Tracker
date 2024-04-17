@@ -155,6 +155,58 @@ class DB {
     }
   }
 
+  Future<bool> wipeStaffDataFromDatabase({required int staffId}) async {
+    // deleted in particular order to prevent
+    // foreign key constraint violations
+
+    // Delete associated staff from calendar_events
+    Results results = await _conn!.query(
+      'DELETE FROM calendar_events WHERE associated_staff = ?',
+      [staffId],
+    );
+    if (results.affectedRows == null || results.affectedRows! < 0) {
+      return false;
+    }
+
+    // Delete staff id from conversation_participants
+    results = await _conn!.query(
+      'DELETE FROM conversation_participants WHERE staff_id = ?',
+      [staffId],
+    );
+    if (results.affectedRows == null || results.affectedRows! < 0) {
+      return false;
+    }
+
+    // Delete staff id from messages
+    results = await _conn!.query(
+      'DELETE FROM messages WHERE staff_id = ?',
+      [staffId],
+    );
+    if (results.affectedRows == null || results.affectedRows! < 0) {
+      return false;
+    }
+
+    // Delete associated_staff from task
+    results = await _conn!.query(
+      'DELETE FROM task WHERE associated_staff = ?',
+      [staffId],
+    );
+    if (results.affectedRows == null || results.affectedRows! < 0) {
+      return false;
+    }
+
+    // Delete id from staff
+    results = await _conn!.query(
+      'DELETE FROM staff WHERE id = ?',
+      [staffId],
+    );
+    if (results.affectedRows == null || results.affectedRows! <= 0) {
+      return false;
+    }
+
+    return true;
+  }
+
   //============================================================================
 
   //===================USER RELATED=============================================

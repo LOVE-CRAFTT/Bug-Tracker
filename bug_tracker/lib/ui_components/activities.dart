@@ -36,7 +36,6 @@ class Activities extends StatelessWidget {
               DateFormat('yyyy-MM-dd HH:mm').format(activity.timeOfAction),
               style: kContainerTextStyle.copyWith(fontSize: 10.0),
             ),
-            //TODO: Maybe go to corresponding activity page
             // onTap: () {},
           ),
         );
