@@ -179,7 +179,7 @@ List<NavigationRailDestination> kMainNavigationRailDestinations = [
 List<NavigationRailDestination> staffNavigationRailDestinations = [
   for (var value in [
     //task
-    navRailData.entries.elementAt(6),
+    navRailData.entries.elementAt(5),
     //discuss
     navRailData.entries.elementAt(1),
     //calendar
