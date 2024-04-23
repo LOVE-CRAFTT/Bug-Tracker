@@ -139,8 +139,7 @@ Future<void> loadComplaintsSourceByProject({
       var tags = await retrieveTags(complaintID: complaintRow['id']);
 
       // get associated project here since can't await in complaint constructor
-      Results? projectResult =
-          await db.getProjectData(complaintRow['associated_project']);
+      Results? projectResult = await db.getProjectData(projectID);
       ResultRow? projectRow = projectResult?.first;
 
       // get user email here since can't wait in complaints constructor

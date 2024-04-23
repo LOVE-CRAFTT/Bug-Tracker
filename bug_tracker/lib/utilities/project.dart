@@ -21,8 +21,9 @@ class Project {
           ),
           dateCreated:
               DateTime.parse(projectRow['date_created'].toString()).toLocal(),
-          dateClosed:
-              DateTime.parse(projectRow['date_closed'].toString()).toLocal(),
+          dateClosed: projectRow['date_closed'] != null
+              ? DateTime.parse(projectRow['date_closed'].toString()).toLocal()
+              : null,
         );
 
   final int id;

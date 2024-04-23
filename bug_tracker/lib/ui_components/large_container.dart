@@ -128,7 +128,7 @@ class _LargeContainerState extends State<LargeContainer> {
                 .toList();
           }
           if (widget.type == LargeContainerTypes.tasksDueToday) {
-            tasksSource
+            localTaskSource = tasksSource
                 .where(
                   (task) => task.taskState == TaskState.dueToday,
                 )
