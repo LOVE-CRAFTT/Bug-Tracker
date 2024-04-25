@@ -622,6 +622,22 @@ class DB {
             )
             .toList(),
       );
+
+      // UPDATING THE SESSIONS TABLE REFERENCED TASK IDS
+      // the newly create session table references tasks
+      // and since the ids are updated the references should also be updated
+      //
+      // in the bug detail update as a new task is added, 0 is added to the end of the list of original
+      // before passing to this function they should all be removed
+      // this will take the remaining original task ids after any deleted ones
+      // after that, get the ids of the referenced tasks in sessions
+      // for each that is not in the remaining original task ids delete them from the table
+      // proceed to clear all the related tasks and adding the new ones (original process)
+      // after adding retrieve the new ids by retrieving the first n number of newly added ids where n is the number of original task ids
+      // this works because deletion in the bug detail update page is always from the end
+      // should probably ensure same length once for safety purposes
+      // then for each session row that references the old ids change to the new one i.e elements at the same ids should be exchanged
+
       // return true if every insert id in results.result is not null
       return results.every((result) => result.insertId != null);
     }

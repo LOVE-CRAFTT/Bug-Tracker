@@ -104,3 +104,12 @@ CREATE TABLE IF NOT EXISTS messages (
     FOREIGN KEY (conversation_id) REFERENCES conversations(conversation_id),
     FOREIGN KEY (staff_id) REFERENCES staff(id)
 );
+
+CREATE TABLE IF NOT EXISTS work_sessions (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    task_id INT UNSIGNED NOT NULL,
+    associated_staff INT UNSIGNED NOT NULL,
+    time_started DATETIME NOT NULL,
+    time_ended DATETIME NOT NULL,
+    FOREIGN KEY (associated_staff) REFERENCES staff(id)
+);
