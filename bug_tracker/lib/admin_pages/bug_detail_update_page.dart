@@ -47,6 +47,10 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
   late Task? originalTeamLeadTask;
   late List<Task> originalTeamMemberTasks;
 
+  // remaining after deleting/addition of new tasks
+  // for updating the work sessions referenced ids
+  List<int> activeTaskIDs = [];
+
   // on initState selectedTags should be currentTags
   // on initState teamMember values should be the corresponding values from
   // current tasks, and task controllers should contain the corresponding task strings
@@ -82,10 +86,17 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
         )
         .toList();
 
+    // populate active taskIDs
+    if (originalTeamLeadTask != null) {
+      activeTaskIDs.add(originalTeamLeadTask!.id);
+    }
+    activeTaskIDs.addAll(originalTeamMemberTasks.map((task) => task.id));
+
     // so the team section is enabled for drawing
     widget.currentTasks.isEmpty
         ? showTeamSection = false
         : showTeamSection = true;
+
     super.initState();
   }
 
@@ -236,6 +247,8 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
                           newTeamMemberValues.add(
                             staffSource.first,
                           );
+
+                          activeTaskIDs.add(0);
                         },
                       );
                     },
@@ -256,6 +269,10 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
                           () {
                             newTeamMembersTaskTextControllers.removeLast();
                             newTeamMemberValues.removeLast();
+
+                            if (activeTaskIDs.isNotEmpty) {
+                              activeTaskIDs.removeLast();
+                            }
                           },
                         );
                       },
@@ -301,6 +318,7 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
 
                   bool hasNewTasks = false;
                   bool hasUpdatedTasks = false;
+                  int taskId;
 
                   // add team lead
                   {
@@ -317,6 +335,8 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
                             TaskState.transferred)) {
                       taskState = TaskState.fresh;
                       hasNewTasks = true;
+
+                      taskId = originalTeamLeadTask!.id;
                     }
                     // if there is an original team lead task and
                     // if the text in newTeamLeadTaskTextController has changed
@@ -331,6 +351,8 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
                             TaskState.transferred)) {
                       taskState = TaskState.updated;
                       hasUpdatedTasks = true;
+
+                      taskId = originalTeamLeadTask!.id;
                     }
 
                     // else if there is an original team lead task but
@@ -342,18 +364,21 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
                             newTeamLeadValue!.id ==
                                 originalTeamLeadTask!.assignedStaff.id)) {
                       taskState = originalTeamLeadTask!.taskState;
+
+                      taskId = originalTeamLeadTask!.id;
                     }
 
                     // at this point there no original task meaning it is new
                     else {
                       taskState = TaskState.fresh;
                       hasNewTasks = true;
+
+                      taskId = 0;
                     }
 
                     taskUpdates.add(
                       Task(
-                        // id is to be replaces so placeholder
-                        id: 0,
+                        id: taskId,
                         task: newTeamLeadTaskTextController.text,
 
                         taskState: taskState,
@@ -390,6 +415,8 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
                               TaskState.transferred)) {
                         taskState = TaskState.fresh;
                         hasNewTasks = true;
+
+                        taskId = originalTeamMemberTasks.elementAt(i).id;
                       }
 
                       // if originalTeamMemberTasks is large enough to prevent value access error
@@ -405,6 +432,8 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
                               TaskState.transferred)) {
                         taskState = TaskState.updated;
                         hasUpdatedTasks = true;
+
+                        taskId = originalTeamMemberTasks.elementAt(i).id;
                       }
 
                       // if originalTeamMemberTasks is large enough to prevent value access error
@@ -422,6 +451,8 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
                                       .id)) {
                         taskState =
                             originalTeamMemberTasks.elementAt(i).taskState;
+
+                        taskId = originalTeamMemberTasks.elementAt(i).id;
                       }
 
                       // at this point the originalTeamMemberTasks does not contain a value
@@ -429,13 +460,13 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
                       else {
                         taskState = TaskState.fresh;
                         hasNewTasks = true;
+
+                        taskId = 0;
                       }
 
                       taskUpdates.add(
                         Task(
-                          // id is unnecessary since will be replaced in db addition
-                          // replacing all with placeholder 0
-                          id: 0,
+                          id: taskId,
                           task: newTeamMembersTaskTextControllers[i].text,
 
                           taskState: taskState,
@@ -460,6 +491,20 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
                         complaintID: widget.complaint.ticketNumber,
                         newTags: selectedTags,
                       );
+
+                  // update tasks which notifies Bug Detail Page
+                  if (context.mounted) {
+                    await context.read<TasksUpdate>().wipeAndUpdateTasks(
+                          taskUpdates: taskUpdates,
+
+                          // remove the 0s
+                          remainingOriginalTaskIDs: activeTaskIDs
+                              .where(
+                                (ids) => ids != 0,
+                              )
+                              .toList(),
+                        );
+                  }
 
                   // make complaint in progress
                   // if there are new or updated tasks
@@ -487,19 +532,13 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
                     }
                   }
 
-                  //also update tasks which notifies Bug Detail Page
-                  if (context.mounted) {
-                    await context
-                        .read<TasksUpdate>()
-                        .wipeAndUpdateTasks(taskUpdates: taskUpdates);
-                  }
-
                   if (context.mounted) {
                     Navigator.pop(context);
                     newTeamLeadTaskTextController.clear();
                     for (var controller in newTeamMembersTaskTextControllers) {
                       controller.clear();
                     }
+                    activeTaskIDs.clear();
                     showTeamSection = false;
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(

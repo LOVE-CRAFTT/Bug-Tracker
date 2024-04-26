@@ -594,6 +594,7 @@ class DB {
 
   Future<bool> addTasks({
     required List<Task> tasks,
+    required List<int> remainingOriginalTaskIDs,
   }) async {
     // Delete all existing tasks first
     Results result = await _conn!.query(
@@ -603,9 +604,17 @@ class DB {
     bool successfullyDeleted =
         (result.affectedRows != null && result.affectedRows! >= 0);
 
+    // divide into the ones with or without the remainingOriginalTaskIDs
+    // with
+    List<Task> remainingOriginalTasks = tasks
+        .where((task) => remainingOriginalTaskIDs.contains(task.id))
+        .toList();
+    // without
+    tasks.removeWhere((task) => remainingOriginalTasks.contains(task));
+
     // if deletion successful then proceed
     if (successfullyDeleted) {
-      // Then add all tasks
+      // Then insert tasks that don't require extra work
       List<Results> results = await _conn!.queryMulti(
         'insert into task (associated_complaint, task_name, task_state, due_date, associated_staff, is_team_lead) values (?, ?, ?, ?, ?, ?)',
         // list of lists
@@ -623,25 +632,60 @@ class DB {
             .toList(),
       );
 
-      // UPDATING THE SESSIONS TABLE REFERENCED TASK IDS
-      // the newly create session table references tasks
-      // and since the ids are updated the references should also be updated
-      //
-      // in the bug detail update as a new task is added, 0 is added to the end of the list of original
-      // before passing to this function they should all be removed
-      // this will take the remaining original task ids after any deleted ones
-      // after that, get the ids of the referenced tasks in sessions
-      // for each that is not in the remaining original task ids delete them from the table
-      // proceed to clear all the related tasks and adding the new ones (original process)
-      // after adding retrieve the new ids by retrieving the first n number of newly added ids where n is the number of original task ids
-      // this works because deletion in the bug detail update page is always from the end
-      // should probably ensure same length once for safety purposes
-      // then for each session row that references the old ids change to the new one i.e elements at the same ids should be exchanged
+      // if successful in inserting tasks that don't need updating in sessions table
+      if (results.every((result) => result.insertId != null)) {
+        // insert tasks requiring extra work
+        results = await _conn!.queryMulti(
+          'insert into task (associated_complaint, task_name, task_state, due_date, associated_staff, is_team_lead) values (?, ?, ?, ?, ?, ?)',
+          // list of lists
+          remainingOriginalTasks
+              .map(
+                (task) => [
+                  task.associatedComplaint.ticketNumber,
+                  task.task,
+                  task.taskState.title,
+                  task.dueDate.toUtc(),
+                  task.assignedStaff.id,
+                  task.isTeamLead,
+                ],
+              )
+              .toList(),
+        );
 
-      // return true if every insert id in results.result is not null
-      return results.every((result) => result.insertId != null);
+        // if successful in inserting tasks that need updating in sessions table
+        if (results.every((result) => result.insertId != null)) {
+          List<int> newIds = results.map((result) => result.insertId!).toList();
+
+          // delete unreferenced from session
+          await _conn!.query(
+            'DELETE FROM work_sessions WHERE associated_complaint = ? AND task_id NOT IN (?)',
+            [
+              remainingOriginalTasks.first.associatedComplaint.ticketNumber,
+              remainingOriginalTaskIDs,
+            ],
+          );
+
+          // replace in sessions
+          for (int i = 0; i < newIds.length; i++) {
+            await _conn!.query(
+              'UPDATE work_sessions SET task_id = ? where task_id = ?;',
+              [newIds[i], remainingOriginalTaskIDs[i]],
+            );
+          }
+
+          return true;
+        }
+        // failure in inserting more work tasks
+        else {
+          return false;
+        }
+      }
+      // failure in inserting less work tasks
+      else {
+        return false;
+      }
     }
-    // else process failure return false
+    // else failed to delete all tasks, return false
     else {
       return false;
     }
