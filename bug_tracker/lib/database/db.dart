@@ -658,12 +658,16 @@ class DB {
         if (results.every((result) => result.insertId != null)) {
           List<int> newIds = results.map((result) => result.insertId!).toList();
 
+          String placeholders =
+              List<String>.filled(preservedOriginalTaskIDs.length, '?')
+                  .join(',');
+
           // delete unreferenced from session
           await _conn!.query(
-            'DELETE FROM work_sessions WHERE associated_complaint = ? AND task_id NOT IN (?)',
+            'DELETE FROM work_sessions WHERE associated_complaint = ? AND task_id NOT IN ($placeholders)',
             [
               relatedComplaintID,
-              preservedOriginalTaskIDs,
+              ...preservedOriginalTaskIDs,
             ],
           );
 

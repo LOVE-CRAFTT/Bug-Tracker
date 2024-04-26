@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:side_sheet/side_sheet.dart';
@@ -30,6 +31,10 @@ class TaskDetailPage extends StatefulWidget {
 }
 
 class _TaskDetailPageState extends State<TaskDetailPage> {
+  bool sessionInProgress = false;
+  String timeDifference = '12w 11d 4h 12m';
+  late Timer timer;
+
   @override
   void initState() {
     // This ensures that set task as inProgress is called after
@@ -78,6 +83,12 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
         }
       }
     }
+  }
+
+  @override
+  void dispose() {
+    if (timer.isActive) timer.cancel();
+    super.dispose();
   }
 
   @override
@@ -249,6 +260,58 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                         fontSize: 25.0,
                         color: Colors.white,
                       ),
+                    ),
+                  ),
+
+                  /// Time tracking
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10.0,
+                      vertical: 20.0,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        ElevatedButton(
+                          style: TextButton.styleFrom(
+                            backgroundColor: sessionInProgress
+                                ? Colors.red
+                                : secondaryThemeColor,
+                            textStyle: kContainerTextStyle,
+                          ),
+                          onPressed: () async {
+                            setState(() {
+                              sessionInProgress = !sessionInProgress;
+                            });
+
+                            // start/end timer
+                            if (sessionInProgress) {
+                              timer.cancel();
+                            } else {
+                              timer = Timer.periodic(
+                                const Duration(minutes: 10),
+                                (timer) {},
+                              );
+                            }
+                          },
+                          child: sessionInProgress
+                              ? const Text('End Session')
+                              : const Text('Start Session'),
+                        ),
+                        Text(
+                          timeDifference,
+                          style: kContainerTextStyle.copyWith(
+                            color: Colors.white,
+                          ),
+                        ),
+                        ElevatedButton(
+                          style: TextButton.styleFrom(
+                            textStyle: kContainerTextStyle,
+                          ),
+                          onPressed: () {},
+                          child: const Text('Open Session Logs'),
+                        ),
+                      ],
                     ),
                   ),
 
