@@ -594,23 +594,25 @@ class DB {
 
   Future<bool> addTasks({
     required List<Task> tasks,
-    required List<int> remainingOriginalTaskIDs,
+    required List<int> preservedOriginalTaskIDs,
   }) async {
+    int relatedComplaintID = tasks.first.associatedComplaint.ticketNumber;
+
     // Delete all existing tasks first
     Results result = await _conn!.query(
       'DELETE FROM task WHERE associated_complaint = ?',
-      [tasks.first.associatedComplaint.ticketNumber],
+      [relatedComplaintID],
     );
     bool successfullyDeleted =
         (result.affectedRows != null && result.affectedRows! >= 0);
 
-    // divide into the ones with or without the remainingOriginalTaskIDs
+    // divide into the ones with or without the preservedOriginalTaskIDs
     // with
-    List<Task> remainingOriginalTasks = tasks
-        .where((task) => remainingOriginalTaskIDs.contains(task.id))
+    List<Task> preservedOriginalTasks = tasks
+        .where((task) => preservedOriginalTaskIDs.contains(task.id))
         .toList();
     // without
-    tasks.removeWhere((task) => remainingOriginalTasks.contains(task));
+    tasks.removeWhere((task) => preservedOriginalTasks.contains(task));
 
     // if deletion successful then proceed
     if (successfullyDeleted) {
@@ -621,7 +623,7 @@ class DB {
         tasks
             .map(
               (task) => [
-                task.associatedComplaint.ticketNumber,
+                relatedComplaintID,
                 task.task,
                 task.taskState.title,
                 task.dueDate.toUtc(),
@@ -638,10 +640,10 @@ class DB {
         results = await _conn!.queryMulti(
           'insert into task (associated_complaint, task_name, task_state, due_date, associated_staff, is_team_lead) values (?, ?, ?, ?, ?, ?)',
           // list of lists
-          remainingOriginalTasks
+          preservedOriginalTasks
               .map(
                 (task) => [
-                  task.associatedComplaint.ticketNumber,
+                  relatedComplaintID,
                   task.task,
                   task.taskState.title,
                   task.dueDate.toUtc(),
@@ -660,8 +662,8 @@ class DB {
           await _conn!.query(
             'DELETE FROM work_sessions WHERE associated_complaint = ? AND task_id NOT IN (?)',
             [
-              remainingOriginalTasks.first.associatedComplaint.ticketNumber,
-              remainingOriginalTaskIDs,
+              relatedComplaintID,
+              preservedOriginalTaskIDs,
             ],
           );
 
@@ -669,7 +671,7 @@ class DB {
           for (int i = 0; i < newIds.length; i++) {
             await _conn!.query(
               'UPDATE work_sessions SET task_id = ? where task_id = ?;',
-              [newIds[i], remainingOriginalTaskIDs[i]],
+              [newIds[i], preservedOriginalTaskIDs[i]],
             );
           }
 

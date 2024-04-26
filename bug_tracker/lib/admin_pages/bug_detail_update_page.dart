@@ -498,7 +498,7 @@ class _BugDetailUpdatePageState extends State<BugDetailUpdatePage> {
                           taskUpdates: taskUpdates,
 
                           // remove the 0s
-                          remainingOriginalTaskIDs: activeTaskIDs
+                          preservedOriginalTaskIDs: activeTaskIDs
                               .where(
                                 (ids) => ids != 0,
                               )

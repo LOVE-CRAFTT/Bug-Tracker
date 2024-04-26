@@ -6,10 +6,10 @@ import 'package:bug_tracker/database/db.dart';
 class TasksUpdate extends ChangeNotifier {
   Future<void> wipeAndUpdateTasks({
     required List<Task> taskUpdates,
-    required List<int> remainingOriginalTaskIDs,
+    required List<int> preservedOriginalTaskIDs,
   }) async {
     bool success = await db.addTasks(
-        tasks: taskUpdates, remainingOriginalTaskIDs: remainingOriginalTaskIDs);
+        tasks: taskUpdates, preservedOriginalTaskIDs: preservedOriginalTaskIDs);
 
     // if addition or update of tasks is successful then notify listeners
     if (success) {
