@@ -195,6 +195,15 @@ class DB {
       return false;
     }
 
+    // Delete associated_staff from work_sessions
+    results = await _conn!.query(
+      'DELETE FROM work_sessions WHERE associated_staff = ?',
+      [staffId],
+    );
+    if (results.affectedRows == null || results.affectedRows! < 0) {
+      return false;
+    }
+
     // Delete id from staff
     results = await _conn!.query(
       'DELETE FROM staff WHERE id = ?',
