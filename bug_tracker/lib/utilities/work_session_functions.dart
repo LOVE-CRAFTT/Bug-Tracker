@@ -3,7 +3,28 @@ import 'package:bug_tracker/database/db.dart';
 import 'package:bug_tracker/utilities/task.dart';
 import 'package:bug_tracker/utilities/work_session.dart';
 
-// Future<List<WorkSession>> retrieveAllWorkSessions({required int taskID}) async {}
+Future<List<WorkSession>> retrieveAllWorkSessions({required int taskID}) async {
+  List<WorkSession> processedSessions = [];
+
+  Results? results = await db.getAllWorkSessions(taskID: taskID);
+  if (results != null) {
+    for (ResultRow sessionRow in results) {
+      processedSessions.add(
+        WorkSession(
+          id: sessionRow['id'],
+          startDate:
+              DateTime.parse(sessionRow['time_started'].toString()).toLocal(),
+          endDate: sessionRow['time_ended'] != null
+              ? DateTime.parse(sessionRow['time_ended'].toString()).toLocal()
+              : null,
+        ),
+      );
+    }
+    return processedSessions;
+  } else {
+    return [];
+  }
+}
 
 Future<WorkSession?> retrieveActiveWorkSession({required int taskID}) async {
   Results? result = await db.getActiveWorkSession(taskID: taskID);

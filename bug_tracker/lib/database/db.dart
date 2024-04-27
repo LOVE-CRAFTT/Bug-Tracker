@@ -752,6 +752,19 @@ class DB {
     }
   }
 
+  Future<Results?> getAllWorkSessions({required int taskID}) async {
+    Results results = await _conn!.query(
+      'SELECT * FROM work_sessions WHERE task_id = ? ORDER BY time_started DESC',
+      [taskID],
+    );
+
+    if (results.isEmpty) {
+      return null;
+    } else {
+      return results;
+    }
+  }
+
   Future<int?> addWorkSession({required Task task}) async {
     Results result = await _conn!.query(
       'INSERT INTO work_sessions (task_id, associated_staff, associated_complaint, time_started, time_ended) VALUES (?, ?, ?, ?, ?)',

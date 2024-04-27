@@ -12,6 +12,7 @@ import 'package:bug_tracker/utilities/load_tasks_source.dart';
 import 'package:bug_tracker/utilities/work_session_functions.dart';
 import 'package:bug_tracker/utilities/file_retrieval_functions.dart';
 import 'package:bug_tracker/utilities/state_retrieval_functions.dart';
+import 'package:bug_tracker/staff_pages/sessions_log.dart';
 import 'package:bug_tracker/models/component_state_updates.dart';
 import 'package:bug_tracker/ui_components/header_button.dart';
 import 'package:bug_tracker/ui_components/empty_screen_placeholder.dart';
@@ -99,36 +100,6 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
           );
         }
       }
-    }
-  }
-
-  String getTimeDifference(DateTime newer, DateTime older) {
-    Duration difference = newer.difference(older);
-
-    int months = (difference.inDays / 30).floor();
-    int days = (difference.inDays % 30).floor();
-    int hours = (difference.inHours % 24).floor();
-    int minutes = (difference.inMinutes % 60).floor();
-
-    List<String> timeUnits = [];
-
-    if (months != 0) {
-      timeUnits.add('${months}M');
-    }
-    if (days != 0) {
-      timeUnits.add('${days}d');
-    }
-    if (hours != 0) {
-      timeUnits.add('${hours}h');
-    }
-    if (minutes != 0) {
-      timeUnits.add('${minutes}m');
-    }
-
-    if (timeUnits.join(' ').isEmpty) {
-      return '0s';
-    } else {
-      return timeUnits.join(' ');
     }
   }
 
@@ -402,6 +373,7 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                               ? getTimeDifference(
                                   DateTime.now(),
                                   activeWorkSession!.startDate,
+                                  fromSessionsLog: false,
                                 )
                               : '',
                           style: kContainerTextStyle.copyWith(
@@ -412,7 +384,16 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                           style: TextButton.styleFrom(
                             textStyle: kContainerTextStyle,
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (builder) => SessionsLog(
+                                  taskID: widget.task.id,
+                                ),
+                              ),
+                            );
+                          },
                           child: const Text('Open Session Logs'),
                         ),
                       ],

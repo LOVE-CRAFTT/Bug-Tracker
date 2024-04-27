@@ -27,6 +27,52 @@ String convertToDateString(DateTime dateTime) {
 }
 
 ///
+String convertToDateStringSessionsLog(DateTime dateTime) {
+  return DateFormat('yyyy-MM-dd HH:mm:ss').format(dateTime);
+}
+
+///
+String getTimeDifference(DateTime newer, DateTime older,
+    {required bool fromSessionsLog}) {
+  Duration difference = newer.difference(older);
+
+  int months = (difference.inDays / 30).floor();
+  int days = (difference.inDays % 30).floor();
+  int hours = (difference.inHours % 24).floor();
+  int minutes = (difference.inMinutes % 60).floor();
+
+  //increased resolution if viewing from sessions log
+  int? seconds;
+  if (fromSessionsLog) seconds = (difference.inSeconds % 60).floor();
+
+  List<String> timeUnits = [];
+
+  if (months != 0) {
+    timeUnits.add('${months}M');
+  }
+  if (days != 0) {
+    timeUnits.add('${days}d');
+  }
+  if (hours != 0) {
+    timeUnits.add('${hours}h');
+  }
+  if (minutes != 0) {
+    timeUnits.add('${minutes}m');
+  }
+  if (seconds != null && seconds != 0 && fromSessionsLog) {
+    timeUnits.add('${seconds}s');
+  }
+
+  if (timeUnits.join(' ').isEmpty && !fromSessionsLog) {
+    return '0m';
+  } else if (timeUnits.join(' ').isEmpty && fromSessionsLog) {
+    return '0s';
+  } else {
+    return timeUnits.join(' ');
+  }
+}
+
+///
 String hashPassword(String password) {
   var bytes = utf8.encode(password);
   return sha512.convert(bytes).toString();
