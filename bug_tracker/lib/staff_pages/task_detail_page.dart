@@ -35,7 +35,7 @@ class TaskDetailPage extends StatefulWidget {
 class _TaskDetailPageState extends State<TaskDetailPage> {
   bool sessionInProgress = false;
   WorkSession? activeWorkSession;
-  late Timer timer;
+  Timer? timer;
 
   @override
   void initState() {
@@ -53,8 +53,13 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
     activeWorkSession = await retrieveActiveWorkSession(taskID: widget.task.id);
     if (activeWorkSession != null) {
       sessionInProgress = true;
-    } else {
-      sessionInProgress = false;
+      timer = Timer.periodic(
+        const Duration(minutes: 1),
+        (timer) {
+          setState(() {});
+        },
+      );
+      setState(() {});
     }
   }
 
@@ -129,7 +134,7 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
 
   @override
   void dispose() {
-    if (timer.isActive) timer.cancel();
+    if (timer != null && timer!.isActive) timer!.cancel();
     super.dispose();
   }
 
@@ -324,7 +329,7 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                           onPressed: () async {
                             // start/end timer
                             if (sessionInProgress) {
-                              timer.cancel();
+                              timer!.cancel();
 
                               // set an end time for the session
                               if (await endWorkSession(
