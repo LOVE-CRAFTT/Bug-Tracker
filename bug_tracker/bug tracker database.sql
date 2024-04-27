@@ -111,7 +111,7 @@ CREATE TABLE IF NOT EXISTS work_sessions (
     associated_staff INT UNSIGNED NOT NULL,
     associated_complaint INT UNSIGNED NOT NULL,
     time_started DATETIME NOT NULL,
-    time_ended DATETIME NOT NULL,
+    time_ended DATETIME,
     FOREIGN KEY (associated_complaint) REFERENCES complaint(id),
     FOREIGN KEY (associated_staff) REFERENCES staff(id)
 );

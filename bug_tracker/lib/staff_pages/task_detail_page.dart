@@ -6,8 +6,10 @@ import 'package:bug_tracker/utilities/constants.dart';
 import 'package:bug_tracker/utilities/tools.dart';
 import 'package:bug_tracker/utilities/task.dart';
 import 'package:bug_tracker/utilities/staff.dart';
+import 'package:bug_tracker/utilities/work_session.dart';
 import 'package:bug_tracker/utilities/core_data_sources.dart';
 import 'package:bug_tracker/utilities/load_tasks_source.dart';
+import 'package:bug_tracker/utilities/work_session_functions.dart';
 import 'package:bug_tracker/utilities/file_retrieval_functions.dart';
 import 'package:bug_tracker/utilities/state_retrieval_functions.dart';
 import 'package:bug_tracker/models/component_state_updates.dart';
@@ -32,7 +34,7 @@ class TaskDetailPage extends StatefulWidget {
 
 class _TaskDetailPageState extends State<TaskDetailPage> {
   bool sessionInProgress = false;
-  String timeDifference = '12w 11d 4h 12m';
+  WorkSession? activeWorkSession;
   late Timer timer;
 
   @override
@@ -42,8 +44,18 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
     // and context has been created
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       setTaskStateAsInProgress();
+      setActiveWorkSession();
     });
     super.initState();
+  }
+
+  void setActiveWorkSession() async {
+    activeWorkSession = await retrieveActiveWorkSession(taskID: widget.task.id);
+    if (activeWorkSession != null) {
+      sessionInProgress = true;
+    } else {
+      sessionInProgress = false;
+    }
   }
 
   void setTaskStateAsInProgress() async {
@@ -82,6 +94,36 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
           );
         }
       }
+    }
+  }
+
+  String getTimeDifference(DateTime newer, DateTime older) {
+    Duration difference = newer.difference(older);
+
+    int months = (difference.inDays / 30).floor();
+    int days = (difference.inDays % 30).floor();
+    int hours = (difference.inHours % 24).floor();
+    int minutes = (difference.inMinutes % 60).floor();
+
+    List<String> timeUnits = [];
+
+    if (months != 0) {
+      timeUnits.add('${months}M');
+    }
+    if (days != 0) {
+      timeUnits.add('${days}d');
+    }
+    if (hours != 0) {
+      timeUnits.add('${hours}h');
+    }
+    if (minutes != 0) {
+      timeUnits.add('${minutes}m');
+    }
+
+    if (timeUnits.join(' ').isEmpty) {
+      return '0s';
+    } else {
+      return timeUnits.join(' ');
     }
   }
 
@@ -280,26 +322,83 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                             textStyle: kContainerTextStyle,
                           ),
                           onPressed: () async {
-                            setState(() {
-                              sessionInProgress = !sessionInProgress;
-                            });
-
                             // start/end timer
                             if (sessionInProgress) {
                               timer.cancel();
+
+                              // set an end time for the session
+                              if (await endWorkSession(
+                                  sessionID: activeWorkSession!.id)) {
+                                activeWorkSession = null;
+                                sessionInProgress = false;
+                              } else {
+                                sessionInProgress = true;
+                              }
+
+                              // at this point an attempt has been made to end the session
+                              if (context.mounted) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      sessionInProgress
+                                          ? "Unable to end session"
+                                          : "Session ended successfully",
+                                      style: kContainerTextStyle.copyWith(
+                                          color: Colors.black),
+                                    ),
+                                  ),
+                                );
+                              }
                             } else {
+                              // create a new session
+                              activeWorkSession =
+                                  await startWorkSession(task: widget.task);
+
+                              // if one is started successfully update the active work session
+                              if (activeWorkSession != null) {
+                                sessionInProgress = true;
+                              } else {
+                                sessionInProgress = false;
+                              }
+
+                              // at this point an attempt to start a session has been made
+                              if (context.mounted) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      sessionInProgress
+                                          ? "Session started successfully"
+                                          : "Unable to start session",
+                                      style: kContainerTextStyle.copyWith(
+                                          color: Colors.black),
+                                    ),
+                                  ),
+                                );
+                              }
+
+                              // set state to redraw new time every 10 minutes
                               timer = Timer.periodic(
-                                const Duration(minutes: 10),
-                                (timer) {},
+                                const Duration(minutes: 1),
+                                (timer) {
+                                  setState(() {});
+                                },
                               );
                             }
+
+                            // update UI
+                            setState(() {});
                           },
                           child: sessionInProgress
                               ? const Text('End Session')
                               : const Text('Start Session'),
                         ),
                         Text(
-                          timeDifference,
+                          activeWorkSession != null
+                              ? getTimeDifference(
+                                  DateTime.now(),
+                                  activeWorkSession!.startDate,
+                                )
+                              : '',
                           style: kContainerTextStyle.copyWith(
                             color: Colors.white,
                           ),

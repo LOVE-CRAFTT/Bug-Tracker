@@ -738,6 +738,57 @@ class DB {
   }
   //============================================================================
 
+  //=================WORK SESSION RELATED=======================================
+  Future<Results?> getActiveWorkSession({required int taskID}) async {
+    Results result = await _conn!.query(
+      'SELECT * FROM work_sessions WHERE task_id = ? AND time_ended IS NULL ORDER BY time_started DESC',
+      [taskID],
+    );
+
+    if (result.isEmpty) {
+      return null;
+    } else {
+      return result;
+    }
+  }
+
+  Future<int?> addWorkSession({required Task task}) async {
+    Results result = await _conn!.query(
+      'INSERT INTO work_sessions (task_id, associated_staff, associated_complaint, time_started, time_ended) VALUES (?, ?, ?, ?, ?)',
+      [
+        task.id,
+        task.assignedStaff.id,
+        task.associatedComplaint.ticketNumber,
+        DateTime.now().toUtc(),
+        null,
+      ],
+    );
+
+    if (result.insertId != null) {
+      return result.insertId!;
+    } else {
+      return null;
+    }
+  }
+
+  Future<bool> updateSessionEndTime({required int sessionID}) async {
+    Results result = await _conn!.query(
+      "UPDATE work_sessions SET time_ended = ? WHERE id = ?",
+      [
+        DateTime.now().toUtc(),
+        sessionID,
+      ],
+    );
+
+    if (result.affectedRows != null && result.affectedRows! > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  //============================================================================
+
   //=================CALENDAR RELATED===========================================
   Future<Results?> getCalendarEvents({required int staffID}) async {
     Results result = await _conn!.query(
