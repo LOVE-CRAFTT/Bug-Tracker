@@ -290,96 +290,100 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        ElevatedButton(
-                          style: TextButton.styleFrom(
-                            backgroundColor: sessionInProgress
-                                ? Colors.red
-                                : secondaryThemeColor,
-                            textStyle: kContainerTextStyle,
-                          ),
-                          onPressed: () async {
-                            // start/end timer
-                            if (sessionInProgress) {
-                              timer!.cancel();
+                        // show the start/end session and time spent only if its not been
+                        // viewed as an assigned task from the bugDetailPage
+                        if (!widget.viewingFromBug) ...[
+                          ElevatedButton(
+                            style: TextButton.styleFrom(
+                              backgroundColor: sessionInProgress
+                                  ? Colors.red
+                                  : secondaryThemeColor,
+                              textStyle: kContainerTextStyle,
+                            ),
+                            onPressed: () async {
+                              // start/end timer
+                              if (sessionInProgress) {
+                                timer!.cancel();
 
-                              // set an end time for the session
-                              if (await endWorkSession(
-                                  sessionID: activeWorkSession!.id)) {
-                                activeWorkSession = null;
-                                sessionInProgress = false;
-                              } else {
-                                sessionInProgress = true;
-                              }
+                                // set an end time for the session
+                                if (await endWorkSession(
+                                    sessionID: activeWorkSession!.id)) {
+                                  activeWorkSession = null;
+                                  sessionInProgress = false;
+                                } else {
+                                  sessionInProgress = true;
+                                }
 
-                              // at this point an attempt has been made to end the session
-                              if (context.mounted) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(
-                                      sessionInProgress
-                                          ? "Unable to end session"
-                                          : "Session ended successfully",
-                                      style: kContainerTextStyle.copyWith(
-                                          color: Colors.black),
+                                // at this point an attempt has been made to end the session
+                                if (context.mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        sessionInProgress
+                                            ? "Unable to end session"
+                                            : "Session ended successfully",
+                                        style: kContainerTextStyle.copyWith(
+                                            color: Colors.black),
+                                      ),
                                     ),
-                                  ),
+                                  );
+                                }
+                              } else {
+                                // create a new session
+                                activeWorkSession =
+                                    await startWorkSession(task: widget.task);
+
+                                // if one is started successfully update the active work session
+                                if (activeWorkSession != null) {
+                                  sessionInProgress = true;
+                                } else {
+                                  sessionInProgress = false;
+                                }
+
+                                // at this point an attempt to start a session has been made
+                                if (context.mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        sessionInProgress
+                                            ? "Session started successfully"
+                                            : "Unable to start session",
+                                        style: kContainerTextStyle.copyWith(
+                                            color: Colors.black),
+                                      ),
+                                    ),
+                                  );
+                                }
+
+                                // set state to redraw new time every 10 minutes
+                                timer = Timer.periodic(
+                                  const Duration(minutes: 1),
+                                  (timer) {
+                                    setState(() {});
+                                  },
                                 );
                               }
-                            } else {
-                              // create a new session
-                              activeWorkSession =
-                                  await startWorkSession(task: widget.task);
 
-                              // if one is started successfully update the active work session
-                              if (activeWorkSession != null) {
-                                sessionInProgress = true;
-                              } else {
-                                sessionInProgress = false;
-                              }
-
-                              // at this point an attempt to start a session has been made
-                              if (context.mounted) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(
-                                      sessionInProgress
-                                          ? "Session started successfully"
-                                          : "Unable to start session",
-                                      style: kContainerTextStyle.copyWith(
-                                          color: Colors.black),
-                                    ),
-                                  ),
-                                );
-                              }
-
-                              // set state to redraw new time every 10 minutes
-                              timer = Timer.periodic(
-                                const Duration(minutes: 1),
-                                (timer) {
-                                  setState(() {});
-                                },
-                              );
-                            }
-
-                            // update UI
-                            setState(() {});
-                          },
-                          child: sessionInProgress
-                              ? const Text('End Session')
-                              : const Text('Start Session'),
-                        ),
-                        Text(
-                          activeWorkSession != null
-                              ? getTimeDifference(
-                                  DateTime.now(),
-                                  activeWorkSession!.startDate,
-                                  fromSessionsLog: false,
-                                )
-                              : '',
-                          style: kContainerTextStyle.copyWith(
-                            color: Colors.white,
+                              // update UI
+                              setState(() {});
+                            },
+                            child: sessionInProgress
+                                ? const Text('End Session')
+                                : const Text('Start Session'),
                           ),
-                        ),
+                          Text(
+                            activeWorkSession != null
+                                ? getTimeDifference(
+                                    DateTime.now(),
+                                    activeWorkSession!.startDate,
+                                    fromSessionsLog: false,
+                                  )
+                                : '',
+                            style: kContainerTextStyle.copyWith(
+                              color: Colors.white,
+                            ),
+                          )
+                        ],
                         ElevatedButton(
                           style: TextButton.styleFrom(
                             textStyle: kContainerTextStyle,
