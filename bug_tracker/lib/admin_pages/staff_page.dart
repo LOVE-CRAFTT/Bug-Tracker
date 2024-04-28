@@ -21,26 +21,6 @@ class StaffPage extends StatefulWidget {
 class _StaffPageState extends State<StaffPage> {
   String searchBarString = "";
 
-  // for managing retrieved staff length
-  ScrollController scrollController = ScrollController();
-
-  // will be increased if scroll to end
-  int limit = 30;
-
-  // listens for if staff has scrolled to end and generates more
-  @override
-  void initState() {
-    scrollController.addListener(() {
-      if (scrollController.position.atEdge) {
-        if (scrollController.position.pixels != 0) {
-          limit += 10;
-          setState(() {});
-        }
-      }
-    });
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     // watch in case the staff details are updated or
@@ -106,7 +86,7 @@ class _StaffPageState extends State<StaffPage> {
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                   child: FutureBuilder(
-                    future: loadStaffSource(limit),
+                    future: loadStaffSource(),
                     builder:
                         (BuildContext context, AsyncSnapshot<void> snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
@@ -122,7 +102,6 @@ class _StaffPageState extends State<StaffPage> {
                           searchBarString: searchBarString,
                         ).isNotEmpty
                             ? ListView.builder(
-                                controller: scrollController,
                                 itemCount: localStaffSource.length,
                                 itemBuilder: (BuildContext context, int index) {
                                   return StaffOverviewCard(

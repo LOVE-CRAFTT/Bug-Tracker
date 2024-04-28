@@ -3,11 +3,11 @@ import 'package:bug_tracker/database/db.dart';
 import 'package:bug_tracker/utilities/project.dart';
 import 'package:bug_tracker/utilities/core_data_sources.dart';
 
-Future<void> loadProjectsSource({required int limit}) async {
+Future<void> loadProjectsSource() async {
   List<Project> processedProjects = [];
 
   //get all projects
-  Results? results = await db.getAllProjects(limit: limit);
+  Results? results = await db.getAllProjects();
 
   //if there are projects
   if (results != null) {

@@ -106,19 +106,6 @@ class DB {
     }
   }
 
-  Future<Results?> getAllStaffInBatches({required int limit}) async {
-    Results results = await _conn!.query(
-      'SELECT * FROM staff LIMIT $limit',
-    );
-    if (results.isEmpty) {
-      // No staff
-      return null;
-    } else {
-      // staff exists
-      return results;
-    }
-  }
-
   Future<bool> updateStaffEmail({
     required int staffID,
     required String newEmail,
@@ -311,9 +298,9 @@ class DB {
     }
   }
 
-  Future<Results?> getAllProjects({required int limit}) async {
+  Future<Results?> getAllProjects() async {
     Results results = await _conn!.query(
-      'SELECT * FROM project LIMIT $limit',
+      'SELECT * FROM project',
     );
     if (results.isEmpty) {
       // No projects
@@ -435,9 +422,9 @@ class DB {
     return results.every((result) => result.insertId != null);
   }
 
-  Future<Results?> getAllComplaints({required int limit}) async {
+  Future<Results?> getAllComplaints() async {
     Results results = await _conn!.query(
-      'SELECT * FROM complaint ORDER BY date_created DESC LIMIT $limit',
+      'SELECT * FROM complaint ORDER BY date_created DESC',
     );
     if (results.isEmpty) {
       // No complaints
@@ -450,11 +437,10 @@ class DB {
 
   Future<Results?> getComplaintsByUser({
     required int userID,
-    required int limit,
   }) async {
     Results results = await _conn!.query(
-      'SELECT * FROM complaint WHERE author = ? ORDER BY date_created DESC LIMIT ?',
-      [userID, limit],
+      'SELECT * FROM complaint WHERE author = ? ORDER BY date_created DESC',
+      [userID],
     );
 
     if (results.isEmpty) {
@@ -466,11 +452,10 @@ class DB {
 
   Future<Results?> getComplaintsByProject({
     required int projectID,
-    required int limit,
   }) async {
     Results results = await _conn!.query(
-      'SELECT * FROM complaint WHERE associated_project = ? ORDER BY date_created DESC LIMIT ?',
-      [projectID, limit],
+      'SELECT * FROM complaint WHERE associated_project = ? ORDER BY date_created DESC',
+      [projectID],
     );
 
     if (results.isEmpty) {
@@ -572,11 +557,10 @@ class DB {
 
   Future<Results?> getTasksByStaff({
     required int staffID,
-    required int limit,
   }) async {
     Results results = await _conn!.query(
-      'SELECT * FROM task WHERE associated_staff = ? LIMIT ?',
-      [staffID, limit],
+      'SELECT * FROM task WHERE associated_staff = ?',
+      [staffID],
     );
     if (results.isEmpty) {
       // no associated tasks
@@ -901,11 +885,10 @@ class DB {
 
   Future<Results?> getStaffDiscussions({
     required int staffID,
-    required int limit,
   }) async {
     Results results = await _conn!.query(
-      'SELECT conversation_id FROM conversation_participants WHERE staff_id = ? LIMIT ?',
-      [staffID, limit],
+      'SELECT conversation_id FROM conversation_participants WHERE staff_id = ?',
+      [staffID],
     );
 
     if (results.isNotEmpty) {
@@ -974,13 +957,12 @@ class DB {
     }
   }
 
-  Future<Results?> getMessagesInBatches({
+  Future<Results?> getMessages({
     required int discussionID,
-    required int limit,
   }) async {
     Results results = await _conn!.query(
-      'SELECT staff_id, message FROM messages WHERE conversation_id = ? ORDER BY time_created DESC LIMIT ?',
-      [discussionID, limit],
+      'SELECT staff_id, message FROM messages WHERE conversation_id = ? ORDER BY time_created DESC',
+      [discussionID],
     );
 
     // there are some messages

@@ -20,8 +20,6 @@ class NewDiscussion extends StatefulWidget {
 class _NewDiscussionState extends State<NewDiscussion> {
   /// Topic text controller
   TextEditingController topicController = TextEditingController();
-  // controller to manage list of staff
-  ScrollController scrollController = ScrollController();
 
   ///
   String? topic;
@@ -34,22 +32,6 @@ class _NewDiscussionState extends State<NewDiscussion> {
 
   ///
   List<Staff> selectedStaff = [];
-
-  int limit = 20;
-
-  @override
-  void initState() {
-    scrollController.addListener(() {
-      if (scrollController.position.atEdge) {
-        if (scrollController.position.pixels != 0) {
-          limit += 5;
-          setState(() {});
-        }
-      }
-    });
-
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +78,7 @@ class _NewDiscussionState extends State<NewDiscussion> {
                 borderRadius: BorderRadius.circular(12.0),
               ),
               child: FutureBuilder(
-                future: loadStaffSource(limit),
+                future: loadStaffSource(),
                 builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(

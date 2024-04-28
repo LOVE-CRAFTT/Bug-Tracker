@@ -24,26 +24,6 @@ class _TasksPageState extends State<TasksPage> {
   String dropDownValue = tasksChoices.first;
   String searchBarString = "";
 
-  // for managing retrieved tasks length
-  ScrollController scrollController = ScrollController();
-
-  // will be increased if scroll to end
-  int limit = 30;
-
-  // listens for if staff has scrolled to end and generates more
-  @override
-  void initState() {
-    scrollController.addListener(() {
-      if (scrollController.position.atEdge) {
-        if (scrollController.position.pixels != 0) {
-          limit += 10;
-          setState(() {});
-        }
-      }
-    });
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     // watch in case the task is removed or just updated
@@ -150,7 +130,6 @@ class _TasksPageState extends State<TasksPage> {
                       child: FutureBuilder(
                         future: loadTasksSourceByStaff(
                           staffID: globalActorID,
-                          limit: limit,
                         ),
                         builder: (BuildContext context,
                             AsyncSnapshot<void> snapshot) {
@@ -175,7 +154,6 @@ class _TasksPageState extends State<TasksPage> {
                                 searchBarString: searchBarString,
                               ).isNotEmpty
                                   ? ListView.builder(
-                                      controller: scrollController,
                                       itemCount: localTasksSource.length,
                                       itemBuilder:
                                           (BuildContext context, int index) {

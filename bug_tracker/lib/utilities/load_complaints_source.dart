@@ -9,13 +9,11 @@ import 'package:bug_tracker/utilities/core_data_sources.dart';
 // complaints are processed here and loaded into complaints classes
 // classes are then loaded into a list for any further processing
 // and put in complaintsSource list
-Future<void> loadComplaintsSource({
-  required int limit,
-}) async {
+Future<void> loadComplaintsSource() async {
   List<Complaint> processedComplaints = [];
 
   // get all the complaints
-  Results? results = await db.getAllComplaints(limit: limit);
+  Results? results = await db.getAllComplaints();
 
   // if there are any complaints
   if (results != null) {
@@ -78,12 +76,11 @@ Future<List<Tags>?> retrieveTags({
 
 Future<void> loadComplaintsSourceByUser({
   required int userID,
-  required int limit,
 }) async {
   List<Complaint> processedComplaints = [];
 
   // get all the complaints
-  Results? results = await db.getComplaintsByUser(userID: userID, limit: limit);
+  Results? results = await db.getComplaintsByUser(userID: userID);
 
   // if there are any complaints
   if (results != null) {
@@ -121,14 +118,12 @@ Future<void> loadComplaintsSourceByUser({
 
 Future<void> loadComplaintsSourceByProject({
   required int projectID,
-  required int limit,
 }) async {
   List<Complaint> processedComplaints = [];
 
   // get all the complaints
   Results? results = await db.getComplaintsByProject(
     projectID: projectID,
-    limit: limit,
   );
 
   // if there are any complaints
@@ -170,7 +165,6 @@ Future<List<Complaint>> retrieveComplaintsByProject({
 }) async {
   await loadComplaintsSourceByProject(
     projectID: projectID,
-    limit: impossiblyLargeNumber,
   );
   return complaintsSource;
 }

@@ -22,29 +22,6 @@ class BugsPage extends StatefulWidget {
 class _BugsPageState extends State<BugsPage> {
   String dropDownValue = bugChoices.first;
 
-  // limit for queries
-  int limit = 30;
-
-  // scroll controller for vertical singleChildScrollView widget
-  // to maintain position when retrieving data sources of new length
-  ScrollController scrollController = ScrollController();
-
-  // add 10 more if reached end of list
-  @override
-  void initState() {
-    scrollController.addListener(
-      () {
-        if (scrollController.position.atEdge) {
-          if (scrollController.position.pixels != 0) {
-            limit += 10;
-            setState(() {});
-          }
-        }
-      },
-    );
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     // watch ComplaintStateUpdates for updates to complaint state
@@ -70,7 +47,7 @@ class _BugsPageState extends State<BugsPage> {
                   constraints: constraints,
                 ),
                 FutureBuilder(
-                  future: loadComplaintsSource(limit: limit),
+                  future: loadComplaintsSource(),
                   builder:
                       (BuildContext context, AsyncSnapshot<void> snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
@@ -94,7 +71,6 @@ class _BugsPageState extends State<BugsPage> {
                                 // to allow to scroll horizontally
                                 scrollDirection: Axis.horizontal,
                                 child: SingleChildScrollView(
-                                  controller: scrollController,
                                   child: Padding(
                                     padding: const EdgeInsets.only(top: 20.0),
                                     child: DefaultTextStyle(

@@ -22,29 +22,6 @@ class ProjectsPage extends StatefulWidget {
 class _ProjectsPageState extends State<ProjectsPage> {
   String dropDownValue = projectChoices.first;
 
-  // limit for queries
-  int limit = 30;
-
-  // scroll controller for vertical singleChildScrollView widget
-  // to maintain position when retrieving data sources of new length
-  ScrollController scrollController = ScrollController();
-
-  // add 10 more if reached end of list
-  @override
-  void initState() {
-    scrollController.addListener(
-      () {
-        if (scrollController.position.atEdge) {
-          if (scrollController.position.pixels != 0) {
-            limit += 10;
-            setState(() {});
-          }
-        }
-      },
-    );
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     // watch ComponentStateUpdates for updates to complaint states
@@ -73,7 +50,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                   constraints: constraints,
                 ),
                 FutureBuilder(
-                  future: loadProjectsSource(limit: limit),
+                  future: loadProjectsSource(),
                   builder:
                       (BuildContext context, AsyncSnapshot<void> snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
@@ -93,7 +70,6 @@ class _ProjectsPageState extends State<ProjectsPage> {
                               child: SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
                                 child: SingleChildScrollView(
-                                  controller: scrollController,
                                   child: Padding(
                                     padding: const EdgeInsets.only(top: 20.0),
                                     child: DefaultTextStyle(

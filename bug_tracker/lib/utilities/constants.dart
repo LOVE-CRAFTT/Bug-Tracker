@@ -15,9 +15,6 @@ bool actorIsUser = false;
 ///[containerHeight] reduces, [FastAccessContainer]s realigns to have 3 maximum on a row
 const bigScreenWidth = 712.0;
 
-/// impossibly large number
-int impossiblyLargeNumber = 9223372036854775807;
-
 ///TextStyle for the [reusableAppBar]
 const kAppBarTextStyle = TextStyle(
   fontSize: 20.0,

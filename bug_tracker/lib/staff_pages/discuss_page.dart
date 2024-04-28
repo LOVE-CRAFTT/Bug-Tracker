@@ -23,26 +23,7 @@ class DiscussPage extends StatefulWidget {
 }
 
 class _DiscussPageState extends State<DiscussPage> {
-  // controller to manage list of discussions
-  ScrollController scrollController = ScrollController();
-
   String searchBarString = '';
-
-  int limit = 30;
-
-  @override
-  void initState() {
-    scrollController.addListener(() {
-      if (scrollController.position.atEdge) {
-        if (scrollController.position.pixels != 0) {
-          limit += 10;
-          setState(() {});
-        }
-      }
-    });
-
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +96,6 @@ class _DiscussPageState extends State<DiscussPage> {
                 FutureBuilder(
                   future: loadDiscussionsSource(
                     staffID: globalActorID,
-                    limit: limit,
                   ),
                   builder:
                       (BuildContext context, AsyncSnapshot<void> snapshot) {
@@ -132,7 +112,6 @@ class _DiscussPageState extends State<DiscussPage> {
                           .toList();
                       return localDiscussionsSource.isNotEmpty
                           ? SingleChildScrollView(
-                              controller: scrollController,
                               child: Padding(
                                 padding: const EdgeInsets.only(top: 20.0),
                                 child: DefaultTextStyle(

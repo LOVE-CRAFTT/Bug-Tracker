@@ -27,26 +27,6 @@ class _ComplaintPageState extends State<ComplaintPage> {
   String dropDownValue = complaintsChoices.first;
   String searchBarString = "";
 
-  // for managing retrieved complaints length
-  ScrollController scrollController = ScrollController();
-
-  // will be increased if scroll to end
-  int limit = 30;
-
-  // listens for if user has scrolled to end and generates more
-  @override
-  void initState() {
-    scrollController.addListener(() {
-      if (scrollController.position.atEdge) {
-        if (scrollController.position.pixels != 0) {
-          limit += 10;
-          setState(() {});
-        }
-      }
-    });
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     // watch ComplaintStateUpdates for updates to complaint
@@ -230,7 +210,6 @@ class _ComplaintPageState extends State<ComplaintPage> {
                     child: FutureBuilder(
                       future: loadComplaintsSourceByUser(
                         userID: globalActorID,
-                        limit: limit,
                       ),
                       builder:
                           (BuildContext context, AsyncSnapshot<void> snapshot) {
@@ -253,7 +232,6 @@ class _ComplaintPageState extends State<ComplaintPage> {
                               searchBarString: searchBarString,
                             ).isNotEmpty
                                 ? ListView.builder(
-                                    controller: scrollController,
                                     itemCount: localComplaintsSource.length,
                                     itemBuilder:
                                         (BuildContext context, int index) {

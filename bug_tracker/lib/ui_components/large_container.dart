@@ -30,30 +30,6 @@ class _LargeContainerState extends State<LargeContainer> {
   var containerHeight = 400.0;
   //============================================================================
 
-  // limit for queries
-  int limit = 10;
-
-  // scroll controller for listview widget
-  // to maintain position when retrieving data sources of new length
-  ScrollController scrollController = ScrollController();
-
-  // on initState attach listeners in order to retrieve again with increased range
-  // when actor has scrolled to the end
-  @override
-  void initState() {
-    super.initState();
-
-    scrollController.addListener(() {
-      // if its at end but not the top then its at the end
-      if (scrollController.position.atEdge) {
-        if (scrollController.position.pixels != 0) {
-          limit += 5;
-          setState(() {});
-        }
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     // watch TaskStateUpdates for updates to task states
@@ -109,7 +85,7 @@ class _LargeContainerState extends State<LargeContainer> {
 
   FutureBuilder getTasksList(BuildContext context) {
     return FutureBuilder(
-      future: loadTasksSourceByStaff(staffID: globalActorID, limit: limit),
+      future: loadTasksSourceByStaff(staffID: globalActorID),
       builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const CustomCircularProgressIndicator();
@@ -138,7 +114,6 @@ class _LargeContainerState extends State<LargeContainer> {
           // if there isn't any corresponding task show empty screen placeholder
           return localTaskSource.isNotEmpty
               ? ListView.builder(
-                  controller: scrollController,
                   itemCount: localTaskSource.length,
                   itemBuilder: (BuildContext context, int index) {
                     return TaskPreviewLite(
@@ -154,7 +129,7 @@ class _LargeContainerState extends State<LargeContainer> {
 
   FutureBuilder<void> getBugsList(BuildContext context) {
     return FutureBuilder(
-      future: loadComplaintsSource(limit: limit),
+      future: loadComplaintsSource(),
       builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const CustomCircularProgressIndicator();
@@ -162,7 +137,6 @@ class _LargeContainerState extends State<LargeContainer> {
           // if there aren't corresponding bugs show empty screen placeholder
           return complaintsSource.isNotEmpty
               ? ListView.builder(
-                  controller: scrollController,
                   itemCount: complaintsSource.length,
                   itemBuilder: (BuildContext context, int index) {
                     return BugPreviewLite(complaint: complaintsSource[index]);

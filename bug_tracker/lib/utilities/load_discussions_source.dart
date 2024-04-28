@@ -6,7 +6,6 @@ import 'package:bug_tracker/utilities/core_data_sources.dart';
 
 Future<void> loadDiscussionsSource({
   required int staffID,
-  required int limit,
 }) async {
   // to be populated
   List<Discuss> processedDiscussions = [];
@@ -55,7 +54,6 @@ Future<void> loadDiscussionsSource({
   // get the id of all discussions that have staffID as participant
   Results? results = await db.getStaffDiscussions(
     staffID: staffID,
-    limit: limit,
   );
 
   // if there are any discussions proceed

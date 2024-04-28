@@ -28,29 +28,6 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
   ProjectState? updatedProjectState;
   bool updateStatusIntent = false;
 
-  // limit for queries
-  int limit = 10;
-
-  // scroll controller for ListView widget
-  // to maintain position when retrieving data sources of new length
-  ScrollController scrollController = ScrollController();
-
-  // add 10 more if reached end of list
-  @override
-  void initState() {
-    scrollController.addListener(
-      () {
-        if (scrollController.position.atEdge) {
-          if (scrollController.position.pixels != 0) {
-            limit += 5;
-            setState(() {});
-          }
-        }
-      },
-    );
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     // watch ComponentStateUpdates for updates to complaint states
@@ -374,7 +351,6 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                       child: FutureBuilder(
                         future: loadComplaintsSourceByProject(
                           projectID: widget.project.id,
-                          limit: limit,
                         ),
                         builder: (BuildContext context,
                             AsyncSnapshot<void> snapshot) {
@@ -385,7 +361,6 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                             );
                           } else {
                             return ListView.builder(
-                              controller: scrollController,
                               itemCount: complaintsSource.length,
                               itemBuilder: (BuildContext context, int index) {
                                 return BugPreviewCard(

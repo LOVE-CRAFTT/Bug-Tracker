@@ -3,15 +3,11 @@ import 'package:bug_tracker/database/db.dart';
 import 'package:bug_tracker/utilities/staff.dart';
 import 'package:bug_tracker/utilities/core_data_sources.dart';
 
-Future<void> loadStaffSource([int? limit]) async {
+Future<void> loadStaffSource() async {
   List<Staff> processedStaff = [];
 
   // get all staff from database
-  Results? results = limit == null
-      ? await db.getAllStaff()
-      : await db.getAllStaffInBatches(
-          limit: limit,
-        );
+  Results? results = await db.getAllStaff();
 
   //if there are staff
   if (results != null) {

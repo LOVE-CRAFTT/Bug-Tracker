@@ -86,7 +86,7 @@ class FastAccessContainer extends StatelessWidget {
 // function to retrieve actual bug numbers
 Future<List<int>> getBugNumbers() async {
   // impossibly high numbers as workaround
-  await loadComplaintsSource(limit: impossiblyLargeNumber);
+  await loadComplaintsSource();
 
   int openBugsLength = complaintsSource
       .where(

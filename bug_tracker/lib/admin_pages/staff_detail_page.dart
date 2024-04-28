@@ -36,26 +36,6 @@ class _StaffDetailPageState extends State<StaffDetailPage> {
     GlobalKey<FormState>()
   ];
 
-  // for managing retrieved tasks length
-  ScrollController scrollController = ScrollController();
-
-  // will be increased if scroll to end
-  int limit = 10;
-
-  // listens for if staff has scrolled to end and generates more
-  @override
-  void initState() {
-    scrollController.addListener(() {
-      if (scrollController.position.atEdge) {
-        if (scrollController.position.pixels != 0) {
-          limit += 5;
-          setState(() {});
-        }
-      }
-    });
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     // watch in case the task is removed or just updated
@@ -392,7 +372,6 @@ class _StaffDetailPageState extends State<StaffDetailPage> {
                   child: FutureBuilder(
                     future: loadTasksSourceByStaff(
                       staffID: widget.staff.id,
-                      limit: limit,
                     ),
                     builder:
                         (BuildContext context, AsyncSnapshot<void> snapshot) {
@@ -403,7 +382,6 @@ class _StaffDetailPageState extends State<StaffDetailPage> {
                       } else {
                         return tasksSource.isNotEmpty
                             ? ListView.builder(
-                                controller: scrollController,
                                 itemCount: tasksSource.length,
                                 itemBuilder: (BuildContext context, int index) {
                                   return TaskPreviewCard(

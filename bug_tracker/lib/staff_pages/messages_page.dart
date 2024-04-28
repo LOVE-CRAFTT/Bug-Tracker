@@ -25,17 +25,6 @@ class _MessagesPageState extends State<MessagesPage> {
   void initState() {
     super.initState();
 
-    scrollController.addListener(() {
-      // if user has scrolled to the top load more
-      // still checking if is not at the top because listview is reversed
-      if (scrollController.position.atEdge) {
-        if (scrollController.position.pixels != 0) {
-          limit += 40;
-          setState(() {});
-        }
-      }
-    });
-
     // scroll to end at first
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (scrollController.hasClients) {
@@ -74,8 +63,7 @@ class _MessagesPageState extends State<MessagesPage> {
               children: [
                 Expanded(
                   child: FutureBuilder(
-                    future: retrieveMessages(
-                        discussionID: widget.discussionID, limit: limit),
+                    future: retrieveMessages(discussionID: widget.discussionID),
                     builder: (BuildContext context,
                         AsyncSnapshot<List<MessageBubble>> snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {

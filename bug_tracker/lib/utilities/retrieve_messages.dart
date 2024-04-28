@@ -5,14 +5,12 @@ import 'package:bug_tracker/ui_components/message_bubble.dart';
 
 Future<List<MessageBubble>> retrieveMessages({
   required int discussionID,
-  required int limit,
 }) async {
   // to be populated
   List<MessageBubble> processedMessages = [];
 
-  Results? results = await db.getMessagesInBatches(
+  Results? results = await db.getMessages(
     discussionID: discussionID,
-    limit: limit,
   );
 
   // there are messages
