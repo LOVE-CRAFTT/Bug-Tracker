@@ -129,11 +129,13 @@ Future<double> getPercentageOfComplaintCompleted(
     {required Complaint complaint}) async {
   List<Task> relatedTasks =
       await retrieveTasksByComplaint(complaintID: complaint.ticketNumber);
-  if (relatedTasks.isEmpty) return 0.0;
+  if (relatedTasks.isEmpty) return 0;
 
   int tasksCompletedLength = relatedTasks
       .where(
-        (task) => task.taskState == TaskState.completed,
+        (task) =>
+            task.taskState == TaskState.completed ||
+            task.taskState == TaskState.transferred,
       )
       .length;
 

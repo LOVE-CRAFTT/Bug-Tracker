@@ -290,9 +290,9 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        // show the start/end session and time spent if its not been
+                        // show the start/end session and time spent if its not being
                         // viewed as an assigned task from the bugDetailPage
-                        // if it is not been transferred or completed either.
+                        // if it has not been transferred or completed either.
                         if (!widget.viewingFromBug &&
                             widget.task.taskState != TaskState.transferred &&
                             widget.task.taskState != TaskState.completed) ...[

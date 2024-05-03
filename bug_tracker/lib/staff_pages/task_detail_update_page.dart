@@ -62,24 +62,26 @@ class _TaskDetailUpdatePageState extends State<TaskDetailUpdatePage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          /// Mark task as completed
-          SizedBox(
-            width: determineContainerDimensionFromConstraint(
-              constraintValue: widget.maxHeight,
-              subtractValue: 300,
-            ),
-            child: CheckboxListTile(
-              value: taskCompleted,
-              onChanged: (value) {
-                taskCompleted = value!;
-                setState(() {});
-              },
-              title: Text(
-                "Mark task as Completed",
-                style: checkboxTextStyle,
+          /// Option to mark task as completed if it is not transferred
+          if (widget.task.taskState != TaskState.transferred) ...[
+            SizedBox(
+              width: determineContainerDimensionFromConstraint(
+                constraintValue: widget.maxHeight,
+                subtractValue: 300,
               ),
-            ),
-          ),
+              child: CheckboxListTile(
+                value: taskCompleted,
+                onChanged: (value) {
+                  taskCompleted = value!;
+                  setState(() {});
+                },
+                title: Text(
+                  "Mark task as Completed",
+                  style: checkboxTextStyle,
+                ),
+              ),
+            )
+          ],
 
           /// Transfer tasks dropdown
           makeTitle(title: "Transfer task"),
