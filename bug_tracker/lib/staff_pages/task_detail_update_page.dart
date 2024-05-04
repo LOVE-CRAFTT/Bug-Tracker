@@ -132,7 +132,6 @@ class _TaskDetailUpdatePageState extends State<TaskDetailUpdatePage> {
           ),
 
           /// Mark Complaint as completed if isTeamLead
-
           if (widget.task.isTeamLead) ...[
             /// Title
             SizedBox(
