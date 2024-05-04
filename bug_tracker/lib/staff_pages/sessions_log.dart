@@ -56,7 +56,7 @@ class _SessionsLogState extends State<SessionsLog> {
                     ),
                   ),
 
-                  // show table if in raw mode
+                  // show table and total if in raw mode
                   if (logView == LogView.raw) ...[
                     buildHeader(),
                     Expanded(
@@ -73,13 +73,16 @@ class _SessionsLogState extends State<SessionsLog> {
                               },
                             )
                           : const Center(child: EmptyScreenPlaceholder()),
-                    )
+                    ),
+                    TotalCompletedWorkSessionTime(workSessions: workSessions),
                   ],
 
-                  // show timeline if in stylized mode
+                  // show timeline and total if in stylized mode
                   if (logView == LogView.stylized) ...[
                     Expanded(
-                      child: OuterTimeLine(workSessions: workSessions),
+                      child: workSessions.isNotEmpty
+                          ? TimeLine(workSessions: workSessions)
+                          : const Center(child: EmptyScreenPlaceholder()),
                     ),
                   ],
                 ],
@@ -92,8 +95,8 @@ class _SessionsLogState extends State<SessionsLog> {
   }
 }
 
-class OuterTimeLine extends StatelessWidget {
-  const OuterTimeLine({
+class TimeLine extends StatelessWidget {
+  const TimeLine({
     super.key,
     required this.workSessions,
   });
@@ -102,51 +105,65 @@ class OuterTimeLine extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Timeline.tileBuilder(
-      builder: TimelineTileBuilder.connectedFromStyle(
-        itemCount: workSessions.length,
-        contentsBuilder: (context, index) => Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: 24.0,
-            horizontal: 10.0,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                workSessions[index].endDate != null
-                    ? "End date: ${convertToDateStringSessionsLog(workSessions[index].endDate!)}"
-                    : "On going",
-                style: workSessions[index].endDate != null
-                    ? kContainerTextStyle.copyWith(
-                        fontSize: 14,
-                        color: Colors.white,
-                      )
-                    : kContainerTextStyle.copyWith(
-                        fontSize: 14,
-                        color: Colors.green,
-                      ),
+    return Row(
+      children: [
+        Expanded(
+          child: Timeline.tileBuilder(
+            builder: TimelineTileBuilder.connectedFromStyle(
+              itemCount: workSessions.length,
+              contentsBuilder: (context, index) => Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 24.0,
+                  horizontal: 10.0,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      workSessions[index].endDate != null
+                          ? "End date: ${convertToDateStringSessionsLog(workSessions[index].endDate!)}"
+                          : "On going",
+                      style: workSessions[index].endDate != null
+                          ? kContainerTextStyle.copyWith(
+                              fontSize: 14,
+                              color: Colors.white,
+                            )
+                          : kContainerTextStyle.copyWith(
+                              fontSize: 14,
+                              color: Colors.green,
+                            ),
+                    ),
+                    InnerTimeLine(workSession: workSessions[index])
+                  ],
+                ),
               ),
-              InnerTimeLine(workSession: workSessions[index])
-            ],
+              indicatorStyleBuilder: (context, index) =>
+                  workSessions[index].endDate != null
+                      ? IndicatorStyle.dot
+                      : IndicatorStyle.outlined,
+              connectorStyleBuilder: (context, index) =>
+                  ConnectorStyle.solidLine,
+              firstConnectorStyle: ConnectorStyle.transparent,
+            ),
+            theme: TimelineThemeData(
+              nodePosition: 0,
+              indicatorPosition: 0.25,
+              color: secondaryThemeColorBlue,
+              indicatorTheme: const IndicatorThemeData(
+                color: secondaryThemeColor,
+                size: 20,
+              ),
+              connectorTheme: const ConnectorThemeData(),
+            ),
           ),
         ),
-        indicatorStyleBuilder: (context, index) =>
-            workSessions[index].endDate != null
-                ? IndicatorStyle.dot
-                : IndicatorStyle.outlined,
-        connectorStyleBuilder: (context, index) => ConnectorStyle.solidLine,
-        firstConnectorStyle: ConnectorStyle.transparent,
-      ),
-      theme: TimelineThemeData(
-        indicatorPosition: 0.25,
-        color: secondaryThemeColorBlue,
-        indicatorTheme: const IndicatorThemeData(
-          color: secondaryThemeColor,
-          size: 20,
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: TotalCompletedWorkSessionTime(workSessions: workSessions),
+          ),
         ),
-        connectorTheme: const ConnectorThemeData(),
-      ),
+      ],
     );
   }
 }
@@ -289,6 +306,69 @@ Column buildHeader() {
       )
     ],
   );
+}
+
+class TotalCompletedWorkSessionTime extends StatelessWidget {
+  const TotalCompletedWorkSessionTime({super.key, required this.workSessions});
+
+  final List<WorkSession> workSessions;
+
+  @override
+  Widget build(BuildContext context) {
+    List<WorkSession> completedSessions = workSessions
+        .where(
+          (session) => session.endDate != null,
+        )
+        .toList();
+
+    String getTotal() {
+      Duration total = const Duration();
+
+      // get total duration
+      for (WorkSession session in completedSessions) {
+        total += session.endDate!.difference(session.startDate);
+      }
+
+      // return a good representation
+      int months = (total.inDays / 30).floor();
+      int days = (total.inDays % 30).floor();
+      int hours = (total.inHours % 24).floor();
+      int minutes = (total.inMinutes % 60).floor();
+      int seconds = (total.inSeconds % 60).floor();
+
+      List<String> timeUnits = [];
+
+      if (months != 0) {
+        timeUnits.add('${months}M');
+      }
+      if (days != 0) {
+        timeUnits.add('${days}d');
+      }
+      if (hours != 0) {
+        timeUnits.add('${hours}h');
+      }
+      if (minutes != 0) {
+        timeUnits.add('${minutes}m');
+      }
+      if (seconds != 0) {
+        timeUnits.add('${seconds}s');
+      }
+
+      if (timeUnits.join(' ').isEmpty) {
+        return '0s';
+      } else {
+        return timeUnits.join(' ');
+      }
+    }
+
+    return Text(
+      "Total Completed Work Sessions: ${getTotal()}",
+      style: kContainerTextStyle.copyWith(
+        color: Colors.white,
+        fontSize: 25,
+      ),
+    );
+  }
 }
 
 // all possible views
