@@ -655,14 +655,16 @@ class DB {
               List<String>.filled(preservedOriginalTaskIDs.length, '?')
                   .join(',');
 
-          // delete unreferenced from session
-          await _conn!.query(
-            'DELETE FROM work_sessions WHERE associated_complaint = ? AND task_id NOT IN ($placeholders)',
-            [
-              relatedComplaintID,
-              ...preservedOriginalTaskIDs,
-            ],
-          );
+          // delete unreferenced from session if any
+          if (preservedOriginalTasks.isNotEmpty) {
+            await _conn!.query(
+              'DELETE FROM work_sessions WHERE associated_complaint = ? AND task_id NOT IN ($placeholders)',
+              [
+                relatedComplaintID,
+                ...preservedOriginalTaskIDs,
+              ],
+            );
+          }
 
           // replace in sessions
           for (int i = 0; i < newIds.length; i++) {
