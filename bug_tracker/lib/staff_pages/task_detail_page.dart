@@ -44,7 +44,6 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
     // initState and build i.e the frame is completed
     // and context has been created
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      setTaskStateAsInProgress();
       setActiveWorkSession();
     });
     super.initState();
@@ -341,6 +340,11 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                                   sessionInProgress = true;
                                 } else {
                                   sessionInProgress = false;
+                                }
+
+                                // set task as in progress if there session in progress
+                                if (sessionInProgress) {
+                                  setTaskStateAsInProgress();
                                 }
 
                                 // at this point an attempt to start a session has been made
