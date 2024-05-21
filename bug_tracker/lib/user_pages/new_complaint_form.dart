@@ -11,9 +11,11 @@ class NewComplaintForm extends StatefulWidget {
   const NewComplaintForm({
     super.key,
     required this.constraints,
+    required this.redrawParent,
   });
 
   final BoxConstraints constraints;
+  final VoidCallback redrawParent;
 
   @override
   State<NewComplaintForm> createState() => _NewComplaintFormState();
@@ -95,7 +97,7 @@ class _NewComplaintFormState extends State<NewComplaintForm> {
                         top: 20.0,
                       ),
                       child: TextFormField(
-                        decoration: textFormFieldDecoration("Notes"),
+                        decoration: textFormFieldDecoration("Notes (optional)"),
                         style:
                             kContainerTextStyle.copyWith(color: Colors.white),
                         controller: notesController,
@@ -113,7 +115,7 @@ class _NewComplaintFormState extends State<NewComplaintForm> {
               ),
             ),
             Tooltip(
-              message: "Add files",
+              message: "Add files (optional)",
               textStyle: kContainerTextStyle.copyWith(
                 fontSize: 12.0,
                 color: Colors.black87,
@@ -221,6 +223,7 @@ class _NewComplaintFormState extends State<NewComplaintForm> {
                                   ),
                                 ),
                               );
+                              widget.redrawParent();
                             }
                             projectIdController.clear();
                             bugTitleController.clear();
@@ -235,13 +238,14 @@ class _NewComplaintFormState extends State<NewComplaintForm> {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(
-                                    'Complaint added but File addition failure',
+                                    'Complaint added but file addition failure',
                                     style: kContainerTextStyle.copyWith(
                                       color: Colors.black,
                                     ),
                                   ),
                                 ),
                               );
+                              widget.redrawParent();
                             }
                             projectIdController.clear();
                             bugTitleController.clear();
@@ -264,6 +268,7 @@ class _NewComplaintFormState extends State<NewComplaintForm> {
                                 ),
                               ),
                             );
+                            widget.redrawParent();
                           }
                           projectIdController.clear();
                           bugTitleController.clear();

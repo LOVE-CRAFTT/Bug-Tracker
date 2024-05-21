@@ -188,6 +188,7 @@ class _ComplaintPageState extends State<ComplaintPage> {
                             sheetBorderRadius: 10.0,
                             body: NewComplaintForm(
                               constraints: constraints,
+                              redrawParent: () => setState(() {}),
                             ),
                           );
                         },

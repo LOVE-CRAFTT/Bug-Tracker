@@ -559,7 +559,7 @@ class DB {
     required int staffID,
   }) async {
     Results results = await _conn!.query(
-      'SELECT * FROM task WHERE associated_staff = ?',
+      'SELECT * FROM task WHERE associated_staff = ? ORDER BY due_date DESC',
       [staffID],
     );
     if (results.isEmpty) {
