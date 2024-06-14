@@ -1,6 +1,6 @@
 # Bug Tracker
 
-This is a bug tracking application developed using Flutter for my final year project. The application enables development teams to receive bug reports from customers, assign tasks to staff for resolution, and monitor progress. Customers can also track the progress and solution plans of these reports, leading to a more transparent system.
+This is a bug tracking application developed using Flutter built for windows for my final year project. The application enables development teams to receive bug reports from customers, assign tasks to staff for resolution, and monitor progress. Customers can also track the progress and solution plans of these reports, leading to a more transparent system.
 
 ## Features
 
@@ -15,6 +15,7 @@ This is a bug tracking application developed using Flutter for my final year pro
 2. Clone this repository.
 3. Run `flutter pub get` to install the necessary packages.
 4. Run `flutter run` to start the application.
+5. Select Windows as the build choice
 
 ## Author
 
