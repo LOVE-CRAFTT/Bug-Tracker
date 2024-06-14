@@ -8,14 +8,18 @@ This is a bug tracking application developed using Flutter built for windows for
 - Assign tasks to team members for bug resolution
 - Monitor progress of bug resolution
 - Customers can track progress and solution plans
+- Staff-staff messaging
+- Calendar including adding activities
+- Work session tracking
 
 ## Setup
 
 1. Install Flutter on your machine.
 2. Clone this repository.
 3. Run `flutter pub get` to install the necessary packages.
-4. Run `flutter run` to start the application.
-5. Select Windows as the build choice
+4. Create MySQL database with the sql file and modify credentials in db.dart file
+5. Run `flutter run` to start the application.
+6. Select Windows as the build choice
 
 ## Author
 
