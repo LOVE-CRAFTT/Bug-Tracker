@@ -19,4 +19,4 @@ This is a bug tracking application developed using Flutter built for windows for
 
 ## Author
 
-Brendan Chukwuemeka
+Brendan Chukwudi Chukwuemeka
