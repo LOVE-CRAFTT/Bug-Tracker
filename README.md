@@ -11,6 +11,7 @@ Insipred by Zoho bug tracker application [https://www.zoho.com/bugtracker/].
 - Staff-staff messaging
 - Calendar including adding activities
 - Work session tracking
+- Automatic progression e.g. when a complaint is opened by the admin the state is changed from pending to acknowledged automatically.
 
 ## UI samples
 Note: not an exhaustive list of the entire UI
