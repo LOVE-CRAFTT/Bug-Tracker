@@ -14,7 +14,7 @@ Insipred by Zoho bug tracker application [https://www.zoho.com/bugtracker/].
 - Automatic progression e.g. when a complaint is opened by the admin the state is changed from pending to acknowledged automatically.
 
 ## UI samples
-Note: not an exhaustive list of the entire UI
+Note: not an exhaustive showcase of the entire UI
 
 |                          |                          |
 |--------------------------|--------------------------|
